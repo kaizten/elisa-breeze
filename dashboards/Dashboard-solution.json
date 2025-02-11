@@ -135,24 +135,23 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 13,
+        "h": 15,
         "w": 24,
         "x": 0,
         "y": 10
       },
-      "id": 5,
+      "id": 6,
       "options": {
-        "colorByField": "serviceCode",
-        "colors": [],
-        "endField": "finishTime",
+        "colorByField": "employee_code",
+        "endField": "finish_time",
         "labelFields": [
-          "serviceCode"
+          "service_code"
         ],
         "showYAxis": true,
         "sortBy": "startTime",
         "sortOrder": "asc",
-        "startField": "startTime",
-        "textField": "serviceCode"
+        "startField": "start_time",
+        "textField": "employee_code"
       },
       "pluginVersion": "0.8.1",
       "targets": [
@@ -164,7 +163,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$.dates[].employees[code = \"0000\"].services[].{\n  \"startTime\": $.startTime,\n  \"finishTime\": $.finishTime,\n  \"serviceCode\": $.code\n}\n\n",
+              "jsonPath": "$reduce(dates.employees, function($acc, $e) {\n  $append($acc, $map($e.services, function($s) {\n    {\n      \"employee_code\": $e.code,\n      \"service_code\": $s.code,\n      \"start_time\": $s.startTime,\n      \"finish_time\": $s.finishTime\n    }\n  }))\n}, [])\n\n",
               "language": "jsonata"
             }
           ],
@@ -174,12 +173,14 @@
           "urlPath": ""
         }
       ],
-      "title": "Diagrama de Gantt de los Servicios del Empleado 0000",
+      "title": "Horario de cada empleado",
       "transformations": [
         {
           "id": "extractFields",
           "options": {
             "delimiter": ",",
+            "format": "auto",
+            "keepTime": false,
             "replace": true,
             "source": "result"
           }
@@ -218,7 +219,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 25
       },
       "id": 4,
       "options": {
@@ -329,7 +330,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 36
       },
       "id": 2,
       "options": {
@@ -439,7 +440,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 46
       },
       "id": 3,
       "options": {
@@ -506,13 +507,13 @@
     "list": []
   },
   "time": {
-    "from": "2024-06-09T11:00:00.000Z",
-    "to": "2024-06-10T01:00:00.000Z"
+    "from": "2024-06-09T05:00:00.000Z",
+    "to": "2024-06-09T13:00:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 9,
+  "version": 12,
   "weekStart": ""
 }

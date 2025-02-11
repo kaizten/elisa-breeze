@@ -223,47 +223,14 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 21,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
             },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "dash": [
-                0,
-                10
-              ],
-              "fill": "dot"
-            },
-            "lineWidth": 2,
-            "pointSize": 7,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -290,17 +257,16 @@
       },
       "id": 1,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "showHeader": true
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -312,7 +278,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$map(services, function($service) {\n  [\n    {\"time\": $service.startTime, \"employees\": $service.employees},\n    {\"time\": $service.finishTime, \"employees\": -$service.employees}\n  ]\n})\n",
+              "jsonPath": "services.{\n  \"startTime\": startTime,\n  \"finishTime\": finishTime,\n  \"code\": code,\n  \"role\": role,\n  \"employees\": employees,\n  \"serviceTime\": serviceTime,\n  \"duration\": $fromMillis($toMillis(finishTime) - $toMillis(startTime)),\n  \"startMillis\": $toMillis(startTime),\n  \"finishMillis\": $toMillis(finishTime)\n}\n",
               "language": "jsonata",
               "name": "",
               "type": "number"
@@ -337,7 +303,7 @@
           }
         }
       ],
-      "type": "timeseries"
+      "type": "table"
     },
     {
       "datasource": {
@@ -1005,6 +971,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 33,
+  "version": 34,
   "weekStart": ""
 }
