@@ -278,7 +278,7 @@
           },
           "fields": [
             {
-              "jsonPath": "services.{\n  \"startTime\": startTime,\n  \"finishTime\": finishTime,\n  \"code\": code,\n  \"role\": role,\n  \"employees\": employees,\n  \"serviceTime\": serviceTime,\n  \"duration\": $fromMillis($toMillis(finishTime) - $toMillis(startTime)),\n  \"startMillis\": $toMillis(startTime),\n  \"finishMillis\": $toMillis(finishTime)\n}\n",
+              "jsonPath": "services.{\n  \"startTime\": startTime,\n  \"finishTime\": finishTime,\n  \"code\": code,\n  \"role\": role,\n  \"employees\": employees,\n  \"serviceTime\": $sum([$number($match($.serviceTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($.serviceTime, /(\\d+)M/)[0].groups[0])]),\n  \"duration\": $fromMillis($toMillis(finishTime) - $toMillis(startTime)),\n  \"startMillis\": $toMillis(startTime),\n  \"finishMillis\": $toMillis(finishTime)\n}\n",
               "language": "jsonata",
               "name": "",
               "type": "number"
@@ -370,7 +370,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "auto",
         "showValue": "auto",
@@ -413,21 +413,6 @@
         }
       ],
       "title": "Empleados por Servicio",
-      "transformations": [
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "code": {
-                "aggregations": []
-              },
-              "role": {
-                "aggregations": []
-              }
-            }
-          }
-        }
-      ],
       "type": "barchart"
     },
     {
@@ -971,6 +956,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 34,
+  "version": 35,
   "weekStart": ""
 }

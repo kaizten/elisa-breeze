@@ -29,8 +29,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "green",
-            "mode": "shades"
+            "fixedColor": "blue",
+            "mode": "palette-classic"
           },
           "custom": {
             "hideFrom": {
@@ -44,7 +44,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 24,
         "x": 0,
         "y": 0
@@ -112,10 +112,23 @@
         "type": "marcusolsson-json-datasource",
         "uid": "decn0yr722134a"
       },
+      "description": "Resumen de cuando hay y cuando no hay servicios",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "blue",
+            "mode": "shades"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineWidth": 0,
+            "spanNulls": false
           },
           "mappings": [],
           "thresholds": {
@@ -135,14 +148,123 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 15,
+        "h": 12,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 11
+      },
+      "id": 8,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "never",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "decn0yr722134a"
+          },
+          "fields": [
+            {
+              "jsonPath": "$reduce(dates.employees, function($acc, $e) {\n  $append($acc, $map($e.services, function($s) {\n    {\n      \"Servicios\": $s.code,\n      \"start_time\": $s.startTime,\n      \"finish_time\": $s.finishTime\n    }\n  }))\n}, [])\n\n",
+              "language": "jsonata"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Servicios a lo largo del tiempo",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "start_time"
+              },
+              {
+                "destinationType": "time",
+                "targetField": "finish_time"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "decn0yr722134a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 23
       },
       "id": 6,
       "options": {
         "colorByField": "employee_code",
+        "colors": [
+          {
+            "color": "green",
+            "text": ""
+          },
+          {
+            "color": "#5794F2",
+            "text": ""
+          }
+        ],
         "endField": "finish_time",
         "labelFields": [
           "service_code"
@@ -187,92 +309,6 @@
         }
       ],
       "type": "marcusolsson-gantt-panel"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "decn0yr722134a"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 24,
-        "x": 0,
-        "y": 25
-      },
-      "id": 4,
-      "options": {
-        "displayMode": "gradient",
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": true
-        },
-        "showUnfilled": true,
-        "sizing": "manual",
-        "valueMode": "color"
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "decn0yr722134a"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.dates.employees.code",
-              "language": "jsonata"
-            },
-            {
-              "jsonPath": "$.dates.employees.indicators.services",
-              "language": "jsonata",
-              "name": ""
-            }
-          ],
-          "method": "GET",
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": ""
-        }
-      ],
-      "title": "Número de servicios realizados por empleado",
-      "type": "bargauge"
     },
     {
       "datasource": {
@@ -392,6 +428,185 @@
         "type": "marcusolsson-json-datasource",
         "uid": "decn0yr722134a"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 4,
+      "options": {
+        "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "decn0yr722134a"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.dates.employees.code",
+              "language": "jsonata"
+            },
+            {
+              "jsonPath": "$.dates.employees.indicators.services",
+              "language": "jsonata",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Número de servicios realizados por empleado",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "decn0yr722134a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 57
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "decn0yr722134a"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.dates[].employees[].{\n    \"Empleado\": $.code,\n    \"Tiempo Descando\": $sum([$number($match($.indicators.breakTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($.indicators.breakTime, /(\\d+)M/)[0].groups[0])])\n}",
+              "language": "jsonata",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Tiempo de Descanso por Empleado (en Min)",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "decn0yr722134a"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -440,7 +655,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 68
       },
       "id": 3,
       "options": {
@@ -508,12 +723,12 @@
   },
   "time": {
     "from": "2024-06-09T05:00:00.000Z",
-    "to": "2024-06-09T13:00:00.000Z"
+    "to": "2024-06-10T00:30:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 12,
+  "version": 16,
   "weekStart": ""
 }
