@@ -26,11 +26,11 @@
         "type": "marcusolsson-json-datasource",
         "uid": "eec4uy21ivb40c"
       },
-      "description": "Indicador de número de servicios y número de empleados totales que hay",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "fixedColor": "blue",
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
@@ -51,34 +51,27 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 10,
+      "id": 11,
       "options": {
-        "displayMode": "lcd",
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "horizontal",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
           "fields": "",
-          "values": true
+          "values": false
         },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": false
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -90,7 +83,7 @@
           },
           "fields": [
             {
-              "jsonPath": "{\n  \"Servicios\": $count(services),\n  \"Empleados\": $count(employees.individuals)\n}",
+              "jsonPath": "{\n  \"Empleados\": $count(employees.individuals)\n}",
               "language": "jsonata"
             }
           ],
@@ -100,7 +93,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Nº de servicios y nº de empleados totales",
+      "title": "Números de Empleados",
       "transformations": [
         {
           "id": "extractFields",
@@ -111,7 +104,95 @@
           }
         }
       ],
-      "type": "bargauge"
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "eec4uy21ivb40c"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": false
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "eec4uy21ivb40c"
+          },
+          "fields": [
+            {
+              "jsonPath": "{\n  \"Servicios\": $count(services)\n}",
+              "language": "jsonata"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Número de Servicios",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
     },
     {
       "datasource": {
@@ -320,7 +401,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Nº Empleados",
             "axisPlacement": "auto",
             "fillOpacity": 80,
             "gradientMode": "scheme",
@@ -958,6 +1039,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 36,
+  "version": 38,
   "weekStart": ""
 }
