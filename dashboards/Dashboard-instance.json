@@ -313,7 +313,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "blue",
+            "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
@@ -322,7 +323,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "fillOpacity": 80,
-            "gradientMode": "none",
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -363,7 +364,7 @@
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
-        "colorByField": "role",
+        "colorByField": "code",
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
@@ -621,7 +622,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "fixedColor": "semi-dark-green",
+            "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
@@ -678,7 +680,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "auto",
         "showValue": "auto",
@@ -890,7 +892,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "mapping": "auto",
         "series": [
@@ -956,6 +958,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 35,
+  "version": 36,
   "weekStart": ""
 }
