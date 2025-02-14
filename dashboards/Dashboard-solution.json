@@ -52,20 +52,23 @@
       "id": 1,
       "options": {
         "displayLabels": [
-          "percent",
-          "name"
+          "name",
+          "value"
         ],
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
         },
         "pieType": "pie",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/^absolute$/",
           "values": true
         },
         "tooltip": {
@@ -84,7 +87,7 @@
           },
           "fields": [
             {
-              "jsonPath": "[\n  {\n    \"type\": \"Cubiertos\",\n    \"percentage\": $.indicators.coveredServices.percentage\n  },\n  {\n    \"type\": \"No Cubiertos\",\n    \"percentage\": 100 - $.indicators.coveredServices.percentage\n  }\n]\n",
+              "jsonPath": "[\n  {\n    \"type\": \"Servicios Cubiertos\",\n    \"absolute\": $.indicators.coveredServices.absolute\n  },\n  {\n    \"type\": \"Servicios No Cubiertos\",\n    \"absolute\": $.indicators.uncoveredServices.absolute\n    \n  }\n]\n",
               "language": "jsonata"
             }
           ],
@@ -94,7 +97,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Servicios cubiertos",
+      "title": "Servicios",
       "transformations": [
         {
           "id": "extractFields",
@@ -105,6 +108,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "piechart"
     },
     {
@@ -227,6 +231,96 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 9,
+      "options": {
+        "colorByField": "employee_code",
+        "endField": "finish_time",
+        "showYAxis": true,
+        "sortBy": "startTime",
+        "sortOrder": "asc",
+        "startField": "start_time",
+        "textField": "employee_code"
+      },
+      "pluginVersion": "0.8.1",
+      "targets": [
+        {
+          "body": "",
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "decn0yr722134a"
+          },
+          "fields": [
+            {
+              "jsonPath": "$reduce(dates.employees, function($acc, $e) {\n    $append($acc, {\n        \"employee_code\": $e.code,\n        \"start_time\": $e.indicators.startingTime,\n        \"finish_time\": $e.indicators.finishingTime\n    })\n}, [])",
+              "language": "jsonata"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Jornada por Empleado",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "start_time"
+              },
+              {
+                "destinationType": "time",
+                "targetField": "finish_time"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "marcusolsson-gantt-panel"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "decn0yr722134a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "fixed"
           },
           "mappings": [],
@@ -250,21 +344,12 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 36
       },
       "id": 6,
       "options": {
         "colorByField": "employee_code",
-        "colors": [
-          {
-            "color": "green",
-            "text": ""
-          },
-          {
-            "color": "#5794F2",
-            "text": ""
-          }
-        ],
+        "colors": [],
         "endField": "finish_time",
         "labelFields": [
           "service_code"
@@ -295,7 +380,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Horario de cada empleado",
+      "title": "Servicios realizados por Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -308,6 +393,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "marcusolsson-gantt-panel"
     },
     {
@@ -324,7 +410,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Productividad (%)",
             "axisPlacement": "auto",
             "fillOpacity": 80,
             "gradientMode": "hue",
@@ -366,20 +452,20 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 49
       },
       "id": 2,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
-        "colorByField": "Productividad",
+        "colorByField": "Código de Empleado",
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "orientation": "auto",
         "showValue": "auto",
@@ -405,7 +491,7 @@
             {
               "jsonPath": "$.dates[].employees[].indicators.productivityUsedTime",
               "language": "jsonata",
-              "name": "Productividad",
+              "name": "Código de Empleado",
               "type": "number"
             },
             {
@@ -455,7 +541,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 59
       },
       "id": 4,
       "options": {
@@ -541,7 +627,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 57
+        "y": 70
       },
       "id": 7,
       "options": {
@@ -655,7 +741,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 68
+        "y": 81
       },
       "id": 3,
       "options": {
@@ -729,6 +815,6 @@
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 16,
+  "version": 22,
   "weekStart": ""
 }

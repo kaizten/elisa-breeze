@@ -394,7 +394,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "semi-dark-blue",
             "mode": "shades"
           },
           "custom": {
@@ -452,16 +452,18 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
+        "text": {},
         "tooltip": {
           "hideZeros": false,
           "mode": "single",
           "sort": "none"
         },
+        "xField": "code",
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
@@ -480,7 +482,7 @@
             {
               "jsonPath": "$.services[*].employees",
               "language": "jsonpath",
-              "name": ""
+              "name": "Código de Servicio"
             },
             {
               "jsonPath": "$.services[*].role",
@@ -594,7 +596,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "fixedColor": "dark-orange",
+            "mode": "continuous-BlPu"
           },
           "fieldMinMax": false,
           "mappings": [],
@@ -624,6 +627,18 @@
                 "value": {
                   "mode": "palette-classic-by-name"
                 }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duración"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
               }
             ]
           }
@@ -670,7 +685,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])])\n    }\n})",
+              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60*60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])*60])\n    }\n})",
               "language": "jsonata",
               "name": ""
             }
@@ -682,7 +697,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Duración Servicios (en Minutos)",
+      "title": "Duración Servicios ",
       "transformations": [
         {
           "id": "extractFields",
@@ -693,6 +708,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "bargauge"
     },
     {
@@ -703,41 +719,26 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "semi-dark-green",
-            "mode": "shades"
+            "mode": "continuous-BlPu"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
+          "mappings": [
+            {
+              "options": {
+                "pattern": "^RAMP_MANAGER$",
+                "result": {
+                  "index": 0,
+                  "text": "RAMP"
+                }
+              },
+              "type": "regex"
             }
-          },
-          "mappings": [],
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -745,37 +746,29 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
+        "h": 12,
+        "w": 14,
+        "x": 6,
         "y": 64
       },
       "id": 6,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "colorByField": "code",
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        },
-        "xField": "code",
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "addUrl": false,
+        "cellPadding": 10,
+        "cellSize": 50,
+        "defaultColor": "#E6E6E6",
+        "inputList": false,
+        "nullColor": "#E6E6E6",
+        "sourceField": "role",
+        "sourceText": "Rol",
+        "targetField": "code",
+        "targetText": "Empleado",
+        "txtLength": 50,
+        "txtSize": 15,
+        "valueField": "value",
+        "valueText": "Valor"
       },
-      "pluginVersion": "11.5.0",
+      "pluginVersion": "1.0.10",
       "targets": [
         {
           "cacheDurationSeconds": 300,
@@ -785,7 +778,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$map(employees.individuals, function($v) {\n  {\n    \"code\": $v.code, \n    \"role_count\": $count($v.roles)\n  }\n})",
+              "jsonPath": "$map(employees.individuals, function($v) {\n  $map($v.roles, function($role) {\n    {\"code\":$v.code, \"role\": $role, \"value\": 1}\n  })\n}) ~> $reduce(function($acc, $v) { $acc ~> $append($v) }, [])\n",
               "language": "jsonata"
             }
           ],
@@ -795,18 +788,20 @@
           "urlPath": ""
         }
       ],
-      "title": "Número de roles por empleado",
+      "title": "Roles de cada Empleado",
       "transformations": [
         {
           "id": "extractFields",
           "options": {
             "delimiter": ",",
+            "keepTime": false,
             "replace": true,
             "source": "result"
           }
         }
       ],
-      "type": "barchart"
+      "transparent": true,
+      "type": "esnet-matrix-panel"
     },
     {
       "datasource": {
@@ -832,13 +827,26 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Descanso entre jornadas"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 74
+        "y": 76
       },
       "id": 5,
       "options": {
@@ -847,23 +855,23 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "maxVizHeight": 300,
         "minVizHeight": 16,
-        "minVizWidth": 8,
+        "minVizWidth": 56,
         "namePlacement": "auto",
         "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^timeBetweenWorkingDays$/",
+          "fields": "/^Descanso entre jornadas$/",
           "values": true
         },
         "showUnfilled": true,
         "sizing": "auto",
-        "valueMode": "color"
+        "valueMode": "text"
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -871,12 +879,8 @@
           "cacheDurationSeconds": 300,
           "fields": [
             {
-              "jsonPath": "$.employees.individuals[*].timeBetweenWorkingDays"
-            },
-            {
-              "jsonPath": "$.employees.individuals[*].code",
-              "language": "jsonpath",
-              "name": ""
+              "jsonPath": "$map($.employees.individuals, function($employee) {\n    {\n        \"Empleados\": $employee.code,\n        \"Descanso entre jornadas\": $sum([\n            $number($match($employee.timeBetweenWorkingDays, /(\\d+)H/)[0].groups[0]) * 60 * 60,\n            $number($match($employee.timeBetweenWorkingDays, /(\\d+)M/)[0].groups[0]) * 60\n        ])\n    }\n})",
+              "language": "jsonata"
             }
           ],
           "method": "GET",
@@ -888,27 +892,15 @@
       "title": "Tiempo de descanso entre días de trabajo",
       "transformations": [
         {
-          "id": "formatString",
+          "id": "extractFields",
           "options": {
-            "outputFormat": "Substring",
-            "stringField": "timeBetweenWorkingDays",
-            "substringEnd": 4,
-            "substringStart": 2
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "number",
-                "targetField": "timeBetweenWorkingDays"
-              }
-            ],
-            "fields": {}
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
           }
         }
       ],
+      "transparent": true,
       "type": "bargauge"
     },
     {
@@ -928,7 +920,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 30,
+            "fillOpacity": 43,
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -938,7 +930,7 @@
             "pointSize": {
               "fixed": 7
             },
-            "pointStrokeWidth": 2,
+            "pointStrokeWidth": 4,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -959,13 +951,26 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duración"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 85
+        "y": 87
       },
       "id": 4,
       "options": {
@@ -977,7 +982,20 @@
         },
         "mapping": "auto",
         "series": [
-          {}
+          {
+            "x": {
+              "matcher": {
+                "id": "byName",
+                "options": "Número de Empleados"
+              }
+            },
+            "y": {
+              "matcher": {
+                "id": "byName",
+                "options": "Duración"
+              }
+            }
+          }
         ],
         "tooltip": {
           "hideZeros": false,
@@ -995,10 +1013,11 @@
           },
           "fields": [
             {
-              "jsonPath": "$.services[*].employees"
+              "jsonPath": "$.services[*].employees",
+              "name": "Número de Empleados"
             },
             {
-              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])])\n    }\n})",
+              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60 *60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])*60])\n    }\n})",
               "language": "jsonata",
               "name": ""
             }
@@ -1018,6 +1037,17 @@
             "keepTime": false,
             "replace": false,
             "source": "result1"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "result1": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
           }
         }
       ],
@@ -1039,6 +1069,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 38,
+  "version": 47,
   "weekStart": ""
 }
