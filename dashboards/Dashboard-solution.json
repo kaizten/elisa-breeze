@@ -231,6 +231,197 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "blue",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Número de Servicios",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 17,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "symlog"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "count (sum)"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "count (sum)"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Servicios"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "decn0yr722134a"
+          },
+          "fields": [
+            {
+              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.services, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1},\n                {\"time\": $s.finishTime, \"count\": 0}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
+              "language": "jsonata"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Cantidad de Servicios a lo largo del tiempo",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "time"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "count": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              },
+              "cumulative sum(count)": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              },
+              "time": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "decn0yr722134a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "thresholds"
           },
           "mappings": [],
@@ -250,7 +441,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 35
       },
       "id": 9,
       "options": {
@@ -273,7 +464,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$reduce(dates.employees, function($acc, $e) {\n    $append($acc, {\n        \"employee_code\": $e.code,\n        \"start_time\": $e.indicators.startingTime,\n        \"finish_time\": $e.indicators.finishingTime\n    })\n}, [])",
+              "jsonPath": "$reduce(dates.employees, function($acc, $e) {\n    $append($acc, {\n        \"employee_code\": $e.code,\n        \"start_time\": $e.indicators.startTime,\n        \"finish_time\": $e.indicators.finishTime\n    })\n}, [])",
               "language": "jsonata"
             }
           ],
@@ -344,7 +535,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 48
       },
       "id": 6,
       "options": {
@@ -452,7 +643,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 49
+        "y": 61
       },
       "id": 2,
       "options": {
@@ -518,7 +709,28 @@
         "defaults": {
           "color": {
             "fixedColor": "dark-green",
-            "mode": "fixed"
+            "mode": "continuous-BlPu"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Servicios",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -527,46 +739,55 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Servicios"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Empleados"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 59
+        "y": 71
       },
       "id": 4,
       "options": {
-        "displayMode": "gradient",
+        "barRadius": 0.1,
+        "barWidth": 0.93,
+        "colorByField": "result1",
+        "fullHighlight": false,
+        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": true
+        "orientation": "vertical",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
         },
-        "showUnfilled": true,
-        "sizing": "manual",
-        "valueMode": "color"
+        "xField": "Empleado",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -594,7 +815,34 @@
         }
       ],
       "title": "Número de servicios realizados por empleado",
-      "type": "bargauge"
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "result0": "Empleado",
+              "result1": "Servicios"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Servicios"
+              }
+            ]
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "barchart"
     },
     {
       "datasource": {
@@ -613,21 +861,30 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tiempo Descando"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 70
+        "y": 82
       },
       "id": 7,
       "options": {
@@ -664,7 +921,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$.dates[].employees[].{\n    \"Empleado\": $.code,\n    \"Tiempo Descando\": $sum([$number($match($.indicators.breakTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($.indicators.breakTime, /(\\d+)M/)[0].groups[0])])\n}",
+              "jsonPath": "$.dates[].employees[].{\n    \"Empleado\": $.code,\n    \"Tiempo Descando\": $sum([$number($match($.indicators.breakTime, /(\\d+)H/)[0].groups[0]) * 60*60, $number($match($.indicators.breakTime, /(\\d+)M/)[0].groups[0])*60])\n}",
               "language": "jsonata",
               "name": ""
             }
@@ -675,7 +932,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Tiempo de Descanso por Empleado (en Min)",
+      "title": "Tiempo de Descanso por Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -727,26 +984,47 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tiempo Usado"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tiempo Disponible"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 81
+        "y": 93
       },
       "id": 3,
       "options": {
         "barRadius": 0,
-        "barWidth": 0.97,
+        "barWidth": 0.94,
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
@@ -757,12 +1035,13 @@
         },
         "orientation": "auto",
         "showValue": "auto",
-        "stacking": "none",
+        "stacking": "normal",
         "tooltip": {
           "hideZeros": false,
           "mode": "single",
           "sort": "none"
         },
+        "xField": "Empleado",
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
@@ -776,7 +1055,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$.dates[].employees[].{\n    \"Empleado\": $.code,\n    \"Tiempo Usado\": $sum([$number($match($.indicators.usedTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($.indicators.usedTime, /(\\d+)M/)[0].groups[0])]),\n    \"Tiempo Disponible\": $sum([$number($match($.indicators.availableTime, /(\\d+)H/)[0].groups[0]) * 60, $number($match($.indicators.availableTime, /(\\d+)M/)[0].groups[0])])\n}",
+              "jsonPath": "$.dates[].employees[].{\n    \"Empleado\": $.code,\n    \"Tiempo Usado\": $sum([$number($match($.indicators.usedTime, /(\\d+)H/)[0].groups[0]) * 60*60, $number($match($.indicators.usedTime, /(\\d+)M/)[0].groups[0])*60]),\n    \"Tiempo Disponible\": $sum([$number($match($.indicators.availableTime, /(\\d+)H/)[0].groups[0]) * 60*60, $number($match($.indicators.availableTime, /(\\d+)M/)[0].groups[0])*60])\n}",
               "language": "jsonata"
             }
           ],
@@ -786,7 +1065,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Tiempo usado y disponible por empleado (en Minutos)",
+      "title": "Tiempo usado y disponible por Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -797,6 +1076,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "barchart"
     }
   ],
@@ -809,12 +1089,12 @@
   },
   "time": {
     "from": "2024-06-09T05:00:00.000Z",
-    "to": "2024-06-10T00:30:00.000Z"
+    "to": "2024-06-10T00:00:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 22,
+  "version": 29,
   "weekStart": ""
 }
