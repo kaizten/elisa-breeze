@@ -663,6 +663,28 @@
             "fixedColor": "dark-orange",
             "mode": "continuous-BlPu"
           },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
           "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
@@ -671,10 +693,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -716,28 +734,31 @@
       },
       "id": 3,
       "options": {
-        "displayMode": "gradient",
+        "barRadius": 0.05,
+        "barWidth": 0.96,
+        "colorByField": "Duración",
+        "fullHighlight": false,
+        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": false
         },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": true
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "text": {
+          "valueSize": 40
         },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "text"
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "Servicio",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -773,7 +794,7 @@
         }
       ],
       "transparent": true,
-      "type": "bargauge"
+      "type": "barchart"
     },
     {
       "datasource": {
@@ -1133,6 +1154,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 51,
+  "version": 53,
   "weekStart": ""
 }
