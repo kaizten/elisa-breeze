@@ -663,7 +663,7 @@
         "stacking": "none",
         "tooltip": {
           "hideZeros": false,
-          "mode": "single",
+          "mode": "none",
           "sort": "none"
         },
         "xField": "Empleados",
@@ -698,6 +698,20 @@
         }
       ],
       "title": "Productividad de cada empleado",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Código de Empleado"
+              }
+            ]
+          }
+        }
+      ],
       "type": "barchart"
     },
     {
@@ -941,6 +955,18 @@
             "replace": true,
             "source": "result"
           }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Tiempo Descando"
+              }
+            ]
+          }
         }
       ],
       "type": "bargauge"
@@ -1095,6 +1121,6 @@
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 29,
+  "version": 30,
   "weekStart": ""
 }
