@@ -221,6 +221,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "state-timeline"
     },
     {
@@ -231,8 +232,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
-            "mode": "shades"
+            "mode": "continuous-BlPu"
           },
           "custom": {
             "axisBorderShow": false,
@@ -243,23 +243,19 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 17,
-            "gradientMode": "none",
+            "fillOpacity": 26,
+            "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
+            "lineInterpolation": "stepAfter",
             "lineWidth": 1,
-            "pointSize": 4,
+            "pointSize": 5,
             "scaleDistribution": {
-              "log": 2,
-              "type": "symlog"
+              "type": "linear"
             },
             "showPoints": "always",
             "spanNulls": false,
@@ -286,52 +282,15 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "count (sum)"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (sum)"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Servicios"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 13,
         "w": 24,
         "x": 0,
         "y": 23
       },
-      "id": 10,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -355,7 +314,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.services, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1},\n                {\"time\": $s.finishTime, \"count\": 0}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
+              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.services, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1},\n                {\"time\": $s.finishTime, \"count\": -1}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
               "language": "jsonata"
             }
           ],
@@ -388,26 +347,29 @@
           }
         },
         {
-          "id": "groupBy",
+          "id": "sortBy",
           "options": {
-            "fields": {
-              "count": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "cumulative sum(count)": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "time": {
-                "aggregations": [],
-                "operation": "groupby"
+            "fields": {},
+            "sort": [
+              {
+                "field": "time"
               }
-            }
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Número de Servicios",
+            "cumulative": {
+              "field": "count",
+              "reducer": "sum"
+            },
+            "mode": "cumulativeFunctions",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
           }
         }
       ],
@@ -441,7 +403,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 36
       },
       "id": 9,
       "options": {
@@ -535,7 +497,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 49
       },
       "id": 6,
       "options": {
@@ -643,7 +605,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 62
       },
       "id": 2,
       "options": {
@@ -712,6 +674,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "barchart"
     },
     {
@@ -776,7 +739,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 72
       },
       "id": 4,
       "options": {
@@ -898,7 +861,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 82
+        "y": 83
       },
       "id": 7,
       "options": {
@@ -969,6 +932,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "bargauge"
     },
     {
@@ -1045,7 +1009,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 93
+        "y": 94
       },
       "id": 3,
       "options": {
@@ -1121,6 +1085,6 @@
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 30,
+  "version": 33,
   "weekStart": ""
 }

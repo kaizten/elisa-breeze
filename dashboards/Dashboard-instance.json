@@ -293,6 +293,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "piechart"
     },
     {
@@ -304,7 +305,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "semi-dark-green",
+            "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
@@ -315,17 +317,20 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
+            "fillOpacity": 36,
+            "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
+            "lineInterpolation": "stepAfter",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 9,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -394,7 +399,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$reduce(services[], function($acc, $e) {\n        $append($acc, $map($e, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": $s.employees},\n                {\"time\": $s.finishTime, \"count\": 0}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
+              "jsonPath": "$reduce(services[], function($acc, $e) {\n        $append($acc, $map($e, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": $s.employees},\n                {\"time\": $s.finishTime, \"count\": -$s.employees}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
               "language": "jsonata",
               "name": "",
               "type": "number"
@@ -431,23 +436,33 @@
           }
         },
         {
-          "id": "groupBy",
+          "id": "sortBy",
           "options": {
-            "fields": {
-              "count": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "time": {
-                "aggregations": [],
-                "operation": "groupby"
+            "fields": {},
+            "sort": [
+              {
+                "field": "time"
               }
-            }
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Número de Empleados",
+            "cumulative": {
+              "field": "count",
+              "reducer": "sum"
+            },
+            "mode": "cumulativeFunctions",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
           }
         }
       ],
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -561,6 +576,7 @@
         }
       ],
       "title": "Empleados por Servicio",
+      "transparent": true,
       "type": "barchart"
     },
     {
@@ -600,7 +616,12 @@
       "id": 7,
       "options": {
         "colorByField": "role",
-        "colors": [],
+        "colors": [
+          {
+            "color": "green",
+            "text": ""
+          }
+        ],
         "endField": "finishTime",
         "labelFields": [],
         "showYAxis": true,
@@ -648,7 +669,8 @@
           "urlPath": ""
         }
       ],
-      "title": "Diagrama de Gantt de servicios de cada rol",
+      "title": "Diagrama de Gantt de servicios necesitados de cada rol",
+      "transparent": true,
       "type": "marcusolsson-gantt-panel"
     },
     {
@@ -819,6 +841,15 @@
             "mode": "continuous-BlPu"
           },
           "mappings": [
+            {
+              "options": {
+                "RAMP_MANAGER": {
+                  "index": 1,
+                  "text": "RAMP"
+                }
+              },
+              "type": "value"
+            },
             {
               "options": {
                 "pattern": "^RAMP_MANAGER$",
@@ -1197,6 +1228,7 @@
           }
         }
       ],
+      "transparent": true,
       "type": "xychart"
     }
   ],
@@ -1215,6 +1247,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 56,
+  "version": 61,
   "weekStart": ""
 }
