@@ -1,3 +1,4 @@
+
 {
   "annotations": {
     "list": [
@@ -473,17 +474,17 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "semi-dark-blue",
+            "fixedColor": "dark-blue",
             "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Nº Empleados",
+            "axisLabel": "Número de Empleados",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "scheme",
+            "fillOpacity": 60,
+            "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -522,16 +523,16 @@
       },
       "id": 9,
       "options": {
-        "barRadius": 0,
+        "barRadius": 0.05,
         "barWidth": 0.97,
-        "colorByField": "code",
+        "colorByField": "Número de Empleados",
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "auto",
         "showValue": "auto",
@@ -561,12 +562,7 @@
             {
               "jsonPath": "$.services[*].employees",
               "language": "jsonpath",
-              "name": "Código de Servicio"
-            },
-            {
-              "jsonPath": "$.services[*].role",
-              "language": "jsonpath",
-              "name": ""
+              "name": "Número de Empleados"
             }
           ],
           "method": "GET",
@@ -576,6 +572,20 @@
         }
       ],
       "title": "Empleados por Servicio",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Número de Empleados"
+              }
+            ]
+          }
+        }
+      ],
       "transparent": true,
       "type": "barchart"
     },
@@ -884,9 +894,9 @@
         "addUrl": false,
         "cellPadding": 10,
         "cellSize": 50,
-        "defaultColor": "#E6E6E6",
+        "defaultColor": "transparent",
         "inputList": false,
-        "nullColor": "#E6E6E6",
+        "nullColor": "transparent",
         "sourceField": "role",
         "sourceText": "Rol",
         "targetField": "code",
@@ -989,18 +999,6 @@
                 "value": "dthms"
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Descanso entre jornadas"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Código de Empleado"
-              }
-            ]
           }
         ]
       },
@@ -1021,7 +1019,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "auto",
         "showValue": "auto",
@@ -1031,7 +1029,7 @@
         },
         "tooltip": {
           "hideZeros": false,
-          "mode": "none",
+          "mode": "multi",
           "sort": "none"
         },
         "xField": "Empleados",
@@ -1160,6 +1158,12 @@
         "mapping": "auto",
         "series": [
           {
+            "frame": {
+              "matcher": {
+                "id": "byIndex",
+                "options": 0
+              }
+            },
             "x": {
               "matcher": {
                 "id": "byName",
@@ -1247,6 +1251,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 61,
+  "version": 63,
   "weekStart": ""
 }

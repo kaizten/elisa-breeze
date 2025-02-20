@@ -611,21 +611,21 @@
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
-        "colorByField": "Código de Empleado",
+        "colorByField": "Productividad",
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
         "tooltip": {
           "hideZeros": false,
-          "mode": "none",
+          "mode": "multi",
           "sort": "none"
         },
         "xField": "Empleados",
@@ -644,7 +644,7 @@
             {
               "jsonPath": "$.dates[].employees[].indicators.productivityUsedTime",
               "language": "jsonata",
-              "name": "Código de Empleado",
+              "name": "Productividad",
               "type": "number"
             },
             {
@@ -668,7 +668,7 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Código de Empleado"
+                "field": "Productividad"
               }
             ]
           }
@@ -720,20 +720,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Servicios"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Empleados"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 11,
@@ -752,14 +739,14 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "vertical",
         "showValue": "auto",
         "stacking": "none",
         "tooltip": {
           "hideZeros": false,
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         },
         "xField": "Empleado",
@@ -829,7 +816,29 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "dark-green",
             "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 51,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -865,28 +874,28 @@
       },
       "id": 7,
       "options": {
-        "displayMode": "basic",
+        "barRadius": 0,
+        "barWidth": 0.93,
+        "colorByField": "Tiempo Descando",
+        "fullHighlight": false,
+        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": false
         },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
         "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": true
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
         },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
+        "xField": "Empleado",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -933,14 +942,14 @@
         }
       ],
       "transparent": true,
-      "type": "bargauge"
+      "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
         "uid": "decn0yr722134a"
       },
-      "description": "",
+      "description": "Ordenado por el Tiempo disponible de cada empleado",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1064,6 +1073,18 @@
             "replace": true,
             "source": "result"
           }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Tiempo Disponible"
+              }
+            ]
+          }
         }
       ],
       "transparent": true,
@@ -1085,6 +1106,6 @@
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 33,
+  "version": 35,
   "weekStart": ""
 }
