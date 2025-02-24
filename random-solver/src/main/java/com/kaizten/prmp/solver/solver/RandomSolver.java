@@ -3,6 +3,7 @@ package com.kaizten.prmp.solver.solver;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
@@ -22,7 +23,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
         PersonsReducedMobilitySolution bestSolution = null;
         double best_productivity = 0.0;
     
-        PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
+        //PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
             /*
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 // System.out.println("date: " + date);
@@ -44,29 +45,54 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
             //===========================================================================
             // Asignación de Servicio aleatorio a cada empleado sin orden ninguno
-            /* 
-            for (int i = 0; i < 200; i++) {
-
-                for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
-                    int randomService = (int) (Math.random() * this.optimizationProblem.getNumberOfServices());
-                    solution.assignServiceToEmployee(employee, randomService);
-                }
             
+            /*for (int i = 0; i < 200; i++) {
+                
+                // Crear una nueva solución para cada iteración
+                PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
+                Random rand = new Random();
+
+                for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
+                    int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
+
+                    // Lista de empleados disponibles
+                    List<Integer> availableEmployees = new ArrayList<>();
+                    for (int emp = 0; emp < this.optimizationProblem.getNumberOfEmployees(); emp++) {
+                        availableEmployees.add(emp);
+                    }
+
+                    // Asignar empleados al azar sin repetir, según lo requerido por el servicio
+                    for (int j = 0; j < requiredEmployees && !availableEmployees.isEmpty(); j++) {
+                        int randomIndex = rand.nextInt(availableEmployees.size());
+                        int selectedEmployee = availableEmployees.remove(randomIndex);
+                        solution.assignServiceToEmployee(selectedEmployee, service);
+                    }
+                }
+                
+                
                 int coveredServices = solution.getNumberOfCoveredServices(); // servicios cubiertos
                 int totalServices = this.optimizationProblem.getNumberOfServices(); // servicios totales
         
                 // Cálculo productividad
                 double productivity = (coveredServices * 100.0) / totalServices;
-        
                 if (productivity > best_productivity) {
                     bestSolution = solution;
                 }
+                
+                
             }*/
+                /*solution.evaluate(); 
+                double objectiveFunctionValue = solution.getObjectiveFunctionValue(0); 
+                System.out.println("Valor objetivo: " + objectiveFunctionValue);
+                if (objectiveFunctionValue > best_productivity) {
+                    bestSolution = solution;
+    }}*/
+    
             //===========================================================================
             
             //===========================================================================
             // Asignación de Servicio ordenados por fecha y hora aleatoriamente a cada empleado
-            /* 
+            /*
             for (int i = 0; i < 200; i++) {
                 List<Integer> servicesOrderedByTime = new ArrayList<>();
                 for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
@@ -78,10 +104,25 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 this.optimizationProblem.getServiceStartingTime(service).toEpochSecond()
                 ));
 
-                
+                // Crear una nueva solución para cada iteración
+                PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
+                Random rand = new Random();
+
                 for (int service : servicesOrderedByTime) {
-                    int randomEmployee = (int) (Math.random() * this.optimizationProblem.getNumberOfEmployees()); // Elegir aleatoriamente un empleado
-                    solution.assignServiceToEmployee(randomEmployee, service); // Asignar servicio al empleado
+                    int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
+
+                    // Lista de empleados disponibles
+                    List<Integer> availableEmployees = new ArrayList<>();
+                    for (int emp = 0; emp < this.optimizationProblem.getNumberOfEmployees(); emp++) {
+                        availableEmployees.add(emp);
+                    }
+
+                    // Asignar empleados al azar sin repetir, según lo requerido por el servicio
+                    for (int j = 0; j < requiredEmployees && !availableEmployees.isEmpty(); j++) {
+                        int randomIndex = rand.nextInt(availableEmployees.size());
+                        int selectedEmployee = availableEmployees.remove(randomIndex);
+                        solution.assignServiceToEmployee(selectedEmployee, service);
+                    }
                 }
 
                 int coveredServices = solution.getNumberOfCoveredServices();
@@ -97,8 +138,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
             //===========================================================================
 
             //===========================================================================
-            // Asignación de servicios ordenador por número de empleados necesitados, aleatoriamente a cada empleado
-            /* 
+            // Asignación de servicios ordenador por número de empleados necesitados, a cada empleado
+             /* 
             for (int i = 0; i < 200; i++) {
                 List<Integer> orderedServicesByNeededEmployees = new ArrayList<>();
                 for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
@@ -110,10 +151,24 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     this.optimizationProblem.getServiceRequiredEmployees(service)
                 ));
 
-                for (int k = 0; k < orderedServicesByNeededEmployees.size(); k++) {
-                    int serviceNum = orderedServicesByNeededEmployees.get(k);
-                    for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
-                        solution.assignServiceToEmployee(employee, serviceNum);
+                // Crear una nueva solución para cada iteración
+                PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
+                Random rand = new Random();
+
+                for (int service = 0; service < orderedServicesByNeededEmployees.size(); service++) {
+                    int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
+
+                    // Lista de empleados disponibles
+                    List<Integer> availableEmployees = new ArrayList<>();
+                    for (int emp = 0; emp < this.optimizationProblem.getNumberOfEmployees(); emp++) {
+                        availableEmployees.add(emp);
+                    }
+
+                    // Asignar empleados al azar sin repetir, según lo requerido por el servicio
+                    for (int j = 0; j < requiredEmployees && !availableEmployees.isEmpty(); j++) {
+                        int randomIndex = rand.nextInt(availableEmployees.size());
+                        int selectedEmployee = availableEmployees.remove(randomIndex);
+                        solution.assignServiceToEmployee(selectedEmployee, service);
                     }
                 }
 
@@ -132,9 +187,10 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
             //===========================================================================
 
-            // Adjudicar servicio aleatorio a cada empleado, ordenados por código
+            // Adjudicar servicio aleatorio a cada empleado, ordenados por código => de momento no funciona bien creo
             for (int iteration = 0; iteration < 200; iteration++) {
                 // Pasa los empleados a una lista
+                PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
                 List<Integer> employees = new ArrayList<>();
                 for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
                     employees.add(employee);
@@ -144,7 +200,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
                 // Asigna servicio aleatorio a cada empleado
                 for (int employee : employees) {
-                    int randomService = (int) (Math.random() * this.optimizationProblem.getNumberOfServices());
+                    Random rand = new Random();
+                    int randomService = rand.nextInt(this.optimizationProblem.getNumberOfServices());
                     solution.assignServiceToEmployee(employee, randomService);
                 }
 
@@ -159,7 +216,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 }
             }
 
+        
         return bestSolution;
           
-    }
+}
 }
