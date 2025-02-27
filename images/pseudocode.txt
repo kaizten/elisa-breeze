@@ -26,3 +26,16 @@ for (i = 1 : 200) {
 }
 
 devolver mejorSolución
+
+
+
+=============================
+
+solucion = vacía
+for (servicio : Servicio) {
+    asignar servicio a alguno de los empleados en esta franja de tiempo (cumpliendo con las restricciones de tiempo máximo, no solapamiento, etc.)
+    if (no hay empleado) {
+        ampliar el número de empleados en 1 unidad (con 8 horas de trabajo) y asignar
+    }
+}
+evaluar solucion -> % productividad + número de empleados + jornada de trabajo [hora comienzo, hora fin]
