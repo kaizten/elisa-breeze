@@ -11,12 +11,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.opt.evaluator.Evaluator;
 import com.kaizten.opt.evaluator.builder.EvaluatorBuilder;
 import com.kaizten.opt.solution.validation.KaiztenSolutionValidator;
+import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
-import com.kaizten.prmp.solver.solver.RandomSolver;
+import com.kaizten.prmp.solver.solver.RandomSolver2;
+import com.kaizten.prmp.solver.solver.RandomSolver3;
 import com.kaizten.utils.json.KaiztenJson;
 import com.kaizten.utils.net.KaiztenURI;
 
@@ -43,8 +45,10 @@ public class Main {
         final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instance-01.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
         System.out.println(optimizationProblem); 
-        RandomSolver solver = new RandomSolver(optimizationProblem);
-        PersonsReducedMobilitySolution solution = solver.run();
+        //AbstractSolver solver = new RandomSolver(optimizationProblem);
+        AbstractSolver solver = new RandomSolver2(optimizationProblem);
+        //AbstractSolver solver = new RandomSolver3(optimizationProblem);
+        PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
         System.out.println(solution);
         JSONObject output = null;
         int statusCode = 0;

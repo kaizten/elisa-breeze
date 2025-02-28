@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -51,23 +53,21 @@ public class RandomSolver2 extends AbstractSolver<PersonsReducedMobilitySolution
                 for (int service : servicesOrderedByTime) {
                     int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service); 
             
-                    // Lista de empleados
-                    List<Integer> availableEmployees = new ArrayList<>();
+                    // Set de empleados disponibles
+                    Set<Integer> availableEmployees = new HashSet<>();
                     for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) { 
                         availableEmployees.add(employee);
                     }
             
                     // Asignar empleados al azar según el número de empleados requeridos por el servicio
-                    int assignedEmployees = 0;
-                    while (assignedEmployees < requiredEmployees && !availableEmployees.isEmpty()) { 
+                    while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) { 
                         int randomIndex = rand.nextInt(availableEmployees.size()); 
-                        int selectedEmployee = availableEmployees.get(randomIndex); 
+                        Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
             
                         // Verifica si el empleado puede realizar el servicio sin solapamientos
                         if (solution.doesServiceFitEmployeeWorkingTime(selectedEmployee, service)) {
                             solution.assignServiceToEmployee(selectedEmployee, service);
                             availableEmployees.remove(randomIndex);
-                            assignedEmployees++;
                         } else {
                             // Si no puede, se elimina de la lista de empleados disponibles para el servicio
                             availableEmployees.remove(randomIndex);
@@ -89,7 +89,7 @@ public class RandomSolver2 extends AbstractSolver<PersonsReducedMobilitySolution
             // Guardamos el JSON en la ruta especificada
             try {
                 JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(bestSolution);
-                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solution2.json"), solutionJSON.toString());
+                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solution2.json"), solutionJSON);
             } catch (IOException e) {
                 System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
             }
