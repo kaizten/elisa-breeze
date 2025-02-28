@@ -2,9 +2,10 @@ package com.kaizten.prmp.solver.solver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -14,11 +15,11 @@ import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
 import com.kaizten.utils.io.KaiztenFile;
 
-public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution> {
+public class RandomSolver3 extends AbstractSolver<PersonsReducedMobilitySolution> {
 
     private PersonsReducedMobilityProblem optimizationProblem;
 
-    public RandomSolver(PersonsReducedMobilityProblem optimizationProblem) {
+    public RandomSolver3(PersonsReducedMobilityProblem optimizationProblem) {
         this.optimizationProblem = optimizationProblem;
     }
 
@@ -29,60 +30,70 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
         double best_productivity = 0.0;
 
 
-            // Asignación de Servicio aleatorio a cada empleado sin orden ninguno
-            
+            // Asignación de servicios ordenador por número de empleados necesitados, a cada empleado
+             
             for (int i = 0; i < 200; i++) {
-    
-                // Nueva solución por iteración
+                List<Integer> orderedServicesByNeededEmployees = new ArrayList<>();
+                for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
+                    orderedServicesByNeededEmployees.add(service);
+                }
+
+                // Ordenar los servicios por el número de empleados requeridos
+                orderedServicesByNeededEmployees.sort(Comparator.comparingInt(service -> 
+                    this.optimizationProblem.getServiceRequiredEmployees(service)
+                ));
+
+                // Crear una nueva solución para cada iteración
                 PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
                 Random rand = new Random();
-                
-                // Recorrer todos los servicios y saca el número de empleados requeridos
-                for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) { 
+
+                 // Recorrer todos los servicios y saca el número de empleados requeridos
+                 for (int service = 0; service < orderedServicesByNeededEmployees.size(); service++) {
                     int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service); 
             
-                    // Set de empleados disponibles
-                    Set<Integer> availableEmployees = new HashSet<>();
+                    // Lista de empleados
+                    List<Integer> availableEmployees = new ArrayList<>();
                     for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) { 
                         availableEmployees.add(employee);
                     }
             
                     // Asignar empleados al azar según el número de empleados requeridos por el servicio
-                    while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) { 
+                    int assignedEmployees = 0;
+                    while (assignedEmployees < requiredEmployees && !availableEmployees.isEmpty()) { 
                         int randomIndex = rand.nextInt(availableEmployees.size()); 
-                        Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
+                        int selectedEmployee = availableEmployees.get(randomIndex); 
             
                         // Verifica si el empleado puede realizar el servicio sin solapamientos
                         if (solution.doesServiceFitEmployeeWorkingTime(selectedEmployee, service)) {
                             solution.assignServiceToEmployee(selectedEmployee, service);
-                            availableEmployees.remove(selectedEmployee);
+                            availableEmployees.remove(randomIndex);
+                            assignedEmployees++;
                         } else {
                             // Si no puede, se elimina de la lista de empleados disponibles para el servicio
-                            availableEmployees.remove(selectedEmployee);
+                            availableEmployees.remove(randomIndex);
                         }
                     }
                 }
-                
-                // Calcular productividad
+
                 int coveredServices = solution.getNumberOfCoveredServices();
                 int totalServices = this.optimizationProblem.getNumberOfServices();
                 double productivity = (coveredServices * 100.0) / totalServices;
-            
+
                 if (productivity > best_productivity) {
                     bestSolution = solution;
-                    best_productivity = productivity;
                 }
             }
-            
-        
-        // Guardamos el JSON en la ruta especificada
-        try {
-            JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(bestSolution);
-            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solution1.json"), solutionJSON);
-        } catch (IOException e) {
-            System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
-        }
+
+            // Guardamos el JSON en la ruta especificada
+            try {
+                JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(bestSolution);
+                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solution3.json"), solutionJSON.toString());
+            } catch (IOException e) {
+                System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
+            }
+                
         
         return bestSolution;
-    }
+          
+}
 }
