@@ -314,7 +314,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.services, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1},\n                {\"time\": $s.finishTime, \"count\": -1}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
+              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.services, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1, \"code\": $s.code},\n                {\"time\": $s.finishTime, \"count\": -1, \"code\": $s.code}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
               "language": "jsonata"
             }
           ],
@@ -358,9 +358,187 @@
           }
         },
         {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "code": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "count": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              },
+              "time": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
           "id": "calculateField",
           "options": {
             "alias": "Número de Servicios",
+            "cumulative": {
+              "field": "count (mean)",
+              "reducer": "sum"
+            },
+            "mode": "cumulativeFunctions",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "decn0yr722134a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-green",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 18,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepAfter",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "decn0yr722134a"
+          },
+          "fields": [
+            {
+              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.indicators, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1, \"code\": $s.code},\n                {\"time\": $s.finishTime, \"count\": -1, \"code\": $s.code}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
+              "language": "jsonata"
+            }
+          ],
+          "hide": false,
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Empleados disponibles a lo largo del tiempo",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "replace": true,
+            "source": "result"
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "time"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "time"
+              }
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Numero de empleados",
             "cumulative": {
               "field": "count",
               "reducer": "sum"
@@ -403,7 +581,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 46
       },
       "id": 9,
       "options": {
@@ -497,7 +675,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 49
+        "y": 59
       },
       "id": 6,
       "options": {
@@ -605,7 +783,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 62
+        "y": 72
       },
       "id": 2,
       "options": {
@@ -726,7 +904,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 72
+        "y": 82
       },
       "id": 4,
       "options": {
@@ -870,7 +1048,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 83
+        "y": 93
       },
       "id": 7,
       "options": {
@@ -1018,7 +1196,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 94
+        "y": 104
       },
       "id": 3,
       "options": {
@@ -1106,6 +1284,6 @@
   "timezone": "browser",
   "title": "Dashboard-solutions",
   "uid": "eecmz1dw71zb4d",
-  "version": 35,
+  "version": 41,
   "weekStart": ""
 }
