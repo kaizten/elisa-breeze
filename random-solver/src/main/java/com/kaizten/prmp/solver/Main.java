@@ -17,6 +17,7 @@ import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
+import com.kaizten.prmp.solver.solver.RandomSolver;
 import com.kaizten.prmp.solver.solver.RandomSolver2;
 import com.kaizten.prmp.solver.solver.RandomSolver3;
 import com.kaizten.utils.json.KaiztenJson;
@@ -45,8 +46,8 @@ public class Main {
         final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instance-01.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
         System.out.println(optimizationProblem); 
-        //AbstractSolver solver = new RandomSolver(optimizationProblem);
-        AbstractSolver solver = new RandomSolver2(optimizationProblem);
+        AbstractSolver solver = new RandomSolver(optimizationProblem);
+        //AbstractSolver solver = new RandomSolver2(optimizationProblem);
         //AbstractSolver solver = new RandomSolver3(optimizationProblem);
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
         System.out.println(solution);
