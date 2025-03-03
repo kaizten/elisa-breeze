@@ -470,209 +470,12 @@
         "type": "marcusolsson-json-datasource",
         "uid": "eec4uy21ivb40c"
       },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-blue",
-            "mode": "shades"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Número de Empleados",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 36,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "stepAfter",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 2,
-            "pointSize": 9,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 0,
-        "y": 31
-      },
-      "id": 14,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "eec4uy21ivb40c"
-          },
-          "fields": [
-            {
-              "jsonPath": "$reduce(services, function($acc, $s) {\n    $append($acc,\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role}\n        ], function($v) { $v.role = \"AGENT\" })\n    )\n}, [])",
-              "language": "jsonata"
-            }
-          ],
-          "hide": false,
-          "method": "GET",
-          "queryParams": "",
-          "refId": "B",
-          "urlPath": ""
-        }
-      ],
-      "title": "Agentes necesitados",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [],
-            "replace": true,
-            "source": "result"
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "time"
-              }
-            ],
-            "fields": {}
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "field": "time"
-              }
-            ]
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Número de Empleados",
-            "cumulative": {
-              "field": "count",
-              "reducer": "sum"
-            },
-            "mode": "cumulativeFunctions",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": false
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "string",
-                "enumConfig": {
-                  "text": [
-                    "MANAGER",
-                    "AGENT",
-                    "RAMP_MANAGER"
-                  ]
-                },
-                "targetField": "role"
-              }
-            ],
-            "fields": {}
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "eec4uy21ivb40c"
-      },
-      "description": "",
+      "description": "Evolución del número de empleados necesitados a lo largo del tiempo",
       "fieldConfig": {
         "defaults": {
           "color": {
             "fixedColor": "semi-dark-green",
-            "mode": "shades"
+            "mode": "continuous-YlRd"
           },
           "custom": {
             "axisBorderShow": false,
@@ -710,7 +513,6 @@
               "mode": "off"
             }
           },
-          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -747,11 +549,11 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 12,
-        "x": 12,
+        "w": 24,
+        "x": 0,
         "y": 31
       },
-      "id": 15,
+      "id": 18,
       "options": {
         "legend": {
           "calcs": [],
@@ -775,18 +577,19 @@
           },
           "fields": [
             {
-              "jsonPath": "$reduce(services, function($acc, $s) {\n    $append($acc,\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role}\n        ], function($v) { $v.role = \"MANAGER\" })\n    )\n}, [])",
-              "language": "jsonata"
+              "jsonPath": "\n\n\n$reduce(services[], function($acc, $e) {\n    $append($acc, $map($e, function($s) {\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role}\n        ], function($v) { $v.role = $Roles[0] })\n    }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n)}, [])",
+              "language": "jsonata",
+              "name": "",
+              "type": "number"
             }
           ],
-          "hide": false,
           "method": "GET",
           "queryParams": "",
-          "refId": "B",
+          "refId": "A",
           "urlPath": ""
         }
       ],
-      "title": "Manager necesitados",
+      "title": "Empleados necesitados por Rol",
       "transformations": [
         {
           "id": "extractFields",
@@ -834,420 +637,6 @@
               "reducer": "sum"
             },
             "replaceFields": false
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "string",
-                "enumConfig": {
-                  "text": [
-                    "MANAGER",
-                    "AGENT",
-                    "RAMP_MANAGER"
-                  ]
-                },
-                "targetField": "role"
-              }
-            ],
-            "fields": {}
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "eec4uy21ivb40c"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-yellow",
-            "mode": "shades"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Número de Empleados",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 36,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "stepAfter",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 2,
-            "pointSize": 9,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 0,
-        "y": 42
-      },
-      "id": 17,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "eec4uy21ivb40c"
-          },
-          "fields": [
-            {
-              "jsonPath": "$reduce(services, function($acc, $s) {\n    $append($acc,\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role}\n        ], function($v) { $v.role = \"RAMP_MANAGER\" })\n    )\n}, [])",
-              "language": "jsonata"
-            }
-          ],
-          "hide": false,
-          "method": "GET",
-          "queryParams": "",
-          "refId": "B",
-          "urlPath": ""
-        }
-      ],
-      "title": "Ramp Manager necesitados",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [],
-            "replace": true,
-            "source": "result"
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "time"
-              }
-            ],
-            "fields": {}
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "field": "time"
-              }
-            ]
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Número de Empleados",
-            "cumulative": {
-              "field": "count",
-              "reducer": "sum"
-            },
-            "mode": "cumulativeFunctions",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": false
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "string",
-                "enumConfig": {
-                  "text": [
-                    "MANAGER",
-                    "AGENT",
-                    "RAMP_MANAGER"
-                  ]
-                },
-                "targetField": "role"
-              }
-            ],
-            "fields": {}
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "eec4uy21ivb40c"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-purple",
-            "mode": "shades"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Número de Empleados",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 36,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "stepAfter",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 2,
-            "pointSize": 9,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "noValue": "NO DRIVERS NEEDED",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 12,
-        "y": 42
-      },
-      "id": 16,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "eec4uy21ivb40c"
-          },
-          "fields": [
-            {
-              "jsonPath": "$reduce(services, function($acc, $s) {\n    $append($acc,\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role}\n        ], function($v) { $v.role = \"DRIVER\" })\n    )\n}, [])",
-              "language": "jsonata"
-            }
-          ],
-          "hide": false,
-          "method": "GET",
-          "queryParams": "",
-          "refId": "B",
-          "urlPath": ""
-        }
-      ],
-      "title": "Driver necesitados",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [],
-            "replace": true,
-            "source": "result"
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "time"
-              }
-            ],
-            "fields": {}
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "field": "time"
-              }
-            ]
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Número de Empleados",
-            "cumulative": {
-              "field": "count",
-              "reducer": "sum"
-            },
-            "mode": "cumulativeFunctions",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": false
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "string",
-                "enumConfig": {
-                  "text": [
-                    "MANAGER",
-                    "AGENT",
-                    "RAMP_MANAGER"
-                  ]
-                },
-                "targetField": "role"
-              }
-            ],
-            "fields": {}
           }
         }
       ],
@@ -1307,7 +696,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 42
       },
       "id": 13,
       "options": {
@@ -1383,7 +772,7 @@
           "options": {
             "conversions": [
               {
-                "destinationType": "other",
+                "destinationType": "enum",
                 "enumConfig": {
                   "text": [
                     "MANAGER",
@@ -1433,7 +822,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 53
       },
       "id": 7,
       "options": {
@@ -1574,7 +963,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 76
+        "y": 65
       },
       "id": 3,
       "options": {
@@ -1699,7 +1088,7 @@
         "h": 12,
         "w": 14,
         "x": 6,
-        "y": 86
+        "y": 75
       },
       "id": 6,
       "options": {
@@ -1818,7 +1207,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 98
+        "y": 87
       },
       "id": 5,
       "options": {
@@ -1928,8 +1317,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1957,7 +1345,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 109
+        "y": 98
       },
       "id": 4,
       "options": {
@@ -2055,7 +1443,6 @@
   "templating": {
     "list": [
       {
-        "allValue": "",
         "allowCustomValue": false,
         "current": {
           "text": "MANAGER",
@@ -2099,6 +1486,6 @@
   "timezone": "browser",
   "title": "Dashboard-instance",
   "uid": "bec54p8rha0w0c",
-  "version": 66,
+  "version": 68,
   "weekStart": ""
 }

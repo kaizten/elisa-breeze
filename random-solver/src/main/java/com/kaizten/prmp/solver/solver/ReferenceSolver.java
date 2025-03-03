@@ -14,10 +14,10 @@ import org.json.JSONObject;
 
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
 import com.kaizten.utils.io.KaiztenFile;
-import com.kaizten.prmp.domain.problem.Role;
 
 public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySolution> {
 
@@ -114,7 +114,8 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         //Si tienen startTime, se comprueba que el servicio empiece después de su startTime, y si no, se pasa a false y ya no se añadirá
                         boolean startTime = true;
                         if (employeeStartTime.isPresent()) {
-                            if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())) {
+                            // si el servicio empieza antes de la hora de inicio del empleado, o si empieza después de 8 horas de su hora de inicio, se pasa a false
+                            if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get()) || serviceStartingTime.toLocalTime().isAfter(employeeStartTime.get().plusHours(8))) {
                                 startTime = false;
                             }
                         }
@@ -122,7 +123,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         //hacemos lo mismo con FinishTime
                         boolean finishTime = true;
                         if (employeeFinishTime.isPresent()) {
-                            if (serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get())) {
+                            if (serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get()) || serviceFinishingTime.toLocalTime().isBefore(employeeFinishTime.get().minusHours(8))) {
                                 finishTime = false;
                             }
                         }
@@ -139,9 +140,25 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     int randomIndex = rand.nextInt(availableEmployees.size()); 
                     Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
                     solution.assignServiceToEmployee(selectedEmployee, service);
-                    // TODO: Asignar jornadas de 8h alrededor del servicio, teniendo en cuenta la duración de esta
-                    LocalTime jornadaStartTime = serviceStartingTime.toLocalTime().minusHours(4);
-                    LocalTime jornadaFinishTime = serviceStartingTime.toLocalTime().plusHours(4);
+                    Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(selectedEmployee);
+                    Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(selectedEmployee);
+                    //Añadir aqui que solo se añada jornada, mientras no tenga??
+                    if (!employeeStartTime.isPresent() && employeeFinishTime.isPresent()){ // no hay start pero si finish => le ponemos start (empleado finish -8)
+                        LocalTime jornadaStartTime = employeeFinishTime.get().minusHours(8);
+                        this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
+
+                    }
+                    if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // hay start pero no finish => le ponemos finish ( empleado start +8)
+                        LocalTime jornadaFinishTime = employeeStartTime.get().plusHours(8);
+                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime);
+                    }
+
+                    if (!employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // no hay start y no hay finish => le ponemos start y finish alrededor de servicio
+                        LocalTime jornadaStartTime = serviceStartingTime.toLocalTime().minusHours(4);
+                        LocalTime jornadaFinishTime = serviceStartingTime.toLocalTime().plusHours(4);
+                        this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
+                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime);
+                    }
                     availableEmployees.remove(selectedEmployee);
                     //antes de volver a iterar revisar si está vacío antes de intentar asignar otro empleado
                     if (availableEmployees.isEmpty()) {
