@@ -13,10 +13,10 @@ import org.json.JSONObject;
 
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
 import com.kaizten.utils.io.KaiztenFile;
-import com.kaizten.prmp.domain.problem.Role;
 
 public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution> {
 
@@ -87,7 +87,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         int randomIndex = rand.nextInt(availableEmployees.size()); 
                         Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
                         solution.assignServiceToEmployee(selectedEmployee, service);
-                            availableEmployees.remove(selectedEmployee);
+                        availableEmployees.remove(selectedEmployee);
                     }
                 }
                 
