@@ -144,9 +144,20 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         }
                     }
                 }
-                System.out.println("Available employees: " + availableEmployees);
                 // Asignar empleados al azar según el número de empleados requeridos por el servicio
                 while (solution.getAssignedEmployees(service).size() < requiredEmployees) { 
+                    //Si no quedan empleados en la lista, añado uno nuevo
+                    // Puede ser que el numero maximo de empleados sea 100? y nunca pasa de 100 porque siempre da 99? 
+                    if (availableEmployees.isEmpty()) {
+                        Role neededRole = this.optimizationProblem.getServiceRole(service); //buscar rol que necesita el servicio
+                        this.optimizationProblem.addEmployee(Set.of(neededRole)); //crear empleado extra con ese rol
+                        int newEmployee = this.optimizationProblem.getNumberOfEmployees()-1;  // Obtén el número total de empleados
+                        availableEmployees.add(newEmployee);
+
+                    }
+                    System.out.println("Available employees: " + availableEmployees);
+
+
                     int randomIndex = rand.nextInt(availableEmployees.size()); 
                     Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
                     solution.assignServiceToEmployee(selectedEmployee, service);
@@ -154,28 +165,44 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(selectedEmployee);
                     Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(selectedEmployee);
                     
+                    //lo hice cogiendo la fecha del servicio como referencia para cambiarlo de tipo a LocalDateTime. eso esta bien?
+                    //porque los demas son de tipo LocalTime y no se pueden cambiar de tipo date
+                    LocalDate serviceFinishDate = serviceFinishingTime.toLocalDate();
+                    LocalDate serviceStartingDate = serviceStartingTime.toLocalDate();
+
                     if (!employeeStartTime.isPresent() && employeeFinishTime.isPresent()){ // no hay start pero si finish => le ponemos start (empleado finish -8)
-                        LocalTime jornadaStartTime = employeeFinishTime.get().minusHours(8);
-                        this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
+                       
+                        LocalDateTime jornadaFinishTime = serviceFinishDate.atTime(employeeFinishTime.get());
+                        LocalDateTime jornadaStartTime = jornadaFinishTime.minusHours(8);
+                        this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
+
+                        //LocalTime jornadaStartTime = employeeFinishTime.get().minusHours(8);
+                        //this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
 
                     }
                     if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // hay start pero no finish => le ponemos finish ( empleado start +8)
-                        LocalTime jornadaFinishTime = employeeStartTime.get().plusHours(8);
-                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime);
+                        
+                        LocalDateTime jornadaStartTime = serviceStartingDate.atTime(employeeStartTime.get());
+                        LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(8);
+                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
+
+                        //LocalTime jornadaFinishTime = employeeStartTime.get().plusHours(8);
+                        //this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime);
                     }
 
                     if (!employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // no hay start y no hay finish => le ponemos start y finish alrededor de servicio
-                        LocalTime jornadaStartTime = serviceStartingTime.toLocalTime().minusHours(4);
-                        LocalTime jornadaFinishTime = serviceStartingTime.toLocalTime().plusHours(4);
-                        this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
-                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime);
+                       
+                        LocalDateTime jornadaStartTime = serviceStartingDate.atTime(serviceStartingTime.toLocalTime().minusHours(4));
+                        LocalDateTime jornadaFinishTime = serviceFinishDate.atTime(serviceFinishingTime.toLocalTime().plusHours(4));
+                        this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
+
+                        //LocalTime jornadaStartTime = serviceStartingTime.toLocalTime().minusHours(4);
+                        //LocalTime jornadaFinishTime = serviceStartingTime.toLocalTime().plusHours(4);
+                        //this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
+                        //this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime);
                     }
                     availableEmployees.remove(selectedEmployee);
-                    //antes de volver a iterar revisar si está vacío antes de intentar asignar otro empleado
-                    if (availableEmployees.isEmpty()) {
-                        Role neededRole = this.optimizationProblem.getServiceRole(service); //buscar rol que necesita el servicio
-                        this.optimizationProblem.addEmployee(Set.of(neededRole)); //crear empleado extra con ese rol
-                    }
                 }
             }
             // Guardamos el JSON en la ruta especificada
