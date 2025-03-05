@@ -3,6 +3,7 @@ package com.kaizten.prmp.solver.solver;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
@@ -55,40 +56,49 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                 }
                 // iterar cada 8h (3 veces porque hay 24h en el dia) y luego pasar a la siguiente fecha. dentro de cada iteracion de 8h, asignar esa jornada de 8h a un driver, un manager y un ramp manager de las listas creadas anteriormente, y luego borrarla de la lista respectiva para que no se asigne 2 veces ese dia. si no hay empleado disponible del rol buscado, crear uno nuevo con ese rol y asignarle la jornada de 8h
                 for (int i = 0; i < 3; i++) {
-                    LocalTime jornadaStartTime = LocalTime.of(8 * i, 0);
-                    LocalTime jornadaFinishTime = LocalTime.of(8 * (i + 1), 0);
+                    LocalDateTime jornadaStartTime = fecha.atTime(8 * i, 0);
+                    LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(8);
                     // Asignar un driver
                     if (!drivers.isEmpty()) { //si no esta vacio, asignarle joranda trabajo
                         int randomIndex = rand.nextInt(drivers.size()); //elegir uno al azar
                         Integer selectedDriver = (Integer) drivers.toArray()[randomIndex];
-                        this.optimizationProblem.setEmployeeStartTime(selectedDriver, jornadaStartTime);
-                        this.optimizationProblem.setEmployeeFinishTime(selectedDriver, jornadaFinishTime);
+                        this.optimizationProblem.setEmployeeStartTime(selectedDriver, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(selectedDriver, jornadaFinishTime.toLocalTime());
                         drivers.remove(selectedDriver); //eliminarlo de la lista para que no se repita
                     } else {//si no quedan, crear empleado nuevo driver
                         //crear nuevo empleado con rol driver
-                        //no se como, lo dejo asi de momento
+                        this.optimizationProblem.addEmployee(Set.of(Role.DRIVER));
+                        int newEmployee = this.optimizationProblem.getNumberOfEmployees() - 1; //coger el ultimo empleado añadido (-1 porque empieza en 0)
+                        this.optimizationProblem.setEmployeeStartTime(newEmployee, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(newEmployee, jornadaFinishTime.toLocalTime());
                     }
                     // Asignar un manager
                     if (!managers.isEmpty()) {
                         int randomIndex = rand.nextInt(managers.size());
                         Integer selectedManager = (Integer) managers.toArray()[randomIndex];
-                        this.optimizationProblem.setEmployeeStartTime(selectedManager, jornadaStartTime);
-                        this.optimizationProblem.setEmployeeFinishTime(selectedManager, jornadaFinishTime);
+                        this.optimizationProblem.setEmployeeStartTime(selectedManager, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(selectedManager, jornadaFinishTime.toLocalTime());
                         drivers.remove(selectedManager); //eliminarlo de la lista para que no se repita
                     } else {
                         //crear nuevo empleado con rol manager
-                        //no se como, lo dejo asi de momento
+                        this.optimizationProblem.addEmployee(Set.of(Role.MANAGER));
+                        int newEmployee = this.optimizationProblem.getNumberOfEmployees() - 1; //coger el ultimo empleado añadido (-1 porque empieza en 0)
+                        this.optimizationProblem.setEmployeeStartTime(newEmployee, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(newEmployee, jornadaFinishTime.toLocalTime());
                     }
                     // Asignar un ramp manager
                     if (!rampManagers.isEmpty()) {
                         int randomIndex = rand.nextInt(rampManagers.size());
                         Integer selectedRampManager = (Integer) rampManagers.toArray()[randomIndex];
-                        this.optimizationProblem.setEmployeeStartTime(selectedRampManager, jornadaStartTime);
-                        this.optimizationProblem.setEmployeeFinishTime(selectedRampManager, jornadaFinishTime);
+                        this.optimizationProblem.setEmployeeStartTime(selectedRampManager, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(selectedRampManager, jornadaFinishTime.toLocalTime());
                         drivers.remove(selectedRampManager); //eliminarlo de la lista para que no se repita
                     } else {
                         //crear nuevo empleado con rol ramp manager
-                        //no se como, lo dejo asi de momento
+                        this.optimizationProblem.addEmployee(Set.of(Role.RAMP_MANAGER));
+                        int newEmployee = this.optimizationProblem.getNumberOfEmployees() - 1; //coger el ultimo empleado añadido (-1 porque empieza en 0)
+                        this.optimizationProblem.setEmployeeStartTime(newEmployee, jornadaStartTime.toLocalTime());
+                        this.optimizationProblem.setEmployeeFinishTime(newEmployee, jornadaFinishTime.toLocalTime());
                     }
                 }        
             }
@@ -140,9 +150,10 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     int randomIndex = rand.nextInt(availableEmployees.size()); 
                     Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
                     solution.assignServiceToEmployee(selectedEmployee, service);
+                    
                     Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(selectedEmployee);
                     Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(selectedEmployee);
-                    //Añadir aqui que solo se añada jornada, mientras no tenga??
+                    
                     if (!employeeStartTime.isPresent() && employeeFinishTime.isPresent()){ // no hay start pero si finish => le ponemos start (empleado finish -8)
                         LocalTime jornadaStartTime = employeeFinishTime.get().minusHours(8);
                         this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime);
@@ -162,8 +173,8 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     availableEmployees.remove(selectedEmployee);
                     //antes de volver a iterar revisar si está vacío antes de intentar asignar otro empleado
                     if (availableEmployees.isEmpty()) {
-                        //crear nuevo empleado con el rol necesario, asignarle jornada y servicio y añadirlo al set de empleados disponibles
-                        //no se como, lo dejo asi de momento
+                        Role neededRole = this.optimizationProblem.getServiceRole(service); //buscar rol que necesita el servicio
+                        this.optimizationProblem.addEmployee(Set.of(neededRole)); //crear empleado extra con ese rol
                     }
                 }
             }
