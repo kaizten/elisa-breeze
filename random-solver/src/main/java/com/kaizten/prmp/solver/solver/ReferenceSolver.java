@@ -147,14 +147,15 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                 // Asignar empleados al azar según el número de empleados requeridos por el servicio
                 while (solution.getAssignedEmployees(service).size() < requiredEmployees) { 
                     //Si no quedan empleados en la lista, añado uno nuevo
-                    // Puede ser que el numero maximo de empleados sea 100? y nunca pasa de 100 porque siempre da 99? 
                     if (availableEmployees.isEmpty()) {
                         Role neededRole = this.optimizationProblem.getServiceRole(service); //buscar rol que necesita el servicio
+                        System.out.println(Set.of(neededRole));
                         this.optimizationProblem.addEmployee(Set.of(neededRole)); //crear empleado extra con ese rol
                         int newEmployee = this.optimizationProblem.getNumberOfEmployees()-1;  // Obtén el número total de empleados
-                        availableEmployees.add(newEmployee);
+                        availableEmployees.add(newEmployee);  
 
                     }
+                    System.out.println("Number of Employees: " + this.optimizationProblem.getNumberOfEmployees());
                     System.out.println("Available employees: " + availableEmployees);
 
 
