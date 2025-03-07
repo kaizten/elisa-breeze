@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kaizten.prmp</groupId>
+    <artifactId>core</artifactId>
+    <name>core</name>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <url>https://www.kaizten.com</url>
+
+    <organization>
+        <name>Kaizten Analytics SL</name>
+        <url>https://www.kaizten.com</url>
+    </organization>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <!-- Dependencies -->
+        <junit.version>5.10.2</junit.version>
+        <kaizten-optimization.version>1.0-SNAPSHOT</kaizten-optimization.version>
+        <kaizten-utils.version>1.0-SNAPSHOT</kaizten-utils.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.kaizten</groupId>
+            <artifactId>kaizten-optimization</artifactId>
+            <version>${kaizten-optimization.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kaizten</groupId>
+            <artifactId>kaizten-utils</artifactId>
+            <version>${kaizten-utils.version}</version>
+        </dependency>
+        <dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/kaizten/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <profile>
+            <id>github</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                </repository>
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/kaizten/*</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/kaizten/persons-reduced-mobility-problem</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+</project>
