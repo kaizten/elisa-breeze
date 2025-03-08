@@ -47,7 +47,6 @@ public class Main {
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instance-01.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
-        //guardar el numero de servicios y empleados que tenga en una variable pa hacerlo mas modular y luego usarlo en los for
         int numberOfInitialServices = optimizationProblem.getNumberOfServices();
         int numberOfInitialEmployees = optimizationProblem.getNumberOfEmployees();
         int numberOfDatesWithServices = optimizationProblem.getNumberOfDates();
@@ -92,19 +91,16 @@ public class Main {
                 newOptimizationProblem.addEmployeeRoles(i, role);
 
             }
-            newOptimizationProblem.setEmployeeCode(i, optimizationProblem.getEmployeeCode(i));
+            newOptimizationProblem.setEmployeeCode(i, "r-" + optimizationProblem.getEmployeeCode(i));
  
             //Si hay, se asigna, si no, no se asigna nada
-            // Para Employee Finish Time (Optional<LocalTime>)
             if (optimizationProblem.getEmployeeFinish(i).isPresent()) {
                 newOptimizationProblem.setEmployeeFinishTime(i, optimizationProblem.getEmployeeFinish(i).get());
             }
 
-            // Para Employee Start Time (Optional<LocalTime>)
             if (optimizationProblem.getEmployeeStartTime(i).isPresent()) {
                 newOptimizationProblem.setEmployeeStartTime(i, optimizationProblem.getEmployeeStartTime(i).get());
             }
-
 
             //Hay siempre CREO, o default o valor individual
             newOptimizationProblem.setEmployeeTimePerDay(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerDay(i))); 
@@ -121,7 +117,7 @@ public class Main {
         for (int i = 0; i < (numberOfEmployees-numberOfInitialEmployees); i++) {
             Role randomRoleToAssign = roles[random.nextInt(roles.length)];
             newOptimizationProblem.addEmployeeRoles(employeeIndex, randomRoleToAssign);
-            newOptimizationProblem.setEmployeeCode(employeeIndex,String.format("%04d", employeeIndex));
+            newOptimizationProblem.setEmployeeCode(employeeIndex,"f-" + String.format("%04d", employeeIndex));
             employeeIndex++;
         }
             

@@ -65,13 +65,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         this.optimizationProblem.setEmployeeStartTime(selectedDriver, jornadaStartTime.toLocalTime());
                         this.optimizationProblem.setEmployeeFinishTime(selectedDriver, jornadaFinishTime.toLocalTime());
                         drivers.remove(selectedDriver); //eliminarlo de la lista para que no se repita
-                    } else {//si no quedan, crear empleado nuevo driver
-                        //crear nuevo empleado con rol driver
-                        this.optimizationProblem.addEmployee(Set.of(Role.DRIVER));
-                        int newEmployee = this.optimizationProblem.getNumberOfEmployees() - 1; //coger el ultimo empleado añadido (-1 porque empieza en 0)
-                        this.optimizationProblem.setEmployeeStartTime(newEmployee, jornadaStartTime.toLocalTime());
-                        this.optimizationProblem.setEmployeeFinishTime(newEmployee, jornadaFinishTime.toLocalTime());
-                    }
+                    } 
                     // Asignar un manager
                     if (!managers.isEmpty()) {
                         int randomIndex = rand.nextInt(managers.size());
@@ -79,13 +73,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         this.optimizationProblem.setEmployeeStartTime(selectedManager, jornadaStartTime.toLocalTime());
                         this.optimizationProblem.setEmployeeFinishTime(selectedManager, jornadaFinishTime.toLocalTime());
                         drivers.remove(selectedManager); //eliminarlo de la lista para que no se repita
-                    } else {
-                        //crear nuevo empleado con rol manager
-                        this.optimizationProblem.addEmployee(Set.of(Role.MANAGER));
-                        int newEmployee = this.optimizationProblem.getNumberOfEmployees() - 1; //coger el ultimo empleado añadido (-1 porque empieza en 0)
-                        this.optimizationProblem.setEmployeeStartTime(newEmployee, jornadaStartTime.toLocalTime());
-                        this.optimizationProblem.setEmployeeFinishTime(newEmployee, jornadaFinishTime.toLocalTime());
-                    }
+                    } 
                     // Asignar un ramp manager
                     if (!rampManagers.isEmpty()) {
                         int randomIndex = rand.nextInt(rampManagers.size());
@@ -93,12 +81,6 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         this.optimizationProblem.setEmployeeStartTime(selectedRampManager, jornadaStartTime.toLocalTime());
                         this.optimizationProblem.setEmployeeFinishTime(selectedRampManager, jornadaFinishTime.toLocalTime());
                         drivers.remove(selectedRampManager); //eliminarlo de la lista para que no se repita
-                    } else {
-                        //crear nuevo empleado con rol ramp manager
-                        this.optimizationProblem.addEmployee(Set.of(Role.RAMP_MANAGER));
-                        int newEmployee = this.optimizationProblem.getNumberOfEmployees() - 1; //coger el ultimo empleado añadido (-1 porque empieza en 0)
-                        this.optimizationProblem.setEmployeeStartTime(newEmployee, jornadaStartTime.toLocalTime());
-                        this.optimizationProblem.setEmployeeFinishTime(newEmployee, jornadaFinishTime.toLocalTime());
                     }
                 }        
             }
@@ -145,20 +127,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     }
                 }
                 // Asignar empleados al azar según el número de empleados requeridos por el servicio
-                while (solution.getAssignedEmployees(service).size() < requiredEmployees) { 
-                    //Si no quedan empleados en la lista, añado uno nuevo
-                    if (availableEmployees.isEmpty()) {
-                        Role neededRole = this.optimizationProblem.getServiceRole(service); //buscar rol que necesita el servicio
-                        System.out.println(Set.of(neededRole));
-                        this.optimizationProblem.addEmployee(Set.of(neededRole)); //crear empleado extra con ese rol
-                        int newEmployee = this.optimizationProblem.getNumberOfEmployees()-1;  // Obtén el número total de empleados
-                        availableEmployees.add(newEmployee);  
-
-                    }
-                    System.out.println("Number of Employees: " + this.optimizationProblem.getNumberOfEmployees());
-                    System.out.println("Available employees: " + availableEmployees);
-
-
+                while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) { 
                     int randomIndex = rand.nextInt(availableEmployees.size()); 
                     Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
                     solution.assignServiceToEmployee(selectedEmployee, service);
