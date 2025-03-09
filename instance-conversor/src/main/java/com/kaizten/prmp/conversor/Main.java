@@ -86,7 +86,11 @@ public class Main {
 
                 OffsetDateTime startingTime = date.atTime(start, 0).atOffset(ZoneOffset.UTC);
                 OffsetDateTime finishingTime = date.atTime(finish, 0).atOffset(ZoneOffset.UTC);
-                
+
+                if (finishingTime.getHour() < startingTime.getHour()){
+                    finishingTime = finishingTime.plusDays(1); 
+                }
+
                 for (Role role : roles) {
                     serviceIndex++;
                     
