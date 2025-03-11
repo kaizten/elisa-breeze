@@ -51,7 +51,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     && !solution.isServiceOverlapping(employee, service)
                     && solution.doesServiceSatisfiesTimeBetweenDays(employee, service)) {
                         // valido startTime y FinishTime juntos, y si ambos son True, se añade a la lista de empleados disponibles. 
-                        //Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime, se les asigna automáticamente
+                        //Empieza por poner ambos en True, porque si no tienen startTime ni finishTime, se les asigna automáticamente
                         //Si tienen startTime, se comprueba que el servicio empiece después de su startTime, y si no, se pasa a false y ya no se añadirá
                         boolean startTime = true;
                         if (employeeStartTime.isPresent()) {
