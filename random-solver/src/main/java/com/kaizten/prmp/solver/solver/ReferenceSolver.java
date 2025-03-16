@@ -96,7 +96,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
 
                     }
-                    if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // hay start pero no finish => le ponemos finish ( empleado start +8)
+                    if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // hay start pero no finish => le ponemos finish (empleado start +8)
                         
                         LocalDateTime jornadaStartTime = serviceStartingDate.atTime(employeeStartTime.get());
                         LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(8);
@@ -115,7 +115,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     availableEmployees.remove(selectedEmployee);
                 }
             }
-            // Guardamos el JSON en la ruta especificada
+            // Guardar json
             try {
                 JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
                 KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solutionReference.json"), solutionJSON);

@@ -27,7 +27,7 @@ import com.kaizten.utils.io.KaiztenFile;
 import com.kaizten.utils.json.KaiztenJson;
 import com.kaizten.utils.net.KaiztenURI;
 
-//PARA QUE FUNCIONA; HAY QUE COMENTAR ESTA LINEA EN PERSONSREDUCEDMOBILITYPROBLEM.java: tableEmployees.setValue(this.isEmployeeAvailable(date, employee), row, column++);
+//PARA QUE FUNCIONE; HAY QUE COMENTAR ESTA LINEA EN PERSONSREDUCEDMOBILITYPROBLEM.java: tableEmployees.setValue(this.isEmployeeAvailable(date, employee), row, column++);
 
 public class Main {
 
@@ -56,7 +56,7 @@ public class Main {
         int numberOfDatesWithServices = optimizationProblem.getNumberOfDates();
 
         int numberOfServices=numberOfInitialServices+(12*numberOfDatesWithServices);
-        int numberOfEmployees=numberOfServices*3; //de momento el triple
+        int numberOfEmployees=numberOfServices*3; //el triple de momento
 
         PersonsReducedMobilityProblem newOptimizationProblem = new PersonsReducedMobilityProblem(numberOfServices, numberOfEmployees);
 
@@ -128,12 +128,12 @@ public class Main {
             newOptimizationProblem.setEmployeeTimePerDay(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerDay(i))); 
             newOptimizationProblem.setEmployeeTimeBetweenWorkingDays(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimeBetweenWorkingDays(i)));
 
-            //esto esta MAL en la instancia, no se porque, pero el default funciona como se ve con los empleados que invento yo
+            //esto esta MAL en la instancia, no se porque, pero el default funciona como se ve con los empleados que creo yo
             newOptimizationProblem.setEmployeeHoursPerWeek(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerWeek(i)));
         }
 
         //creo x empleados nuevos, rol al azar (solo 1 en este caso)
-        //solo le asigno rol y codigo, lo demas default
+        //solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
         Random random = new Random();
         int employeeIndex=numberOfInitialEmployees;
         for (int i = 0; i < (numberOfEmployees-numberOfInitialEmployees); i++) {
