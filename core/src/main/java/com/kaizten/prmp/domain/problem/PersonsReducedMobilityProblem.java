@@ -173,7 +173,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public Optional<String> getAirport() {
-        return Optional.of(this.airport);
+        return Optional.ofNullable(this.airport);
     }
 
     public int getNumberOfEmployees() {

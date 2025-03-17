@@ -61,7 +61,7 @@ public class Main {
         PersonsReducedMobilityProblem newOptimizationProblem = new PersonsReducedMobilityProblem(numberOfServices, numberOfEmployees);
 
         //set de lo principal: 
-        //newOptimizationProblem.setAirport(optimizationProblem.getAirport().toString()); //da error
+        optimizationProblem.getAirport().ifPresent(airport -> newOptimizationProblem.setAirport(airport));
         newOptimizationProblem.setDescription(optimizationProblem.getDescription());
         newOptimizationProblem.setName(optimizationProblem.getName());
 
@@ -143,6 +143,7 @@ public class Main {
             //newOptimizationProblem.setEmployeeCode(employeeIndex, String.format("%04d", employeeIndex));
             employeeIndex++;
         }
+        newOptimizationProblem.computeEmployeesAvailability(List.of());
             
         System.out.println(newOptimizationProblem);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
