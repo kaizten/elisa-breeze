@@ -96,6 +96,11 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                     employeeIndicators.put(
                             JsonConstants.PRODUCTIVITY_USED_TIME,
                             solution.getProductivityUsedTime(date, e));
+                    //NEW
+                    employeeIndicators.put(
+                        JsonConstants.WORK_PRODUCTIVITY,
+                        solution.getWorkProductivity(date, e));
+                        
                     employeeIndicators.put(
                             JsonConstants.AVAILABLE_TIME,
                             Duration.ofMinutes(solution.getAvailableTime(date, e)));

@@ -27,8 +27,6 @@ import com.kaizten.utils.io.KaiztenFile;
 import com.kaizten.utils.json.KaiztenJson;
 import com.kaizten.utils.net.KaiztenURI;
 
-//PARA QUE FUNCIONE; HAY QUE COMENTAR ESTA LINEA EN PERSONSREDUCEDMOBILITYPROBLEM.java: tableEmployees.setValue(this.isEmployeeAvailable(date, employee), row, column++);
-
 public class Main {
 
     private static PersonsReducedMobilityProblem getProblemFromURI(String instanceURI) throws URISyntaxException {
@@ -53,9 +51,15 @@ public class Main {
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
         int numberOfInitialServices = optimizationProblem.getNumberOfServices();
         int numberOfInitialEmployees = optimizationProblem.getNumberOfEmployees();
-        int numberOfDatesWithServices = optimizationProblem.getNumberOfDates();
 
-        int numberOfServices=numberOfInitialServices+(12*numberOfDatesWithServices);
+        // Calcular dias de servicio
+        List<LocalDate> serviceDates = optimizationProblem.getDatesOfServices(); //lista con fechas de los servicios
+        LocalDate firstDate = serviceDates.get(0);
+        LocalDate lastDate = serviceDates.get(serviceDates.size()-1);
+        //total de dias entre el primer y ultimo dia de servicio, contando el primer y ultimo dia
+        int totalDays = (int) Duration.between(firstDate.atStartOfDay(), lastDate.atStartOfDay()).toDays()+1;
+
+        int numberOfServices=numberOfInitialServices+(12*totalDays);
         int numberOfEmployees=numberOfServices*3; //el triple de momento
 
         PersonsReducedMobilityProblem newOptimizationProblem = new PersonsReducedMobilityProblem(numberOfServices, numberOfEmployees);
@@ -77,9 +81,9 @@ public class Main {
         //creo los servicios nuevos(x días de trabajo), de 3 en 3 de 8h pa cada rol => pa que siempre hayan => los llamo "f-1"
         Role[] roles = {Role.DRIVER, Role.MANAGER, Role.RAMP_MANAGER, Role.AGENT}; //Porq en el codigo actual de problem, solo se puede añadir 1 ROL por servicio
         int serviceIndex = numberOfInitialServices - 1;
-        List<LocalDate> serviceDates = optimizationProblem.getDatesOfServices(); //lista con fechas de los servicios
-
-        for (LocalDate date : serviceDates) { // Itera sobre las fechas donde hay servicios
+        //iterar a lo largo de los días 
+        for (int i = 0; i < totalDays; i++) {
+            LocalDate date = firstDate.plusDays(i);
             for (int shift = 0; shift < 3; shift++) { // turnos por día (3 porq son de 8h)
                 int start = (shift * 8) % 24;
                 int finish = (start + 8) % 24;
@@ -93,8 +97,6 @@ public class Main {
 
                 for (Role role : roles) {
                     serviceIndex++;
-                    
-
                     newOptimizationProblem.setServiceCode(serviceIndex, "f-" + String.format("%04d", serviceIndex));
                     //newOptimizationProblem.setServiceCode(serviceIndex, String.format("%04d", serviceIndex));
                     newOptimizationProblem.setServiceRequiredEmployees(serviceIndex, 1);

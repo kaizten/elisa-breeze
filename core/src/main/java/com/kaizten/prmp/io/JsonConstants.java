@@ -51,4 +51,6 @@ public class JsonConstants {
     public static final String UNCOVERED_SERVICES = "uncoveredServices";
     public static final String USED_TIME = "usedTime";
     public static final String WORKING_TIME = "workingTime";
+    //NEW
+    public static final String WORK_PRODUCTIVITY = "workProductivity";
 }
