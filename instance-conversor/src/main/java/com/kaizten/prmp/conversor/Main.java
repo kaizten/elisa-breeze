@@ -145,7 +145,7 @@ public class Main {
             employeeIndex++;
         }
         newOptimizationProblem.computeEmployeesAvailability(List.of());
-            
+                    
         System.out.println(newOptimizationProblem);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
         JSONObject json = toJson.apply(newOptimizationProblem);

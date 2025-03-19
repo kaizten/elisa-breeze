@@ -1042,7 +1042,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 28,
+        "h": 29,
         "w": 24,
         "x": 0,
         "y": 102
@@ -1082,7 +1082,7 @@
           },
           "fields": [
             {
-              "jsonPath": "$.dates[].employees[].indicators.productivityUsedTime",
+              "jsonPath": "$.dates[].employees[].indicators.workProductivity",
               "language": "jsonata",
               "name": "Productividad",
               "type": "number"
@@ -1130,6 +1130,18 @@
             ],
             "match": "any",
             "type": "include"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Productividad"
+              }
+            ]
           }
         }
       ],
@@ -1185,7 +1197,7 @@
         "h": 27,
         "w": 24,
         "x": 0,
-        "y": 130
+        "y": 131
       },
       "id": 4,
       "options": {
@@ -1291,6 +1303,7 @@
         "type": "marcusolsson-json-datasource",
         "uid": "defbax11h2io0b"
       },
+      "description": "El tiempo de descanso es dentro de la jornada. Los empleados asignados a las jornadas ficticias, tienen tiempo 0 porque la jornada es de 8h y el servicio tambien.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1348,7 +1361,7 @@
         "h": 28,
         "w": 24,
         "x": 0,
-        "y": 157
+        "y": 158
       },
       "id": 7,
       "options": {
@@ -1515,7 +1528,7 @@
         "h": 28,
         "w": 24,
         "x": 0,
-        "y": 185
+        "y": 186
       },
       "id": 3,
       "options": {
@@ -1600,13 +1613,13 @@
     "list": []
   },
   "time": {
-    "from": "2024-01-15T04:00:00.000Z",
+    "from": "2024-01-15T00:00:00.000Z",
     "to": "2024-01-20T12:00:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Dashboard-newSolution",
   "uid": "aefbass18z4zkf",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }
