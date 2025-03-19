@@ -420,7 +420,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Empleados necesitados por Rol (Servicios Reales)",
+      "title": "Empleados necesitados por Rol ",
       "transformations": [
         {
           "id": "extractFields",
@@ -471,6 +471,7 @@
           }
         },
         {
+          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
@@ -1281,8 +1282,8 @@
       },
       "gridPos": {
         "h": 12,
-        "w": 14,
-        "x": 6,
+        "w": 24,
+        "x": 0,
         "y": 86
       },
       "id": 6,
@@ -1322,7 +1323,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Roles de cada Empleado (Reales)",
+      "title": "Roles de cada Empleado ",
       "transformations": [
         {
           "id": "extractFields",
@@ -1334,6 +1335,7 @@
           }
         },
         {
+          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
@@ -1418,7 +1420,7 @@
         ]
       },
       "gridPos": {
-        "h": 11,
+        "h": 71,
         "w": 24,
         "x": 0,
         "y": 98
@@ -1436,7 +1438,7 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "auto",
+        "orientation": "horizontal",
         "showValue": "auto",
         "stacking": "none",
         "text": {
@@ -1448,7 +1450,7 @@
           "sort": "none"
         },
         "xField": "Empleados",
-        "xTickLabelRotation": 0,
+        "xTickLabelRotation": -45,
         "xTickLabelSpacing": 0
       },
       "pluginVersion": "11.5.0",
@@ -1471,7 +1473,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Tiempo de descanso entre días de trabajo (empleados reales)",
+      "title": "Tiempo de descanso entre días de trabajo",
       "transformations": [
         {
           "id": "extractFields",
@@ -1494,6 +1496,7 @@
           }
         },
         {
+          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
@@ -1514,181 +1517,6 @@
       ],
       "transparent": true,
       "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
-      },
-      "description": "Scatterplot de la relación entre el numero de empleados y la duración del servicio",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 43,
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "pointShape": "circle",
-            "pointSize": {
-              "fixed": 7
-            },
-            "pointStrokeWidth": 4,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "show": "points"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Duración"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "dthms"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 109
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "mapping": "auto",
-        "series": [
-          {
-            "frame": {
-              "matcher": {
-                "id": "byIndex",
-                "options": 0
-              }
-            },
-            "x": {
-              "matcher": {
-                "id": "byName",
-                "options": "Número de Empleados"
-              }
-            },
-            "y": {
-              "matcher": {
-                "id": "byName",
-                "options": "Duración"
-              }
-            }
-          }
-        ],
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.services[*].employees",
-              "name": "Número de Empleados"
-            },
-            {
-              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60 *60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])*60])\n    }\n})",
-              "language": "jsonata",
-              "name": ""
-            }
-          ],
-          "method": "GET",
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": ""
-        }
-      ],
-      "title": "Relación entre cantidad de empleados y duración del servicio",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "keepTime": false,
-            "replace": false,
-            "source": "result1"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "result1": true
-            },
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {}
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "Servicio"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "xychart"
     }
   ],
   "preload": false,
@@ -1752,6 +1580,6 @@
   "timezone": "browser",
   "title": "Dashboard-ConvertedInstance",
   "uid": "eefbatpwmwpoga",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
