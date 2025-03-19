@@ -295,7 +295,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     //Revisar que getWorkignTime lo devuelve en minutos
     public double getWorkProductivity(LocalDate date, int employee) {
         //Calcular tiempo de jornada total => en vez de getWorkingTime
-        return ((double) this.getUsedTime(date, employee).toMinutes() / (double) this.getWorkingTime(date, employee))*100.0;
+        return ((double) this.getWorkingTime(date, employee) / (double) optimizationProblem.getEmployeeAvailableTimePerDay(employee))*100.0;
     }
 
     public int getWorkingTime(LocalDate date, int employee) {

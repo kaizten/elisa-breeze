@@ -129,7 +129,6 @@ public class Main {
             //Hay siempre CREO, o default o valor individual
             newOptimizationProblem.setEmployeeTimePerDay(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerDay(i))); 
             newOptimizationProblem.setEmployeeTimeBetweenWorkingDays(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimeBetweenWorkingDays(i)));
-
             //esto esta MAL en la instancia, no se porque, pero el default funciona como se ve con los empleados que creo yo
             newOptimizationProblem.setEmployeeHoursPerWeek(i, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerWeek(i)));
         }

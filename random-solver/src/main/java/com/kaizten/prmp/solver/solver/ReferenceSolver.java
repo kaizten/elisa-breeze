@@ -93,24 +93,41 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                        
                         LocalDateTime jornadaFinishTime = serviceFinishDate.atTime(employeeFinishTime.get());
                         LocalDateTime jornadaStartTime = jornadaFinishTime.minusHours(8);
+                    
+                        // Asegura de que la jornada no exceda las 8 horas
+                        if (jornadaFinishTime.isAfter(jornadaStartTime.plusHours(8))) {
+                            jornadaFinishTime = jornadaStartTime.plusHours(8);
+                        }
+                    
                         this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
-
                     }
+
                     if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // hay start pero no finish => le ponemos finish (empleado start +8)
                         
                         LocalDateTime jornadaStartTime = serviceStartingDate.atTime(employeeStartTime.get());
                         LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(8);
-                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
 
+                        // Asegúrate de que la jornada no exceda las 8 horas
+                        if (jornadaFinishTime.isAfter(jornadaStartTime.plusHours(8))) {
+                            jornadaFinishTime = jornadaStartTime.plusHours(8);
+                        }
+
+                        this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
                     }
 
                     if (!employeeStartTime.isPresent() && !employeeFinishTime.isPresent()){ // no hay start y no hay finish => le ponemos start y finish alrededor de servicio
                        
                         LocalDateTime jornadaStartTime = serviceStartingDate.atTime(serviceStartingTime.toLocalTime().minusHours(4));
                         LocalDateTime jornadaFinishTime = serviceFinishDate.atTime(serviceFinishingTime.toLocalTime().plusHours(4));
+                    
+                        // Asegúrate de que la jornada no exceda las 8 horas
+                        if (jornadaFinishTime.isAfter(jornadaStartTime.plusHours(8))) {
+                            jornadaFinishTime = jornadaStartTime.plusHours(8);
+                        }
+                    
                         this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
                         this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
-
+                    
                     }
                     availableEmployees.remove(selectedEmployee);
                 }
