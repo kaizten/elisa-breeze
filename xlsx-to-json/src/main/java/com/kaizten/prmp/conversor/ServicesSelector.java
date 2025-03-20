@@ -7,33 +7,50 @@ import java.util.Random;
 
 public class ServicesSelector {
 
-    public void randomServiceSelector(Map<String, Map<String, List<String>>> flights) {
+    public List<String> randomServiceSelector(Map<String, Map<String, List<String>>> flights) {
+        
+        Map<String, String> dayToDateMap = Map.of(
+            "Lunes", "2024-02-05",
+            "Martes", "2024-02-06",
+            "Miércoles", "2024-02-07",
+            "Jueves", "2024-02-08",
+            "Viernes", "2024-02-09",
+            "Sábado", "2024-02-10",
+            "Domingo", "2024-02-11"
+        );
+
         Random random = new Random();
-        List<String> hours = new ArrayList<>(); //horas de salidas/llegadas
+        List<String> hours = new ArrayList<>(); // horas de salidas/llegadas
+        List<String> selectedFlights = new ArrayList<>(); // Lista para almacenar los vuelos seleccionados
 
         // Recorrer datos para añadir todo a la lista
         for (Map.Entry<String, Map<String, List<String>>> entry : flights.entrySet()) {
-            String date = entry.getKey();  // Fecha del evento
-            Map<String, List<String>> flightsInfo = entry.getValue(); // Informacion de los vuelos de la fecha
+            String date = dayToDateMap.get(entry.getKey());  // Cogemos el día del vuelo, y lo cambiamos a la fecha
+            Map<String, List<String>> flightsInfo = entry.getValue(); // Información de los vuelos de la fecha
 
-            // Recoger la informacion y guardarla con informacion de fecha, tipo y hora
-            for (Map.Entry<String, List<String>> info : flightsInfo.entrySet()) { //recorre la lista de vuelos
+            // Recoger la información y guardarla con información de fecha, tipo y hora
+            for (Map.Entry<String, List<String>> info : flightsInfo.entrySet()) { // Recorre la lista de vuelos
                 String flightType = info.getKey();  // Llegada o salida
                 List<String> flightHours = info.getValue(); // Lista de horas
-                for (String hour : flightHours) { //para cada hora
-                    hours.add(date + " - " + flightType + " - " + hour);  // Guardamos como fecha, tipo y hora
+               
+                for (String hour : flightHours) { // Para cada hora
+                    String cleanHour = hour.replaceAll("^\\*?|\\s*\\(\\d+\\)\\s*|\\*?$", "").trim(); // Nos quedamos solo con la hora
+                    hours.add(date + " - " + flightType + " - " + cleanHour);  // Guardamos como fecha, tipo y hora
                 }
             }
         }
 
-        // Seleccionar 10 vuelos aleatorios //10 para probar => cambiar por numero que se requiere
+        // Seleccionar 10 vuelos aleatorios
         for (int i = 0; i < 10 && !hours.isEmpty(); i++) {
             int index = random.nextInt(hours.size());
             String selectedFlight = hours.get(index);
             hours.remove(index);  // Eliminar el vuelo seleccionado para no repetirlo
 
-            // Mostrar vuelo seleccionado
-            System.out.println("Evento seleccionado: " + selectedFlight);
+            // Añadir el vuelo seleccionado a la lista
+            selectedFlights.add(selectedFlight);
         }
+
+        // Retornar la lista de vuelos seleccionados
+        return selectedFlights;
     }
 }

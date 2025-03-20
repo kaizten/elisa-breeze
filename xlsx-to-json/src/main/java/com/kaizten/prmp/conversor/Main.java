@@ -1,5 +1,6 @@
 package com.kaizten.prmp.conversor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ public class Main {
         ServicesSelector selector = new ServicesSelector();
         
         // Llamar al método seleccionarEventosAleatorios para elegir 10 eventos
-        selector.randomServiceSelector(flights);
+        List<String> selectedFlights = selector.randomServiceSelector(flights);
+
+        System.out.println("selected Flights: " + selectedFlights);
     }
 }
