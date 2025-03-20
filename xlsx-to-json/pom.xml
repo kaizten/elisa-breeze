@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kaizten.prmp</groupId>
-    <artifactId>conversor</artifactId>
-    <name>conversor</name>
+    <artifactId>instance-creator</artifactId>
+    <name>instance-creator</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>https://www.kaizten.com</url>
@@ -18,15 +18,26 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <!-- Dependencies -->
         <junit.version>5.10.2</junit.version>
         <kaizten-optimization.version>1.0-SNAPSHOT</kaizten-optimization.version>
         <kaizten-utils.version>1.0-SNAPSHOT</kaizten-utils.version>
+        <commons-io.version>2.15.1</commons-io.version>
+        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <core.version>1.0-SNAPSHOT</core.version>
+        <jackson-core.version>2.16.1</jackson-core.version>
+        <jcommander.version>2.0</jcommander.version>
+        <slf4j.version>2.1.0-alpha1</slf4j.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.kaizten.prmp</groupId>
+            <artifactId>core</artifactId>
+            <version>${core.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.kaizten</groupId>
             <artifactId>kaizten-optimization</artifactId>
@@ -47,6 +58,42 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jcommander</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>${jcommander.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.kaizten</groupId>
+            <artifactId>kaizten-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

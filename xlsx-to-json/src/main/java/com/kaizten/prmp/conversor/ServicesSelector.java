@@ -35,7 +35,7 @@ public class ServicesSelector {
                
                 for (String hour : flightHours) { // Para cada hora
                     String cleanHour = hour.replaceAll("^\\*?|\\s*\\(\\d+\\)\\s*|\\*?$", "").trim(); // Nos quedamos solo con la hora
-                    hours.add(date + " - " + flightType + " - " + cleanHour);  // Guardamos como fecha, tipo y hora
+                    hours.add(date + "/" + flightType + "/" + cleanHour);  // Guardamos como fecha, tipo y hora
                 }
             }
         }
