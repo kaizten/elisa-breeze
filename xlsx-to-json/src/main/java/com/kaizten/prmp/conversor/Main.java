@@ -11,12 +11,12 @@ public class Main {
         XlsxReader reader = new XlsxReader();
         
         // Obtener el HashMap con los eventos
-        Map<String, Map<String, List<String>>> eventos = reader.readXlsx();
+        Map<String, Map<String, List<String>>> flights = reader.readXlsx();
         
         // Crear una instancia de ServicesSelector
         ServicesSelector selector = new ServicesSelector();
         
         // Llamar al método seleccionarEventosAleatorios para elegir 10 eventos
-        selector.seleccionarEventosAleatorios(eventos);
+        selector.randomServiceSelector(flights);
     }
 }

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ServicesSelector {
 
-    public void seleccionarEventosAleatorios(Map<String, Map<String, List<String>>> flights) {
+    public void randomServiceSelector(Map<String, Map<String, List<String>>> flights) {
         Random random = new Random();
 
         // Crear una lista para almacenar todas las horas de todos los días

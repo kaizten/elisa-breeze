@@ -1,13 +1,19 @@
 package com.kaizten.prmp.conversor;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class XlsxReader {
 
@@ -46,7 +52,7 @@ public class XlsxReader {
                     Cell llegadaColumn = row.getCell(2 * i + 1); 
 
                     // Verificar si la celda no está vacía y agregar el valor al mapa
-                    if (salidaColumn != null && llegadaColumn.getCellType() == CellType.STRING) {
+                    if (salidaColumn != null && salidaColumn.getCellType() == CellType.STRING) {
                         String salida = salidaColumn.getStringCellValue().trim();
                         if (!salida.isEmpty()) {
                             flight.get(days[i]).get("Salidas").add(salida);
