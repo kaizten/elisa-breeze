@@ -1,8 +1,22 @@
-package main.java.com.kaizten.prmp.conversor;
+package com.kaizten.prmp.conversor;
+
+import java.util.List;
+import java.util.Map;
+
 
 public class Main {
     
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        // Crear una instancia de XlsxReader
+        XlsxReader reader = new XlsxReader();
+        
+        // Obtener el HashMap con los eventos
+        Map<String, Map<String, List<String>>> eventos = reader.readXlsx();
+        
+        // Crear una instancia de ServicesSelector
+        ServicesSelector selector = new ServicesSelector();
+        
+        // Llamar al método seleccionarEventosAleatorios para elegir 10 eventos
+        selector.seleccionarEventosAleatorios(eventos);
     }
 }
