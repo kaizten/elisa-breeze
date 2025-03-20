@@ -18,10 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class XlsxReader {
 
     public Map<String, Map<String, List<String>>> readXlsx() {
-        // Ruta del archivo Excel
         String filePath = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/flights.xlsx";
-
-        // Mapa para almacenar los días de la semana y sus horas de llegada y salida
         Map<String, Map<String, List<String>>> flight = new HashMap<>();
         String[] days = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
@@ -32,35 +29,29 @@ public class XlsxReader {
             flight.get(day).put("Llegadas", new ArrayList<>());
         }
 
-        // Leer el archivo Excel
+        // Leer archivo
         try (FileInputStream file = new FileInputStream(new File(filePath))) {
-            // Crear el libro de trabajo (workbook)
+            // Crear el libro de trabajo (workbook) => lo usa apache poi para leer el archivo
             Workbook workbook = new XSSFWorkbook(file);
 
-            // Obtener la primera hoja (suponiendo que los datos están en la primera hoja)
+            // Obtener la hoja que queremos e iterar sobre las filas
             Sheet sheet = workbook.getSheet("SPC");
-
-            // Iterar sobre las filas del archivo Excel
             for (Row row : sheet) {
-                // Saltamos la primera fila si tiene los encabezados
-                if (row.getRowNum() == 0) continue;
-
-                // Iterar sobre los días de la semana
+                // Iterar sobre los días
                 for (int i = 0; i < days.length; i++) {
-                    // Leer la salida y llegada para cada día
-                    Cell salidaColumn = row.getCell(2 * i);   
-                    Cell llegadaColumn = row.getCell(2 * i + 1); 
+                    Cell salidaCell = row.getCell(2 * i); //celda de "salidas"
+                    Cell llegadaCell = row.getCell(2 * i + 1); //celda de "llegadas"
 
-                    // Verificar si la celda no está vacía y agregar el valor al mapa
-                    if (salidaColumn != null && salidaColumn.getCellType() == CellType.STRING) {
-                        String salida = salidaColumn.getStringCellValue().trim();
+                    // Verificar si la celda no está vacía y añadir al mapa
+                    if (salidaCell != null && salidaCell.getCellType() == CellType.STRING) {
+                        String salida = salidaCell.getStringCellValue().trim();
                         if (!salida.isEmpty()) {
                             flight.get(days[i]).get("Salidas").add(salida);
                         }
                     }
 
-                    if (llegadaColumn != null && llegadaColumn.getCellType() == CellType.STRING) {
-                        String llegada = llegadaColumn.getStringCellValue().trim();
+                    if (llegadaCell != null && llegadaCell.getCellType() == CellType.STRING) {
+                        String llegada = llegadaCell.getStringCellValue().trim();
                         if (!llegada.isEmpty()) {
                             flight.get(days[i]).get("Llegadas").add(llegada);
                         }
