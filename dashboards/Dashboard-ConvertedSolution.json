@@ -1099,7 +1099,158 @@
           "urlPath": ""
         }
       ],
-      "title": "Productividad de cada empleado ",
+      "title": "Productividad (WT/Jornada) de cada empleado ",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Empleados"
+              }
+            ]
+          }
+        },
+        {
+          "disabled": true,
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "r-*"
+                  }
+                },
+                "fieldName": "Empleados"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Productividad"
+              }
+            ]
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "defbax11h2io0b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Productividad (%)",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 29,
+        "w": 24,
+        "x": 0,
+        "y": 131
+      },
+      "id": 14,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "colorByField": "Productividad",
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xField": "Empleados",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "defbax11h2io0b"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.dates[].employees[].indicators.productivityUsedTime",
+              "language": "jsonata",
+              "name": "Productividad",
+              "type": "number"
+            },
+            {
+              "jsonPath": "$.dates[].employees[].code",
+              "language": "jsonata",
+              "name": "Empleados"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Productividad (WT/UT) de cada empleado ",
       "transformations": [
         {
           "id": "sortBy",
@@ -1197,7 +1348,7 @@
         "h": 27,
         "w": 24,
         "x": 0,
-        "y": 131
+        "y": 160
       },
       "id": 4,
       "options": {
@@ -1336,8 +1487,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1361,7 +1511,7 @@
         "h": 28,
         "w": 24,
         "x": 0,
-        "y": 158
+        "y": 187
       },
       "id": 7,
       "options": {
@@ -1491,8 +1641,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1528,7 +1677,7 @@
         "h": 28,
         "w": 24,
         "x": 0,
-        "y": 186
+        "y": 215
       },
       "id": 3,
       "options": {
@@ -1618,8 +1767,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Dashboard-newSolution",
+  "title": "Dashboard-ConvertedSolution",
   "uid": "aefbass18z4zkf",
-  "version": 5,
+  "version": 8,
   "weekStart": ""
 }
