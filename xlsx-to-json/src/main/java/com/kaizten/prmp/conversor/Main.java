@@ -3,32 +3,10 @@ package com.kaizten.prmp.conversor;
 import java.util.List;
 import java.util.Map;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
-import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kaizten.opt.evaluator.Evaluator;
-import com.kaizten.opt.evaluator.builder.EvaluatorBuilder;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
-import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-import com.kaizten.utils.json.KaiztenJson;
-import com.kaizten.utils.net.KaiztenURI;
 
 
 
