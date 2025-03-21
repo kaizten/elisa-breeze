@@ -35,20 +35,22 @@ import com.kaizten.utils.net.KaiztenURI;
 public class Main {
     
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
+        
+        String airport = "SPC";
+        int numberOfServices = 201;
+
         XlsxReader reader = new XlsxReader();
-        
-        // Obtener el HashMap con los eventos
-        Map<String, Map<String, List<String>>> flights = reader.readXlsx();
-        
         ServicesSelector selector = new ServicesSelector();
         
-        // Llamar al método seleccionarEventosAleatorios para elegir 10 eventos
-        List<String> selectedFlights = selector.randomServiceSelector(flights);
+        Map<String, Map<String, List<String>>> flights = reader.readXlsx(airport);
+        int numberOfDays = flights.size();    
+        
+        List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
 
         System.out.println("selected Flights: " + selectedFlights);
 
         InstanceCreator creator = new InstanceCreator();
-        creator.createInstance(selectedFlights);
+        creator.createInstance(selectedFlights, airport, numberOfDays);
     }
 
 }

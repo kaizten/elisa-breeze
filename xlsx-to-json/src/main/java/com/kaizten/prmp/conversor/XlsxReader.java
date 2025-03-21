@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class XlsxReader {
 
-    public Map<String, Map<String, List<String>>> readXlsx() {
+    public Map<String, Map<String, List<String>>> readXlsx(String airport) {
         String filePath = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/flights.xlsx";
         Map<String, Map<String, List<String>>> flight = new HashMap<>();
         String[] days = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
@@ -35,8 +35,9 @@ public class XlsxReader {
             Workbook workbook = new XSSFWorkbook(file);
 
             // Obtener la hoja que queremos e iterar sobre las filas
-            Sheet sheet = workbook.getSheet("SPC");
-            for (Row row : sheet) {
+            Sheet sheet = workbook.getSheet(airport);
+            for (int rowIndex = 2; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+                Row row = sheet.getRow(rowIndex);
                 // Iterar sobre los días
                 for (int i = 0; i < days.length; i++) {
                     Cell salidaCell = row.getCell(2 * i); //celda de "salidas"

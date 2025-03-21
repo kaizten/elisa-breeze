@@ -7,8 +7,9 @@ import java.util.Random;
 
 public class ServicesSelector {
 
-    public List<String> randomServiceSelector(Map<String, Map<String, List<String>>> flights) {
+    public List<String> randomServiceSelector(Map<String, Map<String, List<String>>> flights, int numberOfServices) {
         
+        // convertir de dia de la semana a fecha => porque no me lo da como fecha
         Map<String, String> dayToDateMap = Map.of(
             "Lunes", "2024-02-05",
             "Martes", "2024-02-06",
@@ -22,7 +23,7 @@ public class ServicesSelector {
         Random random = new Random();
         List<String> hours = new ArrayList<>(); // horas de salidas/llegadas
         List<String> selectedFlights = new ArrayList<>(); // Lista para almacenar los vuelos seleccionados
-
+        
         // Recorrer datos para añadir todo a la lista
         for (Map.Entry<String, Map<String, List<String>>> entry : flights.entrySet()) {
             String date = dayToDateMap.get(entry.getKey());  // Cogemos el día del vuelo, y lo cambiamos a la fecha
@@ -39,9 +40,8 @@ public class ServicesSelector {
                 }
             }
         }
-
-        // Seleccionar 10 vuelos aleatorios
-        for (int i = 0; i < 10 && !hours.isEmpty(); i++) {
+        // Seleccion de vuelos aleatorios
+        for (int i = 0; i < numberOfServices && !hours.isEmpty(); i++) {
             int index = random.nextInt(hours.size());
             String selectedFlight = hours.get(index);
             hours.remove(index);  // Eliminar el vuelo seleccionado para no repetirlo

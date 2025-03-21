@@ -50,15 +50,15 @@ public class InstanceCreator {
         return optimizationProblem;
     }
 
-    public void createInstance(List<String> selectedFlights)throws JsonProcessingException, IOException, URISyntaxException {
+    public void createInstance(List<String> selectedFlights, String airport, int numberOfDays)throws JsonProcessingException, IOException, URISyntaxException {
         
         int numberOfServices = selectedFlights.size();
-        int numberOfEmployees = numberOfServices + 3*7; // TODO => el 7 => igual se podria calcular distinto, contando las fechas reales
+        int numberOfEmployees = numberOfServices + 3*numberOfDays; 
 
         PersonsReducedMobilityProblem newInstance = new PersonsReducedMobilityProblem(numberOfServices, numberOfEmployees);
 
         //set de lo principal: 
-        newInstance.setAirport("SPC"); // TODO => hacerlo mas modular? que se lo pase en los datos en el ServicesSelector?
+        newInstance.setAirport(airport); 
 
         // crear las fechas y hora de inicio y fin de los servicios
         for (int i = 0; i < numberOfServices; i++) {
@@ -104,27 +104,21 @@ public class InstanceCreator {
             newInstance.setServiceTimes(i, serviceStartingTime, serviceFinishingTime);
         }
 
-
-        /*
-
-        //creo x empleados nuevos, rol al azar (solo 1 en este caso)
+        //creo x empleados nuevos, rol AGENTE
         //solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-        Random random = new Random();
-        int employeeIndex=numberOfInitialEmployees;
-        for (int i = 0; i < (numberOfEmployees-numberOfInitialEmployees); i++) {
-            Role randomRoleToAssign = roles[random.nextInt(roles.length)];
-            newOptimizationProblem.addEmployeeRoles(employeeIndex, randomRoleToAssign);
-            newOptimizationProblem.setEmployeeCode(employeeIndex,"f-" + String.format("%04d", employeeIndex));
-            //newOptimizationProblem.setEmployeeCode(employeeIndex, String.format("%04d", employeeIndex));
-            employeeIndex++;
-        }*/
+        for (int i = 0; i < numberOfEmployees; i++) {
+            newInstance.addEmployeeRoles(i, Role.AGENT);
+            newInstance.setEmployeeCode(i, String.format("%04d", i));
+        }
         newInstance.computeEmployeesAvailability(List.of());
                     
         System.out.println(newInstance);
-        //PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-        //JSONObject json = toJson.apply(newOptimizationProblem);
-        //KaiztenFile.writeToFile(new File("data/convertedInstance-01.json"), json); // GUARDAR JSON EN FICHERO
-        //KaiztenJson.prettyPrint(json); // IMPRIMIR JSON POR PANTALLA
+        PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
+        JSONObject json = toJson.apply(newInstance);
+        KaiztenFile.writeToFile(new File("data/" + airport + "-instance.json"), json); // GUARDAR JSON EN FICHERO
+
+        //KaiztenFile.writeToFile(new File("data/SPC-instance.json"), json); // GUARDAR JSON EN FICHERO
+        KaiztenJson.prettyPrint(json); // IMPRIMIR JSON POR PANTALLA
     }
 
 }
