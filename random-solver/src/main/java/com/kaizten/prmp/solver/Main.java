@@ -17,10 +17,7 @@ import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
-//import com.kaizten.prmp.solver.solver.RandomSolver3;
 import com.kaizten.prmp.solver.solver.ReferenceSolver;
-//import com.kaizten.prmp.solver.solver.RandomSolver;
-//import com.kaizten.prmp.solver.solver.RandomSolver2;
 import com.kaizten.utils.json.KaiztenJson;
 import com.kaizten.utils.net.KaiztenURI;
 
@@ -44,7 +41,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
-        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/SPC-instance.json";
+        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/TFS-instance.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
 
         PersonsReducedMobilityProblem newOptimizationProblem = new PersonsReducedMobilityProblem(100, 5000);

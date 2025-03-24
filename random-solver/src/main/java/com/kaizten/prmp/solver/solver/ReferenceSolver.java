@@ -120,12 +120,14 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                         
                     }
                     availableEmployees.remove(selectedEmployee);
+
                 }
+                
             }
             // Guardar json
             try {
                 JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
-                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/SPCsolution.json"), solutionJSON);
+                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/TFSsolution.json"), solutionJSON);
             } catch (IOException e) {
                 System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
             }

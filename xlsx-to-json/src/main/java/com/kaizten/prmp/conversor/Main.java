@@ -1,10 +1,9 @@
 package com.kaizten.prmp.conversor;
 
-import java.util.List;
-import java.util.Map;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -14,8 +13,8 @@ public class Main {
     
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         
-        String airport = "SPC";
-        int numberOfServices = 201;
+        String airport = "TFS";
+        int numberOfServices = 3197;
 
         XlsxReader reader = new XlsxReader();
         ServicesSelector selector = new ServicesSelector();
