@@ -18,8 +18,8 @@ public class Main {
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
-        final String airport = "MAD";
-        final int numberOfServices = 7895;
+        final String airport = "SPC";
+        final int numberOfServices = 201;
         final Map<String, Map<String, List<String>>> flights;
         
         if (airport == "MAD"){
@@ -33,11 +33,30 @@ public class Main {
         final ServicesSelector selector = new ServicesSelector();
         List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
         System.out.println("selected Flights: " + selectedFlights);
-        InstanceCreator creator = new InstanceCreator();
-        PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
-                selectedFlights,
-                airport,
-                numberOfDays);
+
+        PersonsReducedMobilityProblem optimizationProblem;
+        if(airport =="SPC"){
+            InstanceCreatorSPC creator = new InstanceCreatorSPC();
+            optimizationProblem = creator.createInstance(
+            selectedFlights,
+            airport,
+            numberOfDays);
+        }
+        else if (airport == "TFS"){
+            InstanceCreatorTFS creator = new InstanceCreatorTFS();
+            optimizationProblem = creator.createInstance(
+            selectedFlights,
+            airport,
+            numberOfDays);
+        }
+        else if (airport == "MAD"){
+            InstanceCreatorMAD creator = new InstanceCreatorMAD();
+            optimizationProblem = creator.createInstance(
+            selectedFlights,
+            airport,
+            numberOfDays);
+        }
+        
 
         System.out.println(optimizationProblem);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();

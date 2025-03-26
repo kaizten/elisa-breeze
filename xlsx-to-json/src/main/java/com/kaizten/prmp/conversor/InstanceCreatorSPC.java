@@ -13,13 +13,13 @@ import com.kaizten.prmp.domain.Service;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
 
-public class InstanceCreator {
+public class InstanceCreatorSPC {
 
     public PersonsReducedMobilityProblem createInstance(
             List<String> selectedFlights,
             String airport,
             int numberOfDays) {
-        final int numberOfServices = selectedFlights.size();
+        final int numberOfServices = selectedFlights.size()+ 4*numberOfDays; //añado 4*dias de servicio por los servicios adicionales
         final int numberOfEmployees = numberOfServices + 3 * numberOfDays;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
@@ -27,7 +27,37 @@ public class InstanceCreator {
         optimizationProblem.setAirport(airport);
         // crear las fechas y hora de inicio y fin de los servicios
         final List<Service> listOfServices = new ArrayList<>();
-        for (int i = 0; i < numberOfServices; i++) {
+
+        /*Añado los 4 servicios adicionales
+        7:30 a 14:30 --> 1 Coordinador y 1 Conductor
+        14:30 a 21:30 --> 1 Coordinador y 1 Conductor
+        */
+
+        Role[] roles = {Role.MANAGER, Role.DRIVER};
+        int code = 0; 
+        for (int i = 0; i < numberOfDays; i++) {
+            LocalDate date = LocalDate.of(2024, 2, 5).plusDays(i); //pongo la fecha de inicio a mano ya que no lo puedo coger de los datos porque no lo especifica
+            for (int k = 0; k<2; k++) {
+                for (Role role: roles) {
+                    final Service service = new Service();
+                    service.setCode(String.format("%04d", code));
+                    code++;
+                    if (k == 0) {
+                        service.setStartingTime(OffsetDateTime.of(date, LocalTime.of(07, 30), ZoneOffset.UTC));
+                        service.setFinishingTime(OffsetDateTime.of(date, LocalTime.of(14, 30), ZoneOffset.UTC));
+                    } else {
+                        service.setStartingTime(OffsetDateTime.of(date, LocalTime.of(14, 30), ZoneOffset.UTC));
+                        service.setFinishingTime(OffsetDateTime.of(date, LocalTime.of(21, 30), ZoneOffset.UTC));
+                    }
+                    service.setRequiredEmployees(1);
+                    service.setRole(role);
+                    listOfServices.add(service);
+                }
+            }
+        }
+
+        //Añado los vuelos seleccionados
+        for (int i = 0; i < selectedFlights.size(); i++) { //coge el tamaño del selectedFlights
             String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] => hora
             // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
             // " + flightInfo[2]);
@@ -50,13 +80,15 @@ public class InstanceCreator {
                 serviceFinishingTime = flightTime.plusHours(1); // 1 hora después de la llegada
             }
             final Service newService = new Service();
-            newService.setCode(String.format("%04d", i));
+            newService.setCode(String.format("%04d", i+4*numberOfDays));
             newService.setStartingTime(serviceStartingTime);
             newService.setFinishingTime(serviceFinishingTime);
             newService.setRequiredEmployees(1);
             newService.setRole(Role.AGENT);
             listOfServices.add(newService);
         }
+
+
         Collections.sort(listOfServices);
         for (int i = 0; i < listOfServices.size(); i++) {
             Service service = listOfServices.get(i);
@@ -65,12 +97,24 @@ public class InstanceCreator {
             optimizationProblem.setServiceRole(i, service.getRole());
             optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
         }
+
+        // Creo los 4 empleados adicionales
+        int employeecode = 0;
+        for (int i = 0; i<2*numberOfDays; i++){
+            for (Role role: roles) {
+                optimizationProblem.addEmployeeRoles(employeecode, role);
+                optimizationProblem.setEmployeeCode(employeecode, String.format("%04d", employeecode));
+                employeecode++;
+            }
+        }
+
         // creo x empleados nuevos, rol AGENTE
         // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-        for (int i = 0; i < numberOfEmployees; i++) {
+        for (int i = 4*numberOfDays; i < numberOfEmployees; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.AGENT);
-            optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+            optimizationProblem.setEmployeeCode(i, String.format("%04d", i)); 
         }
+
         optimizationProblem.computeEmployeesAvailability(List.of());
         return optimizationProblem;
     }
