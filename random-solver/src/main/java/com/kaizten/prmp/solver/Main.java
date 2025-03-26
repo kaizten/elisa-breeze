@@ -44,18 +44,20 @@ public class Main {
         final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/SPC-instance.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
 
-        PersonsReducedMobilityProblem newOptimizationProblem = new PersonsReducedMobilityProblem(100, 5000);
-
-
-
         System.out.println(optimizationProblem); 
         AbstractSolver solver = new ReferenceSolver(optimizationProblem);
         //AbstractSolver solver = new RandomSolver(optimizationProblem);
         //AbstractSolver solver = new RandomSolver2(optimizationProblem);
         //AbstractSolver solver = new RandomSolver3(optimizationProblem);
+        
+        long startTime = System.nanoTime();  // Iniciar medición tiempo
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
+        long endTime = System.nanoTime();  // Finalizar medición tiempo
+        long duration = endTime - startTime; // Tiempo en nanosegundos
+        double optimizationDurationInSeconds = duration / 1000000; // Convertir a milisegundos
+        
         System.out.println(solution);
-        /*JSONObject output = null;
+        JSONObject output = null;
         int statusCode = 0;
         if (solution != null) {
             System.out.println("Solution found");
@@ -64,6 +66,7 @@ public class Main {
             output = KaiztenSolutionValidator.noSolutionValidationErrors().toJson();
             statusCode = 1;
         }
-        KaiztenJson.print(output);*/
+        KaiztenJson.print(output);
+        System.out.println("Duración del algoritmo de optimización: " + optimizationDurationInSeconds + " milisegundos");
     }
 }

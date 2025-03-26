@@ -6,8 +6,12 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
+import com.kaizten.utils.io.KaiztenFile;
 
 public class Main {
 
@@ -15,7 +19,7 @@ public class Main {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
         final String airport = "SPC";
-        final int numberOfServices = 100;
+        final int numberOfServices = 201;
         final Map<String, Map<String, List<String>>> flights = XlsxReader.readXlsx(xlsFile, airport);
         final int numberOfDays = flights.size();
         final ServicesSelector selector = new ServicesSelector();
@@ -26,12 +30,11 @@ public class Main {
                 selectedFlights,
                 airport,
                 numberOfDays);
+
         System.out.println(optimizationProblem);
-        // PersonsReducedMobilityProblemToJson toJson = new
-        // PersonsReducedMobilityProblemToJson();
-        // JSONObject json = toJson.apply(newInstance);
-        // KaiztenFile.writeToFile(new File("data/" + airport + "-instance.json"),
-        // json); // GUARDAR JSON EN FICHERO
+        PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
+        JSONObject json = toJson.apply(optimizationProblem);
+        KaiztenFile.writeToFile(new File("data/" + airport + "-instance.json"), json);
 
         // KaiztenFile.writeToFile(new File("data/SPC-instance.json"), json); // GUARDAR
         // JSON EN FICHERO

@@ -38,11 +38,25 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         PersonsReducedMobilityProblem optimizationProblem = solution.getOptimizationProblem();
         JSONArray jsonDates = new JSONArray();
         JSONObject jsonGlobalIndicators = new JSONObject();
+
+        //Para calculo de media de productividad
+        double totalWorkProductivity = 0.0;
+        double totalProductivityUsedTime = 0.0;
+        int countProductivityValues = 0;
+
         for (LocalDate date : optimizationProblem.getDatesOfServices()) {
             JSONObject jsonDate = new JSONObject();
             JSONArray jsonEmployees = new JSONArray();
             for (int e = 0; e < optimizationProblem.getNumberOfEmployees(); e++) {
                 if (solution.hasAssignedServices(date, e)) {
+                    //Calculo productividad media
+                    double workProductivity = solution.getWorkProductivity(date, e);
+                    double productivityUsedTime = solution.getProductivityUsedTime(date, e);
+                    totalProductivityUsedTime += productivityUsedTime;
+                    totalWorkProductivity += workProductivity;
+                    countProductivityValues++;
+
+
                     JSONObject jsonEmployee = new JSONObject();
                     // Code
                     jsonEmployee.put(JsonConstants.CODE, optimizationProblem.getEmployeeCode(e));
@@ -133,6 +147,11 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
             jsonDates.put(jsonDate);
         }
         jsonSolution.put(JsonConstants.DATES, jsonDates);
+
+        //calculate average productivity
+        double averageWorkProductivity = (countProductivityValues > 0) ? (totalWorkProductivity / countProductivityValues) : 0.0;
+        double averageProductivityUsedTime = (countProductivityValues > 0) ? (totalProductivityUsedTime / countProductivityValues) : 0.0;
+
         // Global indicators
         Map<String, Object> coveredFlights = new HashMap<>();
         coveredFlights.put(JsonConstants.ABSOLUTE, solution.getNumberOfCoveredServices());
@@ -145,6 +164,10 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         jsonGlobalIndicators.put(JsonConstants.COVERED_SERVICES, coveredFlights);
         jsonGlobalIndicators.put(JsonConstants.UNCOVERED_SERVICES, uncoveredFlights);
         jsonSolution.put(JsonConstants.INDICATORS, jsonGlobalIndicators);
+
+        //new averages
+        jsonGlobalIndicators.put(JsonConstants.AVERAGE_WORK_PRODUCTIVITY, averageWorkProductivity);
+        jsonGlobalIndicators.put(JsonConstants.AVERAGE_PRODUCTIVITY_USED_TIME, averageProductivityUsedTime);
         return jsonSolution;
     }
 }
