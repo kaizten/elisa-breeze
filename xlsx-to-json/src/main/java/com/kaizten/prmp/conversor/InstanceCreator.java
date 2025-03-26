@@ -21,12 +21,12 @@ public class InstanceCreator {
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size();
         final int numberOfEmployees = numberOfServices + 3 * numberOfDays;
-        PersonsReducedMobilityProblem newInstance = new PersonsReducedMobilityProblem(
+        final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
-        newInstance.setAirport(airport);
+        optimizationProblem.setAirport(airport);
         // crear las fechas y hora de inicio y fin de los servicios
-        List<Service> xxx = new ArrayList<>();
+        final List<Service> listOfServices = new ArrayList<>();
         for (int i = 0; i < numberOfServices; i++) {
             String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] => hora
             // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
@@ -49,29 +49,29 @@ public class InstanceCreator {
                 serviceStartingTime = flightTime.minusMinutes(10); // 10 minutos antes de la llegada
                 serviceFinishingTime = flightTime.plusHours(1); // 1 hora después de la llegada
             }
-            Service newService = new Service();
+            final Service newService = new Service();
             newService.setCode(String.format("%04d", i));
             newService.setStartingTime(serviceStartingTime);
             newService.setFinishingTime(serviceFinishingTime);
             newService.setRequiredEmployees(1);
             newService.setRole(Role.AGENT);
-            xxx.add(newService);
+            listOfServices.add(newService);
         }
-        Collections.sort(xxx);
-        for (int i = 0; i < xxx.size(); i++) {
-            Service service = xxx.get(i);
-            newInstance.setServiceCode(i, service.getCode());
-            newInstance.setServiceTimes(i, service.getStartingTime(), service.getFinishingTime());
-            newInstance.setServiceRole(i, service.getRole());
-            newInstance.setServiceRequiredEmployees(i, service.getRequiredEmployees());
+        Collections.sort(listOfServices);
+        for (int i = 0; i < listOfServices.size(); i++) {
+            Service service = listOfServices.get(i);
+            optimizationProblem.setServiceCode(i, service.getCode());
+            optimizationProblem.setServiceTimes(i, service.getStartingTime(), service.getFinishingTime());
+            optimizationProblem.setServiceRole(i, service.getRole());
+            optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
         }
         // creo x empleados nuevos, rol AGENTE
         // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
         for (int i = 0; i < numberOfEmployees; i++) {
-            newInstance.addEmployeeRoles(i, Role.AGENT);
-            newInstance.setEmployeeCode(i, String.format("%04d", i));
+            optimizationProblem.addEmployeeRoles(i, Role.AGENT);
+            optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        newInstance.computeEmployeesAvailability(List.of());
-        return newInstance;
+        optimizationProblem.computeEmployeesAvailability(List.of());
+        return optimizationProblem;
     }
 }
