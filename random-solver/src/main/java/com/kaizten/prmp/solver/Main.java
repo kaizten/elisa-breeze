@@ -41,7 +41,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
-        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/SPC-instance.json";
+        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/MAD-instance.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
 
         System.out.println(optimizationProblem); 

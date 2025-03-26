@@ -18,9 +18,17 @@ public class Main {
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
-        final String airport = "TFS";
-        final int numberOfServices = 3197;
-        final Map<String, Map<String, List<String>>> flights = XlsxReader.readXlsx(xlsFile, airport);
+        final String airport = "MAD";
+        final int numberOfServices = 7895;
+        final Map<String, Map<String, List<String>>> flights;
+        
+        if (airport == "MAD"){
+            flights = XlsxReader2.readXlsx(xlsFile, airport);
+        }
+        else{
+            flights = XlsxReader.readXlsx(xlsFile, airport);
+        }
+
         final int numberOfDays = flights.size();
         final ServicesSelector selector = new ServicesSelector();
         List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
