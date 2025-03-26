@@ -24,7 +24,157 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "deh109s8oydc0b"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.indicators.averageWorkProductivity"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Average Work Productivity (%)",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "deh109s8oydc0b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "deh109s8oydc0b"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.indicators.averageProductivityUsedTime"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Average Productivity Used Time (%)",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -47,7 +197,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 1,
       "options": {
@@ -83,7 +233,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -114,7 +264,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "description": "Resumen de cuando hay y cuando no hay servicios",
       "fieldConfig": {
@@ -155,7 +305,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 19
       },
       "id": 8,
       "options": {
@@ -180,7 +330,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -227,7 +377,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -272,8 +422,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -288,7 +437,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 31
       },
       "id": 11,
       "options": {
@@ -310,7 +459,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -400,7 +549,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -449,8 +598,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -465,7 +613,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 44
       },
       "id": 12,
       "options": {
@@ -487,7 +635,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -557,7 +705,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -569,8 +717,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -581,7 +728,7 @@
         "h": 54,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 54
       },
       "id": 9,
       "options": {
@@ -600,7 +747,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -647,7 +794,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -659,8 +806,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -675,7 +821,7 @@
         "h": 55,
         "w": 24,
         "x": 0,
-        "y": 100
+        "y": 108
       },
       "id": 6,
       "options": {
@@ -697,7 +843,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -730,7 +876,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -763,8 +909,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -783,7 +928,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 155
+        "y": 163
       },
       "id": 2,
       "options": {
@@ -816,7 +961,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -858,7 +1003,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -891,8 +1036,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -911,7 +1055,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 165
+        "y": 173
       },
       "id": 13,
       "options": {
@@ -944,7 +1088,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -986,7 +1130,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -1020,8 +1164,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1032,7 +1175,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 175
+        "y": 183
       },
       "id": 4,
       "options": {
@@ -1065,7 +1208,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -1117,7 +1260,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "fieldConfig": {
         "defaults": {
@@ -1151,8 +1294,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1176,7 +1318,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 186
+        "y": 194
       },
       "id": 7,
       "options": {
@@ -1209,7 +1351,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -1253,7 +1395,7 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "begi4xy923qpsb"
+        "uid": "deh109s8oydc0b"
       },
       "description": "Ordenado por el Tiempo disponible de cada empleado",
       "fieldConfig": {
@@ -1287,8 +1429,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1324,7 +1465,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 197
+        "y": 205
       },
       "id": 3,
       "options": {
@@ -1356,7 +1497,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "begi4xy923qpsb"
+            "uid": "deh109s8oydc0b"
           },
           "fields": [
             {
@@ -1405,13 +1546,13 @@
     "list": []
   },
   "time": {
-    "from": "2024-02-05T07:30:00.000Z",
-    "to": "2024-02-11T21:30:00.000Z"
+    "from": "2024-02-05T00:30:00.000Z",
+    "to": "2024-02-11T23:59:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Dashboard-SPCsolution",
   "uid": "begi4jxzj18g0e",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
