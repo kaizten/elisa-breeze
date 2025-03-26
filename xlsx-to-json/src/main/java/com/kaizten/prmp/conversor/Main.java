@@ -13,8 +13,8 @@ public class Main {
     
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         
-        String airport = "TFS";
-        int numberOfServices = 3197;
+        String airport = "SPC";
+        int numberOfServices = 201;
 
         XlsxReader reader = new XlsxReader();
         ServicesSelector selector = new ServicesSelector();
