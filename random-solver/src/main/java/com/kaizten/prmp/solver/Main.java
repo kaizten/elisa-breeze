@@ -67,6 +67,6 @@ public class Main {
             statusCode = 1;
         }
         KaiztenJson.print(output);
-        System.out.println("Duración del algoritmo de optimización: " + optimizationDurationInSeconds + " milisegundos");
+        System.out.println("Tiempo ejecución: " + optimizationDurationInSeconds + " milisegundos");
     }
 }
