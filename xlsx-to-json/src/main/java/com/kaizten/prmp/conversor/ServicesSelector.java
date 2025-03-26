@@ -1,6 +1,9 @@
 package com.kaizten.prmp.conversor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -36,6 +39,9 @@ public class ServicesSelector {
                
                 for (String hour : flightHours) { // Para cada hora
                     String cleanHour = hour.replaceAll("^\\*?|\\s*\\(\\d+\\)\\s*|\\*?$", "").trim(); // Nos quedamos solo con la hora
+                    if (cleanHour.length() == 4) {
+                        cleanHour = "0" + cleanHour; // Agregar un cero al principio si la hora tiene solo un dígito
+                    }
                     hours.add(date + "/" + flightType + "/" + cleanHour);  // Guardamos como fecha, tipo y hora
                 }
             }
@@ -50,6 +56,16 @@ public class ServicesSelector {
             selectedFlights.add(selectedFlight);
         }
 
+        // Ordenar los vuelos seleccionados por fecha y hora
+        selectedFlights.sort(Comparator.comparing(flight -> {
+            // Formato de fecha y hora: "yyyy-MM-dd HH:mm"
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String flightDateTime = flight.split("/")[0] + " " + flight.split("/")[2];  // Solo la fecha y hora
+            LocalDateTime dateTime = LocalDateTime.parse(flightDateTime, formatter);  // Parsear fecha y hora
+            return dateTime;  // Comparar por LocalDateTime
+        }));
+        
+        
         // Retornar la lista de vuelos seleccionados
         return selectedFlights;
     }

@@ -41,7 +41,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
-        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/TFS-instance.json";
+        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/SPC-instance.json";
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
 
         PersonsReducedMobilityProblem newOptimizationProblem = new PersonsReducedMobilityProblem(100, 5000);
@@ -55,7 +55,7 @@ public class Main {
         //AbstractSolver solver = new RandomSolver3(optimizationProblem);
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
         System.out.println(solution);
-        JSONObject output = null;
+        /*JSONObject output = null;
         int statusCode = 0;
         if (solution != null) {
             System.out.println("Solution found");
@@ -64,6 +64,6 @@ public class Main {
             output = KaiztenSolutionValidator.noSolutionValidationErrors().toJson();
             statusCode = 1;
         }
-        KaiztenJson.print(output);
+        KaiztenJson.print(output);*/
     }
 }

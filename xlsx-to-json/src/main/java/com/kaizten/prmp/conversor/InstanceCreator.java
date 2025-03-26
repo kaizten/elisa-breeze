@@ -4,16 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import org.json.JSONObject;
 
@@ -51,7 +49,7 @@ public class InstanceCreator {
     }
 
     public void createInstance(List<String> selectedFlights, String airport, int numberOfDays)throws JsonProcessingException, IOException, URISyntaxException {
-        
+
         int numberOfServices = selectedFlights.size();
         int numberOfEmployees = numberOfServices + 3*numberOfDays; 
 
@@ -65,15 +63,10 @@ public class InstanceCreator {
 
             String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] => hora
 
-            System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + " " + flightInfo[2]);
+            //System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + " " + flightInfo[2]);
 
-            // Convertir la fecha y la hora a LocalDate y LocalTime
+
             String time = flightInfo[2].trim();
-            // Asegurarse de que la hora tiene 2 digitos
-            if (time.length() == 4) {
-                time = "0" + time; // Agregar un cero al principio si la hora tiene solo un dígito
-            }
-
             LocalDate localDate = LocalDate.parse(flightInfo[0].trim()); // fecha
             LocalTime localTime = LocalTime.parse(time); // hora
             
@@ -84,7 +77,7 @@ public class InstanceCreator {
             OffsetDateTime flightTime = localDateTime.atOffset(ZoneOffset.UTC);
 
             // Ahora, offsetDateTime contiene la fecha y hora con el Offset UTC
-            System.out.println("OffsetDateTime: " + flightTime);
+            //System.out.println("OffsetDateTime: " + flightTime);
 
             OffsetDateTime serviceStartingTime;
             OffsetDateTime serviceFinishingTime;
@@ -111,6 +104,8 @@ public class InstanceCreator {
             newInstance.setEmployeeCode(i, String.format("%04d", i));
         }
         newInstance.computeEmployeesAvailability(List.of());
+
+        
                     
         System.out.println(newInstance);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
