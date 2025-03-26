@@ -64,8 +64,6 @@ public class ServicesSelector {
             LocalDateTime dateTime = LocalDateTime.parse(flightDateTime, formatter);  // Parsear fecha y hora
             return dateTime;  // Comparar por LocalDateTime
         }));
-        
-        
         // Retornar la lista de vuelos seleccionados
         return selectedFlights;
     }

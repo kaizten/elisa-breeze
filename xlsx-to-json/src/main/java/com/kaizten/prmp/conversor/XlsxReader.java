@@ -17,8 +17,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class XlsxReader {
 
-    public Map<String, Map<String, List<String>>> readXlsx(String airport) {
-        String filePath = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/flights.xlsx";
+    public static Map<String, Map<String, List<String>>> readXlsx(File xlsx, String airport) {
+        
         Map<String, Map<String, List<String>>> flight = new HashMap<>();
         String[] days = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
@@ -30,7 +30,7 @@ public class XlsxReader {
         }
 
         // Leer archivo
-        try (FileInputStream file = new FileInputStream(new File(filePath))) {
+        try (FileInputStream file = new FileInputStream(xlsx)) {
             // Crear el libro de trabajo (workbook) => lo usa apache poi para leer el archivo
             Workbook workbook = new XSSFWorkbook(file);
 
