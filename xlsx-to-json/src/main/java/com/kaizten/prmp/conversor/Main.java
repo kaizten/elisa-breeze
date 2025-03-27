@@ -12,7 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
 import com.kaizten.utils.io.KaiztenFile;
-import com.kaizten.prmp.domain.counter.FlightCounterTFS; // Ensure this is the correct package for FlightCounterTFS
 
 public class Main {
 
