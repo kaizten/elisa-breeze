@@ -34,13 +34,13 @@ de 00-08: 1 conductor, 1 coordinador
 de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
-6-7: 1 conductor
-10-13: 3 conductores, 1 coordinador
-13-15: 7 conductores, 2 coordinadores
-16-17: 3 conductores, 1 coordinador
-17-19: 7 conductores, 2 coordinadores
-19-20: 3 conductores, 1 coordinador
-20-22: 1 conductor
+6-7: 2 conductor
+10-13: 4 conductores, 2 coordinador
+13-15: 8 conductores, 3 coordinadores
+16-17: 4 conductores, 2 coordinador
+17-19: 8 conductores, 3 coordinadores
+19-20: 4 conductores, 2 coordinador
+20-22: 2 conductor
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -62,10 +62,10 @@ de 00-08: 1 conductor, 1 coordinador
 de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
-9-10: 1 conductor
-10-14: 7 conductores, 2 coordinadores
-14-19: 7 conductores, 2 coordinadores
-19-20: 3 conductores, 1 coordinador
+9-10: 2 conductor
+10-14: 8 conductores, 3 coordinadores
+14-19: 8 conductores, 3 coordinadores
+19-20: 4 conductores, 2 coordinador
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -89,9 +89,9 @@ de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
 8-10: 1 conductor
-10-14: 7 conductores, 2 coordinadores
-14-19: 7 conductores, 2 coordinadores
-19-20: 3 conductores, 1 coordinador
+10-14: 8 conductores, 3 coordinadores
+14-19: 8 conductores, 3 coordinadores
+19-20: 4 conductores, 2 coordinador
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -114,11 +114,11 @@ de 00-08: 1 conductor, 1 coordinador
 de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
-9-10: 3 conductores, 1 coordinador
-10-17: 7 conductores, 2 coordinadores
-17-18: 3 conductores, 1 coordinador
-18-19: 7 conductores, 2 coordinadores
-19-20: 3 conductores, 1 coordinador
+9-10: 4 conductores, 2 coordinador
+10-17: 8 conductores, 3 coordinadores
+17-18: 4 conductores, 2 coordinador
+18-19: 8 conductores, 3 coordinadores
+19-20: 4 conductores, 2 coordinador
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -143,12 +143,12 @@ de 00-08: 1 conductor, 1 coordinador
 de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
-1-2: 1 conductor
-8-10: 1 conductor
-10-11: 3 conductores, 1 coordinador
-11-15: 7 conductores, 2 coordinadores
-15-20: 7 conductores, 2 coordinadores
-20-21: 1 conductor
+1-2: 2 conductor
+8-10: 2 conductor
+10-11: 4 conductores, 2 coordinador
+11-15: 8 conductores, 3 coordinadores
+15-20: 8 conductores, 3 coordinadores
+20-21: 2 conductor
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -172,11 +172,11 @@ de 00-08: 1 conductor, 1 coordinador
 de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
-8-9: 1 conductor
-9-10: 3 conductores, 1 coordinador
-10-15: 7 conductores, 2 coordinadores
-15-20: 7 conductores, 2 coordinadores
-20-21: 3 conductores, 1 coordinador
+8-9: 2 conductor
+9-10: 4 conductores, 2 coordinador
+10-15: 8 conductores, 3 coordinadores
+15-20: 8 conductores, 3 coordinadores
+20-21: 4 conductores, 2 coordinador
 
 
 ----------------------------------------------------------------------------------------------------------------------------
@@ -201,8 +201,8 @@ de 00-08: 1 conductor, 1 coordinador
 de 08-16: 1 conductor, 1 coordinador
 de 16-24: 1 conductor, 1 coordinador
 
-8-9: 1 conductor
-9-10: 3 conductores, 1 coordinador
-10-16: 7 conductores, 2 coordinadores
-16-20: 3 conductores, 1 coordinador
-20-21: 1 conductor
+8-9: 2 conductor
+9-10: 4 conductores, 2 coordinador
+10-16: 8 conductores, 3 coordinadores
+16-20: 4 conductores, 2 coordinador
+20-21: 2 conductor

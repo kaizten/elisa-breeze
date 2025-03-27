@@ -19,7 +19,7 @@ public class Main {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
         final String airport = "TFS";
-        final int numberOfServices = 3197;
+        final int numberOfServices = 3197; //cambiar a valor real una vez funcionando
         final Map<String, Map<String, List<String>>> flights;
         
         if (airport == "MAD"){
@@ -32,7 +32,7 @@ public class Main {
         //FlightCounterTFS flightCounter = new FlightCounterTFS();
         //flightCounter.flightCounter(flights);
 
-
+        System.out.println(flights);
         final int numberOfDays = flights.size();
         final ServicesSelector selector = new ServicesSelector();
         List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
