@@ -36,7 +36,7 @@ public class ServicesSelector {
             for (Map.Entry<String, List<String>> info : flightsInfo.entrySet()) { // Recorre la lista de vuelos
                 String flightType = info.getKey();  // Llegada o salida
                 List<String> flightHours = info.getValue(); // Lista de horas
-               
+
                 for (String hour : flightHours) { // Para cada hora
                     String cleanHour = hour.replaceAll("^\\*?|\\s*\\(\\d+\\)\\s*|\\*?$", "").trim(); // Nos quedamos solo con la hora
                     if (cleanHour.length() == 4) {
@@ -47,11 +47,10 @@ public class ServicesSelector {
             }
         }
         // Seleccion de vuelos aleatorios
-        for (int i = 0; i < numberOfServices && !hours.isEmpty(); i++) {
+        for (int i = 0; i <= numberOfServices; i++) { 
             int index = random.nextInt(hours.size());
             String selectedFlight = hours.get(index);
-            hours.remove(index);  // Eliminar el vuelo seleccionado para no repetirlo
-
+        
             // Añadir el vuelo seleccionado a la lista
             selectedFlights.add(selectedFlight);
         }

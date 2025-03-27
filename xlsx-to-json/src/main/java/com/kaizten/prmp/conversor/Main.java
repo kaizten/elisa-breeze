@@ -30,14 +30,14 @@ public class Main {
             flights = XlsxReader.readXlsx(xlsFile, airport);
         }
 
-        FlightCounterTFS flightCounter = new FlightCounterTFS();
-        flightCounter.flightCounter(flights);
+        //FlightCounterTFS flightCounter = new FlightCounterTFS();
+        //flightCounter.flightCounter(flights);
 
 
-        /*final int numberOfDays = flights.size();
+        final int numberOfDays = flights.size();
         final ServicesSelector selector = new ServicesSelector();
         List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
-        System.out.println("selected Flights: " + selectedFlights);
+        System.out.println("selected Flights: " + selectedFlights.size());
 
         PersonsReducedMobilityProblem optimizationProblem;
         if(airport =="SPC"){
@@ -71,6 +71,6 @@ public class Main {
         // KaiztenFile.writeToFile(new File("data/SPC-instance.json"), json); // GUARDAR
         // JSON EN FICHERO
         // KaiztenJson.prettyPrint(json); // IMPRIMIR JSON POR PANTALLA
-    */
+    
 }
 }
