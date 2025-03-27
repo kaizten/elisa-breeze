@@ -12,14 +12,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
 import com.kaizten.utils.io.KaiztenFile;
+import com.kaizten.prmp.domain.counter.FlightCounterTFS; // Ensure this is the correct package for FlightCounterTFS
 
 public class Main {
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
-        final String airport = "SPC";
-        final int numberOfServices = 201;
+        final String airport = "TFS";
+        final int numberOfServices = 3197;
         final Map<String, Map<String, List<String>>> flights;
         
         if (airport == "MAD"){
@@ -29,7 +30,11 @@ public class Main {
             flights = XlsxReader.readXlsx(xlsFile, airport);
         }
 
-        final int numberOfDays = flights.size();
+        FlightCounterTFS flightCounter = new FlightCounterTFS();
+        flightCounter.flightCounter(flights);
+
+
+        /*final int numberOfDays = flights.size();
         final ServicesSelector selector = new ServicesSelector();
         List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
         System.out.println("selected Flights: " + selectedFlights);
@@ -66,5 +71,6 @@ public class Main {
         // KaiztenFile.writeToFile(new File("data/SPC-instance.json"), json); // GUARDAR
         // JSON EN FICHERO
         // KaiztenJson.prettyPrint(json); // IMPRIMIR JSON POR PANTALLA
-    }
+    */
+}
 }

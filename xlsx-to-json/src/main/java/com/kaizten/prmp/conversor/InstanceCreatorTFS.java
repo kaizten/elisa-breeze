@@ -13,6 +13,8 @@ import com.kaizten.prmp.domain.Service;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
 
+//DUDAS: añadir servicios adicionales como ficticios? en el de spc no lo hice como ficticio
+
 public class InstanceCreatorTFS {
 
     public PersonsReducedMobilityProblem createInstance(

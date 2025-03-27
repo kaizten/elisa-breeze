@@ -1,0 +1,208 @@
+DATOS DE TFS:
+Siempre hay 1 conductor
+Si hay Entre 5 y 10 operaciones a la hora --> 2 conductores
+Si hay Entre 10 y 20 operaciones a la hora --> 4 conductores
+Si hay Más de 20 operaciones a la hora --> 8 conductores
+
+Siempre hay 1 Coordinador
+Si hay Entre 10 y 20 operaciones a la hora --> 2 Coordinadores
+si hay Mas de 20 operaciones a la hora --> 3 Coordinadores
+
+
+AÑADIR EN TODO MOMENTO 1 CONDUCTOR Y 1 COORDINADOR, para que siempre haya al menos 1 de cada
+Y luego para añadir estos será siempre -1 en el número de conductores y coordinadores que se necesitan porq ya habrá uno
+
+----------------------------------------------------------------------------------------------------------------------------
+ 
+Lunes:
+6: 5 vuelos => 2 conductores
+10: 16 vuelos => 4 conductores, 2 coordinadores
+11: 20 vuelos => 4 conductores, 2 coordinadores
+12: 19 vuelos => 4 conductores, 2 coordinadores
+13: 30 vuelos => 8 conductores, 3 coordinadores
+14: 22 vuelos => 8 conductores, 3 coordinadores
+15: 26 vuelos => 8 conductores, 3 coordinadores
+16: 20 vuelos => 4 conductores, 2 coordinadores
+17: 23 vuelos => 8 conductores, 3 coordinadores
+18: 23 vuelos => 8 conductores, 3 coordinadores
+19: 11 vuelos => 4 conductores, 2 coordinadores
+20: 5 vuelos => 2 conductores
+21: 5 vuelos => 2 conductores
+
+**RESUMEN de SERVICIOS A AÑADIR LUNES:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+6-7: 1 conductor
+10-13: 3 conductores, 1 coordinador
+13-15: 7 conductores, 2 coordinadores
+16-17: 3 conductores, 1 coordinador
+17-19: 7 conductores, 2 coordinadores
+19-20: 3 conductores, 1 coordinador
+20-22: 1 conductor
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Martes:
+9: 7 vuelos => 2 conductores
+10: 27 vuelos => 8 conductores, 3 coordinadores
+11: 23 vuelos => 8 conductores, 3 coordinadores
+12: 26 vuelos => 8 conductores, 3 coordinadores
+13: 32 vuelos => 8 conductores, 3 coordinadores
+14: 30 vuelos => 8 conductores, 3 coordinadores
+15: 35 vuelos => 8 conductores, 3 coordinadores
+16: 32 vuelos => 8 conductores, 3 coordinadores
+17: 27 vuelos => 8 conductores, 3 coordinadores
+18: 28 vuelos => 8 conductores, 3 coordinadores
+19: 11 vuelos => 4 conductores, 2 coordinadores
+
+**RESUMEN de SERVICIOS A AÑADIR MARTES:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+9-10: 1 conductor
+10-14: 7 conductores, 2 coordinadores
+14-19: 7 conductores, 2 coordinadores
+19-20: 3 conductores, 1 coordinador
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Miércoles:
+8: 5 vuelos => 2 conductores
+9: 9 vuelos => 2 conductores
+10: 26 vuelos => 8 conductores, 3 coordinadores
+11: 22 vuelos => 8 conductores, 3 coordinadores
+12: 29 vuelos => 8 conductores, 3 coordinadores
+13: 26 vuelos => 8 conductores, 3 coordinadores
+14: 27 vuelos => 8 conductores, 3 coordinadores
+15: 29 vuelos => 8 conductores, 3 coordinadores
+16: 30 vuelos => 8 conductores, 3 coordinadores
+17: 27 vuelos => 8 conductores, 3 coordinadores
+18: 26 vuelos => 8 conductores, 3 coordinadores
+19: 13 vuelos => 4 conductores, 2 coordinadores
+
+**RESUMEN de SERVICIOS A AÑADIR MIERCOLES:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+8-10: 1 conductor
+10-14: 7 conductores, 2 coordinadores
+14-19: 7 conductores, 2 coordinadores
+19-20: 3 conductores, 1 coordinador
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+Jueves:
+9: 11 vuelos => 4 conductores, 2 coordinadores
+10: 28 vuelos => 8 conductores, 3 coordinadores
+11: 26 vuelos => 8 conductores, 3 coordinadores
+12: 23 vuelos => 8 conductores, 3 coordinadores
+13: 27 vuelos => 8 conductores, 3 coordinadores
+14: 31 vuelos => 8 conductores, 3 coordinadores
+15: 26 vuelos => 8 conductores, 3 coordinadores
+16: 29 vuelos => 8 conductores, 3 coordinadores
+17: 19 vuelos => 4 conductores, 2 coordinadores
+18: 26 vuelos => 8 conductores, 3 coordinadores
+19: 13 vuelos => 4 conductores, 2 coordinadores
+
+**RESUMEN de SERVICIOS A AÑADIR JUEVES:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+9-10: 3 conductores, 1 coordinador
+10-17: 7 conductores, 2 coordinadores
+17-18: 3 conductores, 1 coordinador
+18-19: 7 conductores, 2 coordinadores
+19-20: 3 conductores, 1 coordinador
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Viernes:
+1: 5 vuelos => 2 conductores
+8: 7 vuelos => 2 conductores
+9: 8 vuelos => 2 conductores
+10: 20 vuelos => 4 conductores, 2 coordinadores
+11: 27 vuelos => 8 conductores, 3 coordinadores
+12: 25 vuelos => 8 conductores, 3 coordinadores
+13: 30 vuelos => 8 conductores, 3 coordinadores
+14: 26 vuelos => 8 conductores, 3 coordinadores
+15: 23 vuelos => 8 conductores, 3 coordinadores
+16: 25 vuelos => 8 conductores, 3 coordinadores
+17: 26 vuelos => 8 conductores, 3 coordinadores
+18: 27 vuelos => 8 conductores, 3 coordinadores
+19: 23 vuelos => 8 conductores, 3 coordinadores
+20: 5 vuelos => 2 conductores
+
+**RESUMEN de SERVICIOS A AÑADIR VIERNES:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+1-2: 1 conductor
+8-10: 1 conductor
+10-11: 3 conductores, 1 coordinador
+11-15: 7 conductores, 2 coordinadores
+15-20: 7 conductores, 2 coordinadores
+20-21: 1 conductor
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Sábado:
+8: 6 vuelos => 2 conductores
+9: 12 vuelos => 4 conductores, 2 coordinadores
+10: 23 vuelos => 8 conductores, 3 coordinadores
+11: 30 vuelos => 8 conductores, 3 coordinadores
+12: 29 vuelos => 8 conductores, 3 coordinadores
+13: 29 vuelos => 8 conductores, 3 coordinadores
+14: 23 vuelos => 8 conductores, 3 coordinadores
+15: 26 vuelos => 8 conductores, 3 coordinadores
+16: 27 vuelos => 8 conductores, 3 coordinadores
+17: 31 vuelos => 8 conductores, 3 coordinadores
+18: 34 vuelos => 8 conductores, 3 coordinadores
+19: 26 vuelos => 8 conductores, 3 coordinadores
+20: 20 vuelos => 4 conductores, 2 coordinadores
+
+**RESUMEN de SERVICIOS A AÑADIR SABADO:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+8-9: 1 conductor
+9-10: 3 conductores, 1 coordinador
+10-15: 7 conductores, 2 coordinadores
+15-20: 7 conductores, 2 coordinadores
+20-21: 3 conductores, 1 coordinador
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Domingo:
+8: 5 vuelos => 2 conductores
+9: 16 vuelos => 4 conductores, 2 coordinadores
+10: 25 vuelos => 8 conductores, 3 coordinadores
+11: 28 vuelos => 8 conductores, 3 coordinadores
+12: 27 vuelos => 8 conductores, 3 coordinadores
+13: 28 vuelos => 8 conductores, 3 coordinadores
+14: 25 vuelos => 8 conductores, 3 coordinadores
+15: 24 vuelos => 8 conductores, 3 coordinadores
+16: 20 vuelos => 4 conductores, 2 coordinadores
+17: 20 vuelos => 4 conductores, 2 coordinadores
+18: 11 vuelos => 4 conductores, 2 coordinadores
+19: 17 vuelos => 4 conductores, 2 coordinadores
+20: 6 vuelos => 2 conductores
+
+**RESUMEN de SERVICIOS A AÑADIR DOMINGO:** 
+de 00-08: 1 conductor, 1 coordinador
+de 08-16: 1 conductor, 1 coordinador
+de 16-24: 1 conductor, 1 coordinador
+
+8-9: 1 conductor
+9-10: 3 conductores, 1 coordinador
+10-16: 7 conductores, 2 coordinadores
+16-20: 3 conductores, 1 coordinador
+20-21: 1 conductor
