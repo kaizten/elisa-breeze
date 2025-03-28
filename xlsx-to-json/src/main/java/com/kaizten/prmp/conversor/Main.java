@@ -19,7 +19,7 @@ public class Main {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
         final String airport = "MAD";
-        final int numberOfServices = 100; //cambiar a valor real una vez funcionando
+        final int numberOfServices = 7895; 
         final Map<String, Map<String, List<String>>> flights;
         
         if (airport == "MAD"){
