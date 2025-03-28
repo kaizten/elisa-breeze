@@ -46,12 +46,12 @@ de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
 de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
 
 
-0: 10 vuelos => 5 conductores, 2 manager, 2 ramp manager
-1: 7 vuelos => 3 conductores
-5: 13 vuelos => 5 conductores, 2 manager, 2 ramp manager
-6-14: 33 vuelos => 8 conductores, 3 manager, 3 ramp manager
-14-22: 74 vuelos => 8 conductores, 3 manager, 3 ramp manager
-22-00: 40 vuelos => 8 conductores, 3 manager, 3 ramp manager
+0-1: => 5 conductores, 2 manager, 2 ramp manager
+1-2:  => 3 conductores
+5-6: => 5 conductores, 2 manager, 2 ramp manager
+6-14:  => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -86,13 +86,13 @@ de 00-08: 2 conductor, 1 coordinador, 1 ramp manager
 de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
 de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
 
-0-1: 20 vuelos => 5 conductores, 2 manager, 2 ramp manager
-1-2: 6 vuelos => 3 conductores
-3-5: 5 vuelos => 3 conductores
-5: 16 vuelos => 5 conductores, 2 manager, 2 ramp manager
-6-14: 31 vuelos => 8 conductores, 3 manager, 3 ramp manager
-14-22: 66 vuelos => 8 conductores, 3 manager, 3 ramp manager
-22-00: 48 vuelos => 8 conductores, 3 manager, 3 ramp manager
+0-1: => 5 conductores, 2 manager, 2 ramp manager
+1-2: => 3 conductores
+3-5: => 3 conductores
+5-6: => 5 conductores, 2 manager, 2 ramp manager
+6-14:  => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager
 
 
 ----------------------------------------------------------------------------------------------------------------------------
@@ -120,6 +120,17 @@ Miércoles:
 22: 53 vuelos => 8 conductores, 3 manager, 3 ramp manager
 23: 41 vuelos => 8 conductores, 3 manager, 3 ramp manager
 
+**RESUMEN de SERVICIOS A AÑADIR MIERCOLES:** 
+de 00-08: 2 conductor, 1 coordinador, 1 ramp manager
+de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
+de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
+
+0-2:=> 3 conductores
+5-6:  => 5 conductores, 2 manager, 2 ramp manager
+6-14:  => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager
+
 ----------------------------------------------------------------------------------------------------------------------------
 
 Jueves:
@@ -146,13 +157,26 @@ Jueves:
 22: 50 vuelos => 8 conductores, 3 manager, 3 ramp manager
 23: 42 vuelos => 8 conductores, 3 manager, 3 ramp manager
 
+**RESUMEN de SERVICIOS A AÑADIR JUEVES:** 
+de 00-08: 2 conductor, 1 coordinador, 1 ramp manager
+de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
+de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
+
+0-2:  => 3 conductores
+3-4: => 3 conductores
+5-6: => 5 conductores, 2 manager, 2 ramp manager
+6-14: => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager
+
+
+
 ----------------------------------------------------------------------------------------------------------------------------
 
 Viernes:
 0: 15 vuelos => 5 conductores, 2 manager, 2 ramp manager
 4: 6 vuelos => 3 conductores
 5: 16 vuelos => 5 conductores, 2 manager, 2 ramp manager
-6: 33 vuelos => 8 conductores, 3 manager, 3 ramp manager
 7: 65 vuelos => 8 conductores, 3 manager, 3 ramp manager
 8: 54 vuelos => 8 conductores, 3 manager, 3 ramp manager
 9: 65 vuelos => 8 conductores, 3 manager, 3 ramp manager
@@ -170,6 +194,18 @@ Viernes:
 21: 50 vuelos => 8 conductores, 3 manager, 3 ramp manager
 22: 56 vuelos => 8 conductores, 3 manager, 3 ramp manager
 23: 45 vuelos => 8 conductores, 3 manager, 3 ramp manager
+
+**RESUMEN de SERVICIOS A AÑADIR VIERNES:** 
+de 00-08: 2 conductor, 1 coordinador, 1 ramp manager
+de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
+de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
+
+0-1: => 5 conductores, 2 manager, 2 ramp manager
+4-5: => 3 conductores
+5-6: => 5 conductores, 2 manager, 2 ramp manager
+6-14: => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -197,6 +233,18 @@ Sábado:
 22: 54 vuelos => 8 conductores, 3 manager, 3 ramp manager
 23: 35 vuelos => 8 conductores, 3 manager, 3 ramp manager
 
+**RESUMEN de SERVICIOS A AÑADIR SABADO:** 
+de 00-08: 2 conductor, 1 coordinador, 1 ramp manager
+de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
+de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
+
+0-1: => 5 conductores, 2 manager, 2 ramp manager
+1-2: => 3 conductores
+5-6: => 5 conductores, 2 manager, 2 ramp manager
+6-14: => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager
+
 ----------------------------------------------------------------------------------------------------------------------------
 
 Domingo:
@@ -220,3 +268,14 @@ Domingo:
 21: 58 vuelos => 8 conductores, 3 manager, 3 ramp manager
 22: 62 vuelos => 8 conductores, 3 manager, 3 ramp manager
 23: 45 vuelos => 8 conductores, 3 manager, 3 ramp manager
+
+**RESUMEN de SERVICIOS A AÑADIR DOMINGO:** 
+de 00-08: 2 conductor, 1 coordinador, 1 ramp manager
+de 08-16: 2 conductor, 1 coordinador, 1 ramp manager
+de 16-24: 2 conductor, 1 coordinador, 1 ramp manager
+
+0-1: => 5 conductores, 2 manager, 2 ramp manager
+5-6: => 5 conductores, 2 manager, 2 ramp manager
+6-14: => 8 conductores, 3 manager, 3 ramp manager
+14-22: => 8 conductores, 3 manager, 3 ramp manager
+22-00: => 8 conductores, 3 manager, 3 ramp manager

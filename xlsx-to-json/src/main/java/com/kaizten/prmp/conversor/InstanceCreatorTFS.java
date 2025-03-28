@@ -20,7 +20,7 @@ public class InstanceCreatorTFS {
             String airport,
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size()+61+6*numberOfDays;  
-        final int numberOfEmployees = numberOfServices + 3 * numberOfDays + 279;
+        final int numberOfEmployees = selectedFlights.size() + 3 * numberOfDays + 280;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
@@ -60,7 +60,6 @@ public class InstanceCreatorTFS {
         //Servicios añadidos manuales dependiendo del número de vuelos: 
 
         //LUNES
-        code++;
         LocalDate monday = LocalDate.of(2024, 2, 5);
 
         final Service newService1 = new Service();
@@ -619,19 +618,20 @@ public class InstanceCreatorTFS {
 
         // creo x empleados nuevos, rol AGENTE
         // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-        for (int i = 0; i < numberOfEmployees-218; i++) {
+        for (int i = 0; i < numberOfEmployees-280; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.AGENT);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
 
         // creo los empleados necesitados para los servicios añadidos (driver y manager)
-        //158 conductores => recuento simple (conte todos los de los servicios, sin tener en cuenta posibles solapamientos, pa tener mas que suficiente)
-        //60 coordinadores
-        for (int i = numberOfEmployees-218; i < numberOfEmployees-60; i++) {
+        //197 conductores => recuento simple (conte todos los de los servicios, sin tener en cuenta posibles solapamientos, pa tener mas que suficiente)
+        //83 coordinadores
+        //280 total extra
+        for (int i = numberOfEmployees-280; i < numberOfEmployees-83; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        for (int i = numberOfEmployees-60; i < numberOfEmployees; i++) {
+        for (int i = numberOfEmployees-83; i < numberOfEmployees; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }

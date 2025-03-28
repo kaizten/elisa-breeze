@@ -42,7 +42,7 @@ public class ServicesSelector {
                     if (cleanHour.length() == 4) {
                         cleanHour = "0" + cleanHour; // Agregar un cero al principio si la hora tiene solo un dígito
                     }
-                    hours.add(date + "/" + flightType + "/" + cleanHour);  // Guardamos como fecha, tipo y hora
+                    hours.add(date + "/" + flightType + "/" + cleanHour.substring(0,5));  // Guardamos como fecha, tipo y hora
                 }
             }
         }
