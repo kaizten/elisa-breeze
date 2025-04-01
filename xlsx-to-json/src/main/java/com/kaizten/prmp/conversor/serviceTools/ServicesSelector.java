@@ -1,4 +1,4 @@
-package com.kaizten.prmp.conversor;
+package com.kaizten.prmp.conversor.serviceTools;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class ServicesSelector {
 
-    public List<String> randomServiceSelector(Map<String, Map<String, List<String>>> flights, int numberOfServices) {
+    public List<String> randomServiceSelector(Map<String, Map<String, List<String>>> flights, double numberOfServices) {
         
         // convertir de dia de la semana a fecha => porque no me lo da como fecha
         Map<String, String> dayToDateMap = Map.of(
@@ -38,8 +38,12 @@ public class ServicesSelector {
                 List<String> flightHours = info.getValue(); // Lista de horas
 
                 for (String hour : flightHours) { // Para cada hora
-                    String cleanHour = hour.replaceAll("^\\*?|\\s*\\(\\d+\\)\\s*|\\*?$", "").trim(); // Nos quedamos solo con la hora
+                    String cleanHour = hour.replaceAll("^\\*?\\s*\\(\\d+\\)\\s*\\*?$", "").trim();
+                    //TODO problema: no coge la expresion, ninguno se acorta a solo la hora.
+                    //System.out.println(cleanHour);
+
                     if (cleanHour.length() == 4) {
+                        System.out.println("LIMPIANDO");
                         cleanHour = "0" + cleanHour; // Agregar un cero al principio si la hora tiene solo un dígito
                     }
                     hours.add(date + "/" + flightType + "/" + cleanHour.substring(0,5));  // Guardamos como fecha, tipo y hora

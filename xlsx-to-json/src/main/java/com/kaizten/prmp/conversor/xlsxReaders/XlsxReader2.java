@@ -1,4 +1,4 @@
-package com.kaizten.prmp.conversor;
+package com.kaizten.prmp.conversor.xlsxReaders;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -15,7 +16,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class XlsxReader {
+public class XlsxReader2 {
+    
+
 
     public static Map<String, Map<String, List<String>>> readXlsx(File xlsx, String airport) {
         
@@ -40,21 +43,21 @@ public class XlsxReader {
                 Row row = sheet.getRow(rowIndex);
                 // Iterar sobre los días
                 for (int i = 0; i < days.length; i++) {
-                    Cell salidaCell = row.getCell(2 * i); //celda de "salidas"
-                    Cell llegadaCell = row.getCell(2 * i + 1); //celda de "llegadas"
+                    Cell salidaCell = row.getCell(8*i); //celda de "salidas"
+                    Cell llegadaCell = row.getCell(8*i+4); //celda de "llegadas"
 
                     // Verificar si la celda no está vacía y añadir al mapa
                     if (salidaCell != null && salidaCell.getCellType() == CellType.STRING) {
                         String salida = salidaCell.getStringCellValue().trim();
-                        if (!salida.isEmpty()) {
-                            flight.get(days[i]).get("Salidas").add(salida);
+                        if (!salida.isEmpty() && salida.length() >= 5 && salida.substring(0, 5).matches("\\d{2}:\\d{2}")) {
+                            flight.get(days[i]).get("Salidas").add(salida.length() >= 5 ? salida.substring(0, 9) : salida);
                         }
                     }
 
                     if (llegadaCell != null && llegadaCell.getCellType() == CellType.STRING) {
                         String llegada = llegadaCell.getStringCellValue().trim();
-                        if (!llegada.isEmpty()) {
-                            flight.get(days[i]).get("Llegadas").add(llegada);
+                        if (!llegada.isEmpty() && llegada.length() >= 5 && llegada.substring(0, 5).matches("\\d{2}:\\d{2}")) {
+                            flight.get(days[i]).get("Llegadas").add(llegada.length() >= 5 ? llegada.substring(0, 9) : llegada);
                         }
                     }
                 }
