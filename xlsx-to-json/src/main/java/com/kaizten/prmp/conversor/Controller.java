@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class Controller {
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
-        /*String[] airports = {"SPC", "TFS", "MAD"};
+        String[] airports = {"SPC", "TFS", "MAD"};
         double[] percentages = {0.5, 1, 1.5, 2};
         
         
@@ -22,11 +22,7 @@ public class Controller {
                 //}
 
             }
-        }*/
-        String[] parameters = {String.valueOf(0.5), "SPC", String.valueOf(0)};
-        System.out.println(0+ ": Ejecutando Main con porcentaje: " + 0.5 + " y aeropuerto: " + "SPC");
-        Main.main(parameters);
-        System.out.println("-------------------------------------------------");
+        }
     }
 }
 

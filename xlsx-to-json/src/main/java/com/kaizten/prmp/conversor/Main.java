@@ -75,11 +75,8 @@ public class Main {
         System.out.println(optimizationProblem);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
         JSONObject json = toJson.apply(optimizationProblem);
-        KaiztenFile.writeToFile(new File("data/"+ airport + "-" +percentage + "-instance" + instanceNumber + " .json"), json);
+        KaiztenFile.writeToFile(new File("data/airportInstances/"+ airport + "-" +percentage + "-instance" + instanceNumber + " .json"), json);
 
-        // KaiztenFile.writeToFile(new File("data/SPC-instance.json"), json); // GUARDAR
-        // JSON EN FICHERO
-        // KaiztenJson.prettyPrint(json); // IMPRIMIR JSON POR PANTALLA
     
 }
 }

@@ -62,8 +62,14 @@ public class InstanceCreatorSPC {
             // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
             // " + flightInfo[2]);
             String time = flightInfo[2].trim();
+            System.out.println(time);
+            if (time.length() == 4) {
+                System.out.println("LIMPIANDO");
+                time = "0" + time; // Agregar un cero al principio si la hora tiene solo un dígito
+            }
             LocalDate localDate = LocalDate.parse(flightInfo[0].trim()); // fecha
             LocalTime localTime = LocalTime.parse(time); // hora
+            
             // Combinar la fecha y la hora en un LocalDateTime
             LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
             // Crear el OffsetDateTime usando UTC

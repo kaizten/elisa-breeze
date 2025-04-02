@@ -39,13 +39,6 @@ public class ServicesSelector {
 
                 for (String hour : flightHours) { // Para cada hora
                     String cleanHour = hour.replaceAll("^\\*?\\s*\\(\\d+\\)\\s*\\*?$", "").trim();
-                    //TODO problema: no coge la expresion, ninguno se acorta a solo la hora.
-                    //System.out.println(cleanHour);
-
-                    if (cleanHour.length() == 4) {
-                        System.out.println("LIMPIANDO");
-                        cleanHour = "0" + cleanHour; // Agregar un cero al principio si la hora tiene solo un dígito
-                    }
                     hours.add(date + "/" + flightType + "/" + cleanHour.substring(0,5));  // Guardamos como fecha, tipo y hora
                 }
             }
@@ -63,7 +56,15 @@ public class ServicesSelector {
         selectedFlights.sort(Comparator.comparing(flight -> {
             // Formato de fecha y hora: "yyyy-MM-dd HH:mm"
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            String flightDateTime = flight.split("/")[0] + " " + flight.split("/")[2];  // Solo la fecha y hora
+            String flightDate = flight.split("/")[0]; 
+            String flightHour = flight.split("/")[2].trim(); 
+            if (flightHour.length() == 4) {
+                System.out.println("LIMPIANDO");
+                flightHour = "0" + flightHour; // Agregar un cero al principio si la hora tiene solo un dígito
+            }
+
+            String flightDateTime = flightDate + " " + flightHour;  // Solo la fecha y hora
+            System.out.println(flightDateTime);
             LocalDateTime dateTime = LocalDateTime.parse(flightDateTime, formatter);  // Parsear fecha y hora
             return dateTime;  // Comparar por LocalDateTime
         }));
