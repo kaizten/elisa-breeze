@@ -6,6 +6,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 import org.json.JSONObject;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import org.json.JSONObject;
+import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.opt.evaluator.Evaluator;
@@ -66,13 +70,14 @@ public class Main {
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
         long endTime = System.nanoTime();  // Finalizar medición tiempo
         long duration = endTime - startTime; // Tiempo en nanosegundos
-        double optimizationDurationInSeconds = duration / 1000000; // Convertir a milisegundos
+        double executionTime = duration / 1000000; // Convertir a milisegundos
         
         System.out.println(solution);
         // Guardamos el JSON en la ruta especificada
+        JSONObject solutionJSON = null; 
         try {
-            JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
-            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/" + algorithm + "/"+ airport + "-" + percentage + "-solution" + instanceNumber + ".json"), solutionJSON);
+            solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
+            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/" + algorithm + "/"+ airport + "-" + percentage + "-solution" + instanceNumber + algorithm + ".json"), solutionJSON);
         } catch (IOException e) {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
@@ -87,8 +92,23 @@ public class Main {
             statusCode = 1;
         }
         KaiztenJson.print(output);*/
-        System.out.println("Tiempo ejecución: " + optimizationDurationInSeconds + " milisegundos");
 
-    
+        System.out.println("Tiempo ejecución: " + executionTime + " milisegundos");
+
+        //guardar info en texto
+        double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators").getInt("averageProductivityUsedTime");
+        double averageWorkProductivity=solutionJSON.getJSONObject("indicators").getInt("averageWorkProductivity");
+        
+        String executionDataFile= "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
+        
+        // Escribir los resultados en el archivo de texto línea por línea
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(executionDataFile, true))) {
+            // Escribir cada campo en una línea separada
+            writer.write(airport + "-" + percentage + "-solution" + instanceNumber + ".json" + "\t" + algorithm + "\t" + averageProductivityUsedTime + "\t" + averageWorkProductivity + "\t" + executionTime);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }
