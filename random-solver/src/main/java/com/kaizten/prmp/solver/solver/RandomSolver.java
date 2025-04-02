@@ -101,15 +101,6 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     best_productivity = productivity;
                 }
             }
-            
-        
-        // Guardamos el JSON en la ruta especificada
-        try {
-            JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(bestSolution);
-            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solution1.json"), solutionJSON);
-        } catch (IOException e) {
-            System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
-        }
         
         return bestSolution;
     }

@@ -10,15 +10,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-
-import org.json.JSONObject;
-
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
-import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
-import com.kaizten.utils.io.KaiztenFile;
 
 public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySolution> {
 
@@ -123,13 +118,6 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
 
                 }
                 
-            }
-            // Guardar json
-            try {
-                JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
-                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/SPCsolution.json"), solutionJSON);
-            } catch (IOException e) {
-                System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
             }
             
             return solution; 

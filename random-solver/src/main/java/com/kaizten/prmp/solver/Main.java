@@ -1,10 +1,10 @@
 package com.kaizten.prmp.solver;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
-
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,6 +18,8 @@ import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
 import com.kaizten.prmp.solver.solver.ReferenceSolver;
+import com.kaizten.prmp.solver.solver.RandomSolver;
+import com.kaizten.utils.io.KaiztenFile;
 import com.kaizten.utils.json.KaiztenJson;
 import com.kaizten.utils.net.KaiztenURI;
 
@@ -41,14 +43,24 @@ public class Main {
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
-        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/SPC-instance.json";
+        String airport = args[1];
+        String instanceNumber = args[2];
+        String percentage = args[0];
+        String algorithm = args[3];
+
+        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/" + airport + "-" + percentage + "-instance" + instanceNumber + ".json";
+
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
+        AbstractSolver solver = null; 
 
         System.out.println(optimizationProblem); 
-        AbstractSolver solver = new ReferenceSolver(optimizationProblem);
-        //AbstractSolver solver = new RandomSolver(optimizationProblem);
-        //AbstractSolver solver = new RandomSolver2(optimizationProblem);
-        //AbstractSolver solver = new RandomSolver3(optimizationProblem);
+
+        if (algorithm == "referenceSolver"){
+            solver = new ReferenceSolver(optimizationProblem);
+        }
+        else {
+            solver = new RandomSolver(optimizationProblem);
+        }
         
         long startTime = System.nanoTime();  // Iniciar medición tiempo
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
@@ -57,7 +69,15 @@ public class Main {
         double optimizationDurationInSeconds = duration / 1000000; // Convertir a milisegundos
         
         System.out.println(solution);
-        JSONObject output = null;
+        // Guardamos el JSON en la ruta especificada
+        try {
+            JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
+            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/" + algorithm + "/"+ airport + "-" + percentage + "-solution" + instanceNumber + ".json"), solutionJSON);
+        } catch (IOException e) {
+            System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
+        }
+
+        /*JSONObject output = null;
         int statusCode = 0;
         if (solution != null) {
             System.out.println("Solution found");
@@ -66,7 +86,9 @@ public class Main {
             output = KaiztenSolutionValidator.noSolutionValidationErrors().toJson();
             statusCode = 1;
         }
-        KaiztenJson.print(output);
+        KaiztenJson.print(output);*/
         System.out.println("Tiempo ejecución: " + optimizationDurationInSeconds + " milisegundos");
+
+    
     }
 }
