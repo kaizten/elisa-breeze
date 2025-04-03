@@ -10,3 +10,7 @@ TFS-2.0-solution0.json	referenceSolver	99.0	17.0	76905.0
 MAD-0.5-solution0.json	referenceSolver	99.0	20.0	102736.0
 MAD-1.0-solution0.json	referenceSolver	99.0	17.0	920868.0
 MAD-1.5-solution0.json	referenceSolver	99.0	16.0	3664777.0
+SPC-0.5-solution0.json	randomSolver	99.0	21.0	10634.0
+SPC-1.0-solution0.json	randomSolver	97.0	19.0	37443.0
+SPC-1.5-solution0.json	randomSolver	98.0	17.0	82905.0
+SPC-2.0-solution0.json	randomSolver	98.0	16.0	140919.0

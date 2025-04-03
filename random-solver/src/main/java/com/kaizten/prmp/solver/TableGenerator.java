@@ -1,9 +1,15 @@
-import java.io.*;
-import java.util.*;
+package com.kaizten.prmp.solver;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.kaizten.utils.string.KaiztenFormatterTable;
 
-public class KaiztenTableGenerator {
+
+
+public class TableGenerator {
 
     public static void main(String[] args) {
         String filePath = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt"; // Cambia esto por la ruta de tu archivo
@@ -12,10 +18,10 @@ public class KaiztenTableGenerator {
         // Agregar encabezados personalizados
         table.addRow(new String[]{
                 "Instance",
-                "ReferenceSolver Productivity",
-                "ReferenceSolver time (ms)",
-                "RandomSolver Productivity",
-                "RandomSolver time (ms)"
+                "ReferenceSolver-Productivity",
+                "ReferenceSolver-time (ms)",
+                "RandomSolver-Productivity",
+                "RandomSolver-time (ms)"
         });
 
         // Usaremos un mapa para almacenar datos de ambas soluciones

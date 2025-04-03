@@ -7,7 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class SolverController {
      public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException  {
-        /*String[] algorithms = {"referenceSolver", "randomSolver"};
+        //String[] algorithms = {"referenceSolver", "randomSolver"};
+        String[] algorithms = {"randomSolver"};
         String[] airports = {"SPC", "TFS", "MAD"};
         double[] percentages = {0.5, 1, 1.5, 2};
         
@@ -25,9 +26,11 @@ public class SolverController {
 
                 }
             }
-        }*/
-        String[] parameters = {String.valueOf(2.0), "MAD", String.valueOf(0), "referenceSolver"};
-        Main.main(parameters);
+        }
+        
+        //FALTA:
+        //String[] parameters = {String.valueOf(2.0), "MAD", String.valueOf(0), "referenceSolver"};
+       // Main.main(parameters);
 
 
     }            
