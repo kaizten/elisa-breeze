@@ -57,7 +57,7 @@ public class Main {
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
         AbstractSolver solver = null; 
 
-        System.out.println(optimizationProblem); 
+        //System.out.println(optimizationProblem); 
 
         if (algorithm == "referenceSolver"){
             solver = new ReferenceSolver(optimizationProblem);
@@ -70,9 +70,9 @@ public class Main {
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
         long endTime = System.nanoTime();  // Finalizar medición tiempo
         long duration = endTime - startTime; // Tiempo en nanosegundos
-        double executionTime = duration / 1000000; // Convertir a milisegundos
+        double executionTime = duration / 1000000.0; // Convertir a milisegundos
         
-        System.out.println(solution);
+        //System.out.println(solution);
         // Guardamos el JSON en la ruta especificada
         JSONObject solutionJSON = null; 
         try {
@@ -93,18 +93,24 @@ public class Main {
         }
         KaiztenJson.print(output);*/
 
-        System.out.println("Tiempo ejecución: " + executionTime + " milisegundos");
+        //System.out.println("Tiempo ejecución: " + executionTime + " milisegundos");
 
         //guardar info en texto
-        double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators").getInt("averageProductivityUsedTime");
-        double averageWorkProductivity=solutionJSON.getJSONObject("indicators").getInt("averageWorkProductivity");
+        double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators").getDouble("averageProductivityUsedTime");
+        double averageWorkProductivity=solutionJSON.getJSONObject("indicators").getDouble("averageWorkProductivity");
+        int coveredServicesPercentage = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getInt("percentage");
+        int coveredServices = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getInt("absolute");
+  
         
         String executionDataFile= "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
         
         // Escribir los resultados en el archivo de texto línea por línea
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(executionDataFile, true))) {
             // Escribir cada campo en una línea separada
-            writer.write(airport + "-" + percentage + "-solution" + instanceNumber + ".json" + "\t" + algorithm + "\t" + averageProductivityUsedTime + "\t" + averageWorkProductivity + "\t" + executionTime);
+            writer.write(String.format("%s-%s-%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%d",
+            airport, percentage, instanceNumber, algorithm, 
+            averageProductivityUsedTime, averageWorkProductivity, 
+            executionTime, coveredServicesPercentage, coveredServices));            
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();

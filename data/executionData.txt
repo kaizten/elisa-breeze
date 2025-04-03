@@ -1,22 +1,26 @@
-Instance                Algorithm       UT      WT      Time(ms)
-SPC-0.5-solution0.json	referenceSolver	99.0	21.0	226.0
-SPC-1.0-solution0.json	referenceSolver	99.0	18.0	324.0
-SPC-1.5-solution0.json	referenceSolver	99.0	17.0	908.0
-SPC-2.0-solution0.json	referenceSolver	99.0	16.0	2198.0
-TFS-0.5-solution0.json	referenceSolver	99.0	22.0	1418.0
-TFS-1.0-solution0.json	referenceSolver	99.0	19.0	9693.0
-TFS-1.5-solution0.json	referenceSolver	99.0	17.0	33621.0
-TFS-2.0-solution0.json	referenceSolver	99.0	17.0	76905.0
-MAD-0.5-solution0.json	referenceSolver	99.0	20.0	102736.0
-MAD-1.0-solution0.json	referenceSolver	99.0	17.0	920868.0
-MAD-1.5-solution0.json	referenceSolver	99.0	16.0	3664777.0
-SPC-0.5-solution0.json	randomSolver	98.0	22.0	2859.0
-SPC-1.0-solution0.json	randomSolver	97.0	18.0	10120.0
-SPC-1.5-solution0.json	randomSolver	97.0	17.0	22440.0
-SPC-2.0-solution0.json	randomSolver	97.0	17.0	39154.0
-TFS-0.5-solution0.json	randomSolver	98.0	22.0	30003.0
-TFS-1.0-solution0.json	randomSolver	98.0	19.0	115203.0
-TFS-1.5-solution0.json	randomSolver	97.0	18.0	254563.0
-TFS-2.0-solution0.json	randomSolver	98.0	17.0	453314.0
-MAD-0.5-solution0.json	randomSolver	98.0	20.0	472519.0
-MAD-1.0-solution0.json	randomSolver	98.0	18.0	2432079.0
+Instance    Algorithm       Prod.UT Prod.WT Time(ms) CoveredServices% CoveredServices
+
+SPC-0.05-0	referenceSolver	99,649	50,658	57,980	100	58
+SPC-0.05-0	randomSolver	100,000	49,784	161,615	100	58
+SPC-0.1-0	referenceSolver	99,463	38,493	10,338	100	87
+SPC-0.1-0	randomSolver	99,672	38,493	354,558	100	87
+SPC-0.15-0	referenceSolver	99,389	32,749	8,086	100	116
+SPC-0.15-0	randomSolver	98,390	33,038	294,302	100	116
+SPC-0.2-0	referenceSolver	99,817	28,863	14,104	100	145
+SPC-0.2-0	randomSolver	99,694	28,863	448,125	100	145
+TFS-0.05-0	referenceSolver	99,876	40,083	38,063	100	203
+TFS-0.05-0	randomSolver	99,228	40,083	805,931	100	203
+TFS-0.1-0	referenceSolver	99,718	34,565	46,370	100	302
+TFS-0.1-0	randomSolver	99,305	34,860	1644,526	100	302
+TFS-0.15-0	referenceSolver	99,701	31,100	89,328	100	401
+TFS-0.15-0	randomSolver	98,835	31,711	2942,951	100	401
+TFS-0.2-0	referenceSolver	99,257	29,094	161,894	100	500
+TFS-0.2-0	randomSolver	99,263	29,094	4861,670	100	500
+MAD-0.05-0	referenceSolver	99,840	42,084	248,771	100	588
+MAD-0.05-0	randomSolver	99,561	42,225	6493,401	100	588
+MAD-0.1-0	referenceSolver	99,723	33,909	1278,092	100	984
+MAD-0.1-0	randomSolver	98,968	34,362	20417,390	100	984
+MAD-0.15-0	referenceSolver	99,702	29,539	3756,257	100	1379
+MAD-0.15-0	randomSolver	99,226	29,663	41830,402	100	1379
+MAD-0.2-0	referenceSolver	99,560	26,760	8377,495	100	1775
+MAD-0.2-0	randomSolver	98,412	27,355	72615,905	100	1775
