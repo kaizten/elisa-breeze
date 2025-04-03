@@ -1,7 +1,5 @@
 package com.kaizten.prmp.solver.solver;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
@@ -9,14 +7,10 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
-import org.json.JSONObject;
-
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
-import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
-import com.kaizten.utils.io.KaiztenFile;
 
 public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution> {
 
@@ -81,7 +75,6 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                             }
                         }
                     }
-                    System.out.println("Available employees: " + availableEmployees);
                     // Asignar empleados al azar según el número de empleados requeridos por el servicio
                     while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) { 
                         int randomIndex = rand.nextInt(availableEmployees.size()); 
