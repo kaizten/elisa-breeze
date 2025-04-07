@@ -40,7 +40,7 @@ public class InstanceCreatorSPC {
             for (int k = 0; k<2; k++) {
                 for (Role role: roles) {
                     final Service service = new Service();
-                    service.setCode(String.format("%04d", code));
+                    service.setCode("f-"+String.format("%04d", code));
                     code++;
                     if (k == 0) {
                         service.setStartingTime(OffsetDateTime.of(date, LocalTime.of(07, 30), ZoneOffset.UTC));
@@ -64,7 +64,6 @@ public class InstanceCreatorSPC {
             String time = flightInfo[2].trim();
             System.out.println(time);
             if (time.length() == 4) {
-                System.out.println("LIMPIANDO");
                 time = "0" + time; // Agregar un cero al principio si la hora tiene solo un dígito
             }
             LocalDate localDate = LocalDate.parse(flightInfo[0].trim()); // fecha

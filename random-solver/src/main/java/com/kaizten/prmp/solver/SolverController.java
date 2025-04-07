@@ -28,10 +28,10 @@ public class SolverController {
                 }
             }
         }
-        
-        //FALTA:
-        //String[] parameters = {String.valueOf(2.0), "MAD", String.valueOf(0), "referenceSolver"};
-       // Main.main(parameters);
+
+        //indiv:
+        //String[] parameters = {String.valueOf(0.1), "SPC", String.valueOf(0), "referenceSolver"};
+        //Main.main(parameters);
 
 
     }            

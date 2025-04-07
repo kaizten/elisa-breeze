@@ -53,6 +53,8 @@ public class JsonConstants {
     public static final String WORKING_TIME = "workingTime";
     //NEW
     public static final String WORK_PRODUCTIVITY = "workProductivity";
-    public static final String AVERAGE_WORK_PRODUCTIVITY = "averageWorkProductivity";
-    public static final String AVERAGE_PRODUCTIVITY_USED_TIME = "averageProductivityUsedTime";
+    //public static final String AVERAGE_WORK_PRODUCTIVITY = "averageWorkProductivity";
+    //public static final String AVERAGE_PRODUCTIVITY_USED_TIME = "averageProductivityUsedTime";
+    public static final String REALSERVICES = "realServices";
+    public static final String FAKESERVICES = "fakeServices";
 }

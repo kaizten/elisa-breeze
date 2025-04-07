@@ -1,30 +1,27 @@
 package com.kaizten.prmp.solver;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
+
 import org.json.JSONObject;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import org.json.JSONObject;
-import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.opt.evaluator.Evaluator;
 import com.kaizten.opt.evaluator.builder.EvaluatorBuilder;
-import com.kaizten.opt.solution.validation.KaiztenSolutionValidator;
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
-import com.kaizten.prmp.solver.solver.ReferenceSolver;
 import com.kaizten.prmp.solver.solver.RandomSolver;
+import com.kaizten.prmp.solver.solver.ReferenceSolver;
 import com.kaizten.utils.io.KaiztenFile;
-import com.kaizten.utils.json.KaiztenJson;
 import com.kaizten.utils.net.KaiztenURI;
 
 public class Main {
@@ -82,39 +79,8 @@ public class Main {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
 
-        /*JSONObject output = null;
-        int statusCode = 0;
-        if (solution != null) {
-            System.out.println("Solution found");
-            output = new PersonsReducedMobilitySolutionToJson().apply(solution);
-        } else {
-            output = KaiztenSolutionValidator.noSolutionValidationErrors().toJson();
-            statusCode = 1;
-        }
-        KaiztenJson.print(output);*/
-
-        //System.out.println("Tiempo ejecución: " + executionTime + " milisegundos");
-
-        //guardar info en texto
-        double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators").getDouble("averageProductivityUsedTime");
-        double averageWorkProductivity=solutionJSON.getJSONObject("indicators").getDouble("averageWorkProductivity");
-        int coveredServicesPercentage = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getInt("percentage");
-        int coveredServices = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getInt("absolute");
-  
-        
-        String executionDataFile= "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
-        
-        // Escribir los resultados en el archivo de texto línea por línea
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(executionDataFile, true))) {
-            // Escribir cada campo en una línea separada
-            writer.write(String.format("%s-%s-%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%d",
-            airport, percentage, instanceNumber, algorithm, 
-            averageProductivityUsedTime, averageWorkProductivity, 
-            executionTime, coveredServicesPercentage, coveredServices));            
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+         //guardar info en texto
+         TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, instanceNumber, algorithm);
         
     }
 }
