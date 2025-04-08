@@ -114,7 +114,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     LocalDate serviceDate = serviceStartingTime.toLocalDate();
 
                     for (Integer employee : availableEmployees) {
-                        int availableTime = solution.getAvailableTime(i, employee);
+                        int availableTime = solution.getAvailableTime(serviceDate, employee);
                         double fitness = 1.0 / (availableTime + 1); // +1 para evitar división por cero
                         employeeFitnessMap.put(employee, fitness);
                         totalFitness += fitness;
