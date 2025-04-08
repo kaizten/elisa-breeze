@@ -3,8 +3,10 @@ package com.kaizten.prmp.solver.solver;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -80,7 +82,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         }
                     }
                 }
-                // Asignar empleados a los servicios => busca los que tengan el menor tiempo disponible, para que maximice su trabajo
+                /*// Asignar empleados a los servicios => busca los que tengan el menor tiempo disponible, para que maximice su trabajo
                 while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) {
                     int bestEmployee = -1;
                     int minAvailableTime = Integer.MAX_VALUE;
@@ -103,9 +105,42 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         break;
                     }
                 }
+            }*/
+                // asignacion de empleados a servicios con fitness y aleatoriedad
+                while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) {
+                    // Mapear fitness por empleado
+                    double totalFitness = 0.0;
+                    Map<Integer, Double> employeeFitnessMap = new HashMap<>();
+                    LocalDate serviceDate = serviceStartingTime.toLocalDate();
 
-            }
-                
+                    for (Integer employee : availableEmployees) {
+                        int availableTime = solution.getAvailableTime(i, employee);
+                        double fitness = 1.0 / (availableTime + 1); // +1 para evitar división por cero
+                        employeeFitnessMap.put(employee, fitness);
+                        totalFitness += fitness;
+                    }
+
+                    // Selección tipo ruleta (fitness proporcional)
+                    double randomValue = Math.random() * totalFitness;
+                    double cumulative = 0.0;
+                    int selectedEmployee = -1;
+
+                    for (Map.Entry<Integer, Double> entry : employeeFitnessMap.entrySet()) {
+                        cumulative += entry.getValue();
+                        if (randomValue <= cumulative) {
+                            selectedEmployee = entry.getKey();
+                            break;
+                        }
+                    }
+
+                    if (selectedEmployee != -1) {
+                        solution.assignServiceToEmployee(selectedEmployee, service);
+                        availableEmployees.remove(selectedEmployee);
+                    } else {
+                        break; 
+                    }
+                }
+                    
                 // Calcular productividad de Working Time (porque la otra es siempre 99 o 100?)
                 double accumulativeProductivity = 0.0;
                 int count = 0;
@@ -130,7 +165,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     stopCounter++; //Aumenta contador
                 }
             }
+        }
         
         return bestSolution;
-    }
+        }
 }
