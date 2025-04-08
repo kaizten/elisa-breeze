@@ -9,6 +9,7 @@ public class SolverController {
      public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException  {
         //String[] algorithms = {"referenceSolver", "randomSolver"};
         String[] algorithms = {"referenceSolver", "randomSolver"};
+        //String[] algorithms = {"randomSolver"};
         String[] airports = {"SPC", "TFS", "MAD"};
         //double[] percentages = {0.5, 1, 1.5, 2};
         final double[] percentages = {0.05, 0.1, 0.15, 0.2};
