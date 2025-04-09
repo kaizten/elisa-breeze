@@ -20,7 +20,7 @@ public class InstanceCreatorTFS {
             String airport,
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size()+61+6*numberOfDays;  
-        final int numberOfEmployees = selectedFlights.size() + 3 * numberOfDays + 280;
+        final int numberOfEmployees = (int) Math.ceil((double) selectedFlights.size() / 7*5) + 6 + 280/7;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
@@ -618,7 +618,7 @@ public class InstanceCreatorTFS {
 
         // creo x empleados nuevos, rol AGENTE
         // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-        for (int i = 0; i < numberOfEmployees-280; i++) {
+        for (int i = 0; i < numberOfEmployees-280/7; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.AGENT);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
@@ -626,12 +626,13 @@ public class InstanceCreatorTFS {
         // creo los empleados necesitados para los servicios añadidos (driver y manager)
         //197 conductores => recuento simple (conte todos los de los servicios, sin tener en cuenta posibles solapamientos, pa tener mas que suficiente)
         //83 coordinadores
-        //280 total extra
-        for (int i = numberOfEmployees-280; i < numberOfEmployees-83; i++) {
+        //280 total extra /7 => 40 empleados
+        //70% conductores(28) y 30% coordinadores(12)
+        for (int i = numberOfEmployees-40; i < numberOfEmployees-12; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        for (int i = numberOfEmployees-83; i < numberOfEmployees; i++) {
+        for (int i = numberOfEmployees-12; i < numberOfEmployees; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }

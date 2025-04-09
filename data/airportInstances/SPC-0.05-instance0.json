@@ -17,10 +17,58 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-05T13:30:00Z",
+               "finishTime": "2024-02-05T08:55:00Z",
+               "code": "0029",
+               "role": "AGENT",
+               "startTime": "2024-02-05T07:45:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-05T09:00:00Z",
                "code": "0028",
                "role": "AGENT",
-               "startTime": "2024-02-05T12:20:00Z",
+               "startTime": "2024-02-05T07:50:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-05T12:30:00Z",
+               "code": "0030",
+               "role": "AGENT",
+               "startTime": "2024-02-05T11:20:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-05T13:20:00Z",
+               "code": "0031",
+               "role": "AGENT",
+               "startTime": "2024-02-05T12:10:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-05T14:30:00Z",
+               "code": "0032",
+               "role": "AGENT",
+               "startTime": "2024-02-05T13:20:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-05T15:10:00Z",
+               "code": "0033",
+               "role": "AGENT",
+               "startTime": "2024-02-05T14:00:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-05T15:15:00Z",
+               "code": "0034",
+               "role": "AGENT",
+               "startTime": "2024-02-05T14:05:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -41,18 +89,10 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-05T16:10:00Z",
-               "code": "0029",
+               "finishTime": "2024-02-05T20:50:00Z",
+               "code": "0035",
                "role": "AGENT",
-               "startTime": "2024-02-05T15:00:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-05T20:25:00Z",
-               "code": "0030",
-               "role": "AGENT",
-               "startTime": "2024-02-05T19:15:00Z",
+               "startTime": "2024-02-05T19:40:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -73,26 +113,18 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-06T11:10:00Z",
-               "code": "0031",
+               "finishTime": "2024-02-06T09:10:00Z",
+               "code": "0036",
                "role": "AGENT",
-               "startTime": "2024-02-06T10:00:00Z",
+               "startTime": "2024-02-06T08:00:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
           {
-               "finishTime": "2024-02-06T12:40:00Z",
-               "code": "0032",
+               "finishTime": "2024-02-06T09:50:00Z",
+               "code": "0037",
                "role": "AGENT",
-               "startTime": "2024-02-06T11:30:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-06T14:40:00Z",
-               "code": "0033",
-               "role": "AGENT",
-               "startTime": "2024-02-06T13:30:00Z",
+               "startTime": "2024-02-06T08:40:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -113,18 +145,34 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-06T19:20:00Z",
-               "code": "0035",
+               "finishTime": "2024-02-06T18:05:00Z",
+               "code": "0038",
                "role": "AGENT",
-               "startTime": "2024-02-06T18:10:00Z",
+               "startTime": "2024-02-06T16:55:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
           {
-               "finishTime": "2024-02-06T19:45:00Z",
-               "code": "0034",
+               "finishTime": "2024-02-06T19:50:00Z",
+               "code": "0040",
                "role": "AGENT",
-               "startTime": "2024-02-06T18:35:00Z",
+               "startTime": "2024-02-06T18:40:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-06T20:30:00Z",
+               "code": "0039",
+               "role": "AGENT",
+               "startTime": "2024-02-06T19:20:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-07T08:10:00Z",
+               "code": "0041",
+               "role": "AGENT",
+               "startTime": "2024-02-07T07:00:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -145,26 +193,18 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-07T08:40:00Z",
-               "code": "0036",
+               "finishTime": "2024-02-07T12:10:00Z",
+               "code": "0042",
                "role": "AGENT",
-               "startTime": "2024-02-07T07:30:00Z",
+               "startTime": "2024-02-07T11:00:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
           {
-               "finishTime": "2024-02-07T10:30:00Z",
-               "code": "0037",
+               "finishTime": "2024-02-07T13:20:00Z",
+               "code": "0043",
                "role": "AGENT",
-               "startTime": "2024-02-07T09:20:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-07T14:10:00Z",
-               "code": "0038",
-               "role": "AGENT",
-               "startTime": "2024-02-07T13:00:00Z",
+               "startTime": "2024-02-07T12:10:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -185,16 +225,24 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-07T20:40:00Z",
-               "code": "0039",
+               "finishTime": "2024-02-07T18:55:00Z",
+               "code": "0044",
                "role": "AGENT",
-               "startTime": "2024-02-07T19:30:00Z",
+               "startTime": "2024-02-07T17:45:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-07T21:00:00Z",
+               "code": "0046",
+               "role": "AGENT",
+               "startTime": "2024-02-07T19:50:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
           {
                "finishTime": "2024-02-07T21:45:00Z",
-               "code": "0040",
+               "code": "0045",
                "role": "AGENT",
                "startTime": "2024-02-07T20:35:00Z",
                "employees": 1,
@@ -217,10 +265,18 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-08T10:55:00Z",
-               "code": "0041",
+               "finishTime": "2024-02-08T09:10:00Z",
+               "code": "0047",
                "role": "AGENT",
-               "startTime": "2024-02-08T09:45:00Z",
+               "startTime": "2024-02-08T08:00:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-08T15:15:00Z",
+               "code": "0048",
+               "role": "AGENT",
+               "startTime": "2024-02-08T14:05:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -241,46 +297,6 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-08T16:00:00Z",
-               "code": "0042",
-               "role": "AGENT",
-               "startTime": "2024-02-08T14:50:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-08T18:40:00Z",
-               "code": "0043",
-               "role": "AGENT",
-               "startTime": "2024-02-08T17:30:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-08T18:40:00Z",
-               "code": "0045",
-               "role": "AGENT",
-               "startTime": "2024-02-08T17:30:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-08T18:50:00Z",
-               "code": "0044",
-               "role": "AGENT",
-               "startTime": "2024-02-08T17:40:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-08T20:10:00Z",
-               "code": "0046",
-               "role": "AGENT",
-               "startTime": "2024-02-08T19:00:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
                "finishTime": "2024-02-09T14:30:00Z",
                "code": "f-0016",
                "role": "MANAGER",
@@ -297,26 +313,18 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-09T08:55:00Z",
-               "code": "0047",
-               "role": "AGENT",
-               "startTime": "2024-02-09T07:45:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-09T12:10:00Z",
-               "code": "0048",
-               "role": "AGENT",
-               "startTime": "2024-02-09T11:00:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-09T15:00:00Z",
+               "finishTime": "2024-02-09T12:40:00Z",
                "code": "0049",
                "role": "AGENT",
-               "startTime": "2024-02-09T13:50:00Z",
+               "startTime": "2024-02-09T11:30:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-09T13:30:00Z",
+               "code": "0050",
+               "role": "AGENT",
+               "startTime": "2024-02-09T12:20:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -337,26 +345,10 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-09T16:10:00Z",
-               "code": "0050",
-               "role": "AGENT",
-               "startTime": "2024-02-09T15:00:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-09T17:00:00Z",
+               "finishTime": "2024-02-09T18:40:00Z",
                "code": "0051",
                "role": "AGENT",
-               "startTime": "2024-02-09T15:50:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-09T19:30:00Z",
-               "code": "0052",
-               "role": "AGENT",
-               "startTime": "2024-02-09T18:20:00Z",
+               "startTime": "2024-02-09T17:30:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -377,18 +369,10 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-10T11:05:00Z",
-               "code": "0053",
+               "finishTime": "2024-02-10T11:15:00Z",
+               "code": "0052",
                "role": "AGENT",
-               "startTime": "2024-02-10T09:55:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-10T11:30:00Z",
-               "code": "0054",
-               "role": "AGENT",
-               "startTime": "2024-02-10T10:20:00Z",
+               "startTime": "2024-02-10T10:05:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -409,6 +393,22 @@
                "serviceTime": "PT7H"
           },
           {
+               "finishTime": "2024-02-10T16:40:00Z",
+               "code": "0053",
+               "role": "AGENT",
+               "startTime": "2024-02-10T15:30:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-10T19:30:00Z",
+               "code": "0054",
+               "role": "AGENT",
+               "startTime": "2024-02-10T18:20:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
                "finishTime": "2024-02-11T14:30:00Z",
                "code": "f-0024",
                "role": "MANAGER",
@@ -425,10 +425,18 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-11T11:10:00Z",
+               "finishTime": "2024-02-11T09:30:00Z",
                "code": "0055",
                "role": "AGENT",
-               "startTime": "2024-02-11T10:00:00Z",
+               "startTime": "2024-02-11T08:20:00Z",
+               "employees": 1,
+               "serviceTime": "PT1H10M"
+          },
+          {
+               "finishTime": "2024-02-11T11:05:00Z",
+               "code": "0056",
+               "role": "AGENT",
+               "startTime": "2024-02-11T09:55:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           },
@@ -449,18 +457,10 @@
                "serviceTime": "PT7H"
           },
           {
-               "finishTime": "2024-02-11T19:10:00Z",
-               "code": "0056",
-               "role": "AGENT",
-               "startTime": "2024-02-11T18:00:00Z",
-               "employees": 1,
-               "serviceTime": "PT1H10M"
-          },
-          {
-               "finishTime": "2024-02-11T20:40:00Z",
+               "finishTime": "2024-02-11T19:30:00Z",
                "code": "0057",
                "role": "AGENT",
-               "startTime": "2024-02-11T19:30:00Z",
+               "startTime": "2024-02-11T18:20:00Z",
                "employees": 1,
                "serviceTime": "PT1H10M"
           }
@@ -498,524 +498,153 @@
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0004",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0005",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0006",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0007",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0008",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0009",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0010",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0011",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0012",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0013",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0014",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0015",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0016",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0017",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0018",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0019",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0020",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0021",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0022",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0023",
-               "roles": ["DRIVER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0024",
-               "roles": ["MANAGER"],
+               "roles": ["AGENT"],
                "timePerDay": "PT8H"
           },
           {
                "timePerWeek": "PT2400H",
                "timeBetweenWorkingDays": "PT12H",
                "code": "0025",
-               "roles": ["DRIVER"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0026",
-               "roles": ["MANAGER"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0027",
-               "roles": ["DRIVER"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0028",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0029",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0030",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0031",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0032",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0033",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0034",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0035",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0036",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0037",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0038",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0039",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0040",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0041",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0042",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0043",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0044",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0045",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0046",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0047",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0048",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0049",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0050",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0051",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0052",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0053",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0054",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0055",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0056",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0057",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0058",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0059",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0060",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0061",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0062",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0063",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0064",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0065",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0066",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0067",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0068",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0069",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0070",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0071",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0072",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0073",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0074",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0075",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0076",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0077",
-               "roles": ["AGENT"],
-               "timePerDay": "PT8H"
-          },
-          {
-               "timePerWeek": "PT2400H",
-               "timeBetweenWorkingDays": "PT12H",
-               "code": "0078",
                "roles": ["AGENT"],
                "timePerDay": "PT8H"
           }

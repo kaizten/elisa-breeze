@@ -20,7 +20,8 @@ public class InstanceCreatorSPC {
             String airport,
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size()+ 4*numberOfDays; //añado 4*dias de servicio por los servicios adicionales
-        final int numberOfEmployees = numberOfServices + 3 * numberOfDays;
+        //regla general => un empleado tiene 8h y puede hacer unos 5 servicios al dia => (vuelos/7)/5 => y cojo el maximo (ceil) pa no tener menos
+        final int numberOfEmployees = (int) Math.ceil((double) selectedFlights.size() / 7*5) +4;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
@@ -105,7 +106,7 @@ public class InstanceCreatorSPC {
 
         // Creo los 4 empleados adicionales
         int employeecode = 0;
-        for (int i = 0; i<2*numberOfDays; i++){
+        for (int i = 0; i<2; i++){
             for (Role role: roles) {
                 optimizationProblem.addEmployeeRoles(employeecode, role);
                 optimizationProblem.setEmployeeCode(employeecode, String.format("%04d", employeecode));
@@ -115,7 +116,7 @@ public class InstanceCreatorSPC {
 
         // creo x empleados nuevos, rol AGENTE
         // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-        for (int i = 4*numberOfDays; i < numberOfEmployees; i++) {
+        for (int i = 4; i < numberOfEmployees; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.AGENT);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i)); 
         }
