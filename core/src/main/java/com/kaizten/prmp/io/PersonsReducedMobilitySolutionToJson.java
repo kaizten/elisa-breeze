@@ -1,3 +1,5 @@
+
+
 package com.kaizten.prmp.io;
 
 import java.time.Duration;
@@ -41,6 +43,9 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         Map<String, Double> roleToProductivityUsedTime = new HashMap<>();
         Map<String, Double> roleToWorkProductivity = new HashMap<>();
         Map<String, Integer> roleToCount = new HashMap<>();
+        Map<String, Double> roleDailyToProductivityUsedTime = new HashMap<>();
+        Map<String, Double> roleDailyToWorkProductivity = new HashMap<>();
+        Map<String, Integer> roleDailyToCount = new HashMap<>();
 
         int fakeServices = 0;
         int realServices = 0;
@@ -48,6 +53,15 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         for (LocalDate date : optimizationProblem.getDatesOfServices()) {
             JSONObject jsonDate = new JSONObject();
             JSONArray jsonEmployees = new JSONArray();
+            //Para calculo de media de productividad
+            double totalDailyWorkProductivity = 0.0;
+            double totalDailyProductivityUsedTime = 0.0;
+            int countDailyProductivityValues = 0;
+    
+            double totalDailyRealProductivityUsedTime = 0.0;
+            double totalDailyRealWorkProductivity = 0.0;
+            int countDailyRealProductivityValues = 0;
+
             for (int e = 0; e < optimizationProblem.getNumberOfEmployees(); e++) {
                 if (solution.hasAssignedServices(date, e)) {
                     //Calculo productividad media
@@ -55,7 +69,10 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                     double productivityUsedTime = solution.getProductivityUsedTime(date, e);
                     totalProductivityUsedTime += productivityUsedTime;
                     totalWorkProductivity += workProductivity;
+                    totalDailyProductivityUsedTime += productivityUsedTime;
+                    totalDailyWorkProductivity += workProductivity;
                     countProductivityValues++;
+                    countDailyProductivityValues++;
 
                     // Verificar si el empleado tiene asignado un servicio real => para calcular la media de productividad real
                     Set<Integer> assignedFlights = solution.getAssignedServices(date, e);
@@ -66,6 +83,9 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                         totalRealProductivityUsedTime += productivityUsedTime;
                         totalRealWorkProductivity += workProductivity;
                         countRealProductivityValues++;
+                        totalDailyProductivityUsedTime += productivityUsedTime;
+                        totalDailyRealWorkProductivity += workProductivity;
+                        countDailyRealProductivityValues++;
                     }
 
                     //calculo productividad por rol
@@ -78,6 +98,13 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                             roleToWorkProductivity.getOrDefault(roleName, 0.0) + workProductivity);
                         roleToCount.put(roleName,
                             roleToCount.getOrDefault(roleName, 0) + 1);
+
+                        roleDailyToProductivityUsedTime.put(roleName,
+                            roleDailyToProductivityUsedTime.getOrDefault(roleName, 0.0) + productivityUsedTime);
+                        roleDailyToWorkProductivity.put(roleName,
+                            roleDailyToWorkProductivity.getOrDefault(roleName, 0.0) + workProductivity);
+                        roleDailyToCount.put(roleName,
+                            roleDailyToCount.getOrDefault(roleName, 0) + 1);
                     }
                                     
                     JSONObject jsonEmployee = new JSONObject();
@@ -167,6 +194,24 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
             jsonDateIndicators.put(JsonConstants.EMPLOYEES, solution.getUsedEmployees(date));
             jsonDateIndicators.put(JsonConstants.COVERED_SERVICES, coveredFlights);
             jsonDateIndicators.put(JsonConstants.UNCOVERED_SERVICES, uncoveredFlights);
+
+            // Añadir productividades por dia
+            jsonDateIndicators.put("PRODUCTIVITY_USED_TIME", totalDailyProductivityUsedTime / countDailyProductivityValues);
+            jsonDateIndicators.put("WORK_PRODUCTIVITY", totalDailyWorkProductivity / countDailyProductivityValues);
+            jsonDateIndicators.put("REAL_PRODUCTIVITY_USED_TIME", totalDailyRealProductivityUsedTime / countDailyRealProductivityValues);
+            jsonDateIndicators.put("REAL_WORK_PRODUCTIVITY", totalDailyRealWorkProductivity / countDailyRealProductivityValues);
+            // Añadir medias por rol
+            for (Map.Entry<String, Double> entry : roleDailyToProductivityUsedTime.entrySet()) {
+                String role = entry.getKey();
+                double avgProdUsedTime = (roleDailyToCount.get(role) > 0) ? roleDailyToProductivityUsedTime.get(role) / roleDailyToCount.get(role) : 0.0;
+                jsonDateIndicators.put(role + "_" + "PRODUCTIVITY_USED_TIME", avgProdUsedTime);
+            }
+            for (Map.Entry<String, Double> entry : roleDailyToWorkProductivity.entrySet()) {
+                String role = entry.getKey();
+                double avgWorkProd = (roleDailyToCount.get(role) > 0) ? roleDailyToWorkProductivity.get(role) / roleDailyToCount.get(role) : 0.0;
+                jsonDateIndicators.put(role + "_" + "WORK_PRODUCTIVITY", avgWorkProd);
+            }
+
             jsonDate.put(JsonConstants.INDICATORS, jsonDateIndicators);
             jsonDates.put(jsonDate);
         }

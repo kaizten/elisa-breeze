@@ -1,8 +1,6 @@
 package com.kaizten.prmp.solver;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -80,7 +78,8 @@ public class Main {
         }
 
          //guardar info en texto
-         TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, instanceNumber, algorithm);
+         Object[] dates = optimizationProblem.getDatesOfServices().toArray();
+         TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, instanceNumber, algorithm, dates);
         
     }
 }

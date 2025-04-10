@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.kaizten.opt.problem.OptimizationProblem;
 import com.kaizten.utils.string.KaiztenFormatterTable;
 
 public class TableGenerator {
@@ -16,7 +18,7 @@ public class TableGenerator {
     private static final String executionDataFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
     private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
 
-    public static void saveExecutionDataToTable(double executionTime, JSONObject solutionJSON, String airport, String percentage, String instanceNumber, String algorithm) {
+    public static void saveExecutionDataToTable(double executionTime, JSONObject solutionJSON, String airport, String percentage, String instanceNumber, String algorithm, Object[] dates) {
         // Obtener los datos de la solución
         double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators").getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Global");
         double averageWorkProductivity = solutionJSON.getJSONObject("indicators").getJSONObject("WORK PRODUCTIVITY VALUES").getDouble("Global");
@@ -59,93 +61,111 @@ public class TableGenerator {
             wpAgent, wpDriver, wpRampManager, wpManager,
             executionTime, coveredServicesPercentage, coveredServices));  
 
+            // Bucle para escribir la información de cada día en el archivo
+            for (int day = 0; day < dates.length; day++) {
+                String date = solutionJSON.getJSONArray("dates").getJSONObject(day).getString("date");
+                JSONObject indicators = solutionJSON.getJSONArray("dates").getJSONObject(day).getJSONObject("indicators");
+
+                // Escribir las productividades para cada día en la misma línea
+                writer.write(String.format("\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t",
+                    date,
+                    indicators.optDouble("PRODUCTIVITY_USED_TIME",0),
+                    indicators.optDouble("REAL_PRODUCTIVITY_USED_TIME",0),
+                    indicators.optDouble("AGENT_PRODUCTIVITY_USED_TIME",0),
+                    indicators.optDouble("MANAGER_PRODUCTIVITY_USED_TIME",0),
+                    indicators.optDouble("RAMP_MANAGER_PRODUCTIVITY_USED_TIME",0),
+                    indicators.optDouble("DRIVER_PRODUCTIVITY_USED_TIME",0),
+
+                    indicators.optDouble("WORK_PRODUCTIVITY",0),
+                    indicators.optDouble("REAL_WORK_PRODUCTIVITY",0),
+                    indicators.optDouble("AGENT_WORK_PRODUCTIVITY",0),
+                    indicators.optDouble("MANAGER_WORK_PRODUCTIVITY",0),
+                    indicators.optDouble("RAMP_MANAGER_WORK_PRODUCTIVITY",0),
+                    indicators.optDouble("DRIVER_WORK_PRODUCTIVITY",0)
+
+                ));
+            }
+             
+
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        int dateCount = solutionJSON.getJSONArray("dates").length();
         // Generar la tabla con los datos del archivo actualizado
-        generateTable();
+        generateTable(dateCount, solutionJSON);
     }
 
-    private static void generateTable() {
+    private static void generateTable(int dates, JSONObject solutionJSON) {
+        // Crear el objeto KaiztenFormatterTable para la tabla principal
         KaiztenFormatterTable table = new KaiztenFormatterTable();
-        // Agregar encabezados
+        
+        /*// Añadir la fila de cabeceras
         table.addRow(new String[]{
-                "Instance", "Number-of-Services", "Real-Services", "Fake-Services", "Number-of-Employees",
-                "Total-Agents", "Total-Drivers", "Total-Managers", "Total-RampManagers", "Algorithm",
-                "Productivity-UT", "Real-Productivity-UT", "P.UT-Agent", "P.UT-Driver", 
-                "P.UT-RampManager", "P.UT-Manager", "Work-Productivity", "Real-Work-Productivity", 
-                "WP-Agent", "WP-Driver", "WP-Ramp Manager", "WP-Manager", "Execution-Time(ms)", 
-                "Covered-Services(%)", "Covered-Services"
-        });
+            "Instance", "Services", "Real Services", "Fake Services",
+            "Employees", "Total Agents", "Total Drivers", "Total Managers", "Total Ramp Managers",
+            "Algorithm", "Avg Productive Time", "Avg Real Productive Time", 
+            "Agent Put", "Driver Put", "Ramp Manager Put", "Manager Put", 
+            "Avg Work Prod", "Avg Real Work Prod", "Agent Work Prod", 
+            "Driver Work Prod", "Ramp Manager Work Prod", "Manager Work Prod", 
+            "Execution Time", "Covered Services %", "Covered Services", "Days"
+        });*/
+        String[] header = new String[26 + (dates * 13)];
+        System.arraycopy(new String[]{
+            "Instance", "Number-of-Services", "Real-Services", "Fake-Services", "Number-of-Employees",
+            "Total-Agents", "Total-Drivers", "Total-Managers", "Total-RampManagers", "Algorithm",
+            "Productivity-UT", "Real-Productivity-UT", "P.UT-Agent", "P.UT-Driver", 
+            "P.UT-RampManager", "P.UT-Manager", "Work-Productivity", "Real-Work-Productivity", 
+            "WP-Agent", "WP-Driver", "WP-Ramp Manager", "WP-Manager", "Execution-Time(ms)", 
+            "Covered-Services(%)", "Covered-Services"
+        }, 0, header, 0, 25); //columnas fijas
 
-        try (BufferedReader br = new BufferedReader(new FileReader(executionDataFile))) {
+        // Añadir las columnas para cada día
+        for (int i = 0; i < dates; i++) {
+            int offset = 25 + (i * 13);
+            header[offset] = "Date-" + (i + 1);
+            header[offset + 1] = "P.UT-" ;
+            header[offset + 2] = "R.P.UT-" ;
+            header[offset + 3] = "P.UT-Agent-" ;
+            header[offset + 4] = "P.UT-Manager-" ;
+            header[offset + 5] = "P.UT-RampManager-" ;
+            header[offset + 6] = "P.UT-Driver-" ;
+            header[offset + 7] = "WP-";
+            header[offset + 8] = "R.WP-";
+            header[offset + 9] = "WP-Agent-";
+            header[offset + 10] = "WP-Manager-";
+            header[offset + 11] = "WP-RampManager-";
+            header[offset + 12] = "WP-Driver-";
+        }
+
+
+        // Agregar el encabezado a la tabla
+        table.addRow(header);   
+    
+        // Leer el archivo de datos y agregar filas de datos a la tabla
+        try (BufferedReader reader = new BufferedReader(new FileReader(executionDataFile))) {
             String line;
-            boolean firstLine = false;
-            String lastInstance = null;
-
-            while ((line = br.readLine()) != null) {
-                if (firstLine) {
-                    firstLine = false;
-                    continue;
-                }
-
-                String[] columns = line.trim().split("\\s+");
-                if (columns.length < 24) continue;
-
-                String instance = columns[0];
-                String numberServices = columns[1];
-                String realServices = columns[2];
-                String fakeServices = columns[3];
-                String numberEmployees = columns[4];
-                String totalAgents = columns[5];
-                String totalDrivers = columns[6];
-                String totalManagers = columns[7];
-                String totalRampManagers = columns[8];
-                String algorithm = columns[9];
-                String averageProductivityUsedTime = columns[10];
-                String averageRealProductivityUsedTime = columns[11];
-                String putAgent = columns[12];
-                String putDriver = columns[13];
-                String putRampManager = columns[14];
-                String putManager = columns[15];
-                String averageWorkProductivity = columns[16];
-                String averageRealWorkProductivity = columns[17];
-                String wpAgent = columns[18];
-                String wpDriver = columns[19];
-                String wpRampManager = columns[20];
-                String wpManager = columns[21];
-                String executionTime = columns[22];
-                String coveredServicesPercent = columns[23]; 
-                String coveredServices = columns[24];
-
-                if (lastInstance != null && !lastInstance.equals(instance)) {
-                    table.addRow(new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "});
-                }
-
-                table.addRow(new String[]{
-                        instance, numberServices, realServices, fakeServices, numberEmployees, totalAgents, 
-                        totalDrivers, totalManagers, totalRampManagers, algorithm, averageProductivityUsedTime, 
-                        averageRealProductivityUsedTime, putAgent, putDriver, putRampManager, putManager, 
-                        averageWorkProductivity, averageRealWorkProductivity, wpAgent, wpDriver, wpRampManager, 
-                        wpManager, executionTime, coveredServicesPercent + "%", coveredServices
-                });
-
-                lastInstance = instance;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split("\t");
+                // Aquí los datos están separados por tabulaciones, como en el ejemplo original
+                table.addRow(data);
             }
-
-            // Escribir la tabla en archivo
-            try (FileWriter writer = new FileWriter(tableOutputFile)) {
-                writer.write(table.toString());
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Table generated and saved.");
+    
+    
+        // Imprimir la tabla generada
+        System.out.println(table.toString());
+    
+        // Si deseas guardar la tabla en el archivo de salida
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tableOutputFile))) {
+            writer.write(table.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    
 }
     
        
