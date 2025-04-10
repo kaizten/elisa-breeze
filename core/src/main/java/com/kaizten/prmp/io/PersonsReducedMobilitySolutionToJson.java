@@ -83,7 +83,7 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                         totalRealProductivityUsedTime += productivityUsedTime;
                         totalRealWorkProductivity += workProductivity;
                         countRealProductivityValues++;
-                        totalDailyProductivityUsedTime += productivityUsedTime;
+                        totalDailyRealProductivityUsedTime += productivityUsedTime;
                         totalDailyRealWorkProductivity += workProductivity;
                         countDailyRealProductivityValues++;
                     }

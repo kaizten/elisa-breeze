@@ -6,10 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.kaizten.opt.problem.OptimizationProblem;
 import com.kaizten.utils.string.KaiztenFormatterTable;
 
 public class TableGenerator {
@@ -67,7 +65,7 @@ public class TableGenerator {
                 JSONObject indicators = solutionJSON.getJSONArray("dates").getJSONObject(day).getJSONObject("indicators");
 
                 // Escribir las productividades para cada día en la misma línea
-                writer.write(String.format("\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t",
+                writer.write(String.format("\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f",
                     date,
                     indicators.optDouble("PRODUCTIVITY_USED_TIME",0),
                     indicators.optDouble("REAL_PRODUCTIVITY_USED_TIME",0),
