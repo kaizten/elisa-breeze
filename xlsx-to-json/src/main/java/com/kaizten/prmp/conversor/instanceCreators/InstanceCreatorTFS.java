@@ -24,7 +24,8 @@ public class InstanceCreatorTFS {
         int numberOfManagers = 3;
         int numberOfDrivers = 3;
         int numberOfExtraEmployees = 280;
-        int numberOfEmployees = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1) + numberOfManagers + numberOfDrivers + numberOfExtraEmployees/7;
+        //int numberOfEmployees = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1) + numberOfManagers + numberOfDrivers + numberOfExtraEmployees/7;
+        int numberOfEmployees = (int) Math.ceil((double) selectedFlights.size() / 7*5) + numberOfManagers + numberOfDrivers + numberOfExtraEmployees/7;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
