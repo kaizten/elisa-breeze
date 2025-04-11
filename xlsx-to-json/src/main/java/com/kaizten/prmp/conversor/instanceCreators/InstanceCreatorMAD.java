@@ -20,7 +20,11 @@ public class InstanceCreatorMAD {
             String airport,
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size()+107+12*numberOfDays;
-        final int numberOfEmployees = (int) Math.ceil((double) selectedFlights.size() / 7*5) + 12 + 510/7;
+        int numberOfManagers = 6;
+        int numberOfDrivers = 3;
+        int numberOfRampManagers = 3;
+        int numberOfExtraEmployees = 510;
+        int numberOfEmployees = Math.min((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1) + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees/7;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);

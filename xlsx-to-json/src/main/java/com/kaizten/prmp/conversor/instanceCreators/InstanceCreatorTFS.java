@@ -19,8 +19,12 @@ public class InstanceCreatorTFS {
             List<String> selectedFlights,
             String airport,
             int numberOfDays) {
+        
         final int numberOfServices = selectedFlights.size()+61+6*numberOfDays;  
-        final int numberOfEmployees = (int) Math.ceil((double) selectedFlights.size() / 7*5) + 6 + 280/7;
+        int numberOfManagers = 3;
+        int numberOfDrivers = 3;
+        int numberOfExtraEmployees = 280;
+        int numberOfEmployees = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1) + numberOfManagers + numberOfDrivers + numberOfExtraEmployees/7;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
