@@ -161,9 +161,6 @@ public class TableGenerator {
         }
     
     
-        // Imprimir la tabla generada
-        System.out.println(table.toString());
-    
         // Si deseas guardar la tabla en el archivo de salida
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(tableOutputFile))) {
             writer.write(table.toString());
