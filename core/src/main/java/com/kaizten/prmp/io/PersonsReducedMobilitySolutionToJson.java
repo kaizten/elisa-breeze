@@ -196,10 +196,27 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
             jsonDateIndicators.put(JsonConstants.UNCOVERED_SERVICES, uncoveredFlights);
 
             // Añadir productividades por dia
-            jsonDateIndicators.put("PRODUCTIVITY_USED_TIME", totalDailyProductivityUsedTime / countDailyProductivityValues);
-            jsonDateIndicators.put("WORK_PRODUCTIVITY", totalDailyWorkProductivity / countDailyProductivityValues);
-            jsonDateIndicators.put("REAL_PRODUCTIVITY_USED_TIME", totalDailyRealProductivityUsedTime / countDailyRealProductivityValues);
-            jsonDateIndicators.put("REAL_WORK_PRODUCTIVITY", totalDailyRealWorkProductivity / countDailyRealProductivityValues);
+            // Añadir productividades por día
+            jsonDateIndicators.put("PRODUCTIVITY_USED_TIME", 
+            Double.isNaN(totalDailyProductivityUsedTime / countDailyProductivityValues) 
+            ? 0 
+            : totalDailyProductivityUsedTime / countDailyProductivityValues);
+
+            jsonDateIndicators.put("WORK_PRODUCTIVITY", 
+            Double.isNaN(totalDailyWorkProductivity / countDailyProductivityValues) 
+            ? 0 
+            : totalDailyWorkProductivity / countDailyProductivityValues);
+
+            jsonDateIndicators.put("REAL_PRODUCTIVITY_USED_TIME", 
+            Double.isNaN(totalDailyRealProductivityUsedTime / countDailyRealProductivityValues) 
+            ? 0 
+            : totalDailyRealProductivityUsedTime / countDailyRealProductivityValues);
+
+            jsonDateIndicators.put("REAL_WORK_PRODUCTIVITY", 
+            Double.isNaN(totalDailyRealWorkProductivity / countDailyRealProductivityValues) 
+            ? 0 
+            : totalDailyRealWorkProductivity / countDailyRealProductivityValues);
+
             // Añadir medias por rol
             for (Map.Entry<String, Double> entry : roleDailyToProductivityUsedTime.entrySet()) {
                 String role = entry.getKey();

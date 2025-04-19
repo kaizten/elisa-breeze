@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.json.JSONObject;
 
@@ -143,10 +144,17 @@ public class TableGenerator {
         // Leer el archivo de datos y agregar filas de datos a la tabla
         try (BufferedReader reader = new BufferedReader(new FileReader(executionDataFile))) {
             String line;
+            int lineCount = 0; 
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split("\t");
                 // Aquí los datos están separados por tabulaciones, como en el ejemplo original
                 table.addRow(data);
+                lineCount++;
+                if(lineCount %2 == 0){
+                    String[] emptyRow = new String[header.length];
+                    Arrays.fill(emptyRow, ""); 
+                    table.addRow(emptyRow);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

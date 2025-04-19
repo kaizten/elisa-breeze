@@ -12,7 +12,8 @@ public class SolverController {
         //String[] algorithms = {"randomSolver"};
         String[] airports = {"SPC", "TFS", "MAD"};
         //double[] percentages = {0.5, 1, 1.5, 2};
-        final double[] percentages = {0.05, 0.1, 0.15, 0.2};
+        //final double[] percentages = {0.05, 0.1, 0.15, 0.2};
+        final double[] percentages = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5};
         
         for (String airport : airports) {
                 for (double percentage : percentages) {
@@ -30,9 +31,9 @@ public class SolverController {
             }
         }
 
-        //indiv:
-        //String[] parameters = {String.valueOf(0.1), "SPC", String.valueOf(0), "referenceSolver"};
-        //Main.main(parameters);
+        /*//indiv:
+        String[] parameters = {String.valueOf(0.1), "MAD", String.valueOf(0), "referenceSolver"};
+        Main.main(parameters);*/
 
 
     }            

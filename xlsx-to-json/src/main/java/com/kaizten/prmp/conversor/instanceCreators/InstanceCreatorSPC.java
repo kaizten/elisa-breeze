@@ -21,10 +21,14 @@ public class InstanceCreatorSPC {
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size()+ 4*numberOfDays; //añado 4*dias de servicio por los servicios adicionales
         //regla general => un empleado tiene 8h y puede hacer unos 5 servicios al dia => (vuelos/7)/5 => y cojo el maximo (ceil) pa no tener menos
+        int serviciosPorEmpleadoPorSemana = 7 * 5; // 5 servicios por día, 7 días a la semana
+        int neededAgents = Math.max(1, (int) Math.ceil((double) selectedFlights.size() / serviciosPorEmpleadoPorSemana)); //minimo 1 siempre
+        // Managers y drivers para servicios adicionales (4 por día)
         int numberOfManagers = 2;
         int numberOfDrivers = 2;
-        //int numberOfEmployees = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1) + numberOfManagers + numberOfDrivers; 
-        int numberOfEmployees = (int) Math.ceil((double) selectedFlights.size() / 7*5) + numberOfManagers + numberOfDrivers; 
+
+        int numberOfEmployees = neededAgents + numberOfManagers + numberOfDrivers;
+
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
