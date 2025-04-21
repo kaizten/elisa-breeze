@@ -47,7 +47,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
             // Recorrer todos los servicios y saca el número de empleados requeridos
             for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) { 
                 int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service); 
-                Role serviceRole = this.optimizationProblem.getServiceRole(service);                    OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
+                Role serviceRole = this.optimizationProblem.getServiceRole(service);                    
+                OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
                 OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);            
                 // Set de empleados disponibles
                 Set<Integer> availableEmployees = new HashSet<>();
@@ -141,7 +142,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     }
                 }
                     
-                // Calcular productividad de Working Time (porque la otra es siempre 99 o 100?)
+                // Calcular productividad de Working Time 
                 double accumulativeProductivity = 0.0;
                 int count = 0;
                 for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
