@@ -27,7 +27,7 @@ public class InstanceCreatorTFS {
         //calculo de numero de empleados extra: el dia con más demanda es lunes, con 32 conductores y 12 coordinadores necesitados. Adjudicamos eso para que cubra eso y ya de paso cubre los demas (regla general de momento)
         int numberOfExtraEmployees = 32+12;
         int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 5);
-        int numberOfEmployees = numberOfEmployeesFlights + numberOfManagers + numberOfDrivers + numberOfExtraEmployees;
+        int numberOfEmployees = numberOfEmployeesFlights*2 + numberOfManagers + numberOfDrivers + numberOfExtraEmployees;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);

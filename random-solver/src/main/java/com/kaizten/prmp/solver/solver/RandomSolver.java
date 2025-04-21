@@ -43,7 +43,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
             // Nueva solución por iteración
             PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
             Random rand = new Random();
-                
+            //int nocubierto = 0;    
             // Recorrer todos los servicios y saca el número de empleados requeridos
             for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) { 
                 int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service); 
@@ -83,30 +83,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         }
                     }
                 }
-                /*// Asignar empleados a los servicios => busca los que tengan el menor tiempo disponible, para que maximice su trabajo
-                while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) {
-                    int bestEmployee = -1;
-                    int minAvailableTime = Integer.MAX_VALUE;
-
-                    LocalDate serviceDate = serviceStartingTime.toLocalDate();
-
-                    // Itera a través de los empleados disponibles
-                    for (Integer employee : availableEmployees) {
-                        int availableTime = solution.getAvailableTime(serviceDate, employee); //recoge su tiempo disponible
-                        if (availableTime < minAvailableTime) { //si es menor que el minimo, se asigna ese tiempo y el empleado como mejor opción
-                            minAvailableTime = availableTime;
-                            bestEmployee = employee;
-                        }
-                    }
-
-                    if (bestEmployee != -1) {
-                        solution.assignServiceToEmployee(bestEmployee, service); //asigno servicio a ese empleado
-                        availableEmployees.remove(bestEmployee); //lo quito de la lista de empleados disponibles para ese servicio 
-                    } else {
-                        break;
-                    }
-                }
-            }*/
+                
                 // asignacion de empleados a servicios con fitness y aleatoriedad
                 while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) {
                     // Mapear fitness por empleado
@@ -137,10 +114,20 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     if (selectedEmployee != -1) {
                         solution.assignServiceToEmployee(selectedEmployee, service);
                         availableEmployees.remove(selectedEmployee);
+                        //System.out.println("empleado asignado, empleados que quedan disponibles: " + availableEmployees.size());
                     } else {
                         break; 
                     }
+
                 }
+                
+                /*if (!solution.isServiceCovered(service)){
+                    System.out.println("Servicio " + service + " no cubierto. Empleados requeridos: " + requiredEmployees + ". Empleados asignados: " + solution.getAssignedEmployees(service).size() + "\n");
+                    System.out.println("Rol requerido: " + serviceRole);
+                    nocubierto++;
+                }*/
+                
+            }
                     
                 // Calcular productividad de Working Time 
                 double accumulativeProductivity = 0.0;
@@ -164,9 +151,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 } else{
                     stopCounter++; //Aumenta contador
                 }
-            }
         }
-        
+        //System.out.println("no cubierto: " + nocubierto);
         return bestSolution;
         }
 }

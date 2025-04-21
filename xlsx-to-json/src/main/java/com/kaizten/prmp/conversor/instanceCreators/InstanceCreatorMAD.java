@@ -28,7 +28,7 @@ public class InstanceCreatorMAD {
         //int numberOfExtraEmployees = 51;
         int numberOfExtraEmployees = 60;
         int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 70);
-        int numberOfEmployees = numberOfEmployeesFlights + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees;
+        int numberOfEmployees = numberOfEmployeesFlights*2 + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
