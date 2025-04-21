@@ -155,10 +155,9 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         }
                     }
                 }
-
+                
                 double productivity = count > 0 ? accumulativeProductivity / count : 0.0;
-            
-                if (productivity > best_productivity) {
+                if(productivity > best_productivity) {
                     bestSolution = solution;
                     best_productivity = productivity;
                     stopCounter = 0; //Reinicia contador

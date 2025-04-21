@@ -21,11 +21,12 @@ public class InstanceCreatorTFS {
             int numberOfDays) {
         
         final int numberOfServices = selectedFlights.size()+61+6*numberOfDays;  
-        int numberOfManagers = 3;
-        int numberOfDrivers = 3;
+        // (3 de cada)+1 de respuesto de cada tipo fijo
+        int numberOfManagers = 3+1;
+        int numberOfDrivers = 3+1;
         //calculo de numero de empleados extra: el dia con más demanda es lunes, con 32 conductores y 12 coordinadores necesitados. Adjudicamos eso para que cubra eso y ya de paso cubre los demas (regla general de momento)
         int numberOfExtraEmployees = 32+12;
-        int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1);
+        int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 5);
         int numberOfEmployees = numberOfEmployeesFlights + numberOfManagers + numberOfDrivers + numberOfExtraEmployees;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,

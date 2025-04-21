@@ -27,7 +27,7 @@ public class Controller {
         }
         /*final String[] airports = {"MAD"};
         //final double[] percentages = {0.5, 1, 1.5, 2};
-        final double[] percentages = {0.05, 0.1, 0.15, 0.2};
+        final double[] percentages = {0.1};
         final int numberOfInstances = 100;
         
         

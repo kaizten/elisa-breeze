@@ -20,12 +20,14 @@ public class InstanceCreatorMAD {
             String airport,
             int numberOfDays) {
         final int numberOfServices = selectedFlights.size()+107+12*numberOfDays;
-        int numberOfManagers = 6;
-        int numberOfDrivers = 3;
-        int numberOfRampManagers = 3;
+        //+2 de respuesto de cada:
+        int numberOfManagers = 6+2;
+        int numberOfDrivers = 3+2;
+        int numberOfRampManagers = 3+2;
         //extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51
-        int numberOfExtraEmployees = 51;
-        int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 1);
+        //int numberOfExtraEmployees = 51;
+        int numberOfExtraEmployees = 60;
+        int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 70);
         int numberOfEmployees = numberOfEmployeesFlights + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees;
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
@@ -999,20 +1001,20 @@ public class InstanceCreatorMAD {
         }
 
         //Empleados añadidos
-        //TOTAl: 51 + 6 + 3 + 3 => 63
+        //TOTAl: 51 + 6 + 3 + 3 => 63+2+2+2
         //TOTAL TOTAL: 510
-        //294 DRIVERS => 58% => 37
-        //108 MANAGER => 21% => 13
-        //108 RAMP_MANAGER => 21% => 13
-        for (int i = numberOfEmployees-63; i < numberOfEmployees-37; i++) {
+        //294 DRIVERS => 58% => 37+2
+        //108 MANAGER => 21% => 13+2
+        //108 RAMP_MANAGER => 21% => 13+2
+        for (int i = numberOfEmployees-(63+2+2+2); i < numberOfEmployees-(37+2); i++) {
             optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        for (int i = numberOfEmployees-37; i < numberOfEmployees-13; i++) {
+        for (int i = numberOfEmployees-(37+2); i < numberOfEmployees-(13+2); i++) {
             optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        for (int i = numberOfEmployees-13; i < numberOfEmployees; i++) {
+        for (int i = numberOfEmployees-(13+2); i < numberOfEmployees; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.RAMP_MANAGER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
