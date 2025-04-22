@@ -59,12 +59,12 @@ public class ServicesSelector {
             String flightDate = flight.split("/")[0]; 
             String flightHour = flight.split("/")[2].trim(); 
             if (flightHour.length() == 4) {
-                System.out.println("LIMPIANDO");
+                //System.out.println("LIMPIANDO");
                 flightHour = "0" + flightHour; // Agregar un cero al principio si la hora tiene solo un dígito
             }
 
             String flightDateTime = flightDate + " " + flightHour;  // Solo la fecha y hora
-            System.out.println(flightDateTime);
+            //System.out.println(flightDateTime);
             LocalDateTime dateTime = LocalDateTime.parse(flightDateTime, formatter);  // Parsear fecha y hora
             return dateTime;  // Comparar por LocalDateTime
         }));

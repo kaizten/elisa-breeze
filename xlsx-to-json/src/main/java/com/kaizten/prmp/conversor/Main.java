@@ -72,7 +72,7 @@ public class Main {
         }
         
 
-        System.out.println(optimizationProblem);
+        //System.out.println(optimizationProblem);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
         JSONObject json = toJson.apply(optimizationProblem);
         KaiztenFile.writeToFile(new File("data/airportInstances/"+ airport + "-" +percentage + "-instance" + instanceNumber + ".json"), json);

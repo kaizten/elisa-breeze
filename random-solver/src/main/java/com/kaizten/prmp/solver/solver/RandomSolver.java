@@ -114,7 +114,6 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     if (selectedEmployee != -1) {
                         solution.assignServiceToEmployee(selectedEmployee, service);
                         availableEmployees.remove(selectedEmployee);
-                        //System.out.println("empleado asignado, empleados que quedan disponibles: " + availableEmployees.size());
                     } else {
                         break; 
                     }
@@ -151,8 +150,9 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 } else{
                     stopCounter++; //Aumenta contador
                 }
+                //System.out.println("no cubierto: " + nocubierto);
         }
-        //System.out.println("no cubierto: " + nocubierto);
+        
         return bestSolution;
         }
 }
