@@ -1,9 +1,5 @@
 package com.kaizten.prmp.io;
 
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.utils.json.KaiztenJsonSchema;
-
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,6 +7,10 @@ import java.util.function.Function;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.utils.json.KaiztenJsonSchema;
 
 public class PersonsReducedMobilityProblemToJson implements Function<PersonsReducedMobilityProblem, JSONObject> {
 
@@ -33,8 +33,8 @@ public class PersonsReducedMobilityProblemToJson implements Function<PersonsRedu
         for (int i = 0; i < optimizationProblem.getNumberOfEmployees(); i++) {
             JSONObject jsonIndividual = new JSONObject();
             jsonIndividual.put(JsonConstants.CODE, optimizationProblem.getEmployeeCode(i));
-            jsonIndividual.put(JsonConstants.TIME_PER_DAY, Duration.ofHours(optimizationProblem.getEmployeeHoursPerDay(i)));
-            jsonIndividual.put(JsonConstants.TIME_PER_WEEK, Duration.ofHours(optimizationProblem.getEmployeeTimePerWeek(i)));
+            jsonIndividual.put(JsonConstants.TIME_PER_DAY, Duration.ofMinutes(optimizationProblem.getEmployeeHoursPerDay(i)));
+            jsonIndividual.put(JsonConstants.TIME_PER_WEEK, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerWeek(i)));
             jsonIndividual.put(JsonConstants.TIME_BETWEEN_WORKING_DAYS, Duration.ofMinutes(optimizationProblem.getEmployeeTimeBetweenWorkingDays(i)));
             if (optimizationProblem.hasEmployeeStart(i)) {
                 jsonIndividual.put(JsonConstants.START_TIME, KaiztenJsonSchema.toTime(optimizationProblem.getEmployeeStart(i).get()));

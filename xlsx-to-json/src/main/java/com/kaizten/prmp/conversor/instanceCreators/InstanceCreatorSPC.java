@@ -26,7 +26,7 @@ public class InstanceCreatorSPC {
         // Managers y drivers para servicios adicionales (4 por día) + 1 de respuesto de cada
         int numberOfManagers = 2+1; 
         int numberOfDrivers = 2+1;
-        int numberOfEmployees = (neededAgents*2)*10 + numberOfManagers + numberOfDrivers; //+10 porque faltan
+        int numberOfEmployees = (neededAgents+10)*2 + numberOfManagers + numberOfDrivers; //+10 porque faltan
 
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
