@@ -203,10 +203,11 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
             jsonDate.put(JsonConstants.EMPLOYEES, jsonEmployees);
             jsonDate.put(JsonConstants.UNCOVERED_SERVICES, solution.getUncoveredServices(date));
             // Indicators of date
-            Map<String, Object> coveredFlights = new HashMap<>();
+            JSONObject coveredFlights = new JSONObject();
             coveredFlights.put(JsonConstants.ABSOLUTE, solution.getNumberOfCoveredServices(date));
-            coveredFlights.put(JsonConstants.PERCENTAGE, ((double) solution.getNumberOfCoveredServices(date) / (double) optimizationProblem.getNumberOfServices(date)) * 100.0);
-            Map<String, Object> uncoveredFlights = new HashMap<>();
+            final double percentage = ((double) solution.getNumberOfCoveredServices(date) / (double) optimizationProblem.getNumberOfServices(date)) * 100.0;
+            coveredFlights.put(JsonConstants.PERCENTAGE, percentage);
+            JSONObject uncoveredFlights = new JSONObject();
             uncoveredFlights.put(JsonConstants.ABSOLUTE, solution.getNumberOfUncoveredServices(date));
             uncoveredFlights.put(JsonConstants.PERCENTAGE, ((double) solution.getNumberOfUncoveredServices(date) / (double) optimizationProblem.getNumberOfServices(date)) * 100.0);
             JSONObject jsonDateIndicators = new JSONObject();
