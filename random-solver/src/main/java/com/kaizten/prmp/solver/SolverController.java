@@ -30,12 +30,12 @@ public class SolverController {
                 }
             }
         }
-
+/* 
         //indiv:
         //String[] parameters = {String.valueOf(0.1), "MAD", String.valueOf(0), "randomSolver"};
         //Main.main(parameters);
        
-        /*String[] algorithms = {"randomSolver"};
+        String[] algorithms = {"randomSolver"};
         //String[] algorithms = {"randomSolver"};
         String[] airports = {"SPC"};
         //double[] percentages = {0.5};

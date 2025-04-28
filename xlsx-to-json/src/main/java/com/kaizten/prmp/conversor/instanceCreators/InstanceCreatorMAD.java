@@ -18,16 +18,16 @@ public class InstanceCreatorMAD {
     public PersonsReducedMobilityProblem createInstance(
             List<String> selectedFlights,
             String airport,
-            int numberOfDays) {
+            int numberOfDays, int maxOverlaps) {
         final int numberOfServices = selectedFlights.size()+107+12*numberOfDays;
         //+2 de respuesto de cada:
-        int numberOfManagers = 6+2;
-        int numberOfDrivers = 3+2;
-        int numberOfRampManagers = 3+2;
+        int numberOfManagers = 6;
+        int numberOfDrivers = 3;
+        int numberOfRampManagers = 3;
         //extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51
-        int numberOfExtraEmployees = 51*2; //Faltan drivers y ramp managers=> *2 de momento
-        int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), 5*2); //minimo 5 por terminal
-        int numberOfEmployees = numberOfEmployeesFlights*2 + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees; 
+        int numberOfExtraEmployees = 51; //Faltan drivers y ramp managers=> *2 de momento
+        int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), maxOverlaps); 
+        int numberOfEmployees = numberOfEmployeesFlights + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees; 
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
                 numberOfEmployees);
@@ -1000,20 +1000,20 @@ public class InstanceCreatorMAD {
         }
 
         //Empleados añadidos
-        //TOTAl: 51*2 + 6 +2 + 3+2 + 3+2 => 120
+        //TOTAl: 63
         //TOTAL TOTAL: 510
-        //294 DRIVERS => 70% => 84
-        //108 MANAGER => 15% => 18
-        //108 RAMP_MANAGER => 15% => 18
-        for (int i = numberOfEmployees-(120); i < numberOfEmployees-(36); i++) {
+        //294 DRIVERS => 70% => 43
+        //108 MANAGER => 15% => 10
+        //108 RAMP_MANAGER => 15% => 10
+        for (int i = numberOfEmployees-(63); i < numberOfEmployees-(20); i++) {
             optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        for (int i = numberOfEmployees-(36); i < numberOfEmployees-(18); i++) {
+        for (int i = numberOfEmployees-(20); i < numberOfEmployees-(10); i++) {
             optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }
-        for (int i = numberOfEmployees-(18); i < numberOfEmployees; i++) {
+        for (int i = numberOfEmployees-(10); i < numberOfEmployees; i++) {
             optimizationProblem.addEmployeeRoles(i, Role.RAMP_MANAGER);
             optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
         }

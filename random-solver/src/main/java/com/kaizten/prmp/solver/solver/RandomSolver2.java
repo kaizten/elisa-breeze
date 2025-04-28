@@ -1,25 +1,21 @@
 package com.kaizten.prmp.solver.solver;
 
-import java.io.File;
-import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-
-import org.json.JSONObject;
 
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
-import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
-import com.kaizten.utils.io.KaiztenFile;
 
 public class RandomSolver2 extends AbstractSolver<PersonsReducedMobilitySolution> {
 
@@ -31,100 +27,138 @@ public class RandomSolver2 extends AbstractSolver<PersonsReducedMobilitySolution
 
     @Override
     public PersonsReducedMobilitySolution run() {
-         
+
         PersonsReducedMobilitySolution bestSolution = null;
-        double best_productivity = 0.0;
+        double bestProductivity = 0.0;
+        int stopCounter = 0;
     
+        for (int iter = 0; iter < 200; iter++) {
+            if (stopCounter >= 50) {
+                System.out.println("Criterio de parada: no mejora en 50 iteraciones.");
+                break;
+            }
+    
+            PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
+    
+            // 1. Preparar lista de servicios ordenados por dificultad
+            List<Integer> orderedServices = new ArrayList<>();
+            Map<Integer, Integer> serviceDifficulty = new HashMap<>();
+    
+            for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
+                int countAvailable = 0;
+                Role serviceRole = this.optimizationProblem.getServiceRole(service);
+                OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
+                OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);
+    
+                for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
+                    Optional<LocalTime> startOpt = this.optimizationProblem.getEmployeeStart(employee);
+                    Optional<LocalTime> finishOpt = this.optimizationProblem.getEmployeeFinish(employee);
+    
+                    boolean roleOk = this.optimizationProblem.hasEmployeeRole(employee, serviceRole);
+                    boolean withinHours = true;
+                    if (startOpt.isPresent() && serviceStartingTime.toLocalTime().isBefore(startOpt.get())) {
+                        withinHours = false;
+                    }
+                    if (finishOpt.isPresent() && serviceFinishingTime.toLocalTime().isAfter(finishOpt.get())) {
+                        withinHours = false;
+                    }
+    
+                    if (roleOk && withinHours) {
+                        countAvailable++;
+                    }
+                }
+                serviceDifficulty.put(service, countAvailable);
+                orderedServices.add(service);
+            }
+    
+            // Ordenar servicios por número de empleados disponibles (ascendente)
+            orderedServices.sort((s1, s2) -> Integer.compare(serviceDifficulty.get(s1), serviceDifficulty.get(s2)));
+    
+            // 2. Asignar servicios
+            for (int service : orderedServices) {
+                int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
+                Role serviceRole = this.optimizationProblem.getServiceRole(service);
+                OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
+                OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);
+    
+                // Buscar empleados disponibles
+                Set<Integer> availableEmployees = new HashSet<>();
+    
+                for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
+                    Optional<LocalTime> startOpt = this.optimizationProblem.getEmployeeStart(employee);
+                    Optional<LocalTime> finishOpt = this.optimizationProblem.getEmployeeFinish(employee);
+    
+                    boolean roleOk = this.optimizationProblem.hasEmployeeRole(employee, serviceRole);
+                    boolean withinHours = true;
+                    if (startOpt.isPresent() && serviceStartingTime.toLocalTime().isBefore(startOpt.get())) {
+                        withinHours = false;
+                    }
+                    if (finishOpt.isPresent() && serviceFinishingTime.toLocalTime().isAfter(finishOpt.get())) {
+                        withinHours = false;
+                    }
+    
+                    if (roleOk && withinHours
+                            && solution.doesServiceFitEmployeeWorkingTime(employee, service)
+                            && !solution.isServiceOverlapping(employee, service)) {
+                        availableEmployees.add(employee);
+                    }
+                }
+    
+                // Asignar empleados por disponibilidad
+                while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) {
+                    // Buscar el empleado con menos horas trabajadas
+                    List<Integer> bestCandidates = new ArrayList<>();
+                    long minWorkTime = Long.MAX_VALUE;
+                    LocalDate serviceDate = serviceStartingTime.toLocalDate();
 
-            // Asignación de Servicio ordenados por fecha y hora aleatoriamente a cada empleado
-            
-            for (int i = 0; i < 200; i++) {
-
-                // Crear una nueva solución para cada iteración
-                PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
-                Random rand = new Random();
-
-                List<Integer> servicesOrderedByTime = new ArrayList<>();
-                for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
-                    servicesOrderedByTime.add(service);
-                }      
-               
-                // Ordenar los servicios por startingTime
-                servicesOrderedByTime.sort(Comparator.comparingLong(service -> 
-                this.optimizationProblem.getServiceStartingTime(service).toEpochSecond()
-                ));
-
-                // Recorrer todos los servicios y saca el número de empleados requeridos
-                for (int service : servicesOrderedByTime) {
-                    int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service); 
-                    Role serviceRole = this.optimizationProblem.getServiceRole(service);
-                    OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
-                    OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);            
-                    
-                    // Set de empleados disponibles
-                    Set<Integer> availableEmployees = new HashSet<>();
-                    for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) { 
-                        Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(employee);
-                        Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(employee);
-
-                        if (this.optimizationProblem.hasEmployeeRole(employee, serviceRole) 
-                        && solution.doesServiceFitEmployeeWorkingTime(employee, service)
-                        && !solution.isServiceOverlapping(employee, service)
-                         ) {
-                            // valido startTime y FinishTime juntos, y si ambos son True, se añade a la lista de empleados disponibles. 
-                            //Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime, se les asigna automáticamente
-                            //Si tienen startTime, se comprueba que el servicio empiece después de su startTime, y si no, se pasa a false y ya no se añadirá
-                            boolean startTime = true;
-                            if (employeeStartTime.isPresent()) {
-                                if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())) {
-                                    startTime = false;
-                                }
-                            }
-
-                            //hacemos lo mismo con FinishTime
-                            boolean finishTime = true;
-                            if (employeeFinishTime.isPresent()) {
-                                if (serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get())) {
-                                    finishTime = false;
-                                }
-                            }
-
-                            //comprobamos si ambos estan en true, y si es asi, se añade
-                            if (startTime && finishTime) {
-                                availableEmployees.add(employee);
-                            }
+                    for (Integer employee : availableEmployees) {
+                        int availableMinutes = solution.getAvailableTime(serviceDate, employee);
+                        if (availableMinutes < minWorkTime) {
+                            minWorkTime = availableMinutes;
+                            bestCandidates.clear();
+                            bestCandidates.add(employee);
+                        } else if (availableMinutes == minWorkTime) {
+                            bestCandidates.add(employee);
                         }
                     }
-            
-                    // Asignar empleados al azar según el número de empleados requeridos por el servicio
-                    while (solution.getAssignedEmployees(service).size() < requiredEmployees && !availableEmployees.isEmpty()) { 
-                        int randomIndex = rand.nextInt(availableEmployees.size()); 
-                        Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex]; 
+
+                    // Elegir aleatorio entre los mejores
+                    if (!bestCandidates.isEmpty()) {
+                        Random rand = new Random();
+                        int index = rand.nextInt(bestCandidates.size());
+                        Integer selectedEmployee = bestCandidates.get(index);
+
                         solution.assignServiceToEmployee(selectedEmployee, service);
                         availableEmployees.remove(selectedEmployee);
                     }
-                }
 
-                int coveredServices = solution.getNumberOfCoveredServices();
-                int totalServices = this.optimizationProblem.getNumberOfServices();
-
-                // Cálculo productividad
-                double productivity = (coveredServices * 100.0) / totalServices;
-
-                if (productivity > best_productivity) {
-                    bestSolution = solution;
                 }
             }
-
-            // Guardamos el JSON en la ruta especificada
-            try {
-                JSONObject solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(bestSolution);
-                KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/solution2.json"), solutionJSON);
-            } catch (IOException e) {
-                System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
+    
+            // 3. Evaluar productividad
+            double accumulativeProductivity = 0.0;
+            int count = 0;
+            for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
+                for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+                    Double productivity = solution.getWorkProductivity(date, employee);
+                    if (productivity != null) {
+                        accumulativeProductivity += productivity;
+                        count++;
+                    }
+                }
             }
-        
+            double averageProductivity = (count > 0) ? (accumulativeProductivity / count) : 0.0;
+    
+            if (averageProductivity > bestProductivity) {
+                bestSolution = solution;
+                bestProductivity = averageProductivity;
+                stopCounter = 0;
+            } else {
+                stopCounter++;
+            }
+        }
+    
         return bestSolution;
-          
+    }
 }
-}
+

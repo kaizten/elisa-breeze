@@ -18,15 +18,16 @@ public class InstanceCreatorSPC {
     public PersonsReducedMobilityProblem createInstance(
             List<String> selectedFlights,
             String airport,
-            int numberOfDays) {
+            int numberOfDays, int maxOverlaps) {
+        
         final int numberOfServices = selectedFlights.size()+ 4*numberOfDays; //añado 4*dias de servicio por los servicios adicionales
         //regla general => un empleado tiene 8h y puede hacer unos 5 servicios al dia => (vuelos/7)/5 => y cojo el maximo (ceil) pa no tener menos
         int serviciosPorEmpleadoPorSemana = 7 * 5; // 5 servicios por día, 7 días a la semana
-        int neededAgents = Math.max(5, (int) Math.ceil((double) selectedFlights.size() / serviciosPorEmpleadoPorSemana)); //minimo 5 siempre
+        int neededAgents = Math.max(maxOverlaps, (int) Math.ceil((double) selectedFlights.size() / serviciosPorEmpleadoPorSemana)); //minimo número maximo de solapamientos
         // Managers y drivers para servicios adicionales (4 por día) + 1 de respuesto de cada
-        int numberOfManagers = 2+1; 
-        int numberOfDrivers = 2+1;
-        int numberOfEmployees = (neededAgents+10)*2 + numberOfManagers + numberOfDrivers; //+10 porque faltan
+        int numberOfManagers = 2; 
+        int numberOfDrivers = 2;
+        int numberOfEmployees = neededAgents + numberOfManagers + numberOfDrivers; 
 
         final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                 numberOfServices,
@@ -69,7 +70,6 @@ public class InstanceCreatorSPC {
             // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
             // " + flightInfo[2]);
             String time = flightInfo[2].trim();
-            System.out.println(time);
             if (time.length() == 4) {
                 time = "0" + time; // Agregar un cero al principio si la hora tiene solo un dígito
             }

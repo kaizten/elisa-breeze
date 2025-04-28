@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -80,6 +81,7 @@ public class Main {
          //guardar info en texto
          Object[] dates = optimizationProblem.getDatesOfServices().toArray();
          TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, instanceNumber, algorithm, dates);
+
         
     }
 }

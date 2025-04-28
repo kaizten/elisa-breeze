@@ -13,6 +13,7 @@ import com.kaizten.prmp.conversor.instanceCreators.InstanceCreatorMAD;
 import com.kaizten.prmp.conversor.instanceCreators.InstanceCreatorSPC;
 import com.kaizten.prmp.conversor.instanceCreators.InstanceCreatorTFS;
 import com.kaizten.prmp.conversor.serviceTools.FlightCounter;
+import com.kaizten.prmp.conversor.serviceTools.FlightOverlapCounter;
 import com.kaizten.prmp.conversor.serviceTools.ServicesSelector;
 import com.kaizten.prmp.conversor.xlsxReaders.XlsxReader;
 import com.kaizten.prmp.conversor.xlsxReaders.XlsxReader2;
@@ -38,7 +39,7 @@ public class Main {
         }
 
         int total = FlightCounter.countTotalFlights(flights);
-        System.out.println("Total de vuelos: " + total);
+        //System.out.println("Total de vuelos: " + total);
 
         int numberOfServices = (int) Math.round(total*percentage);
 
@@ -47,6 +48,10 @@ public class Main {
         List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
         //System.out.println("selected Flights: " + selectedFlights);
 
+        //Calcular máximo número de servicios solapados 
+        FlightOverlapCounter counter = new FlightOverlapCounter();
+        int maxOverlaps = counter.countMaxOverlaps(selectedFlights);
+
         PersonsReducedMobilityProblem optimizationProblem = null;
 
         if(airport =="SPC"){
@@ -54,21 +59,21 @@ public class Main {
             optimizationProblem = creator.createInstance(
             selectedFlights,
             airport,
-            numberOfDays);
+            numberOfDays, maxOverlaps);
         }
         else if (airport == "TFS"){
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
             optimizationProblem = creator.createInstance(
             selectedFlights,
             airport,
-            numberOfDays);
+            numberOfDays, maxOverlaps);
         }
         else if (airport == "MAD"){
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
             optimizationProblem = creator.createInstance(
             selectedFlights,
             airport,
-            numberOfDays);
+            numberOfDays, maxOverlaps);
         }
         
 

@@ -148,7 +148,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return false;
     }
 
-    public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
+    /*public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
         LocalDate date = this.optimizationProblem.getDate(service);
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         long assignedWorkingTime = 0;
@@ -168,7 +168,37 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
         }
         return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
-    }
+    }*/
+    //verificar que no se acumule a otro dia sino que se considere como nuevo dia
+    public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
+        LocalDate date = this.optimizationProblem.getDate(service);
+        int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
+        long assignedWorkingTime = 0;
+    
+        // Resetea las horas de trabajo a cero al inicio de un nuevo día
+        if (this.hasAssignedServices(indexOfDate, employee)) {
+            assignedWorkingTime = this.getUsedTime(indexOfDate, employee).toMinutes();
+            
+            OffsetDateTime employeeFinishingTime = this.getFinishingTime(indexOfDate, employee);
+            OffsetDateTime lastServiceFinishingTime = super.getOptimizationProblem().getServiceFinishingTime(service);
+    
+            // Si el servicio termina después de la hora de finalización del empleado, se acumula el tiempo adicional
+            if (lastServiceFinishingTime.isAfter(employeeFinishingTime)) {
+                assignedWorkingTime += Duration.between(employeeFinishingTime, lastServiceFinishingTime).toMinutes();
+            } else {
+                // Si el servicio comienza antes que la hora de inicio del empleado, se acumula el tiempo faltante
+                OffsetDateTime employeeStartingTime = this.getStartingTime(indexOfDate, employee);
+                OffsetDateTime firstServiceStartingTime = super.getOptimizationProblem().getServiceStartingTime(service);
+                if (firstServiceStartingTime.isBefore(employeeStartingTime)) {
+                    assignedWorkingTime += Duration.between(firstServiceStartingTime, employeeStartingTime).toMinutes();
+                }
+            }
+        }
+    
+        // Verifica que las horas trabajadas no excedan las disponibles para el empleado
+        return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
+    }    
+    
 
     public int getFirstUncoveredService() {
         for (int i = 0; i < this.optimizationProblem.getNumberOfServices(); i++) {
@@ -292,7 +322,6 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes()) * 100.0;
     }
 
-    //Revisar que getWorkignTime lo devuelve en minutos
     public double getWorkProductivity(LocalDate date, int employee) {
         //Calcular tiempo de jornada total => en vez de getWorkingTime
         return ((double) this.getWorkingTime(date, employee) / (double) optimizationProblem.getEmployeeAvailableTimePerDay(employee))*100.0;
@@ -374,10 +403,24 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return this.optimizationProblem.getNumberOfServices(date) - this.getNumberOfCoveredServices(date);
     }
 
-    public int getAvailableTime(LocalDate date, int employee) {
+    /*public int getAvailableTime(LocalDate date, int employee) {
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) - this.getWorkingTime(indexOfDate, employee);
+    }*/
+    //que se considere por día
+    // Método para calcular el tiempo disponible de un empleado en un día
+    public int getAvailableTime(LocalDate date, int employee) {
+        // Reinicia el tiempo disponible al principio de cada día
+        int availableTime = super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee);
+
+        // Aquí restas el tiempo ya trabajado en ese día
+        if (this.hasAssignedServices(date, employee)) {
+            availableTime -= this.getUsedTime(date, employee).toMinutes();
+        }
+
+        return availableTime;
     }
+
 
     public int getAvailableTime(int date, int employee) {
         return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) - this.getWorkingTime(date, employee);

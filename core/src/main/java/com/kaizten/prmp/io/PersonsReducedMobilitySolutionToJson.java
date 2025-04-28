@@ -50,7 +50,10 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         int fakeServices = 0;
         int realServices = 0;
 
+        
+
         for (LocalDate date : optimizationProblem.getDatesOfServices()) {
+
             JSONObject jsonDate = new JSONObject();
             JSONArray jsonEmployees = new JSONArray();
             //Para calculo de media de productividad
@@ -89,23 +92,40 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                     }
 
                     //calculo productividad por rol
-                    Set<Role> employeeRoles = optimizationProblem.getEmployeeRoles(e);
-                    for (Role role : employeeRoles) {
-                        String roleName = role.toString();
-                        roleToProductivityUsedTime.put(roleName,
-                            roleToProductivityUsedTime.getOrDefault(roleName, 0.0) + productivityUsedTime);
-                        roleToWorkProductivity.put(roleName,
-                            roleToWorkProductivity.getOrDefault(roleName, 0.0) + workProductivity);
-                        roleToCount.put(roleName,
-                            roleToCount.getOrDefault(roleName, 0) + 1);
+                    Set<Integer> assignedServices = solution.getAssignedServices(date, e);
 
-                        roleDailyToProductivityUsedTime.put(roleName,
-                            roleDailyToProductivityUsedTime.getOrDefault(roleName, 0.0) + productivityUsedTime);
-                        roleDailyToWorkProductivity.put(roleName,
-                            roleDailyToWorkProductivity.getOrDefault(roleName, 0.0) + workProductivity);
-                        roleDailyToCount.put(roleName,
-                            roleDailyToCount.getOrDefault(roleName, 0) + 1);
+                    // Filtrar si el servicio es real
+                    boolean employeeHasRealService = assignedServices.stream()
+                        .anyMatch(serviceId -> {
+                            String serviceCode = optimizationProblem.getServiceCode(serviceId);
+                            return !serviceCode.trim().toLowerCase().startsWith("f-"); // Solo servicios reales
+                        });
+
+                    if (employeeHasRealService) {
+                        // Ahora verificamos si el rol del empleado es necesario para los servicios reales asignados
+                        Set<Role> employeeRoles = optimizationProblem.getEmployeeRoles(e);
+                        
+                        for (Role role : employeeRoles) {
+                            // Verificar si el rol del empleado es necesario para alguno de los servicios reales
+                            boolean isRoleNeeded = assignedServices.stream()
+                                .anyMatch(serviceId -> {
+                                    Role requiredRolesForService = optimizationProblem.getServiceRole(serviceId); 
+                                    return (requiredRolesForService == role); // Verificar si el rol es necesario
+                                });
+
+                            // Si el rol es necesario para al menos un servicio real
+                            if (isRoleNeeded) {
+                                String roleName = role.toString();
+                                roleToProductivityUsedTime.put(roleName,
+                                    roleToProductivityUsedTime.getOrDefault(roleName, 0.0) + productivityUsedTime);
+                                roleToWorkProductivity.put(roleName,
+                                    roleToWorkProductivity.getOrDefault(roleName, 0.0) + workProductivity);
+                                roleToCount.put(roleName,
+                                    roleToCount.getOrDefault(roleName, 0) + 1);
+                            }
+                        }
                     }
+
                                     
                     JSONObject jsonEmployee = new JSONObject();
                     // Code
