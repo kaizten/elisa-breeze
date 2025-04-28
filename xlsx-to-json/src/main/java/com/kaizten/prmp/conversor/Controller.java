@@ -1,11 +1,7 @@
 package com.kaizten.prmp.conversor;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class Controller {
-    public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
+    public static void main(String[] args) throws Exception {
         final String[] airports = {"SPC", "TFS", "MAD"};
         //final String[] airports = {"SPC"};
         //final double[] percentages = {0.5, 1, 1.5, 2};

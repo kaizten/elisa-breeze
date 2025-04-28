@@ -44,11 +44,11 @@ public class Main {
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         String airport = args[1];
-        String instanceNumber = args[2];
+        String agents = args[2];
         String percentage = args[0];
         String algorithm = args[3];
 
-        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/" + airport + "-" + percentage + "-instance" + instanceNumber + ".json";
+        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/" + airport + "-" + percentage + "-agents" + agents + ".json";
 
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
         AbstractSolver solver = null; 
@@ -73,14 +73,14 @@ public class Main {
         JSONObject solutionJSON = null; 
         try {
             solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
-            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/" + algorithm + "/"+ airport + "-" + percentage + "-solution" + instanceNumber + algorithm + ".json"), solutionJSON);
+            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/" + algorithm + "/"+ airport + "-" + percentage + "-agents" + agents +"-solution-"+ algorithm + ".json"), solutionJSON);
         } catch (IOException e) {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
 
          //guardar info en texto
          Object[] dates = optimizationProblem.getDatesOfServices().toArray();
-         TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, instanceNumber, algorithm, dates);
+         TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, agents, algorithm, dates);
 
         
     }

@@ -23,7 +23,7 @@ import com.kaizten.utils.io.KaiztenFile;
 
 public class Main {
 
-    public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
+    public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException, Exception {
         final String filePath = "data/flights.xlsx";
         final File xlsFile = new File(filePath);
         double percentage = Double.parseDouble(args[0]);
@@ -49,38 +49,38 @@ public class Main {
         //System.out.println("selected Flights: " + selectedFlights);
 
         //Calcular máximo número de servicios solapados 
-        FlightOverlapCounter counter = new FlightOverlapCounter();
-        int maxOverlaps = counter.countMaxOverlaps(selectedFlights);
+        //FlightOverlapCounter counter = new FlightOverlapCounter();
+        //int maxOverlaps = counter.countMaxOverlaps(selectedFlights);
+        int maxOverlaps = 0; //para no tener que cambiar más codigo, lo dejo a 0 y ya está
 
         PersonsReducedMobilityProblem optimizationProblem = null;
 
         if(airport =="SPC"){
             InstanceCreatorSPC creator = new InstanceCreatorSPC();
-            optimizationProblem = creator.createInstance(
+            creator.createInstance(
             selectedFlights,
             airport,
-            numberOfDays, maxOverlaps);
+            numberOfDays, maxOverlaps, percentage);
         }
         else if (airport == "TFS"){
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
-            optimizationProblem = creator.createInstance(
+            creator.createInstance(
             selectedFlights,
             airport,
-            numberOfDays, maxOverlaps);
+            numberOfDays, maxOverlaps, percentage);
         }
         else if (airport == "MAD"){
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
-            optimizationProblem = creator.createInstance(
+            creator.createInstance(
             selectedFlights,
             airport,
-            numberOfDays, maxOverlaps);
+            numberOfDays, maxOverlaps, percentage);
         }
         
-
-        //System.out.println(optimizationProblem);
+        /*//System.out.println(optimizationProblem);
         PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
         JSONObject json = toJson.apply(optimizationProblem);
-        KaiztenFile.writeToFile(new File("data/airportInstances/"+ airport + "-" +percentage + "-instance" + instanceNumber + ".json"), json);
+        KaiztenFile.writeToFile(new File("data/airportInstances/"+ airport + "-" +percentage + "-instance" + instanceNumber + ".json"), json);*/
 
     
 }

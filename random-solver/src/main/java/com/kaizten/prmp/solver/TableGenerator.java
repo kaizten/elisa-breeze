@@ -17,7 +17,7 @@ public class TableGenerator {
     private static final String executionDataFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
     private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
 
-    public static void saveExecutionDataToTable(double executionTime, JSONObject solutionJSON, String airport, String percentage, String instanceNumber, String algorithm, Object[] dates) {
+    public static void saveExecutionDataToTable(double executionTime, JSONObject solutionJSON, String airport, String percentage, String agents, String algorithm, Object[] dates) {
         // Obtener los datos de la solución
         double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators").getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Global");
         double averageWorkProductivity = solutionJSON.getJSONObject("indicators").getJSONObject("WORK PRODUCTIVITY VALUES").getDouble("Global");
@@ -36,7 +36,7 @@ public class TableGenerator {
         double wpRampManager = productivitiesW.optInt("RAMP_MANAGER", 0);
         double wpManager = productivitiesW.optInt("MANAGER", 0);
 
-        int coveredServicesPercentage = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getInt("percentage");
+        double coveredServicesPercentage = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getDouble("percentage");
         int coveredServices = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices").getInt("absolute");
         int numberServices = solutionJSON.getJSONObject("indicators").getInt("services");
         int numberEmployees = solutionJSON.getJSONObject("indicators").getInt("employees");
@@ -51,8 +51,8 @@ public class TableGenerator {
         
         // Guardar en archivo de texto
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(executionDataFile, true))) {
-            writer.write(String.format("%s-%s-%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d\t%d",
-            airport, percentage, instanceNumber, numberServices, realServices, fakeServices, 
+            writer.write(String.format("%s-%s-%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
+            airport, percentage, agents, numberServices, realServices, fakeServices, 
             numberEmployees, totalAgents, totalDrivers, totalManagers, totalRampManagers,
             algorithm, averageProductivityUsedTime, averageRealProductivityUsedTime,
             putAgent, putDriver, putRampManager, putManager,
