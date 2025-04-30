@@ -25,7 +25,7 @@ import com.kaizten.utils.net.KaiztenURI;
 public class SolverController {
 
     private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/";
-    private static final String SOLUTION_FOLDER = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/";
+    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/";
 
     public static void solveInstance(File instance, String algorithm)
             throws JsonProcessingException, IOException, URISyntaxException {
@@ -61,15 +61,15 @@ public class SolverController {
         } catch (IOException e) {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
-        //Object[] dates = optimizationProblem.getDatesOfServices().toArray();
-        /*TableGenerator.saveExecutionDataToTable(
-                executionTime,
+        Object[] dates = optimizationProblem.getDatesOfServices().toArray();
+        TableGenerator.saveExecutionDataToTable(
+                instance,
+                optimizationProblem,
                 solutionJSON,
-                optimizationProblem.getAirport(),
-                //percentage, 0.5,
-                //optimizationProblem.getNumberOfEmployeeRoles(),10,
+                executionTime,
                 algorithm,
-                dates);*/
+                dates);
+
     }
 
     public static PersonsReducedMobilityProblem getProblemFromURI(String instanceURI) throws URISyntaxException {

@@ -43,7 +43,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
             // Nueva solución por iteración
             PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
             Random rand = new Random();
-            int nocubierto = 0;    
+            //int nocubierto = 0;    
             // Recorrer todos los servicios y saca el número de empleados requeridos
             for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) { 
                 int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service); 
@@ -120,11 +120,11 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
                 }
                 
-                if (!solution.isServiceCovered(service)){
+                /*if (!solution.isServiceCovered(service)){
                     System.out.println("Servicio " + service + " no cubierto. Empleados requeridos: " + requiredEmployees + ". Empleados asignados: " + solution.getAssignedEmployees(service).size() + "\n");
                     System.out.println("Rol requerido: " + serviceRole);
                     nocubierto++;
-                }
+                }*/
                 
             }
                     

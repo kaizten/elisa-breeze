@@ -1,86 +1,84 @@
 package com.kaizten.prmp.solver;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.json.JSONObject;
 
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
-import com.kaizten.utils.string.KaiztenFormatterTable;
 
 public class TableGenerator {
 
     // Ruta de archivo de ejecución
-    private static final String executionDataFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
-    private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
+    private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
+    //private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
 
     public static void saveExecutionDataToTable(
             File instance,
-            File fileToSave,
             PersonsReducedMobilityProblem optimizationProblem,
-            PersonsReducedMobilitySolution solution,
-            double executionTime) {
-        // si no existe el archivo, crearlo con header
-        // GUARDAR INFORMACIÓN EN FILETOSAVE
-    }
-
-    public static void saveExecutionDataToTable(
+            JSONObject solution,
             double executionTime,
-            JSONObject solutionJSON,
-            String airport,
-            String percentage,
-            String agents,
             String algorithm,
-            Object[] dates) {
+            Object[] dates) throws IOException {
+        // si no existe el archivo, crearlo con header
         // Obtener los datos de la solución
-        double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators")
+        double averageProductivityUsedTime = solution.getJSONObject("indicators")
                 .getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Global");
-        double averageWorkProductivity = solutionJSON.getJSONObject("indicators")
+        double averageWorkProductivity = solution.getJSONObject("indicators")
                 .getJSONObject("WORK PRODUCTIVITY VALUES").getDouble("Global");
-        double averageRealProductivityUsedTime = solutionJSON.getJSONObject("indicators")
+        double averageRealProductivityUsedTime = solution.getJSONObject("indicators")
                 .getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Real Services");
-        double averageRealWorkProductivity = solutionJSON.getJSONObject("indicators")
+        double averageRealWorkProductivity = solution.getJSONObject("indicators")
                 .getJSONObject("WORK PRODUCTIVITY VALUES").getDouble("Real Services");
 
-        JSONObject productivitiesUT = solutionJSON.getJSONObject("indicators")
+        JSONObject productivitiesUT = solution.getJSONObject("indicators")
                 .getJSONObject("PRODUCTIVITY USED TIME VALUES");
         double putAgent = productivitiesUT.optInt("AGENT", 0);
         double putDriver = productivitiesUT.optInt("DRIVER", 0);
         double putRampManager = productivitiesUT.optInt("RAMP_MANAGER", 0);
         double putManager = productivitiesUT.optInt("MANAGER", 0);
 
-        JSONObject productivitiesW = solutionJSON.getJSONObject("indicators").getJSONObject("WORK PRODUCTIVITY VALUES");
+        JSONObject productivitiesW = solution.getJSONObject("indicators").getJSONObject("WORK PRODUCTIVITY VALUES");
         double wpAgent = productivitiesW.optInt("AGENT", 0);
         double wpDriver = productivitiesW.optInt("DRIVER", 0);
         double wpRampManager = productivitiesW.optInt("RAMP_MANAGER", 0);
         double wpManager = productivitiesW.optInt("MANAGER", 0);
 
-        double coveredServicesPercentage = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices")
+        double coveredServicesPercentage = solution.getJSONObject("indicators").getJSONObject("coveredServices")
                 .getDouble("percentage");
-        int coveredServices = solutionJSON.getJSONObject("indicators").getJSONObject("coveredServices")
+        int coveredServices = solution.getJSONObject("indicators").getJSONObject("coveredServices")
                 .getInt("absolute");
-        int numberServices = solutionJSON.getJSONObject("indicators").getInt("services");
-        int numberEmployees = solutionJSON.getJSONObject("indicators").getInt("employees");
-        int fakeServices = solutionJSON.getJSONObject("indicators").getInt("fakeServices");
-        int realServices = solutionJSON.getJSONObject("indicators").getInt("realServices");
+        int numberServices = solution.getJSONObject("indicators").getInt("services");
+        int numberEmployees = solution.getJSONObject("indicators").getInt("employees");
+        int fakeServices = solution.getJSONObject("indicators").getInt("fakeServices");
+        int realServices = solution.getJSONObject("indicators").getInt("realServices");
 
-        JSONObject employeesByRole = solutionJSON.getJSONObject("indicators").getJSONObject("EMPLOYEES BY ROLE");
+        JSONObject employeesByRole = solution.getJSONObject("indicators").getJSONObject("EMPLOYEES BY ROLE");
         int totalAgents = employeesByRole.optInt("AGENT", 0);
         int totalDrivers = employeesByRole.optInt("DRIVER", 0);
         int totalManagers = employeesByRole.optInt("MANAGER", 0);
         int totalRampManagers = employeesByRole.optInt("RAMP_MANAGER", 0);
 
+        //añadir cabecera si el archivo no existe
+        File file = new File(FILETOSAVE);
+        if (!file.exists()) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
+                writer.write(
+                        "Instance\tNumber-of-Services\tReal-Services\tFake-Services\tNumber-of-Employees\tTotal-Agents\tTotal-Drivers\tTotal-Managers\tTotal-RampManagers\tAlgorithm\tProductivity-UT\tReal-Productivity-UT\tP.UT-Agent\tP.UT-Driver\tP.UT-RampManager\tP.UT-Manager\tWork-Productivity\tReal-Work-Productivity\tWP-Agent\tWP-Driver\tWP-RampManager\tWP-Manager\tExecution-Time(ms)\tCovered-Services(%)\tCovered-Services");
+                writer.newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         // Guardar en archivo de texto
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(executionDataFile, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
             writer.write(String.format(
-                    "%s-%s-%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
-                    airport, percentage, agents, numberServices, realServices, fakeServices,
+                    "%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
+                    instance.getName(), numberServices, realServices, fakeServices,
                     numberEmployees, totalAgents, totalDrivers, totalManagers, totalRampManagers,
                     algorithm, averageProductivityUsedTime, averageRealProductivityUsedTime,
                     putAgent, putDriver, putRampManager, putManager,
@@ -89,9 +87,9 @@ public class TableGenerator {
                     executionTime, coveredServicesPercentage, coveredServices));
 
             // Bucle para escribir la información de cada día en el archivo
-            for (int day = 0; day < dates.length; day++) {
-                String date = solutionJSON.getJSONArray("dates").getJSONObject(day).getString("date");
-                JSONObject indicators = solutionJSON.getJSONArray("dates").getJSONObject(day)
+            /*for (int day = 0; day < dates.length; day++) {
+                String date = solution.getJSONArray("dates").getJSONObject(day).getString("date");
+                JSONObject indicators = solution.getJSONArray("dates").getJSONObject(day)
                         .getJSONObject("indicators");
 
                 // Escribir las productividades para cada día en la misma línea
@@ -113,18 +111,19 @@ public class TableGenerator {
                                 indicators.optDouble("DRIVER_WORK_PRODUCTIVITY", 0)
 
                         ));
-            }
+            }*/
 
             writer.newLine();
+
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        int dateCount = solutionJSON.getJSONArray("dates").length();
+        //int dateCount = solution.getJSONArray("dates").length();
         // Generar la tabla con los datos del archivo actualizado
-        generateTable(dateCount, solutionJSON);
+        //generateTable(dateCount, solutionJSON);
     }
+}
 
-    private static void generateTable(int dates, JSONObject solutionJSON) {
+   /* private static void generateTable(int dates, JSONObject solutionJSON) {
         // Crear el objeto KaiztenFormatterTable para la tabla principal
         KaiztenFormatterTable table = new KaiztenFormatterTable();
 
@@ -141,7 +140,7 @@ public class TableGenerator {
          * "Execution Time", "Covered Services %", "Covered Services", "Days"
          * });
          */
-        String[] header = new String[26 + (dates * 13)];
+       /* String[] header = new String[26 + (dates * 13)];
         System.arraycopy(new String[] {
                 "Instance", "Number-of-Services", "Real-Services", "Fake-Services", "Number-of-Employees",
                 "Total-Agents", "Total-Drivers", "Total-Managers", "Total-RampManagers", "Algorithm",
@@ -197,6 +196,5 @@ public class TableGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-}
+    }*/
+            }
