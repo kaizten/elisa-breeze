@@ -2,6 +2,7 @@ package com.kaizten.prmp.solver;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.Arrays;
 
 import org.json.JSONObject;
 
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 import com.kaizten.utils.string.KaiztenFormatterTable;
 
 public class TableGenerator {
@@ -17,8 +20,24 @@ public class TableGenerator {
     private static final String executionDataFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
     private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
 
-    public static void saveExecutionDataToTable(double executionTime, JSONObject solutionJSON, String airport,
-            String percentage, String agents, String algorithm, Object[] dates) {
+    public static void saveExecutionDataToTable(
+            File instance,
+            File fileToSave,
+            PersonsReducedMobilityProblem optimizationProblem,
+            PersonsReducedMobilitySolution solution,
+            double executionTime) {
+        // si no existe el archivo, crearlo con header
+        // GUARDAR INFORMACIÓN EN FILETOSAVE
+    }
+
+    public static void saveExecutionDataToTable(
+            double executionTime,
+            JSONObject solutionJSON,
+            String airport,
+            String percentage,
+            String agents,
+            String algorithm,
+            Object[] dates) {
         // Obtener los datos de la solución
         double averageProductivityUsedTime = solutionJSON.getJSONObject("indicators")
                 .getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Global");

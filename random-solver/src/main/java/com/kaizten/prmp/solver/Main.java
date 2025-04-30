@@ -24,7 +24,24 @@ import com.kaizten.utils.net.KaiztenURI;
 
 public class Main {
 
-    private static PersonsReducedMobilityProblem getProblemFromURI(String instanceURI) throws URISyntaxException {
+    public static PersonsReducedMobilityProblem getProblemFromPath(String instancePath) throws URISyntaxException {
+        URI uri = new URI(instancePath);
+        Optional<JSONObject> optionalJson = KaiztenURI.toJsonObject(uri);
+        JSONObject instanceFile = optionalJson.get();
+        PersonsReducedMobilityProblemJsonFileSupplier supplier = new PersonsReducedMobilityProblemJsonFileSupplier();
+        PersonsReducedMobilityProblem optimizationProblem = supplier
+                .get(instanceFile)
+                .findFirst()
+                .get();
+        Evaluator<PersonsReducedMobilitySolution> evaluator = EvaluatorBuilder
+                .instance()
+                .addEvaluatorObjectiveFunction(new PersonsReducedMobilityProblemEvaluator())
+                .build();
+        optimizationProblem.setEvaluator(evaluator);
+        return optimizationProblem;
+    }
+
+    public static PersonsReducedMobilityProblem getProblemFromURI(String instanceURI) throws URISyntaxException {
         URI uri = new URI(instanceURI);
         Optional<JSONObject> optionalJson = KaiztenURI.toJsonObject(uri);
         JSONObject instanceFile = optionalJson.get();
@@ -47,40 +64,43 @@ public class Main {
         String percentage = args[0];
         String algorithm = args[3];
 
-        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/" + airport + "-" + percentage + "-agents" + agents + ".json";
+        final String instance = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/"
+                + airport + "-" + percentage + "-agents" + agents + ".json";
 
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance);
-        AbstractSolver solver = null; 
+        AbstractSolver solver = null;
 
-        //System.out.println(optimizationProblem); 
+        // System.out.println(optimizationProblem);
 
-        if (algorithm == "referenceSolver"){
+        if (algorithm == "referenceSolver") {
             solver = new ReferenceSolver(optimizationProblem);
-        }
-        else {
+        } else {
             solver = new RandomSolver(optimizationProblem);
         }
-        
-        long startTime = System.nanoTime();  // Iniciar medición tiempo
+
+        long startTime = System.nanoTime(); // Iniciar medición tiempo
         PersonsReducedMobilitySolution solution = (PersonsReducedMobilitySolution) solver.run();
-        long endTime = System.nanoTime();  // Finalizar medición tiempo
+        long endTime = System.nanoTime(); // Finalizar medición tiempo
         long duration = endTime - startTime; // Tiempo en nanosegundos
         double executionTime = duration / 1000000.0; // Convertir a milisegundos
-        
-        //System.out.println(solution);
+
+        // System.out.println(solution);
         // Guardamos el JSON en la ruta especificada
-        JSONObject solutionJSON = null; 
+        JSONObject solutionJSON = null;
         try {
             solutionJSON = new PersonsReducedMobilitySolutionToJson().apply(solution);
-            KaiztenFile.writeToFile(new File("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/" + algorithm + "/"+ airport + "-" + percentage + "-agents" + agents +"-solution-"+ algorithm + ".json"), solutionJSON);
+            KaiztenFile.writeToFile(new File(
+                    "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/"
+                            + algorithm + "/" + airport + "-" + percentage + "-agents" + agents + "-solution-"
+                            + algorithm + ".json"),
+                    solutionJSON);
         } catch (IOException e) {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
 
-         //guardar info en texto
-         Object[] dates = optimizationProblem.getDatesOfServices().toArray();
-         TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, agents, algorithm, dates);
-
-        
+        // guardar info en texto
+        Object[] dates = optimizationProblem.getDatesOfServices().toArray();
+        TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, agents, algorithm,
+                dates);
     }
 }
