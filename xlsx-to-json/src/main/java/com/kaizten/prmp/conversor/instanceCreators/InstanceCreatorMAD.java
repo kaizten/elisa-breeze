@@ -25,7 +25,7 @@ public class InstanceCreatorMAD {
             String airport,
             int numberOfDays, int maxOverlaps, double percentage) throws Exception {
 
-        for (int agents = 1; agents <= 250; agents++) { 
+        for (int agents = 1; agents <= 500; agents++) { 
             final int numberOfServices = selectedFlights.size()+107+12*numberOfDays;
             int numberOfManagers = 6;
             int numberOfDrivers = 3;
