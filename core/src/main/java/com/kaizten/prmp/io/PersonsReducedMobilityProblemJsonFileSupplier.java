@@ -38,8 +38,10 @@ public class PersonsReducedMobilityProblemJsonFileSupplier
             JSONObject jsonService = (JSONObject) jsonServices.get(i);
             String code = jsonService.getString(JsonConstants.CODE);
             long employees = jsonService.getLong(JsonConstants.EMPLOYEES);
-            OffsetDateTime startTime = KaiztenOffsetDateTime.fromJsonSchema(jsonService.getString(JsonConstants.START_TIME));
-            OffsetDateTime finishTime = KaiztenOffsetDateTime.fromJsonSchema(jsonService.getString(JsonConstants.FINISH_TIME));
+            OffsetDateTime startTime = KaiztenOffsetDateTime
+                    .fromJsonSchema(jsonService.getString(JsonConstants.START_TIME));
+            OffsetDateTime finishTime = KaiztenOffsetDateTime
+                    .fromJsonSchema(jsonService.getString(JsonConstants.FINISH_TIME));
             Role role = Role.fromString(jsonService.getString(JsonConstants.ROLE));
             optimizationProblem.setServiceCode(i, code);
             optimizationProblem.setServiceTimes(i, startTime, finishTime);
@@ -62,7 +64,8 @@ public class PersonsReducedMobilityProblemJsonFileSupplier
                 optimizationProblem.addEmployeeRoles(i, role);
             }
             if (jsonEmployee.has(JsonConstants.TIME_BETWEEN_WORKING_DAYS)) {
-                Duration timeBetweenWorkingDays = Duration.parse(jsonEmployee.getString(JsonConstants.TIME_BETWEEN_WORKING_DAYS));
+                Duration timeBetweenWorkingDays = Duration
+                        .parse(jsonEmployee.getString(JsonConstants.TIME_BETWEEN_WORKING_DAYS));
                 optimizationProblem.setEmployeeTimeBetweenWorkingDays(i, timeBetweenWorkingDays);
             }
             if (jsonEmployee.has(JsonConstants.START_TIME)) {

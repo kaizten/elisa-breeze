@@ -1,4 +1,4 @@
-package com.kaizten.prmp.conversor.instanceCreators;
+package com.kaizten.prmp.conversor.creator;
 
 import java.io.File;
 import java.time.LocalDate;

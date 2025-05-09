@@ -1,4 +1,4 @@
-package com.kaizten.prmp.conversor.xlsxReaders;
+package com.kaizten.prmp.conversor.xlsx;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,39 +18,27 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class XlsxReader {
 
     public static Map<String, Map<String, List<String>>> readXlsx(File xlsx, String airport) {
-        
         Map<String, Map<String, List<String>>> flight = new HashMap<>();
         String[] days = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-
-        // Inicializar mapa de días y columnas de llegada y salida
         for (String day : days) {
             flight.put(day, new HashMap<>());
             flight.get(day).put("Salidas", new ArrayList<>());
             flight.get(day).put("Llegadas", new ArrayList<>());
         }
-
-        // Leer archivo
         try (FileInputStream file = new FileInputStream(xlsx)) {
-            // Crear el libro de trabajo (workbook) => lo usa apache poi para leer el archivo
             Workbook workbook = new XSSFWorkbook(file);
-
-            // Obtener la hoja que queremos e iterar sobre las filas
             Sheet sheet = workbook.getSheet(airport);
             for (int rowIndex = 2; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
                 Row row = sheet.getRow(rowIndex);
-                // Iterar sobre los días
                 for (int i = 0; i < days.length; i++) {
-                    Cell salidaCell = row.getCell(2 * i); //celda de "salidas"
-                    Cell llegadaCell = row.getCell(2 * i + 1); //celda de "llegadas"
-
-                    // Verificar si la celda no está vacía y añadir al mapa
+                    Cell salidaCell = row.getCell(2 * i);
+                    Cell llegadaCell = row.getCell(2 * i + 1);
                     if (salidaCell != null && salidaCell.getCellType() == CellType.STRING) {
                         String salida = salidaCell.getStringCellValue().trim();
                         if (!salida.isEmpty()) {
                             flight.get(days[i]).get("Salidas").add(salida);
                         }
                     }
-
                     if (llegadaCell != null && llegadaCell.getCellType() == CellType.STRING) {
                         String llegada = llegadaCell.getStringCellValue().trim();
                         if (!llegada.isEmpty()) {
@@ -59,7 +47,6 @@ public class XlsxReader {
                     }
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

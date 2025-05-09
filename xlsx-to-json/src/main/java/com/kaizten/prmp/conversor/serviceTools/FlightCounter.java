@@ -5,18 +5,12 @@ import java.util.Map;
 
 public class FlightCounter {
 
-    // Cuenta el número de vuelos
     public static int countTotalFlights(Map<String, Map<String, List<String>>> flights) {
         int totalFlights = 0;
-
-        // Recorre por día 
         for (Map<String, List<String>> hours : flights.values()) {
-
             if (hours.containsKey("Salidas")) {
                 for (String flight : hours.get("Salidas")) {
                     String[] parts = flight.split(" ");
-
-                    // Validar estructura hora (cantidad)"
                     if (parts.length >= 2) {
                         try {
                             int amount = Integer.parseInt(parts[1].replace("(", "").replace(")", ""));
@@ -27,11 +21,9 @@ public class FlightCounter {
                     }
                 }
             }
-
             if (hours.containsKey("Llegadas")) {
                 for (String flight : hours.get("Llegadas")) {
                     String[] parts = flight.split(" ");
-
                     if (parts.length >= 2) {
                         try {
                             int amount = Integer.parseInt(parts[1].replace("(", "").replace(")", ""));
@@ -43,7 +35,6 @@ public class FlightCounter {
                 }
             }
         }
-
         return totalFlights;
     }
 }

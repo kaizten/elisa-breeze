@@ -1,4 +1,10 @@
-package com.kaizten.prmp.conversor.instanceCreators;
+package com.kaizten.prmp.conversor.creator;
+
+import com.kaizten.prmp.domain.Service;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
+import com.kaizten.utils.io.KaiztenFile;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -12,12 +18,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.kaizten.prmp.domain.Service;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-
 public class InstanceCreatorMAD {
 
     public void createInstance(
@@ -25,15 +25,18 @@ public class InstanceCreatorMAD {
             String airport,
             int numberOfDays, int maxOverlaps, double percentage) throws Exception {
 
-        for (int agents = 1; agents <= 500; agents++) { 
-            final int numberOfServices = selectedFlights.size()+107+12*numberOfDays;
+        for (int agents = 1; agents <= 500; agents++) {
+            final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
             int numberOfManagers = 6;
             int numberOfDrivers = 3;
             int numberOfRampManagers = 3;
-            //extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51
-            int numberOfExtraEmployees = 51; //Faltan drivers y ramp managers=> *2 de momento
-            //int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), maxOverlaps); 
-            int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfRampManagers + numberOfExtraEmployees; 
+            // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados
+            // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51
+            int numberOfExtraEmployees = 51; // Faltan drivers y ramp managers=> *2 de momento
+            // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
+            // selectedFlights.size() / (7*5)), maxOverlaps);
+            int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfRampManagers
+                    + numberOfExtraEmployees;
             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                     numberOfServices,
                     numberOfEmployees);
@@ -41,11 +44,11 @@ public class InstanceCreatorMAD {
             // crear las fechas y hora de inicio y fin de los servicios
             final List<Service> listOfServices = new ArrayList<>();
 
-
-            //Añado servicios base las 24h los 7 dias: 
-            Role[] roles = {Role.DRIVER, Role.DRIVER, Role.RAMP_MANAGER, Role.MANAGER}; //BASE: 2 driver, 1 manager, 1 ramp manager
-            //iterar a lo largo de los días 
-            int code = 0; 
+            // Añado servicios base las 24h los 7 dias:
+            Role[] roles = { Role.DRIVER, Role.DRIVER, Role.RAMP_MANAGER, Role.MANAGER }; // BASE: 2 driver, 1 manager,
+                                                                                          // 1 ramp manager
+            // iterar a lo largo de los días
+            int code = 0;
             for (int i = 0; i < numberOfDays; i++) {
                 LocalDate date = LocalDate.of(2024, 2, 5).plusDays(i);
                 for (int shift = 0; shift < 3; shift++) { // turnos por día (3 porq son de 8h)
@@ -55,13 +58,13 @@ public class InstanceCreatorMAD {
                     OffsetDateTime startingTime = date.atTime(start, 0).atOffset(ZoneOffset.UTC);
                     OffsetDateTime finishingTime = date.atTime(finish, 0).atOffset(ZoneOffset.UTC);
 
-                    if (finishingTime.getHour() < startingTime.getHour()){
-                        finishingTime = finishingTime.plusDays(1); 
+                    if (finishingTime.getHour() < startingTime.getHour()) {
+                        finishingTime = finishingTime.plusDays(1);
                     }
 
                     for (Role role : roles) {
                         final Service newService = new Service();
-                        newService.setCode("f-" + String.format("%04d", code));                    
+                        newService.setCode("f-" + String.format("%04d", code));
                         newService.setStartingTime(startingTime);
                         newService.setFinishingTime(finishingTime);
                         newService.setRequiredEmployees(1);
@@ -73,8 +76,8 @@ public class InstanceCreatorMAD {
                 }
             }
 
-            //SERVICIOS ADICIONALES
-            //LUNES
+            // SERVICIOS ADICIONALES
+            // LUNES
             LocalDate monday = LocalDate.of(2024, 2, 5);
 
             final Service newService1 = new Service();
@@ -205,7 +208,7 @@ public class InstanceCreatorMAD {
             newService16.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService16);
 
-            //Martes
+            // Martes
             LocalDate tuesday = LocalDate.of(2024, 2, 6);
 
             final Service newService17 = new Service();
@@ -344,7 +347,7 @@ public class InstanceCreatorMAD {
             newService33.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService33);
 
-            //WEDNESDAY
+            // WEDNESDAY
             LocalDate wednesday = LocalDate.of(2024, 2, 7);
 
             final Service newService34 = new Service();
@@ -451,7 +454,7 @@ public class InstanceCreatorMAD {
             newService46.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService46);
 
-            //THURSDAY
+            // THURSDAY
             LocalDate thursday = LocalDate.of(2024, 2, 8);
 
             final Service newService47 = new Service();
@@ -566,7 +569,7 @@ public class InstanceCreatorMAD {
             newService60.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService60);
 
-            //FRIDAY
+            // FRIDAY
             LocalDate friday = LocalDate.of(2024, 2, 9);
 
             final Service newService61 = new Service();
@@ -697,7 +700,7 @@ public class InstanceCreatorMAD {
             newService76.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService76);
 
-            //SATURDAY
+            // SATURDAY
             LocalDate saturday = LocalDate.of(2024, 2, 10);
 
             final Service newService77 = new Service();
@@ -828,7 +831,7 @@ public class InstanceCreatorMAD {
             newService92.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService92);
 
-            //SUNDAY
+            // SUNDAY
             LocalDate sunday = LocalDate.of(2024, 2, 11);
 
             final Service newService93 = new Service();
@@ -951,14 +954,14 @@ public class InstanceCreatorMAD {
             newService107.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService107);
 
-
             // ========================================================================================================
 
-            //SERVICIOS REALES
+            // SERVICIOS REALES
 
             for (int i = 0; i < selectedFlights.size(); i++) {
                 code++;
-                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] => hora
+                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] =>
+                                                                         // hora
                 // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
                 // " + flightInfo[2]);
                 String time = flightInfo[2].trim();
@@ -988,8 +991,8 @@ public class InstanceCreatorMAD {
                 newService.setRole(Role.AGENT);
                 listOfServices.add(newService);
             }
-        
-            Collections.sort(listOfServices); 
+
+            Collections.sort(listOfServices);
             for (int i = 0; i < listOfServices.size(); i++) {
                 Service service = listOfServices.get(i);
                 optimizationProblem.setServiceCode(i, service.getCode());
@@ -1000,39 +1003,38 @@ public class InstanceCreatorMAD {
 
             // creo x empleados nuevos, rol AGENTE
             // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-            for (int i = 0; i < numberOfEmployees-63; i++) {
+            for (int i = 0; i < numberOfEmployees - 63; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
 
-            //Empleados añadidos
-            //TOTAl: 63
-            //TOTAL TOTAL: 510
-            //294 DRIVERS => 70% => 43
-            //108 MANAGER => 15% => 10
-            //108 RAMP_MANAGER => 15% => 10
-            for (int i = numberOfEmployees-(63); i < numberOfEmployees-(20); i++) {
+            // Empleados añadidos
+            // TOTAl: 63
+            // TOTAL TOTAL: 510
+            // 294 DRIVERS => 70% => 43
+            // 108 MANAGER => 15% => 10
+            // 108 RAMP_MANAGER => 15% => 10
+            for (int i = numberOfEmployees - (63); i < numberOfEmployees - (20); i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-            for (int i = numberOfEmployees-(20); i < numberOfEmployees-(10); i++) {
+            for (int i = numberOfEmployees - (20); i < numberOfEmployees - (10); i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-            for (int i = numberOfEmployees-(10); i < numberOfEmployees; i++) {
+            for (int i = numberOfEmployees - (10); i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.RAMP_MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
 
-
             optimizationProblem.computeEmployeesAvailability(List.of());
 
-            //guardar el problema en un archivo json
+            // guardar el problema en un archivo json
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
-            KaiztenFile.writeToFile(new File("data/airportInstances/"+ airport + "-" + percentage + "-agents" + agents + ".json"), json);
+            KaiztenFile.writeToFile(
+                    new File("data/airportInstances/" + airport + "-" + percentage + "-agents" + agents + ".json"),
+                    json);
         }
-        
-        
     }
 }

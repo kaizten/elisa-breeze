@@ -24,8 +24,10 @@ import com.kaizten.utils.net.KaiztenURI;
 
 public class SolverController {
 
-    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/";
-    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/";
+    //private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/";
+    private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
+    //private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/";
+    private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions";
 
     public static void solveInstance(File instance, String algorithm)
             throws JsonProcessingException, IOException, URISyntaxException {
@@ -41,7 +43,7 @@ public class SolverController {
             return;
         }
         PersonsReducedMobilityProblem optimizationProblem = SolverController.getProblemFromURI(instance.toURI().toString());
-        AbstractSolver solver = null;
+        AbstractSolver<PersonsReducedMobilitySolution> solver = null;
         if (algorithm.equals("referenceSolver")) {
             solver = new ReferenceSolver(optimizationProblem);
         } else {

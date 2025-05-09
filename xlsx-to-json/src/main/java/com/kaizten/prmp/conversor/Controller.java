@@ -17,7 +17,7 @@ public class Controller {
                 String[] parameters = {String.valueOf(percentage), airport, String.valueOf(instanceNumber)};
                 System.out.println(instanceNumber+ ": Ejecutando Main con porcentaje: " + percentage + " y aeropuerto: " + airport);
                 Main.main(parameters);
-                System.out.println("-------------------------------------------------");
+                //System.out.println("-------------------------------------------------");
                 //instanceNumber++;
                 //}
 

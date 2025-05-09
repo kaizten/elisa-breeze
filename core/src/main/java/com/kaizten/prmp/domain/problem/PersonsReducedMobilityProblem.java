@@ -84,7 +84,8 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
         this.employeeCode = KaiztenArray.add(this.employeeCode, "");
         this.employeeTimePerDay = KaiztenArray.add(this.employeeTimePerDay, DEFAULT_TIME_PER_DAY);
         this.employeeTimePerWeek = KaiztenArray.add(this.employeeTimePerWeek, DEFAULT_TIME_PER_WEEK);
-        this.employeeTimeBetweenWorkingDays = KaiztenArray.add(this.employeeTimeBetweenWorkingDays, DEFAULT_TIME_BETWEEN_WORKING_DAYS);
+        this.employeeTimeBetweenWorkingDays = KaiztenArray.add(this.employeeTimeBetweenWorkingDays,
+                DEFAULT_TIME_BETWEEN_WORKING_DAYS);
         LocalTime[] newEmployeeStartTime = new LocalTime[this.employees];
         LocalTime[] newEmployeeFinishTime = new LocalTime[this.employees];
         for (int i = 0; i < this.employees - 1; i++) {
@@ -128,7 +129,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public int getEmployeeAvailableTimePerDay(int index) {
-        return this.getEmployeeTimePerDay(index)*60; //para devolverlo en minutos
+        return this.getEmployeeTimePerDay(index) * 60; // para devolverlo en minutos
     }
 
     public int getIndexOfFirstServiceInDate(LocalDate date) {

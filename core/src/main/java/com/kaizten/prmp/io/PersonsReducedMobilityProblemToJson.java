@@ -21,8 +21,10 @@ public class PersonsReducedMobilityProblemToJson implements Function<PersonsRedu
         for (int i = 0; i < optimizationProblem.getNumberOfServices(); i++) {
             JSONObject jsonService = new JSONObject();
             jsonService.put(JsonConstants.CODE, optimizationProblem.getServiceCode(i));
-            jsonService.put(JsonConstants.START_TIME, KaiztenJsonSchema.toDateTime(optimizationProblem.getServiceStartingTime(i)));
-            jsonService.put(JsonConstants.FINISH_TIME, KaiztenJsonSchema.toDateTime(optimizationProblem.getServiceFinishingTime(i)));
+            jsonService.put(JsonConstants.START_TIME,
+                    KaiztenJsonSchema.toDateTime(optimizationProblem.getServiceStartingTime(i)));
+            jsonService.put(JsonConstants.FINISH_TIME,
+                    KaiztenJsonSchema.toDateTime(optimizationProblem.getServiceFinishingTime(i)));
             jsonService.put(JsonConstants.SERVICE_TIME, Duration.ofMinutes(optimizationProblem.getServiceTime(i)));
             jsonService.put(JsonConstants.ROLE, optimizationProblem.getServiceRole(i));
             jsonService.put(JsonConstants.EMPLOYEES, optimizationProblem.getServiceRequiredEmployees(i));
@@ -33,14 +35,19 @@ public class PersonsReducedMobilityProblemToJson implements Function<PersonsRedu
         for (int i = 0; i < optimizationProblem.getNumberOfEmployees(); i++) {
             JSONObject jsonIndividual = new JSONObject();
             jsonIndividual.put(JsonConstants.CODE, optimizationProblem.getEmployeeCode(i));
-            jsonIndividual.put(JsonConstants.TIME_PER_DAY, Duration.ofMinutes(optimizationProblem.getEmployeeHoursPerDay(i)));
-            jsonIndividual.put(JsonConstants.TIME_PER_WEEK, Duration.ofMinutes(optimizationProblem.getEmployeeTimePerWeek(i)));
-            jsonIndividual.put(JsonConstants.TIME_BETWEEN_WORKING_DAYS, Duration.ofMinutes(optimizationProblem.getEmployeeTimeBetweenWorkingDays(i)));
+            jsonIndividual.put(JsonConstants.TIME_PER_DAY,
+                    Duration.ofMinutes(optimizationProblem.getEmployeeHoursPerDay(i)));
+            jsonIndividual.put(JsonConstants.TIME_PER_WEEK,
+                    Duration.ofMinutes(optimizationProblem.getEmployeeTimePerWeek(i)));
+            jsonIndividual.put(JsonConstants.TIME_BETWEEN_WORKING_DAYS,
+                    Duration.ofMinutes(optimizationProblem.getEmployeeTimeBetweenWorkingDays(i)));
             if (optimizationProblem.hasEmployeeStart(i)) {
-                jsonIndividual.put(JsonConstants.START_TIME, KaiztenJsonSchema.toTime(optimizationProblem.getEmployeeStart(i).get()));
+                jsonIndividual.put(JsonConstants.START_TIME,
+                        KaiztenJsonSchema.toTime(optimizationProblem.getEmployeeStart(i).get()));
             }
             if (optimizationProblem.hasEmployeeFinish(i)) {
-                jsonIndividual.put(JsonConstants.FINISH_TIME, KaiztenJsonSchema.toTime(optimizationProblem.getEmployeeFinish(i).get()));
+                jsonIndividual.put(JsonConstants.FINISH_TIME,
+                        KaiztenJsonSchema.toTime(optimizationProblem.getEmployeeFinish(i).get()));
             }
             Set<Role> roles = optimizationProblem.getEmployeeRoles(i);
             JSONArray jsonRoles = new JSONArray();

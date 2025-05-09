@@ -27,17 +27,20 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
     public PersonsReducedMobilitySolution(PersonsReducedMobilityProblem optimizationProblem) {
         super(optimizationProblem);
-        this.serviceAssignment = new HashSet[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        this.serviceAssignment = new HashSet[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
+                .getNumberOfEmployees()];
         for (int day = 0; day < optimizationProblem.getNumberOfDatesWithServices(); day++) {
             for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
                 this.serviceAssignment[day][employee] = new HashSet<>();
             }
         }
-        this.firstService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        this.firstService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
+                .getNumberOfEmployees()];
         for (int day = 0; day < optimizationProblem.getNumberOfDatesWithServices(); day++) {
             Arrays.fill(this.firstService[day], NO_SERVICE_ASSIGNED);
         }
-        this.lastService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        this.lastService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
+                .getNumberOfEmployees()];
         for (int day = 0; day < optimizationProblem.getNumberOfDatesWithServices(); day++) {
             Arrays.fill(this.lastService[day], NO_SERVICE_ASSIGNED);
         }
@@ -50,19 +53,22 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     @Override
     public Solution clone() {
         PersonsReducedMobilitySolution copy = (PersonsReducedMobilitySolution) super.clone();
-        copy.serviceAssignment = new HashSet[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        copy.serviceAssignment = new HashSet[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
+                .getNumberOfEmployees()];
         for (int day = 0; day < optimizationProblem.getNumberOfDatesWithServices(); day++) {
             for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
                 copy.serviceAssignment[day][employee] = new HashSet<>(this.serviceAssignment[day][employee]);
             }
         }
-        copy.firstService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        copy.firstService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
+                .getNumberOfEmployees()];
         for (int day = 0; day < optimizationProblem.getNumberOfDatesWithServices(); day++) {
             for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
                 copy.firstService[day][employee] = this.firstService[day][employee];
             }
         }
-        copy.lastService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        copy.lastService = new int[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
+                .getNumberOfEmployees()];
         for (int day = 0; day < optimizationProblem.getNumberOfDatesWithServices(); day++) {
             for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
                 copy.lastService[day][employee] = this.lastService[day][employee];
@@ -118,7 +124,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public boolean isServiceCovered(int service) {
-        return (this.getNumberOfAssignedEmployees(service) == this.optimizationProblem.getServiceRequiredEmployees(service));
+        return (this.getNumberOfAssignedEmployees(service) == this.optimizationProblem
+                .getServiceRequiredEmployees(service));
     }
 
     public boolean hasAllServicesCovered() {
@@ -148,57 +155,68 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return false;
     }
 
-    /*public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
-        LocalDate date = this.optimizationProblem.getDate(service);
-        int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
-        long assignedWorkingTime = 0;
-        if (this.hasAssignedServices(indexOfDate, employee)) {
-            assignedWorkingTime = this.getUsedTime(indexOfDate, employee).toMinutes();
-            OffsetDateTime employeeFinishingTime = this.getFinishingTime(indexOfDate, employee);
-            OffsetDateTime lastServiceFinishingTime = super.getOptimizationProblem().getServiceFinishingTime(service);
-            if (lastServiceFinishingTime.isAfter(employeeFinishingTime)) {
-                assignedWorkingTime += Duration.between(employeeFinishingTime, lastServiceFinishingTime).toMinutes();
-            } else {
-                OffsetDateTime employeeStartingTime = this.getStartingTime(indexOfDate, employee);
-                OffsetDateTime firstServiceStartingTime = super.getOptimizationProblem().getServiceStartingTime(service);
-                if (firstServiceStartingTime.isBefore(employeeStartingTime)) {
-                    assignedWorkingTime += Duration.between(firstServiceStartingTime, employeeStartingTime).toMinutes();
-                }
-            }
-
-        }
-        return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
-    }*/
-    //verificar que no se acumule a otro dia sino que se considere como nuevo dia
+    /*
+     * public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
+     * LocalDate date = this.optimizationProblem.getDate(service);
+     * int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
+     * long assignedWorkingTime = 0;
+     * if (this.hasAssignedServices(indexOfDate, employee)) {
+     * assignedWorkingTime = this.getUsedTime(indexOfDate, employee).toMinutes();
+     * OffsetDateTime employeeFinishingTime = this.getFinishingTime(indexOfDate,
+     * employee);
+     * OffsetDateTime lastServiceFinishingTime =
+     * super.getOptimizationProblem().getServiceFinishingTime(service);
+     * if (lastServiceFinishingTime.isAfter(employeeFinishingTime)) {
+     * assignedWorkingTime += Duration.between(employeeFinishingTime,
+     * lastServiceFinishingTime).toMinutes();
+     * } else {
+     * OffsetDateTime employeeStartingTime = this.getStartingTime(indexOfDate,
+     * employee);
+     * OffsetDateTime firstServiceStartingTime =
+     * super.getOptimizationProblem().getServiceStartingTime(service);
+     * if (firstServiceStartingTime.isBefore(employeeStartingTime)) {
+     * assignedWorkingTime += Duration.between(firstServiceStartingTime,
+     * employeeStartingTime).toMinutes();
+     * }
+     * }
+     * 
+     * }
+     * return (assignedWorkingTime <=
+     * super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
+     * }
+     */
+    // verificar que no se acumule a otro dia sino que se considere como nuevo dia
     public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
         LocalDate date = this.optimizationProblem.getDate(service);
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         long assignedWorkingTime = 0;
-    
+
         // Resetea las horas de trabajo a cero al inicio de un nuevo día
         if (this.hasAssignedServices(indexOfDate, employee)) {
             assignedWorkingTime = this.getUsedTime(indexOfDate, employee).toMinutes();
-            
+
             OffsetDateTime employeeFinishingTime = this.getFinishingTime(indexOfDate, employee);
             OffsetDateTime lastServiceFinishingTime = super.getOptimizationProblem().getServiceFinishingTime(service);
-    
-            // Si el servicio termina después de la hora de finalización del empleado, se acumula el tiempo adicional
+
+            // Si el servicio termina después de la hora de finalización del empleado, se
+            // acumula el tiempo adicional
             if (lastServiceFinishingTime.isAfter(employeeFinishingTime)) {
                 assignedWorkingTime += Duration.between(employeeFinishingTime, lastServiceFinishingTime).toMinutes();
             } else {
-                // Si el servicio comienza antes que la hora de inicio del empleado, se acumula el tiempo faltante
+                // Si el servicio comienza antes que la hora de inicio del empleado, se acumula
+                // el tiempo faltante
                 OffsetDateTime employeeStartingTime = this.getStartingTime(indexOfDate, employee);
-                OffsetDateTime firstServiceStartingTime = super.getOptimizationProblem().getServiceStartingTime(service);
+                OffsetDateTime firstServiceStartingTime = super.getOptimizationProblem()
+                        .getServiceStartingTime(service);
                 if (firstServiceStartingTime.isBefore(employeeStartingTime)) {
                     assignedWorkingTime += Duration.between(firstServiceStartingTime, employeeStartingTime).toMinutes();
                 }
             }
         }
-    
+
         // Verifica que las horas trabajadas no excedan las disponibles para el empleado
         return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
-    }    
-    
+    }
 
     public int getFirstUncoveredService() {
         for (int i = 0; i < this.optimizationProblem.getNumberOfServices(); i++) {
@@ -315,16 +333,19 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public double getProductivityWorkingTime(LocalDate date, int employee) {
-        return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes()) * 100.0;
+        return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes())
+                * 100.0;
     }
 
     public double getProductivityUsedTime(LocalDate date, int employee) {
-        return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes()) * 100.0;
+        return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes())
+                * 100.0;
     }
 
     public double getWorkProductivity(LocalDate date, int employee) {
-        //Calcular tiempo de jornada total => en vez de getWorkingTime
-        return ((double) this.getWorkingTime(date, employee) / (double) optimizationProblem.getEmployeeAvailableTimePerDay(employee))*100.0;
+        // Calcular tiempo de jornada total => en vez de getWorkingTime
+        return ((double) this.getWorkingTime(date, employee)
+                / (double) optimizationProblem.getEmployeeAvailableTimePerDay(employee)) * 100.0;
     }
 
     public int getWorkingTime(LocalDate date, int employee) {
@@ -377,7 +398,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
     public int getNumberOfCoveredServices(LocalDate date) {
         int coveredServices = 0;
-        for (int i = this.optimizationProblem.getIndexOfFirstServiceInDate(date); i <= this.optimizationProblem.getIndexOfLastServiceInDate(date); i++) {
+        for (int i = this.optimizationProblem.getIndexOfFirstServiceInDate(date); i <= this.optimizationProblem
+                .getIndexOfLastServiceInDate(date); i++) {
             if (this.isServiceCovered(i)) {
                 coveredServices++;
             }
@@ -387,7 +409,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
     public List<String> getUncoveredServices(LocalDate date) {
         List<String> uncoveredServices = new ArrayList<>();
-        for (int i = this.optimizationProblem.getIndexOfFirstServiceInDate(date); i <= this.optimizationProblem.getIndexOfLastServiceInDate(date); i++) {
+        for (int i = this.optimizationProblem.getIndexOfFirstServiceInDate(date); i <= this.optimizationProblem
+                .getIndexOfLastServiceInDate(date); i++) {
             if (!this.isServiceCovered(i)) {
                 uncoveredServices.add(this.optimizationProblem.getServiceCode(i));
             }
@@ -403,11 +426,14 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return this.optimizationProblem.getNumberOfServices(date) - this.getNumberOfCoveredServices(date);
     }
 
-    /*public int getAvailableTime(LocalDate date, int employee) {
-        int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
-        return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) - this.getWorkingTime(indexOfDate, employee);
-    }*/
-    //que se considere por día
+    /*
+     * public int getAvailableTime(LocalDate date, int employee) {
+     * int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
+     * return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) -
+     * this.getWorkingTime(indexOfDate, employee);
+     * }
+     */
+    // que se considere por día
     // Método para calcular el tiempo disponible de un empleado en un día
     public int getAvailableTime(LocalDate date, int employee) {
         // Reinicia el tiempo disponible al principio de cada día
@@ -420,7 +446,6 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
         return availableTime;
     }
-
 
     public int getAvailableTime(int date, int employee) {
         return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) - this.getWorkingTime(date, employee);
@@ -477,7 +502,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public boolean doesServiceFitsWorkingJourney(int employee, int service) {
-        if (!this.optimizationProblem.hasEmployeeStartTime(employee) && !this.optimizationProblem.hasEmployeeFinishTime(employee)) {
+        if (!this.optimizationProblem.hasEmployeeStartTime(employee)
+                && !this.optimizationProblem.hasEmployeeFinishTime(employee)) {
             return true;
         }
         OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
@@ -580,7 +606,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
                     tableEmployees.setValue(this.getAvailableTime(indexOfDate, employee), row, column++);
                     tableEmployees.setValue(this.getWorkingTime(indexOfDate, employee), row, column++);
                     tableEmployees.setValue(this.getBreakTime(indexOfDate, employee), row, column++);
-                    tableEmployees.setValue(this.getOptimizationProblem().getEmployeeTimeBetweenWorkingDays(employee), row, column++);
+                    tableEmployees.setValue(this.getOptimizationProblem().getEmployeeTimeBetweenWorkingDays(employee),
+                            row, column++);
                     String elapsedTime = "INFINITE";
                     long time = this.getElapsedTimeFromPreviousDays(date, employee);
                     if (time != Long.MAX_VALUE) {
@@ -590,7 +617,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
                     tableEmployees.setValue(this.getNumberOfAssignedServices(indexOfDate, employee), row, column++);
                     tableEmployees.setValue(this.getFirstAssignedService(indexOfDate, employee), row, column++);
                     tableEmployees.setValue(this.getLastAssignedService(indexOfDate, employee), row, column++);
-                    ArrayList<Integer> sortedServices = new ArrayList<>(this.getAssignedServices(indexOfDate, employee));
+                    ArrayList<Integer> sortedServices = new ArrayList<>(
+                            this.getAssignedServices(indexOfDate, employee));
                     Collections.sort(sortedServices);
                     for (int j = 0; j < sortedServices.size(); j++) {
                         tableEmployees.setValue(sortedServices.get(j), row, j + column++);

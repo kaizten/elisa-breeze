@@ -1,13 +1,5 @@
 package com.kaizten.prmp.solver;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Optional;
-
-import org.json.JSONObject;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.opt.evaluator.Evaluator;
 import com.kaizten.opt.evaluator.builder.EvaluatorBuilder;
@@ -21,6 +13,14 @@ import com.kaizten.prmp.solver.solver.RandomSolver;
 import com.kaizten.prmp.solver.solver.ReferenceSolver;
 import com.kaizten.utils.io.KaiztenFile;
 import com.kaizten.utils.net.KaiztenURI;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Optional;
+
+import org.json.JSONObject;
 
 public class Main {
 
@@ -97,10 +97,15 @@ public class Main {
         } catch (IOException e) {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
-
         // guardar info en texto
         Object[] dates = optimizationProblem.getDatesOfServices().toArray();
-        TableGenerator.saveExecutionDataToTable(executionTime, solutionJSON, airport, percentage, agents, algorithm,
+        TableGenerator.saveExecutionDataToTable(
+                executionTime,
+                solutionJSON,
+                airport,
+                percentage,
+                agents,
+                algorithm,
                 dates);
     }
 }

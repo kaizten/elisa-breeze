@@ -3,7 +3,8 @@ package com.kaizten.prmp.evaluator;
 import com.kaizten.opt.evaluator.EvaluatorSingleObjectiveFunction;
 import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 
-public class PersonsReducedMobilityProblemEvaluator extends EvaluatorSingleObjectiveFunction<PersonsReducedMobilitySolution> {
+public class PersonsReducedMobilityProblemEvaluator
+        extends EvaluatorSingleObjectiveFunction<PersonsReducedMobilitySolution> {
 
     public PersonsReducedMobilityProblemEvaluator() {
         super();
