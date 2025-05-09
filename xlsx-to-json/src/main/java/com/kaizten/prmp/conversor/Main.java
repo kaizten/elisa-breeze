@@ -1,29 +1,25 @@
 package com.kaizten.prmp.conversor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kaizten.prmp.conversor.creator.InstanceCreatorMAD;
-import com.kaizten.prmp.conversor.creator.InstanceCreatorSPC;
-import com.kaizten.prmp.conversor.creator.InstanceCreatorTFS;
-import com.kaizten.prmp.conversor.utils.FlightCounter;
-import com.kaizten.prmp.conversor.utils.FlightOverlapCounter;
-import com.kaizten.prmp.conversor.utils.ServicesSelector;
-import com.kaizten.prmp.conversor.xlsx.XlsxReader;
-import com.kaizten.prmp.conversor.xlsx.XlsxReader2;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kaizten.prmp.conversor.creator.InstanceCreatorMAD;
+import com.kaizten.prmp.conversor.creator.InstanceCreatorSPC;
+import com.kaizten.prmp.conversor.creator.InstanceCreatorTFS;
+import com.kaizten.prmp.conversor.utils.FlightCounter;
+import com.kaizten.prmp.conversor.utils.ServicesSelector;
+import com.kaizten.prmp.conversor.xlsx.XlsxReader;
+import com.kaizten.prmp.conversor.xlsx.XlsxReader2;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 
 public class Main {
 
     private static final String filePath = "data/flights.xlsx";
+    private static final String instanceDirectory = "data/airportInstances/";
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException, Exception {
         final File xlsFile = new File(filePath);
@@ -53,19 +49,19 @@ public class Main {
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage);
+                    numberOfDays, maxOverlaps, percentage, instanceDirectory);
         } else if (airport.equals("TFS")) {
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage);
+                    numberOfDays, maxOverlaps, percentage, instanceDirectory);
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage);
+                    numberOfDays, maxOverlaps, percentage, instanceDirectory);
         }
         // System.out.println(optimizationProblem);
         //PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();

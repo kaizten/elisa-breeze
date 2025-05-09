@@ -23,7 +23,7 @@ public class InstanceCreatorSPC {
     public void createInstance( //TODO bucle y en cada uno sumarle un empleado hasta 30, y devolver lista de problemas con numero de empleados variados. guardar con numero de agentes en el nombre 
             List<String> selectedFlights,
             String airport,
-            int numberOfDays, int maxOverlaps, double percentage) throws Exception {
+            int numberOfDays, int maxOverlaps, double percentage, String instanceDirectory) throws Exception {
                 
         for (int agents = 1; agents <= 30; agents++) { //30 intancias => agentes de 1 a 30
             final int numberOfServices = selectedFlights.size()+ 4*numberOfDays; //añado 4*dias de servicio por los servicios adicionales
@@ -138,7 +138,7 @@ public class InstanceCreatorSPC {
             //guardar el problema en un archivo json
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
-            KaiztenFile.writeToFile(new File("data/airportInstances/"+ airport + "-" + percentage + "-agents" + agents + ".json"), json);
+            KaiztenFile.writeToFile(new File(instanceDirectory + airport + "-" + percentage + "-agents" + agents + ".json"), json);
         }
     }
         
