@@ -18,14 +18,15 @@ import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 
 public class Main {
 
-    private static final String filePath = "data/flights.xlsx";
-    private static final String instanceDirectory = "data/airportInstances/";
-
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException, Exception {
-        final File xlsFile = new File(filePath);
         final double percentage = Double.parseDouble(args[0]);
         final String airport = args[1];
         final int instanceNumber = Integer.parseInt(args[2]);
+        final String FILEPATH = args[3];
+        final String INSTANCEDIRECTORY = args[4];
+
+        final File xlsFile = new File(FILEPATH);
+
         final Map<String, Map<String, List<String>>> flights;
         if (airport == "MAD") {
             flights = XlsxReader2.readXlsx(xlsFile, airport);
@@ -49,19 +50,19 @@ public class Main {
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage, instanceDirectory);
+                    numberOfDays, maxOverlaps, percentage, INSTANCEDIRECTORY);
         } else if (airport.equals("TFS")) {
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage, instanceDirectory);
+                    numberOfDays, maxOverlaps, percentage, INSTANCEDIRECTORY);
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage, instanceDirectory);
+                    numberOfDays, maxOverlaps, percentage, INSTANCEDIRECTORY);
         }
         // System.out.println(optimizationProblem);
         //PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();

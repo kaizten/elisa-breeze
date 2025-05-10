@@ -1,4 +1,4 @@
-package com.kaizten.prmp.solver;
+/*package com.kaizten.prmp.solver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaizten.opt.evaluator.Evaluator;
@@ -97,15 +97,4 @@ public class Main {
         } catch (IOException e) {
             System.err.println("Error al guardar la solución como archivo: " + e.getMessage());
         }
-        // guardar info en texto
-        Object[] dates = optimizationProblem.getDatesOfServices().toArray();
-        TableGenerator.saveExecutionDataToTable(
-                executionTime,
-                solutionJSON,
-                airport,
-                percentage,
-                agents,
-                algorithm,
-                dates);
-    }
-}
+}*/

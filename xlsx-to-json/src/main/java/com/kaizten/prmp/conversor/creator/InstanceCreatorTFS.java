@@ -23,7 +23,7 @@ public class InstanceCreatorTFS {
     public void createInstance(
             List<String> selectedFlights,
             String airport,
-            int numberOfDays, int maxOverlaps, double percentage, String instanceDirectory) throws Exception {
+            int numberOfDays, int maxOverlaps, double percentage, String INSTANCEDIRECTORY) throws Exception {
         
         for (int agents = 1; agents <= 70; agents++) { 
             final int numberOfServices = selectedFlights.size()+61+6*numberOfDays;  
@@ -654,7 +654,7 @@ public class InstanceCreatorTFS {
             //guardar el problema en un archivo json
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
-            KaiztenFile.writeToFile(new File(instanceDirectory + airport + "-" + percentage + "-agents" + agents + ".json"), json);
+            KaiztenFile.writeToFile(new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"), json);
         }
      }
             

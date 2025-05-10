@@ -21,7 +21,7 @@ import org.json.JSONObject;
 public class InstanceCreatorMAD {
 
     public void createInstance(
-            List<String> selectedFlights, String airport, int numberOfDays, int maxOverlaps, double percentage, String instanceDirectory) throws Exception {
+            List<String> selectedFlights, String airport, int numberOfDays, int maxOverlaps, double percentage, String INSTANCEDIRECTORY) throws Exception {
 
         for (int agents = 1; agents <= 500; agents++) {
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
@@ -1030,7 +1030,7 @@ public class InstanceCreatorMAD {
             // guardar el problema en un archivo json
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
-            KaiztenFile.writeToFile(new File(instanceDirectory + airport + "-" + percentage + "-agents" + agents + ".json"),
+            KaiztenFile.writeToFile(new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"),
                     json);
         }
     }

@@ -1,8 +1,11 @@
 package com.kaizten.prmp.conversor;
 
 public class Controller {
+    private static final String FILEPATH = "data/flights.xlsx";
+    private static final String INSTANCEDIRECTORY = "data/airportInstances/";
+
     public static void main(String[] args) throws Exception {
-        final String[] airports = {"MAD"};
+        final String[] airports = {"MAD", "SPC", "TFS"};
         //final String[] airports = {"SPC"};
         //final double[] percentages = {0.5, 1, 1.5, 2};
         final double[] percentages = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
@@ -14,7 +17,7 @@ public class Controller {
             for (double percentage : percentages) {
                 int instanceNumber = 0;
                 //for (int i = 0; i<numberOfInstances; i++){
-                String[] parameters = {String.valueOf(percentage), airport, String.valueOf(instanceNumber)};
+                String[] parameters = {String.valueOf(percentage), airport, String.valueOf(instanceNumber), FILEPATH, INSTANCEDIRECTORY};
                 System.out.println(instanceNumber+ ": Ejecutando Main con porcentaje: " + percentage + " y aeropuerto: " + airport);
                 Main.main(parameters);
                 //System.out.println("-------------------------------------------------");
