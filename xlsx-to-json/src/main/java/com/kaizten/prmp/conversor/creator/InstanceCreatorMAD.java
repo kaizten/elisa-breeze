@@ -1,11 +1,5 @@
 package com.kaizten.prmp.conversor.creator;
 
-import com.kaizten.prmp.domain.Service;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +12,12 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.kaizten.prmp.domain.Service;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
+import com.kaizten.utils.io.KaiztenFile;
+
 public class InstanceCreatorMAD {
 
     public void createInstance(
@@ -25,12 +25,12 @@ public class InstanceCreatorMAD {
 
         for (int agents = 1; agents <= 500; agents++) {
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
-            int numberOfManagers = 6;
-            int numberOfDrivers = 3;
+            int numberOfManagers = 3;
+            int numberOfDrivers = 6;
             int numberOfRampManagers = 3;
-            // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados
-            // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51
-            int numberOfExtraEmployees = 51; // Faltan drivers y ramp managers=> *2 de momento
+            // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados => día en el que más se necesitan
+            // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51 por día + 19 de replazo = 70
+            int numberOfExtraEmployees = 70; // 
             // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
             // selectedFlights.size() / (7*5)), maxOverlaps);
             int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfRampManagers
@@ -1001,26 +1001,26 @@ public class InstanceCreatorMAD {
 
             // creo x empleados nuevos, rol AGENTE
             // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-            for (int i = 0; i < numberOfEmployees - 63; i++) {
+            for (int i = 0; i < numberOfEmployees - 67; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
 
             // Empleados añadidos
-            // TOTAl: 63
+            // TOTAl: 70+6+3+3 = 82
             // TOTAL TOTAL: 510
-            // 294 DRIVERS => 70% => 43
-            // 108 MANAGER => 15% => 10
-            // 108 RAMP_MANAGER => 15% => 10
-            for (int i = numberOfEmployees - (63); i < numberOfEmployees - (20); i++) {
+            // 294 DRIVERS => 60% => 48
+            // 108 MANAGER => 20% => 17
+            // 108 RAMP_MANAGER => 20% => 17
+            for (int i = numberOfEmployees - (67); i < numberOfEmployees - (30); i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-            for (int i = numberOfEmployees - (20); i < numberOfEmployees - (10); i++) {
+            for (int i = numberOfEmployees - (30); i < numberOfEmployees - (15); i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-            for (int i = numberOfEmployees - (10); i < numberOfEmployees; i++) {
+            for (int i = numberOfEmployees - (15); i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.RAMP_MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
