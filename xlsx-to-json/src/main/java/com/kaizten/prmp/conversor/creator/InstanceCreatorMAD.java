@@ -1001,7 +1001,7 @@ public class InstanceCreatorMAD {
 
             // creo x empleados nuevos, rol AGENTE
             // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-            for (int i = 0; i < numberOfEmployees - 67; i++) {
+            for (int i = 0; i < numberOfEmployees - 92; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
