@@ -181,6 +181,9 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         // Finalmente, meterlos al global
         jsonGlobalIndicators.put("PRODUCTIVITY USED TIME VALUES", jsonProductivityUsedTime);
         jsonGlobalIndicators.put("WORK PRODUCTIVITY VALUES", jsonWorkProductivity);
+
+        jsonGlobalIndicators.put("AGENTS with WORK - absolute", solution.getNumberOfAgentsWithWork());
+        jsonGlobalIndicators.put("AGENTS with WORK - percentage", solution.getPercentageOfAgentsWithWork());
         return jsonSolution;
     }
 }

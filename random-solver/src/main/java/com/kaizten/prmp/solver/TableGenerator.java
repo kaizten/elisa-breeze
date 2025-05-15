@@ -55,6 +55,9 @@ public class TableGenerator {
         int numberEmployees = solution.getJSONObject("indicators").getInt("employees");
         int fakeServices = solution.getJSONObject("indicators").getInt("fakeServices");
         int realServices = solution.getJSONObject("indicators").getInt("realServices");
+        int workingAgents = solution.getJSONObject("indicators").getInt("AGENTS with WORK - absolute");
+        double workingAgentsPercentage = solution.getJSONObject("indicators")
+                .getDouble("AGENTS with WORK - percentage");
 
         JSONObject employeesByRole = solution.getJSONObject("indicators").getJSONObject("EMPLOYEES BY ROLE");
         int totalAgents = employeesByRole.optInt("AGENT", 0);
@@ -77,14 +80,14 @@ public class TableGenerator {
         // Guardar en archivo de texto
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
             writer.write(String.format(
-                    "%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
+                    "%s\t%d\t%d\t%d\t%d\t%d\t%d\t%.3f\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
                     instance.getName(), numberServices, realServices, fakeServices,
-                    numberEmployees, totalAgents, totalDrivers, totalManagers, totalRampManagers,
+                    numberEmployees, totalAgents, workingAgents, workingAgentsPercentage, totalDrivers, totalManagers, totalRampManagers,
                     algorithm, averageProductivityUsedTime, averageRealProductivityUsedTime,
                     putAgent, putDriver, putRampManager, putManager,
                     averageWorkProductivity, averageRealWorkProductivity,
                     wpAgent, wpDriver, wpRampManager, wpManager,
-                    executionTime, coveredServicesPercentage, coveredServices));
+                    executionTime, coveredServicesPercentage, coveredServices)); 
 
             // Bucle para escribir la información de cada día en el archivo
             /*for (int day = 0; day < dates.length; day++) {
