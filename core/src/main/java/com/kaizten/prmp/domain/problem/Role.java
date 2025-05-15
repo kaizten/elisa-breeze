@@ -11,6 +11,8 @@ public enum Role {
     RAMP_MANAGER,
     MANAGER;
 
+    private static final Random RANDOM = new Random();
+
     public static Role fromString(String stringToCheck) {
         if (stringToCheck == null) {
             throw new NullPointerException();
@@ -40,6 +42,6 @@ public enum Role {
     }
 
     public static Role random() {
-        return values()[new Random().nextInt(values().length)];
+        return values()[RANDOM.nextInt(values().length)];
     }
 }

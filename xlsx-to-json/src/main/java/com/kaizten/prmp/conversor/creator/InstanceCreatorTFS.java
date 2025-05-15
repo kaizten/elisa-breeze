@@ -23,41 +23,43 @@ public class InstanceCreatorTFS {
     public void createInstance(
             List<String> selectedFlights,
             String airport,
-            int numberOfDays, int maxOverlaps, double percentage, String INSTANCEDIRECTORY) throws Exception {
-        
-        for (int agents = 1; agents <= 70; agents++) { 
-            final int numberOfServices = selectedFlights.size()+61+6*numberOfDays;  
+            int numberOfDays,
+            int maxOverlaps,
+            double percentage,
+            String INSTANCEDIRECTORY) throws Exception {
+        for (int agents = 1; agents <= 70; agents++) {
+            final int numberOfServices = selectedFlights.size() + 61 + 6 * numberOfDays;
             // (3 de cada)+1 de respuesto de cada tipo fijo
             int numberOfManagers = 3;
             int numberOfDrivers = 3;
-            //calculo de numero de empleados extra: el dia con más demanda es lunes, con 32 conductores y 12 coordinadores necesitados. Adjudicamos eso para que cubra eso y ya de paso cubre los demas (regla general de momento)
+            // calculo de numero de empleados extra: el dia con más demanda es lunes, con 32
+            // conductores y 12 coordinadores necesitados. Adjudicamos eso para que cubra
+            // eso y ya de paso cubre los demas (regla general de momento)
             int numberOfExtraEmployees = 32;
-            //int numberOfEmployeesFlights = Math.max((int) Math.ceil((double) selectedFlights.size() / (7*5)), maxOverlaps); 
+            // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
+            // selectedFlights.size() / (7*5)), maxOverlaps);
             int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfExtraEmployees;
             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                     numberOfServices,
                     numberOfEmployees);
             optimizationProblem.setAirport(airport);
-            
             final List<Service> listOfServices = new ArrayList<>();
-
-            //Añado servicios base (1 conductor, 1 coordinador) las 24h los 7 dias: 
-            Role[] roles = {Role.DRIVER, Role.MANAGER}; //Porq en el codigo actual de problem, solo se puede añadir 1 ROL por servicio
-            int code = 0; 
-            //iterar a lo largo de los días 
+            // Añado servicios base (1 conductor, 1 coordinador) las 24h los 7 dias:
+            final Role[] roles = { Role.DRIVER, Role.MANAGER }; // Porq en el codigo actual de problem, solo se puede
+                                                                // añadir 1
+            // ROL por servicio
+            int code = 0;
+            // iterar a lo largo de los días
             for (int i = 0; i < numberOfDays; i++) {
                 LocalDate date = LocalDate.of(2024, 2, 5).plusDays(i);
                 for (int shift = 0; shift < 3; shift++) { // turnos por día (3 porq son de 8h)
                     int start = (shift * 8) % 24;
                     int finish = (start + 8) % 24;
-
                     OffsetDateTime startingTime = date.atTime(start, 0).atOffset(ZoneOffset.UTC);
                     OffsetDateTime finishingTime = date.atTime(finish, 0).atOffset(ZoneOffset.UTC);
-
-                    if (finishingTime.getHour() < startingTime.getHour()){
-                        finishingTime = finishingTime.plusDays(1); 
+                    if (finishingTime.getHour() < startingTime.getHour()) {
+                        finishingTime = finishingTime.plusDays(1);
                     }
-
                     for (Role role : roles) {
                         final Service newService = new Service();
                         newService.setCode("f-" + String.format("%04d", code));
@@ -70,11 +72,9 @@ public class InstanceCreatorTFS {
                     }
                 }
             }
-            //Servicios añadidos manuales dependiendo del número de vuelos: 
-
-            //LUNES
+            // Servicios añadidos manuales dependiendo del número de vuelos:
+            // LUNES
             LocalDate monday = LocalDate.of(2024, 2, 5);
-
             final Service newService1 = new Service();
             newService1.setCode("f-" + String.format("%04d", code));
             newService1.setStartingTime(monday.atTime(6, 0).atOffset(ZoneOffset.UTC));
@@ -82,7 +82,6 @@ public class InstanceCreatorTFS {
             newService1.setRequiredEmployees(2);
             newService1.setRole(Role.DRIVER);
             listOfServices.add(newService1);
-
             final Service newService2 = new Service();
             newService2.setCode("f-" + String.format("%04d", ++code));
             newService2.setStartingTime(monday.atTime(10, 0).atOffset(ZoneOffset.UTC));
@@ -90,7 +89,6 @@ public class InstanceCreatorTFS {
             newService2.setRequiredEmployees(4);
             newService2.setRole(Role.DRIVER);
             listOfServices.add(newService2);
-
             final Service newService3 = new Service();
             newService3.setCode("f-" + String.format("%04d", ++code));
             newService3.setStartingTime(monday.atTime(10, 0).atOffset(ZoneOffset.UTC));
@@ -98,7 +96,6 @@ public class InstanceCreatorTFS {
             newService3.setRequiredEmployees(2);
             newService3.setRole(Role.MANAGER);
             listOfServices.add(newService3);
-
             final Service newService4 = new Service();
             newService4.setCode("f-" + String.format("%04d", ++code));
             newService4.setStartingTime(monday.atTime(13, 0).atOffset(ZoneOffset.UTC));
@@ -106,7 +103,6 @@ public class InstanceCreatorTFS {
             newService4.setRequiredEmployees(8);
             newService4.setRole(Role.DRIVER);
             listOfServices.add(newService4);
-
             final Service newService5 = new Service();
             newService5.setCode("f-" + String.format("%04d", ++code));
             newService5.setStartingTime(monday.atTime(13, 0).atOffset(ZoneOffset.UTC));
@@ -114,7 +110,6 @@ public class InstanceCreatorTFS {
             newService5.setRequiredEmployees(3);
             newService5.setRole(Role.MANAGER);
             listOfServices.add(newService5);
-
             final Service newService6 = new Service();
             newService6.setCode("f-" + String.format("%04d", ++code));
             newService6.setStartingTime(monday.atTime(16, 0).atOffset(ZoneOffset.UTC));
@@ -122,7 +117,6 @@ public class InstanceCreatorTFS {
             newService6.setRequiredEmployees(4);
             newService6.setRole(Role.DRIVER);
             listOfServices.add(newService6);
-
             final Service newService7 = new Service();
             newService7.setCode("f-" + String.format("%04d", ++code));
             newService7.setStartingTime(monday.atTime(16, 0).atOffset(ZoneOffset.UTC));
@@ -173,7 +167,7 @@ public class InstanceCreatorTFS {
 
             // MARTES
             LocalDate tuesday = LocalDate.of(2024, 2, 6);
-            
+
             final Service newService13 = new Service();
             newService13.setCode("f-" + String.format("%04d", ++code));
             newService13.setStartingTime(tuesday.atTime(9, 0).atOffset(ZoneOffset.UTC));
@@ -181,7 +175,7 @@ public class InstanceCreatorTFS {
             newService13.setRequiredEmployees(2);
             newService13.setRole(Role.DRIVER);
             listOfServices.add(newService13);
-            
+
             final Service newService14 = new Service();
             newService14.setCode("f-" + String.format("%04d", ++code));
             newService14.setStartingTime(tuesday.atTime(10, 0).atOffset(ZoneOffset.UTC));
@@ -189,7 +183,7 @@ public class InstanceCreatorTFS {
             newService14.setRequiredEmployees(8);
             newService14.setRole(Role.DRIVER);
             listOfServices.add(newService14);
-            
+
             final Service newService15 = new Service();
             newService15.setCode("f-" + String.format("%04d", ++code));
             newService15.setStartingTime(tuesday.atTime(10, 0).atOffset(ZoneOffset.UTC));
@@ -197,7 +191,7 @@ public class InstanceCreatorTFS {
             newService15.setRequiredEmployees(3);
             newService15.setRole(Role.MANAGER);
             listOfServices.add(newService15);
-            
+
             final Service newService16 = new Service();
             newService16.setCode("f-" + String.format("%04d", ++code));
             newService16.setStartingTime(tuesday.atTime(14, 0).atOffset(ZoneOffset.UTC));
@@ -205,7 +199,7 @@ public class InstanceCreatorTFS {
             newService16.setRequiredEmployees(8);
             newService16.setRole(Role.DRIVER);
             listOfServices.add(newService16);
-            
+
             final Service newService17 = new Service();
             newService17.setCode("f-" + String.format("%04d", ++code));
             newService17.setStartingTime(tuesday.atTime(14, 0).atOffset(ZoneOffset.UTC));
@@ -213,7 +207,7 @@ public class InstanceCreatorTFS {
             newService17.setRequiredEmployees(3);
             newService17.setRole(Role.MANAGER);
             listOfServices.add(newService17);
-            
+
             final Service newService18 = new Service();
             newService18.setCode("f-" + String.format("%04d", ++code));
             newService18.setStartingTime(tuesday.atTime(19, 0).atOffset(ZoneOffset.UTC));
@@ -221,7 +215,7 @@ public class InstanceCreatorTFS {
             newService18.setRequiredEmployees(4);
             newService18.setRole(Role.DRIVER);
             listOfServices.add(newService18);
-            
+
             final Service newService19 = new Service();
             newService19.setCode("f-" + String.format("%04d", ++code));
             newService19.setStartingTime(tuesday.atTime(19, 0).atOffset(ZoneOffset.UTC));
@@ -581,14 +575,14 @@ public class InstanceCreatorTFS {
             service57.setRole(Role.DRIVER);
             listOfServices.add(service57);
 
-        
             // ========================================================================================================
 
             // SERVICIOS REALES
             // crear las fechas y hora de inicio y fin de los servicios
             for (int i = 0; i < selectedFlights.size(); i++) {
                 code++;
-                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] => hora
+                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] =>
+                                                                         // hora
                 // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
                 // " + flightInfo[2]);
                 String time = flightInfo[2].trim();
@@ -618,7 +612,6 @@ public class InstanceCreatorTFS {
                 newService.setRole(Role.AGENT);
                 listOfServices.add(newService);
             }
-
             Collections.sort(listOfServices);
             for (int i = 0; i < listOfServices.size(); i++) {
                 Service service = listOfServices.get(i);
@@ -627,35 +620,34 @@ public class InstanceCreatorTFS {
                 optimizationProblem.setServiceRole(i, service.getRole());
                 optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
             }
-
-
             // creo x empleados nuevos, rol AGENTE
             // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
-            for (int i = 0; i < numberOfEmployees-38; i++) {
+            for (int i = 0; i < numberOfEmployees - 38; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-
             // creo los empleados necesitados para los servicios añadidos (driver y manager)
-            //197 conductores => recuento simple (conte todos los de los servicios, sin tener en cuenta posibles solapamientos, pa tener mas que suficiente)
-            //83 coordinadores
-            //total 38 empleados
-            //70% conductores(27) y 30% coordinadores(11)
-            for (int i = numberOfEmployees-38; i < numberOfEmployees-11; i++) {
+            // 197 conductores => recuento simple (conte todos los de los servicios, sin
+            // tener en cuenta posibles solapamientos, pa tener mas que suficiente)
+            // 83 coordinadores
+            // total 38 empleados
+            // 70% conductores(27) y 30% coordinadores(11)
+            for (int i = numberOfEmployees - 38; i < numberOfEmployees - 11; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-            for (int i = numberOfEmployees-11; i < numberOfEmployees; i++) {
+            for (int i = numberOfEmployees - 11; i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
-
-            //guardar el problema en un archivo json
-            PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-            JSONObject json = toJson.apply(optimizationProblem);
-            KaiztenFile.writeToFile(new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"), json);
+            // guardar el problema en un archivo json
+            final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
+            final JSONObject json = toJson.apply(optimizationProblem);
+            final String fileName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
+            KaiztenFile.writeToFile(
+                    new File(fileName),
+                    json);
         }
-     }
-            
- }
+    }
+}

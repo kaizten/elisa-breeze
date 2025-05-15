@@ -4,7 +4,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import com.kaizten.utils.lang.KaiztenClass;
+
 public class FlightOverlapCounter {
+
+    private FlightOverlapCounter() {
+        throw new UnsupportedOperationException(KaiztenClass.ERROR_UTILITY_CLASS);
+    }
 
     public static int countMaxOverlaps(List<String> selectedFlights) {
         final int maxOverlap = calculateMaxOverlaps(selectedFlights);
@@ -57,6 +63,6 @@ public class FlightOverlapCounter {
         if (hour.length() == 4) {
             return "0" + hour;
         }
-        return hour; 
+        return hour;
     }
 }

@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class PersonsReducedMobilityProblem extends OptimizationProblem {
 
-    public static String OPTIMIZATION_PROBLEM_NAME = "Persons with reduced mobility problem";
+    public static final String OPTIMIZATION_PROBLEM_NAME = "Persons with reduced mobility problem";
     public static final int DEFAULT_TIME_PER_DAY = 8 * 60;
     public static final int DEFAULT_TIME_PER_WEEK = 40 * 60;
     public static final int DEFAULT_TIME_BETWEEN_WORKING_DAYS = 12 * 60;
@@ -155,14 +155,14 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public List<Integer> getServicesByDate(LocalDate date) {
-        List<Integer> services = new ArrayList<Integer>();
+        final List<Integer> servicesDate = new ArrayList<>();
         for (int i = 0; i < this.serviceStartTime.length; i++) {
             LocalDate serviceStarting = this.serviceStartTime[i].toLocalDate();
             if (serviceStarting.isEqual(date)) {
-                services.add(i);
+                servicesDate.add(i);
             }
         }
-        return services;
+        return servicesDate;
     }
 
     public int getNumberOfDatesWithServices() {
@@ -186,8 +186,8 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
             return 0;
         }
         Tuple2<Integer, Integer> tuple = this.servicesByDate.get(date);
-        int firstService = tuple.get0();
-        int lastService = tuple.get1();
+        final int firstService = tuple.get0();
+        final int lastService = tuple.get1();
         return lastService - firstService + 1;
     }
 
@@ -384,6 +384,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
         return this.employeeAvailability[employeeIndex][indexOfDate];
     }
 
+    @Override
     public String toString() {
         List<LocalDate> sortedDates = this.getDatesOfServices();
         StringBuilder builder = new StringBuilder();

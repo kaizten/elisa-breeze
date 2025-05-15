@@ -63,7 +63,7 @@ public class PersonsReducedMobilityProblemToJson implements Function<PersonsRedu
         jsonProblem.put(JsonConstants.SERVICES, jsonServices);
         jsonProblem.put(JsonConstants.EMPLOYEES, jsonEmployees);
         if (optimizationProblem.hasAirport()) {
-            String airport = optimizationProblem.getAirport().get();
+            final String airport = optimizationProblem.getAirport().get();
             jsonProblem.put(JsonConstants.AIRPORT, airport);
         }
         return jsonProblem;

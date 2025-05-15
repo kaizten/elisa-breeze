@@ -21,16 +21,22 @@ import com.kaizten.utils.io.KaiztenFile;
 public class InstanceCreatorMAD {
 
     public void createInstance(
-            List<String> selectedFlights, String airport, int numberOfDays, int maxOverlaps, double percentage, String INSTANCEDIRECTORY) throws Exception {
-
+            List<String> selectedFlights,
+            String airport,
+            int numberOfDays,
+            int maxOverlaps,
+            double percentage,
+            String INSTANCEDIRECTORY) throws Exception {
         for (int agents = 1; agents <= 500; agents++) {
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
             int numberOfManagers = 3;
             int numberOfDrivers = 6;
             int numberOfRampManagers = 3;
-            // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados => día en el que más se necesitan
-            // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51 por día => para que sobre, asignamos 80
-            int numberOfExtraEmployees = 80; // 
+            // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados
+            // => día en el que más se necesitan
+            // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51 por día => para que
+            // sobre, asignamos 80
+            int numberOfExtraEmployees = 80; //
             // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
             // selectedFlights.size() / (7*5)), maxOverlaps);
             int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfRampManagers
@@ -41,10 +47,10 @@ public class InstanceCreatorMAD {
             optimizationProblem.setAirport(airport);
             // crear las fechas y hora de inicio y fin de los servicios
             final List<Service> listOfServices = new ArrayList<>();
-
             // Añado servicios base las 24h los 7 dias:
-            Role[] roles = { Role.DRIVER, Role.DRIVER, Role.RAMP_MANAGER, Role.MANAGER }; // BASE: 2 driver, 1 manager,
-                                                                                          // 1 ramp manager
+            final Role[] roles = { Role.DRIVER, Role.DRIVER, Role.RAMP_MANAGER, Role.MANAGER }; // BASE: 2 driver, 1
+                                                                                                // manager,
+            // 1 ramp manager
             // iterar a lo largo de los días
             int code = 0;
             for (int i = 0; i < numberOfDays; i++) {
@@ -52,14 +58,11 @@ public class InstanceCreatorMAD {
                 for (int shift = 0; shift < 3; shift++) { // turnos por día (3 porq son de 8h)
                     int start = (shift * 8) % 24;
                     int finish = (start + 8) % 24;
-
                     OffsetDateTime startingTime = date.atTime(start, 0).atOffset(ZoneOffset.UTC);
                     OffsetDateTime finishingTime = date.atTime(finish, 0).atOffset(ZoneOffset.UTC);
-
                     if (finishingTime.getHour() < startingTime.getHour()) {
                         finishingTime = finishingTime.plusDays(1);
                     }
-
                     for (Role role : roles) {
                         final Service newService = new Service();
                         newService.setCode("f-" + String.format("%04d", code));
@@ -69,15 +72,12 @@ public class InstanceCreatorMAD {
                         newService.setRole(role);
                         listOfServices.add(newService);
                         code++;
-
                     }
                 }
             }
-
             // SERVICIOS ADICIONALES
             // LUNES
             LocalDate monday = LocalDate.of(2024, 2, 5);
-
             final Service newService1 = new Service();
             newService1.setCode("f-" + String.format("%04d", code));
             newService1.setStartingTime(monday.atTime(0, 0).atOffset(ZoneOffset.UTC));
@@ -85,7 +85,6 @@ public class InstanceCreatorMAD {
             newService1.setRequiredEmployees(5);
             newService1.setRole(Role.DRIVER);
             listOfServices.add(newService1);
-
             final Service newService2 = new Service();
             newService2.setCode("f-" + String.format("%04d", ++code));
             newService2.setStartingTime(monday.atTime(0, 0).atOffset(ZoneOffset.UTC));
@@ -93,7 +92,6 @@ public class InstanceCreatorMAD {
             newService2.setRequiredEmployees(2);
             newService2.setRole(Role.MANAGER);
             listOfServices.add(newService2);
-
             final Service newService3 = new Service();
             newService3.setCode("f-" + String.format("%04d", ++code));
             newService3.setStartingTime(monday.atTime(0, 0).atOffset(ZoneOffset.UTC));
@@ -101,7 +99,6 @@ public class InstanceCreatorMAD {
             newService3.setRequiredEmployees(2);
             newService3.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService3);
-
             final Service newService4 = new Service();
             newService4.setCode("f-" + String.format("%04d", ++code));
             newService4.setStartingTime(monday.atTime(1, 0).atOffset(ZoneOffset.UTC));
@@ -109,7 +106,6 @@ public class InstanceCreatorMAD {
             newService4.setRequiredEmployees(3);
             newService4.setRole(Role.DRIVER);
             listOfServices.add(newService4);
-
             final Service newService5 = new Service();
             newService5.setCode("f-" + String.format("%04d", ++code));
             newService5.setStartingTime(monday.atTime(5, 0).atOffset(ZoneOffset.UTC));
@@ -117,7 +113,6 @@ public class InstanceCreatorMAD {
             newService5.setRequiredEmployees(5);
             newService5.setRole(Role.DRIVER);
             listOfServices.add(newService5);
-
             final Service newService6 = new Service();
             newService6.setCode("f-" + String.format("%04d", ++code));
             newService6.setStartingTime(monday.atTime(5, 0).atOffset(ZoneOffset.UTC));
@@ -125,7 +120,6 @@ public class InstanceCreatorMAD {
             newService6.setRequiredEmployees(2);
             newService6.setRole(Role.MANAGER);
             listOfServices.add(newService6);
-
             final Service newService7 = new Service();
             newService7.setCode("f-" + String.format("%04d", ++code));
             newService7.setStartingTime(monday.atTime(5, 0).atOffset(ZoneOffset.UTC));
@@ -133,7 +127,6 @@ public class InstanceCreatorMAD {
             newService7.setRequiredEmployees(2);
             newService7.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService7);
-
             final Service newService8 = new Service();
             newService8.setCode("f-" + String.format("%04d", ++code));
             newService8.setStartingTime(monday.atTime(6, 0).atOffset(ZoneOffset.UTC));
@@ -141,7 +134,6 @@ public class InstanceCreatorMAD {
             newService8.setRequiredEmployees(8);
             newService8.setRole(Role.DRIVER);
             listOfServices.add(newService8);
-
             final Service newService9 = new Service();
             newService9.setCode("f-" + String.format("%04d", ++code));
             newService9.setStartingTime(monday.atTime(6, 0).atOffset(ZoneOffset.UTC));
@@ -149,7 +141,6 @@ public class InstanceCreatorMAD {
             newService9.setRequiredEmployees(3);
             newService9.setRole(Role.MANAGER);
             listOfServices.add(newService9);
-
             final Service newService10 = new Service();
             newService10.setCode("f-" + String.format("%04d", ++code));
             newService10.setStartingTime(monday.atTime(6, 0).atOffset(ZoneOffset.UTC));
@@ -157,7 +148,6 @@ public class InstanceCreatorMAD {
             newService10.setRequiredEmployees(3);
             newService10.setRole(Role.RAMP_MANAGER);
             listOfServices.add(newService10);
-
             final Service newService11 = new Service();
             newService11.setCode("f-" + String.format("%04d", ++code));
             newService11.setStartingTime(monday.atTime(14, 0).atOffset(ZoneOffset.UTC));
@@ -1030,7 +1020,8 @@ public class InstanceCreatorMAD {
             // guardar el problema en un archivo json
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
-            KaiztenFile.writeToFile(new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"),
+            KaiztenFile.writeToFile(
+                    new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"),
                     json);
         }
     }

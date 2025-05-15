@@ -1,51 +1,27 @@
 package com.kaizten.prmp.conversor;
 
 public class Controller {
-    private static final String FILEPATH = "data/flights.xlsx";
-    private static final String INSTANCEDIRECTORY = "data/airportInstances/";
+
+    private static final String FILE_PATH = "data/flights.xlsx";
+    private static final String INSTANCE_DIRECTORY = "data/airportInstances/";
 
     public static void main(String[] args) throws Exception {
-        //final String[] airports = {"MAD", "SPC", "TFS"};
-        final String[] airports = {"MAD"};
-        //final double[] percentages = {0.5, 1, 1.5, 2};
-        final double[] percentages = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-        //final double[] percentages = {0.05, 0.1, 0.15, 0.2};
+        final String[] airports = { "MAD", "SPC", "TFS" };
+        final double[] percentages = { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9, 1 };
         final int numberOfInstances = 100;
-        
-        
         for (String airport : airports) {
             for (double percentage : percentages) {
-                int instanceNumber = 0;
-                //for (int i = 0; i<numberOfInstances; i++){
-                String[] parameters = {String.valueOf(percentage), airport, String.valueOf(instanceNumber), FILEPATH, INSTANCEDIRECTORY};
-                System.out.println(instanceNumber+ ": Ejecutando Main con porcentaje: " + percentage + " y aeropuerto: " + airport);
-                Main.main(parameters);
-                //System.out.println("-------------------------------------------------");
-                //instanceNumber++;
-                //}
-
+                for (int instanceNumber = 0; instanceNumber < numberOfInstances; instanceNumber++) {
+                    String[] parameters = {
+                            String.valueOf(percentage),
+                            airport,
+                            String.valueOf(instanceNumber),
+                            FILE_PATH, INSTANCE_DIRECTORY };
+                    System.out.println(instanceNumber + ": Ejecutando Main con porcentaje: " + percentage
+                            + " y aeropuerto: " + airport);
+                    Main.main(parameters);
+                }
             }
         }
-        /*final String[] airports = {"SPC"};
-        final double[] percentages = {0.05, 0.1, 0.15, 0.2};
-        //final double[] percentages = {0.5};
-        final int numberOfInstances = 100;
-        
-        
-        for (String airport : airports) {
-            for (double percentage : percentages) {
-                int instanceNumber = 0;
-                //for (int i = 0; i<numberOfInstances; i++){
-                String[] parameters = {String.valueOf(percentage), airport, String.valueOf(instanceNumber)};
-                System.out.println(instanceNumber+ ": Ejecutando Main con porcentaje: " + percentage + " y aeropuerto: " + airport);
-                Main.main(parameters);
-                System.out.println("-------------------------------------------------");
-                //instanceNumber++;
-                //}
-
-            }
-        }*/
-
     }
 }
-

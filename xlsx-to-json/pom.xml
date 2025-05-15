@@ -24,11 +24,12 @@
         <junit.version>5.10.2</junit.version>
         <kaizten-optimization.version>1.0-SNAPSHOT</kaizten-optimization.version>
         <kaizten-utils.version>1.0-SNAPSHOT</kaizten-utils.version>
-        <commons-io.version>2.15.1</commons-io.version>
-        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <commons-io.version>2.19.0</commons-io.version>
+        <commons-lang3.version>3.17.0</commons-lang3.version>
         <core.version>1.0-SNAPSHOT</core.version>
-        <jackson-core.version>2.16.1</jackson-core.version>
+        <jackson-core.version>2.19.0</jackson-core.version>
         <jcommander.version>2.0</jcommander.version>
+        <poi-ooxml.version>5.4.1</poi-ooxml.version>
         <slf4j.version>2.1.0-alpha1</slf4j.version>
     </properties>
 
@@ -57,7 +58,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.3</version>
+            <version>${poi-ooxml.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jcommander</groupId>
@@ -95,7 +96,6 @@
             <artifactId>kaizten-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
     <repositories>
