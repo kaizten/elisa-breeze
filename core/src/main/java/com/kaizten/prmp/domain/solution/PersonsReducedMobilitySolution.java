@@ -518,11 +518,21 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return numberOfAgentsWithWork;
     }
 
+    public int getNumberOfAgents(){
+        int numberOfAgents = 0;
+        for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
+            if (this.optimizationProblem.getEmployeeRoles(employee).toString().equals("[AGENT]")) {
+                numberOfAgents++;
+            }
+        }
+        return numberOfAgents;
+    }
+
     // % AGENTES con trabajo
     public double getPercentageOfAgentsWithWork() {
-        int totalEmployees = this.optimizationProblem.getNumberOfEmployees();
+        int totalAgents = this.getNumberOfAgents();
         int agentsWithWork = this.getNumberOfAgentsWithWork();
-        return (((double) agentsWithWork / totalEmployees) * 100.0);
+        return (((double) agentsWithWork / totalAgents) * 100.0);
     }
 
 
