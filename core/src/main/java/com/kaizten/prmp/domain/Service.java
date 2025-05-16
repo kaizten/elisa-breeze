@@ -70,7 +70,7 @@ public class Service implements Comparable<Service> {
         if (otherObject == null || getClass() != otherObject.getClass()) {
             return false;
         }
-        Service otherService = (Service) otherObject;
+        final Service otherService = (Service) otherObject;
         return this.startingTime.equals(otherService.getStartingTime());
     }
 

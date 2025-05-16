@@ -1,6 +1,9 @@
 
 package com.kaizten.prmp.io;
 
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -15,27 +18,17 @@ import java.util.function.Function;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
-
 public class PersonsReducedMobilitySolutionToJson implements Function<PersonsReducedMobilitySolution, JSONObject> {
 
     @Override
     public JSONObject apply(PersonsReducedMobilitySolution solution) {
-        // System.out.println(solution.getOptimizationProblem());
-        // System.out.println(solution);
         JSONObject jsonSolution = new JSONObject();
         PersonsReducedMobilityProblem optimizationProblem = solution.getOptimizationProblem();
         JSONArray jsonDates = new JSONArray();
         JSONObject jsonGlobalIndicators = new JSONObject();
-
-
         for (LocalDate date : optimizationProblem.getDatesOfServices()) {
-            
             JSONObject jsonDate = new JSONObject();
             JSONArray jsonEmployees = new JSONArray();
-            
-
             for (int e = 0; e < optimizationProblem.getNumberOfEmployees(); e++) {
                 if (solution.hasAssignedServices(date, e)) {
                     Set<Integer> assignedFlights = solution.getAssignedServices(date, e);
@@ -47,36 +40,47 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                     while (iterator.hasNext()) {
                         JSONObject jsonFlight = new JSONObject();
                         final int flight = iterator.next();
-                        jsonFlight.put(JsonConstants.CODE, optimizationProblem.getServiceCode(flight));
-                        jsonFlight.put(JsonConstants.START_TIME, optimizationProblem.getServiceStartingTime(flight)
+                        jsonFlight.put(JsonConstants.CODE,
+                                optimizationProblem.getServiceCode(flight));
+                        jsonFlight.put(JsonConstants.START_TIME, optimizationProblem
+                                .getServiceStartingTime(flight)
                                 .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-                        jsonFlight.put(JsonConstants.FINISH_TIME, optimizationProblem.getServiceFinishingTime(flight)
+                        jsonFlight.put(JsonConstants.FINISH_TIME, optimizationProblem
+                                .getServiceFinishingTime(flight)
                                 .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
                         jsonFlight.put(JsonConstants.SERVICE_TIME,
-                                Duration.ofMinutes(optimizationProblem.getServiceTime(flight)));
+                                Duration.ofMinutes(optimizationProblem
+                                        .getServiceTime(flight)));
                         jsonFlights.put(jsonFlight);
                     }
                     jsonEmployee.put(JsonConstants.SERVICES, jsonFlights);
                     OffsetDateTime startTime = (optimizationProblem.hasEmployeeStart(e))
-                            ? OffsetDateTime.of(date, optimizationProblem.getEmployeeStart(e).get(), ZoneOffset.UTC)
+                            ? OffsetDateTime.of(date,
+                                    optimizationProblem.getEmployeeStart(e).get(),
+                                    ZoneOffset.UTC)
                             : solution.getStartingTime(date, e);
                     OffsetDateTime finishTime = (optimizationProblem.hasEmployeeFinish(e))
-                            ? OffsetDateTime.of(date, optimizationProblem.getEmployeeFinish(e).get(), ZoneOffset.UTC)
+                            ? OffsetDateTime.of(date,
+                                    optimizationProblem.getEmployeeFinish(e).get(),
+                                    ZoneOffset.UTC)
                             : solution.getFinishingTime(date, e);
                     if (finishTime.isBefore(startTime)) {
                         finishTime = finishTime.plusDays(1);
                     }
                     // Indicators
                     JSONObject employeeIndicators = new JSONObject();
-                    employeeIndicators.put(JsonConstants.SERVICES, solution.getNumberOfAssignedServices(date, e));
+                    employeeIndicators.put(JsonConstants.SERVICES,
+                            solution.getNumberOfAssignedServices(date, e));
                     employeeIndicators.put(JsonConstants.START_TIME,
-                            startTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)); // hora de comienzo de la jornada
+                            startTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
                     employeeIndicators.put(JsonConstants.FINISH_TIME,
-                            finishTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)); // hora de fin de la jornada
+                            finishTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
                     employeeIndicators.put(JsonConstants.STARTING_TIME,
-                            solution.getStartingTime(date, e).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                            solution.getStartingTime(date, e).format(
+                                    DateTimeFormatter.ISO_OFFSET_DATE_TIME));
                     employeeIndicators.put(JsonConstants.FINISHING_TIME,
-                            solution.getFinishingTime(date, e).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                            solution.getFinishingTime(date, e).format(
+                                    DateTimeFormatter.ISO_OFFSET_DATE_TIME));
                     employeeIndicators.put(
                             JsonConstants.BREAK_TIME,
                             Duration.ofMinutes(solution.getBreakTime(date, e)));
@@ -89,7 +93,6 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                     employeeIndicators.put(
                             JsonConstants.WORK_PRODUCTIVITY,
                             solution.getWorkProductivity(date, e));
-                            
                     employeeIndicators.put(
                             JsonConstants.AVAILABLE_TIME,
                             Duration.ofMinutes(solution.getAvailableTime(date, e)));
@@ -103,7 +106,6 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
                     jsonEmployees.put(jsonEmployee);
                 }
             }
-
             jsonDate.put(JsonConstants.DATE, date.toString());
             jsonDate.put(JsonConstants.EMPLOYEES, jsonEmployees);
             jsonDate.put(JsonConstants.UNCOVERED_SERVICES, solution.getUncoveredServices(date));
@@ -115,8 +117,10 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
             coveredFlights.put(JsonConstants.PERCENTAGE, percentage);
             JSONObject uncoveredFlights = new JSONObject();
             uncoveredFlights.put(JsonConstants.ABSOLUTE, solution.getNumberOfUncoveredServices(date));
-            uncoveredFlights.put(JsonConstants.PERCENTAGE, ((double) solution.getNumberOfUncoveredServices(date)
-                    / (double) optimizationProblem.getNumberOfServices(date)) * 100.0);
+            uncoveredFlights.put(JsonConstants.PERCENTAGE,
+                    ((double) solution.getNumberOfUncoveredServices(date)
+                            / (double) optimizationProblem.getNumberOfServices(date))
+                            * 100.0);
             JSONObject jsonDateIndicators = new JSONObject();
             jsonDateIndicators.put(JsonConstants.SERVICES, optimizationProblem.getNumberOfServices(date));
             jsonDateIndicators.put(JsonConstants.EMPLOYEES, solution.getUsedEmployees(date));
@@ -126,62 +130,48 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
             jsonDates.put(jsonDate);
         }
         jsonSolution.put(JsonConstants.DATES, jsonDates);
-
-        // Global indicators
         Map<String, Object> coveredFlights = new HashMap<>();
         coveredFlights.put(JsonConstants.ABSOLUTE, solution.getNumberOfCoveredServices());
         coveredFlights.put(JsonConstants.PERCENTAGE,
-                ((double) solution.getNumberOfCoveredServices() / (double) optimizationProblem.getNumberOfServices())
+                ((double) solution.getNumberOfCoveredServices()
+                        / (double) optimizationProblem.getNumberOfServices())
                         * 100.0);
         Map<String, Object> uncoveredFlights = new HashMap<>();
         uncoveredFlights.put(JsonConstants.ABSOLUTE, solution.getNumberOfUncoveredServices());
         uncoveredFlights.put(JsonConstants.PERCENTAGE,
-                ((double) solution.getNumberOfUncoveredServices() / (double) optimizationProblem.getNumberOfServices())
+                ((double) solution.getNumberOfUncoveredServices()
+                        / (double) optimizationProblem.getNumberOfServices())
                         * 100.0);
         jsonGlobalIndicators.put(JsonConstants.SERVICES, optimizationProblem.getNumberOfServices());
         jsonGlobalIndicators.put(JsonConstants.EMPLOYEES, optimizationProblem.getNumberOfEmployees());
         jsonGlobalIndicators.put(JsonConstants.COVERED_SERVICES, coveredFlights);
         jsonGlobalIndicators.put(JsonConstants.UNCOVERED_SERVICES, uncoveredFlights);
         jsonSolution.put(JsonConstants.INDICATORS, jsonGlobalIndicators);
-        // new averages
-        jsonGlobalIndicators.put(JsonConstants.FAKESERVICES, solution.getNumberOfFakeServices()); 
-        jsonGlobalIndicators.put(JsonConstants.REALSERVICES, solution.getNumberOfRealServices()); 
- 
-
-        // Añadir recuento de roles a los indicadores globales
+        jsonGlobalIndicators.put(JsonConstants.FAKESERVICES, solution.getNumberOfFakeServices());
+        jsonGlobalIndicators.put(JsonConstants.REALSERVICES, solution.getNumberOfRealServices());
         JSONObject jsonRoleCount = new JSONObject();
         for (Map.Entry<String, Integer> entry : solution.getNumberOfEmployeesPerRole().entrySet()) {
             jsonRoleCount.put(entry.getKey(), entry.getValue());
         }
         jsonGlobalIndicators.put("EMPLOYEES BY ROLE", jsonRoleCount);
-
-        // crear objeto json que imprima todos los parametros de productivity used time
         JSONObject jsonProductivityUsedTime = new JSONObject();
         jsonProductivityUsedTime.put("Global", solution.getAverageProductivityUsedTime());
         jsonProductivityUsedTime.put("Real Services", solution.getAverageProductivityUsedTimeRealServices());
         JSONObject jsonWorkProductivity = new JSONObject();
         jsonWorkProductivity.put("Global", solution.getAverageWorkProductivity());
         jsonWorkProductivity.put("Real Services", solution.getAverageWorkProductivityRealServices());
-        // Añadir medias por rol
-        // Añadir medias por rol a productividad usada
         JSONObject jsonProductivityUsedTimeByRole = new JSONObject();
         for (Map.Entry<String, Double> entry : solution.getAverageProductivityUsedTimePerRole().entrySet()) {
-        jsonProductivityUsedTimeByRole.put(entry.getKey(), entry.getValue());
+            jsonProductivityUsedTimeByRole.put(entry.getKey(), entry.getValue());
         }
         jsonProductivityUsedTime.put("By Role", jsonProductivityUsedTimeByRole);
-
-        // Añadir medias por rol a productividad de trabajo
         JSONObject jsonWorkProductivityByRole = new JSONObject();
         for (Map.Entry<String, Double> entry : solution.getAverageWorkProductivityPerRole().entrySet()) {
-        jsonWorkProductivityByRole.put(entry.getKey(), entry.getValue());
+            jsonWorkProductivityByRole.put(entry.getKey(), entry.getValue());
         }
         jsonWorkProductivity.put("By Role", jsonWorkProductivityByRole);
-
-        
-        // Finalmente, meterlos al global
         jsonGlobalIndicators.put("PRODUCTIVITY USED TIME VALUES", jsonProductivityUsedTime);
         jsonGlobalIndicators.put("WORK PRODUCTIVITY VALUES", jsonWorkProductivity);
-
         jsonGlobalIndicators.put("AGENTS with WORK - absolute", solution.getNumberOfAgentsWithWork());
         jsonGlobalIndicators.put("AGENTS with WORK - percentage", solution.getPercentageOfAgentsWithWork());
         return jsonSolution;

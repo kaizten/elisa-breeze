@@ -88,8 +88,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public List<Integer> getEmployeesByDate(LocalDate date) {
-        List<Integer> employees = new ArrayList<Integer>();
-        List<Integer> servicesByDate = this.optimizationProblem.getServicesByDate(date);
+        final List<Integer> employees = new ArrayList<>();
+        final List<Integer> servicesByDate = this.optimizationProblem.getServicesByDate(date);
         for (int s = 0; s < servicesByDate.size(); s++) {
             int service = servicesByDate.get(s);
             Integer[] employeesByService = this.assignedEmployees[service].stream().toArray(Integer[]::new);
@@ -192,14 +192,11 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         LocalDate date = this.optimizationProblem.getDate(service);
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         long assignedWorkingTime = 0;
-
         // Resetea las horas de trabajo a cero al inicio de un nuevo día
         if (this.hasAssignedServices(indexOfDate, employee)) {
             assignedWorkingTime = this.getUsedTime(indexOfDate, employee).toMinutes();
-
             OffsetDateTime employeeFinishingTime = this.getFinishingTime(indexOfDate, employee);
             OffsetDateTime lastServiceFinishingTime = super.getOptimizationProblem().getServiceFinishingTime(service);
-
             // Si el servicio termina después de la hora de finalización del empleado, se
             // acumula el tiempo adicional
             if (lastServiceFinishingTime.isAfter(employeeFinishingTime)) {
@@ -215,7 +212,6 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
                 }
             }
         }
-
         // Verifica que las horas trabajadas no excedan las disponibles para el empleado
         return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
     }
@@ -255,12 +251,12 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public boolean hasAssignedServices(LocalDate date, int employee) {
-        int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
-        return this.serviceAssignment[indexOfDate][employee].size() > 0;
+        final int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
+        return !this.serviceAssignment[indexOfDate][employee].isEmpty();
     }
 
     public boolean hasAssignedServices(int date, int employee) {
-        return this.serviceAssignment[date][employee].size() > 0;
+        return !this.serviceAssignment[date][employee].isEmpty();
     }
 
     public int getNumberOfAssignedEmployees(int service) {
@@ -268,7 +264,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public int getNumberOfAssignedServices(LocalDate date, int employee) {
-        int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
+        final int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         return this.getNumberOfAssignedServices(indexOfDate, employee);
     }
 
@@ -335,40 +331,42 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public double getProductivityWorkingTime(LocalDate date, int employee) {
-        return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes())
+        return ((double) this.getWorkingTime(date, employee) /
+                (double) this.getUsedTime(date, employee).toMinutes())
                 * 100.0;
     }
 
     public double getProductivityUsedTime(LocalDate date, int employee) {
-        return ((double) this.getWorkingTime(date, employee) / (double) this.getUsedTime(date, employee).toMinutes())
+        return ((double) this.getWorkingTime(date, employee) /
+                (double) this.getUsedTime(date, employee).toMinutes())
                 * 100.0;
     }
 
     public double getWorkProductivity(LocalDate date, int employee) {
         // Calcular tiempo de jornada total => en vez de getWorkingTime
-        return ((double) this.getWorkingTime(date, employee)
-                / (double) optimizationProblem.getEmployeeAvailableTimePerDay(employee)) * 100.0;
+        return ((double) this.getWorkingTime(date, employee) /
+                (double) optimizationProblem.getEmployeeAvailableTimePerDay(employee))
+                * 100.0;
     }
 
-    // cálculo de las distintas productividades medias: 
-    //_____________________________
+    // cálculo de las distintas productividades medias:
+    // _____________________________
 
     // media de work productivity TOTAL
     public double getAverageWorkProductivity() {
         double productivity = 0.0;
-        int numberOfProductivities = 0; 
+        int numberOfProductivities = 0;
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
-                productivity += this.getWorkProductivity(date, employee);
+                    productivity += this.getWorkProductivity(date, employee);
                 } else {
-                productivity += 0.0; // Si no tiene servicio, productividad = 0
+                    productivity += 0.0;
                 }
                 numberOfProductivities++;
             }
         }
-        
-        return productivity / numberOfProductivities; 
+        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
     }
 
     // media de productivity used time TOTAL
@@ -378,54 +376,56 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
-                productivity += this.getProductivityUsedTime(date, employee);
+                    productivity += this.getProductivityUsedTime(date, employee);
                 } else {
-                productivity += 0.0; // Si no tiene servicio, productividad = 0
+                    productivity += 0.0;
                 }
                 numberOfProductivities++;
-                
             }
         }
-        return productivity / numberOfProductivities;
+        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
     }
 
-
-    //funcion que calcule la productividad used time media de los empleados solo de servicios reales (que no empiecen por f-)
+    // funcion que calcule la productividad used time media de los empleados solo de
+    // servicios reales (que no empiecen por f-)
     public double getAverageProductivityUsedTimeRealServices() {
         double productivity = 0.0;
         int numberOfProductivities = 0;
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
-                    Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee);
+                    Set<Integer> assignedServices = this
+                            .getAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee);
                     for (int service : assignedServices) {
                         if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
                             productivity += this.getProductivityUsedTime(date, employee);
                         }
                         numberOfProductivities++;
-                    }  
+                    }
                 }
             }
         }
-        return productivity / numberOfProductivities;
+        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
     }
 
-    //funcion que calcule la work productividad media de los empleados solo de servicios reales (que no empiecen por f-)
+    // funcion que calcule la work productividad media de los empleados solo de
+    // servicios reales (que no empiecen por f-)
     public double getAverageWorkProductivityRealServices() {
         double productivity = 0.0;
         int numberOfProductivities = 0;
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
-                Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee);
-                    for (int service : assignedServices) {
-                        if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
-                            productivity += this.getWorkProductivity(date, employee);
-                        }
-                        numberOfProductivities++;
-                    }  
+                Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date),
+                        employee);
+                for (int service : assignedServices) {
+                    if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
+                        productivity += this.getWorkProductivity(date, employee);
+                    }
+                    numberOfProductivities++;
+                }
             }
         }
-        return productivity / numberOfProductivities;
+        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
     }
 
     // media de productivity used time por rol total
@@ -438,13 +438,12 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getProductivityUsedTime(date, employee);
-                    } else {
-                    productivity += 0.0; // Si no tiene servicio, productividad = 0
-                    }
-                    numberOfProductivities++;
-                
+                } else {
+                    productivity += 0.0;
+                }
+                numberOfProductivities++;
             }
-            productivityPerRole.put(role, productivity / numberOfProductivities);
+            productivityPerRole.put(role, numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities);
         }
         return productivityPerRole;
     }
@@ -459,16 +458,15 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getWorkProductivity(date, employee);
-                    } else {
+                } else {
                     productivity += 0.0; // Si no tiene servicio, productividad = 0
-                    }
-                    numberOfProductivities++;
+                }
+                numberOfProductivities++;
             }
-            productivityPerRole.put(role, productivity / numberOfProductivities);
+            productivityPerRole.put(role, numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities);
         }
         return productivityPerRole;
     }
-    
 
     // número de servicios reales
     public int getNumberOfRealServices() {
@@ -509,12 +507,12 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             if (this.optimizationProblem.getEmployeeRoles(employee).toString().equals("[AGENT]")) {
                 for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                     if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
-                            numberOfAgentsWithWork++;
-                            break; //pasamos al siguiente empleado porq ya sabemos que trabaja
-                        }
+                        numberOfAgentsWithWork++;
+                        break;
                     }
                 }
             }
+        }
         return numberOfAgentsWithWork;
     }
 
@@ -559,7 +557,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     }
 
     public int getBreakTime(LocalDate date, int employee) {
-        int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
+        final int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         return this.getBreakTime(indexOfDate, employee);
     }
 
@@ -617,29 +615,21 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return this.optimizationProblem.getNumberOfServices(date) - this.getNumberOfCoveredServices(date);
     }
 
-    /*
-     * public int getAvailableTime(LocalDate date, int employee) {
-     * int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
-     * return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) -
-     * this.getWorkingTime(indexOfDate, employee);
-     * }
-     */
     // que se considere por día
     // Método para calcular el tiempo disponible de un empleado en un día
     public int getAvailableTime(LocalDate date, int employee) {
         // Reinicia el tiempo disponible al principio de cada día
         int availableTime = super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee);
-
         // Aquí restas el tiempo ya trabajado en ese día
         if (this.hasAssignedServices(date, employee)) {
             availableTime -= this.getUsedTime(date, employee).toMinutes();
         }
-
         return availableTime;
     }
 
     public int getAvailableTime(int date, int employee) {
-        return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) - this.getWorkingTime(date, employee);
+        return this.optimizationProblem.getEmployeeAvailableTimePerDay(employee) -
+                this.getWorkingTime(date, employee);
     }
 
     public int getUsedEmployees() {
@@ -681,8 +671,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         long elapsedTime = Long.MAX_VALUE;
         if (indexOfDate > 0 && this.hasAssignedServices(indexOfDate, employee)) {
-            int firstService = this.getFirstAssignedService(indexOfDate, employee);
-            elapsedTime = this.getElapsedTimeFromPreviousDays(employee, firstService);
+            final int theFirstService = this.getFirstAssignedService(indexOfDate, employee);
+            elapsedTime = this.getElapsedTimeFromPreviousDays(employee, theFirstService);
         }
         return elapsedTime;
     }
@@ -717,12 +707,10 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         if (start.isAfter(serviceStartingTime)) {
             return false;
         }
-        if (serviceFinishingTime.isAfter(finish)) {
-            return false;
-        }
-        return true;
+        return !serviceFinishingTime.isAfter(finish);
     }
 
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         KaiztenFormatterTable tableServices = new KaiztenFormatterTable();
@@ -824,5 +812,4 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         return builder.toString();
     }
-
 }

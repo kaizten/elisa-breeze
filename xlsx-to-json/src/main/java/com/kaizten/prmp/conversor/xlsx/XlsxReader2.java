@@ -32,7 +32,7 @@ public class XlsxReader2 {
                 Row row = sheet.getRow(rowIndex);
                 for (int i = 0; i < days.length; i++) {
                     Cell salidaCell = row.getCell(8 * i);
-                    Cell llegadaCell = row.getCell(8 * i + 4); 
+                    Cell llegadaCell = row.getCell(8 * i + 4);
                     if (salidaCell != null && salidaCell.getCellType() == CellType.STRING) {
                         String salida = salidaCell.getStringCellValue().trim();
                         if (!salida.isEmpty() && salida.length() >= 5

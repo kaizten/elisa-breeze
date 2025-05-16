@@ -17,19 +17,16 @@ public class JsonSchemaEvaluator extends ProblemInstanceJsonValidator<PersonsRed
 
     @Override
     public ValidationErrors validate(File instanceFile) {
-        ValidationErrors errors = super.validate(instanceFile);
-        return errors;
+        return super.validate(instanceFile);
     }
 
     @Override
     public ValidationErrors validate(URI instanceURL) {
-        ValidationErrors errors = super.validate(instanceURL);
-        return errors;
+        return super.validate(instanceURL);
     }
 
     @Override
     public ValidationErrors validate(String instanceString) {
-        ValidationErrors errors = super.validate(instanceString);
-        return errors;
+        return super.validate(instanceString);
     }
 }

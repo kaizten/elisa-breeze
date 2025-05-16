@@ -21,10 +21,10 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <!-- Dependencies -->
-        <commons-io.version>2.15.1</commons-io.version>
-        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <commons-io.version>2.19.0</commons-io.version>
+        <commons-lang3.version>3.17.0</commons-lang3.version>
         <core.version>1.0-SNAPSHOT</core.version>
-        <jackson-core.version>2.16.1</jackson-core.version>
+        <jackson-core.version>2.19.0</jackson-core.version>
         <jcommander.version>2.0</jcommander.version>
         <slf4j.version>2.1.0-alpha1</slf4j.version>
         <!-- Plugins -->
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>com.kaizten</groupId>
             <artifactId>kaizten-utils</artifactId>
-             <version>1.0-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -148,8 +148,14 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
-            <plugin><groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId><version>3.10.1</version><configuration><release>21</release></configuration></plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <release>21</release>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

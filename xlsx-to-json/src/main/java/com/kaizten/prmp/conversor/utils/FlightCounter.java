@@ -3,7 +3,13 @@ package com.kaizten.prmp.conversor.utils;
 import java.util.List;
 import java.util.Map;
 
+import com.kaizten.utils.lang.KaiztenClass;
+
 public class FlightCounter {
+
+    private FlightCounter() {
+        throw new UnsupportedOperationException(KaiztenClass.ERROR_UTILITY_CLASS);
+    }
 
     public static int countTotalFlights(Map<String, Map<String, List<String>>> flights) {
         int totalFlights = 0;

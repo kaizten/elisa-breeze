@@ -1,6 +1,12 @@
 package com.kaizten.prmp.io;
 
+import com.kaizten.utils.lang.KaiztenClass;
+
 public class JsonConstants {
+
+    private JsonConstants() {
+        throw new UnsupportedOperationException(KaiztenClass.ERROR_UTILITY_CLASS);
+    }
 
     public static final String ABSOLUTE = "absolute";
     public static final String AIRPORT = "airport";
@@ -51,12 +57,7 @@ public class JsonConstants {
     public static final String UNCOVERED_SERVICES = "uncoveredServices";
     public static final String USED_TIME = "usedTime";
     public static final String WORKING_TIME = "workingTime";
-    // NEW
     public static final String WORK_PRODUCTIVITY = "workProductivity";
-    // public static final String AVERAGE_WORK_PRODUCTIVITY =
-    // "averageWorkProductivity";
-    // public static final String AVERAGE_PRODUCTIVITY_USED_TIME =
-    // "averageProductivityUsedTime";
     public static final String REALSERVICES = "realServices";
     public static final String FAKESERVICES = "fakeServices";
 }
