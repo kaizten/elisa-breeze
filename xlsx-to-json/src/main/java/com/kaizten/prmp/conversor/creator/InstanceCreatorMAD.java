@@ -988,14 +988,12 @@ public class InstanceCreatorMAD {
                 optimizationProblem.setServiceRole(i, service.getRole());
                 optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
             }
-
             // creo x empleados nuevos, rol AGENTE
             // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
             for (int i = 0; i < numberOfEmployees - 92; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-
             // Empleados añadidos
             // TOTAl: 80+6+3+3 = 92
             // TOTAL TOTAL: 510
@@ -1014,9 +1012,7 @@ public class InstanceCreatorMAD {
                 optimizationProblem.addEmployeeRoles(i, Role.RAMP_MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
-
             optimizationProblem.computeEmployeesAvailability(List.of());
-
             // guardar el problema en un archivo json
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
