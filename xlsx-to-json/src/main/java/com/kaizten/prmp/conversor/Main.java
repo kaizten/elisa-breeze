@@ -23,6 +23,8 @@ public class Main {
         final int instanceNumber = Integer.parseInt(args[2]);
         final String FILEPATH = args[3];
         final String INSTANCE_DIRECTORY = args[4];
+        final int hoursPerDay = Integer.parseInt(args[5]);
+
         final File xlsFile = new File(FILEPATH);
         final Map<String, Map<String, List<String>>> flights;
         if (airport.equals("MAD")) {
@@ -64,7 +66,7 @@ public class Main {
             creator.createInstance(
                     selectedFlights,
                     airport,
-                    numberOfDays, maxOverlaps, percentage, INSTANCE_DIRECTORY);
+                    numberOfDays, maxOverlaps, percentage, INSTANCE_DIRECTORY, hoursPerDay);
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.kaizten.prmp.solver.solver;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,6 +8,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
@@ -53,9 +52,8 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     boolean startTime = true;
                     if (employeeStartTime.isPresent()) {
                         // si el servicio empieza antes de la hora de inicio del empleado, o si empieza
-                        // después de 8 horas de su hora de inicio, se pasa a false
                         if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())
-                                || serviceStartingTime.toLocalTime().isAfter(employeeStartTime.get().plusHours(8))) {
+                                || serviceStartingTime.toLocalTime().isAfter(employeeStartTime.get().plusHours(this.optimizationProblem.getEmployeeTimePerDay(employee)))) {
                             startTime = false;
                         }
                     }
@@ -63,7 +61,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     boolean finishTime = true;
                     if (employeeFinishTime.isPresent()) {
                         if (serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get()) ||
-                                serviceFinishingTime.toLocalTime().isBefore(employeeFinishTime.get().minusHours(8))) {
+                                serviceFinishingTime.toLocalTime().isBefore(employeeFinishTime.get().minusHours(this.optimizationProblem.getEmployeeTimePerDay(employee)))) {
                             finishTime = false;
                         }
                     }
@@ -90,14 +88,14 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                                                                                         // => le ponemos start (empleado
                                                                                         // finish -8)
                     LocalDateTime jornadaFinishTime = serviceFinishDate.atTime(employeeFinishTime.get());
-                    LocalDateTime jornadaStartTime = jornadaFinishTime.minusHours(8);
+                    LocalDateTime jornadaStartTime = jornadaFinishTime.minusHours(this.optimizationProblem.getEmployeeTimePerDay(selectedEmployee));
                     this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
                 }
                 if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()) { // hay start pero no finish =>
                                                                                         // le ponemos finish (empleado
                                                                                         // start +8)
                     LocalDateTime jornadaStartTime = serviceStartingDate.atTime(employeeStartTime.get());
-                    LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(8);
+                    LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(this.optimizationProblem.getEmployeeTimePerDay(selectedEmployee));
                     this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
                 }
 
@@ -109,7 +107,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                                                                                                   // segundos para que
                                                                                                   // el error de
                                                                                                   // decimales sea menor
-                    long timeLeftAroundService = (28800 - serviceDuration) / 2;
+                    long timeLeftAroundService = (this.optimizationProblem.getEmployeeMinutesPerDay(selectedEmployee)*60 - serviceDuration) / 2;
                     LocalDateTime jornadaStartTime = serviceStartingDate
                             .atTime(serviceStartingTime.toLocalTime().minusSeconds(timeLeftAroundService));
                     LocalDateTime jornadaFinishTime = serviceFinishDate

@@ -26,7 +26,7 @@ public class InstanceCreatorMAD {
             int numberOfDays,
             int maxOverlaps,
             double percentage,
-            String INSTANCEDIRECTORY) throws Exception {
+            String INSTANCEDIRECTORY, int hoursPerDay) throws Exception {
         for (int agents = 1; agents <= 500; agents++) {
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
             int numberOfManagers = 3;
@@ -993,6 +993,7 @@ public class InstanceCreatorMAD {
             for (int i = 0; i < numberOfEmployees - 92; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, java.time.Duration.ofHours(hoursPerDay));
             }
             // Empleados añadidos
             // TOTAl: 80+6+3+3 = 92
@@ -1017,7 +1018,7 @@ public class InstanceCreatorMAD {
             PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             JSONObject json = toJson.apply(optimizationProblem);
             KaiztenFile.writeToFile(
-                    new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"),
+                    new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + "-hours"+ hoursPerDay + ".json"),
                     json);
         }
     }
