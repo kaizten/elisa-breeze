@@ -1,6 +1,13 @@
 package com.kaizten.prmp.conversor.creator;
 
+import com.kaizten.prmp.domain.Service;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
+import com.kaizten.utils.io.KaiztenFile;
+
 import java.io.File;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,12 +19,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.kaizten.prmp.domain.Service;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-
 public class InstanceCreatorMAD {
 
     public void createInstance(
@@ -26,21 +27,25 @@ public class InstanceCreatorMAD {
             int numberOfDays,
             int maxOverlaps,
             double percentage,
-            String INSTANCEDIRECTORY, int hoursPerDay) throws Exception {
+            String INSTANCEDIRECTORY,
+            int hoursPerDay) throws Exception {
         for (int agents = 1; agents <= 500; agents++) {
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
-            int numberOfManagers = 3;
-            int numberOfDrivers = 6;
-            int numberOfRampManagers = 3;
+            final int numberOfManagers = 3;
+            final int numberOfDrivers = 6;
+            final int numberOfRampManagers = 3;
             // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados
             // => día en el que más se necesitan
             // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51 por día => para que
             // sobre, asignamos 80
-            int numberOfExtraEmployees = 80; //
+            final int numberOfExtraEmployees = 80; //
             // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
             // selectedFlights.size() / (7*5)), maxOverlaps);
-            int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfRampManagers
-                    + numberOfExtraEmployees;
+            final int numberOfEmployees = agents +
+                    numberOfManagers +
+                    numberOfDrivers +
+                    numberOfRampManagers +
+                    numberOfExtraEmployees;
             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                     numberOfServices,
                     numberOfEmployees);
@@ -963,7 +968,6 @@ public class InstanceCreatorMAD {
                 // System.out.println("OffsetDateTime: " + flightTime);
                 OffsetDateTime serviceStartingTime;
                 OffsetDateTime serviceFinishingTime;
-
                 if ("Salidas".equals(flightInfo[1].trim())) { // mira si es salida
                     serviceStartingTime = flightTime.minusHours(1); // 1 hora antes de la salida
                     serviceFinishingTime = flightTime.plusMinutes(10); // 10 minutos después de la salida
@@ -979,7 +983,6 @@ public class InstanceCreatorMAD {
                 newService.setRole(Role.AGENT);
                 listOfServices.add(newService);
             }
-
             Collections.sort(listOfServices);
             for (int i = 0; i < listOfServices.size(); i++) {
                 Service service = listOfServices.get(i);
@@ -993,7 +996,7 @@ public class InstanceCreatorMAD {
             for (int i = 0; i < numberOfEmployees - 92; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
-                optimizationProblem.setEmployeeTimePerDay(i, java.time.Duration.ofHours(hoursPerDay));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(hoursPerDay));
             }
             // Empleados añadidos
             // TOTAl: 80+6+3+3 = 92
@@ -1015,10 +1018,11 @@ public class InstanceCreatorMAD {
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
             // guardar el problema en un archivo json
-            PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-            JSONObject json = toJson.apply(optimizationProblem);
+            final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
+            final JSONObject json = toJson.apply(optimizationProblem);
+            final String instanceName = airport + "-" + percentage + "-agents" + agents + "-hours" + hoursPerDay;
             KaiztenFile.writeToFile(
-                    new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + "-hours"+ hoursPerDay + ".json"),
+                    new File(instanceName),
                     json);
         }
     }

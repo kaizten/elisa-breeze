@@ -129,7 +129,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public int getEmployeeAvailableTimePerDay(int index) {
-        return this.getEmployeeTimePerDay(index) * 60; // para devolverlo en minutos
+        return this.getEmployeeTimePerDay(index);
     }
 
     public int getIndexOfFirstServiceInDate(LocalDate date) {
@@ -145,7 +145,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public int getIndexOfDate(LocalDate date) {
-        List<LocalDate> datesOfServices = this.getDatesOfServices();
+        final List<LocalDate> datesOfServices = this.getDatesOfServices();
         for (int i = 0; i < datesOfServices.size(); i++) {
             if (datesOfServices.get(i).equals(date)) {
                 return i;
@@ -341,8 +341,8 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
         this.employeeCode[employeeIndex] = code;
     }
 
-    public void setEmployeeTimePerDay(int index, Duration minutes) {
-        this.employeeTimePerDay[index] = (int) minutes.toMinutes();
+    public void setEmployeeTimePerDay(int index, Duration timePerDay) {
+        this.employeeTimePerDay[index] = (int) timePerDay.toMinutes();
     }
 
     public void setEmployeeStartTime(int index, LocalTime time) {

@@ -24,7 +24,6 @@ public class Main {
         final String FILEPATH = args[3];
         final String INSTANCE_DIRECTORY = args[4];
         final int hoursPerDay = Integer.parseInt(args[5]);
-
         final File xlsFile = new File(FILEPATH);
         final Map<String, Map<String, List<String>>> flights;
         if (airport.equals("MAD")) {

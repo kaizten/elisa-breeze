@@ -1,5 +1,11 @@
 package com.kaizten.prmp.conversor.creator;
 
+import com.kaizten.prmp.domain.Service;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
+import com.kaizten.utils.io.KaiztenFile;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,12 +18,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.kaizten.prmp.domain.Service;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-
 public class InstanceCreatorSPC {
 
     public void createInstance( // TODO bucle y en cada uno sumarle un empleado hasta 30, y devolver lista de
@@ -25,7 +25,10 @@ public class InstanceCreatorSPC {
                                 // el nombre
             List<String> selectedFlights,
             String airport,
-            int numberOfDays, int maxOverlaps, double percentage, String INSTANCEDIRECTORY) throws Exception {
+            int numberOfDays,
+            int maxOverlaps,
+            double percentage,
+            String INSTANCEDIRECTORY) throws Exception {
         for (int agents = 1; agents <= 30; agents++) { // 30 intancias => agentes de 1 a 30
             final int numberOfServices = selectedFlights.size() + 4 * numberOfDays; // añado 4*dias de servicio por los
                                                                                     // servicios adicionales
@@ -137,8 +140,9 @@ public class InstanceCreatorSPC {
             optimizationProblem.computeEmployeesAvailability(List.of());
             final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             final JSONObject json = toJson.apply(optimizationProblem);
+            final String fileName = airport + "-" + percentage + "-agents" + agents + ".json";
             KaiztenFile.writeToFile(
-                    new File(INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json"), 
+                    new File(fileName),
                     json);
         }
     }
