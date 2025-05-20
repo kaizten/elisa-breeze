@@ -1,5 +1,4 @@
 Instance	Number-of-Services	Real-Services	Fake-Services	Number-of-Employees	Total-Agents	Total-Drivers	Total-Managers	Total-RampManagers	Algorithm	Productivity-UT	Real-Productivity-UT	P.UT-Agent	P.UT-Driver	P.UT-RampManager	P.UT-Manager	Work-Productivity	Real-Work-Productivity	WP-Agent	WP-Driver	WP-RampManager	WP-Manager	Execution-Time(ms)	Covered-Services(%)	Covered-Services
-MAD-0.2-agents390-hours4.json	1775	1584	191	482	390	390	100,000	54	19	19	referenceSolver	12,500	80,913	12,500	12,500	12,500	12,500	4,295	23,600	3,646	1,563	3,125	3,125	2853,999	24,000	426
 MAD-0.2-agents390-hours4.json	1775	1584	191	482	390	390	100,000	54	19	19	referenceSolver	12,500	80,913	12,500	12,500	12,500	12,500	4,295	23,600	3,646	3,125	12,500	3,125	2285,912	24,000	426
 MAD-0.2-agents390-hours4.json	1775	1584	191	482	390	386	98,974	54	19	19	randomSolver	50,395	73,208	75,000	87,500	87,500	62,500	20,335	25,155	21,875	57,813	76,563	43,750	15456,979	100,000	1775
 MAD-0.2-agents164-hours6.json	1775	1584	191	256	164	164	100,000	54	19	19	referenceSolver	12,500	64,063	12,500	12,500	12,500	12,500	4,090	12,457	2,431	1,563	12,500	12,500	994,559	11,268	200

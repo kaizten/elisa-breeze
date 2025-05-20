@@ -153,27 +153,27 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         for (Map.Entry<String, Integer> entry : solution.getNumberOfEmployeesPerRole().entrySet()) {
             jsonRoleCount.put(entry.getKey(), entry.getValue());
         }
-        jsonGlobalIndicators.put("EMPLOYEES BY ROLE", jsonRoleCount);
+        jsonGlobalIndicators.put(JsonConstants.EMPLOYEES_BY_ROLE, jsonRoleCount);
         JSONObject jsonProductivityUsedTime = new JSONObject();
-        jsonProductivityUsedTime.put("Global", solution.getAverageProductivityUsedTime());
-        jsonProductivityUsedTime.put("Real Services", solution.getAverageProductivityUsedTimeRealServices());
+        jsonProductivityUsedTime.put(JsonConstants.GLOBAL, solution.getAverageProductivityUsedTime());
+        jsonProductivityUsedTime.put(JsonConstants.REAL_SERVICES, solution.getAverageProductivityUsedTimeRealServices());
         JSONObject jsonWorkProductivity = new JSONObject();
-        jsonWorkProductivity.put("Global", solution.getAverageWorkProductivity());
-        jsonWorkProductivity.put("Real Services", solution.getAverageWorkProductivityRealServices());
+        jsonWorkProductivity.put(JsonConstants.GLOBAL, solution.getAverageWorkProductivity());
+        jsonWorkProductivity.put(JsonConstants.REAL_SERVICES, solution.getAverageWorkProductivityRealServices());
         JSONObject jsonProductivityUsedTimeByRole = new JSONObject();
         for (Map.Entry<String, Double> entry : solution.getAverageProductivityUsedTimePerRole().entrySet()) {
             jsonProductivityUsedTimeByRole.put(entry.getKey(), entry.getValue());
         }
-        jsonProductivityUsedTime.put("By Role", jsonProductivityUsedTimeByRole);
+        jsonProductivityUsedTime.put(JsonConstants.BY_ROLE, jsonProductivityUsedTimeByRole);
         JSONObject jsonWorkProductivityByRole = new JSONObject();
         for (Map.Entry<String, Double> entry : solution.getAverageWorkProductivityPerRole().entrySet()) {
             jsonWorkProductivityByRole.put(entry.getKey(), entry.getValue());
         }
-        jsonWorkProductivity.put("By Role", jsonWorkProductivityByRole);
-        jsonGlobalIndicators.put("PRODUCTIVITY USED TIME VALUES", jsonProductivityUsedTime);
-        jsonGlobalIndicators.put("WORK PRODUCTIVITY VALUES", jsonWorkProductivity);
-        jsonGlobalIndicators.put("AGENTS with WORK - absolute", solution.getNumberOfAgentsWithWork());
-        jsonGlobalIndicators.put("AGENTS with WORK - percentage", solution.getPercentageOfAgentsWithWork());
+        jsonWorkProductivity.put(JsonConstants.BY_ROLE, jsonWorkProductivityByRole);
+        jsonGlobalIndicators.put(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES, jsonProductivityUsedTime);
+        jsonGlobalIndicators.put(JsonConstants.WORK_PRODUCTIVITY_VALUES, jsonWorkProductivity);
+        jsonGlobalIndicators.put(JsonConstants.AGENTS_WITH_WORK, solution.getNumberOfAgentsWithWork());
+        jsonGlobalIndicators.put(JsonConstants.AGENTS_WITH_WORK_PERCENTAGE, solution.getPercentageOfAgentsWithWork());
         return jsonSolution;
     }
 }

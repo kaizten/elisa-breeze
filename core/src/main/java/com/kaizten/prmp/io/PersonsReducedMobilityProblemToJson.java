@@ -36,7 +36,7 @@ public class PersonsReducedMobilityProblemToJson implements Function<PersonsRedu
             JSONObject jsonIndividual = new JSONObject();
             jsonIndividual.put(JsonConstants.CODE, optimizationProblem.getEmployeeCode(i));
             jsonIndividual.put(JsonConstants.TIME_PER_DAY,
-                    Duration.ofMinutes(optimizationProblem.getEmployeeHoursPerDay(i)));
+                    Duration.ofHours(optimizationProblem.getEmployeeHoursPerDay(i)));
             jsonIndividual.put(JsonConstants.TIME_PER_WEEK,
                     Duration.ofMinutes(optimizationProblem.getEmployeeTimePerWeek(i)));
             jsonIndividual.put(JsonConstants.TIME_BETWEEN_WORKING_DAYS,

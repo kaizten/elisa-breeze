@@ -60,4 +60,12 @@ public class JsonConstants {
     public static final String WORK_PRODUCTIVITY = "workProductivity";
     public static final String REALSERVICES = "realServices";
     public static final String FAKESERVICES = "fakeServices";
+    public static final String EMPLOYEES_BY_ROLE = "employeesByRole";
+    public static final String GLOBAL = "global";
+    public static final String REAL_SERVICES = "realServices";
+    public static final String BY_ROLE = "byRole";
+    public static final String PRODUCTIVITY_USED_TIME_VALUES = "productivityUsedTimeValues";
+    public static final String WORK_PRODUCTIVITY_VALUES = "workProductivityValues";
+    public static final String AGENTS_WITH_WORK = "agentsWithWork";
+    public static final String AGENTS_WITH_WORK_PERCENTAGE = "agentsWithWorkPercentage";
 }

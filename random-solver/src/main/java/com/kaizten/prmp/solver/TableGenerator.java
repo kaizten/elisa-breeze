@@ -15,7 +15,7 @@ public class TableGenerator {
     //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
     //Analysis: 
     private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionDatAnalysis.txt";
-    
+
     //private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
 
     public static void saveExecutionDataToTable(
@@ -28,26 +28,26 @@ public class TableGenerator {
                 
         // Obtener los datos de la solución
         double averageProductivityUsedTime = solution.getJSONObject("indicators")
-                .getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Global");
+                .getJSONObject("productivityUsedTimeValues").getDouble("global");
         double averageWorkProductivity = solution.getJSONObject("indicators")
-                .getJSONObject("WORK PRODUCTIVITY VALUES").getDouble("Global");
+                .getJSONObject("workProductivityValues").getDouble("global");
         double averageRealProductivityUsedTime = solution.getJSONObject("indicators")
-                .getJSONObject("PRODUCTIVITY USED TIME VALUES").getDouble("Real Services");
+                .getJSONObject("productivityUsedTimeValues").getDouble("realServices");
         double averageRealWorkProductivity = solution.getJSONObject("indicators")
-                .getJSONObject("WORK PRODUCTIVITY VALUES").getDouble("Real Services");
+                .getJSONObject("workProductivityValues").getDouble("realServices");
 
         JSONObject productivitiesUT = solution.getJSONObject("indicators")
-                .getJSONObject("PRODUCTIVITY USED TIME VALUES");
-        double putAgent = productivitiesUT.getJSONObject("By Role").optDouble("[AGENT]", 0);
-        double putDriver = productivitiesUT.getJSONObject("By Role").optDouble("[DRIVER]", 0);
-        double putRampManager = productivitiesUT.getJSONObject("By Role").optDouble("[RAMP_MANAGER]", 0);
-        double putManager = productivitiesUT.getJSONObject("By Role").optDouble("[MANAGER]", 0);
+                .getJSONObject("productivityUsedTimeValues");
+        double putAgent = productivitiesUT.getJSONObject("byRole").optDouble("[AGENT]", 0);
+        double putDriver = productivitiesUT.getJSONObject("byRole").optDouble("[DRIVER]", 0);
+        double putRampManager = productivitiesUT.getJSONObject("byRole").optDouble("[RAMP_MANAGER]", 0);
+        double putManager = productivitiesUT.getJSONObject("byRole").optDouble("[MANAGER]", 0);
 
-        JSONObject productivitiesW = solution.getJSONObject("indicators").getJSONObject("WORK PRODUCTIVITY VALUES");
-        double wpAgent = productivitiesW.getJSONObject("By Role").optDouble("[AGENT]", 0);
-        double wpDriver = productivitiesW.getJSONObject("By Role").optDouble("[DRIVER]", 0);
-        double wpRampManager = productivitiesW.getJSONObject("By Role").optDouble("[RAMP_MANAGER]", 0);
-        double wpManager = productivitiesW.getJSONObject("By Role").optDouble("[MANAGER]", 0);
+        JSONObject productivitiesW = solution.getJSONObject("indicators").getJSONObject("workProductivityValues");
+        double wpAgent = productivitiesW.getJSONObject("byRole").optDouble("[AGENT]", 0);
+        double wpDriver = productivitiesW.getJSONObject("byRole").optDouble("[DRIVER]", 0);
+        double wpRampManager = productivitiesW.getJSONObject("byRole").optDouble("[RAMP_MANAGER]", 0);
+        double wpManager = productivitiesW.getJSONObject("byRole").optDouble("[MANAGER]", 0);
 
         double coveredServicesPercentage = solution.getJSONObject("indicators").getJSONObject("coveredServices")
                 .getDouble("percentage");
@@ -57,11 +57,11 @@ public class TableGenerator {
         int numberEmployees = solution.getJSONObject("indicators").getInt("employees");
         int fakeServices = solution.getJSONObject("indicators").getInt("fakeServices");
         int realServices = solution.getJSONObject("indicators").getInt("realServices");
-        int workingAgents = solution.getJSONObject("indicators").getInt("AGENTS with WORK - absolute");
+        int workingAgents = solution.getJSONObject("indicators").getInt("agentsWithWork");
         double workingAgentsPercentage = solution.getJSONObject("indicators")
-                .getDouble("AGENTS with WORK - percentage");
+                .getDouble("agentsWithWorkPercentage");
 
-        JSONObject employeesByRole = solution.getJSONObject("indicators").getJSONObject("EMPLOYEES BY ROLE");
+        JSONObject employeesByRole = solution.getJSONObject("indicators").getJSONObject("employeesByRole");
         int totalAgents = employeesByRole.optInt("[AGENT]", 0);
         int totalDrivers = employeesByRole.optInt("[DRIVER]", 0);
         int totalManagers = employeesByRole.optInt("[MANAGER]", 0);
