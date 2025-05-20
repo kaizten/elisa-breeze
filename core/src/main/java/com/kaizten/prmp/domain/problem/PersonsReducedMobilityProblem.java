@@ -129,7 +129,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public int getEmployeeAvailableTimePerDay(int index) {
-        return this.getEmployeeTimePerDay(index) * 60; // para devolverlo en minutos
+        return this.getEmployeeTimePerDay(index);
     }
 
     public int getIndexOfFirstServiceInDate(LocalDate date) {
