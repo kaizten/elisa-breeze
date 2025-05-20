@@ -341,8 +341,8 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
         this.employeeCode[employeeIndex] = code;
     }
 
-    public void setEmployeeTimePerDay(int index, Duration minutes) {
-        this.employeeTimePerDay[index] = (int) minutes.toMinutes();
+    public void setEmployeeTimePerDay(int index, Duration timePerDay) {
+        this.employeeTimePerDay[index] = (int) timePerDay.toMinutes();
     }
 
     public void setEmployeeStartTime(int index, LocalTime time) {
