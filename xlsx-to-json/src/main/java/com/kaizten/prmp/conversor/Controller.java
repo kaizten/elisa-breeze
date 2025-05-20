@@ -19,7 +19,7 @@ public class Controller {
                 for (int hours : hoursPerDay) {
                     // for (int instanceNumber = 0; instanceNumber < numberOfInstances;
                     // instanceNumber++) {
-                    String[] parameters = {
+                    final String[] parameters = {
                             String.valueOf(percentage),
                             airport,
                             // String.valueOf(instanceNumber),
