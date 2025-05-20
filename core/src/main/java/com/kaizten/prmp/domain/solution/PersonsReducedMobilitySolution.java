@@ -516,7 +516,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return numberOfAgentsWithWork;
     }
 
-    public int getNumberOfAgents(){
+    public int getNumberOfAgents() {
         int numberOfAgents = 0;
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             if (this.optimizationProblem.getEmployeeRoles(employee).toString().equals("[AGENT]")) {
@@ -533,9 +533,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return (((double) agentsWithWork / totalAgents) * 100.0);
     }
 
-
-    //_____________________________
-
+    // _____________________________
 
     public int getWorkingTime(LocalDate date, int employee) {
         final int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
