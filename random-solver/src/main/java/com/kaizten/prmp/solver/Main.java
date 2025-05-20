@@ -25,17 +25,13 @@ import com.kaizten.utils.net.KaiztenURI;
 public class Main {
 
     //ELISA:
-    //private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/";
-    //private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/";
+    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportInstances/";
+    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportInstanceSolutions/";
     
     //CHRISTOPHER: 
     //private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
     //private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions";
     
-    //Analysis: 
-    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/airportAnalysisInstances/";
-    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/airportAnalysisSolutions/";
-
     public static void solveInstance(File instance, String algorithm)
             throws JsonProcessingException, IOException, URISyntaxException {
         if (!instance.exists()) {
@@ -45,6 +41,7 @@ public class Main {
         final String instanceName = instance.getName();
         final String solutionName = instanceName.replace(".json", "_" + algorithm + ".json");
         File solutionFile = new File(SOLUTION_FOLDER + solutionName);
+        //TODO: añadir que no se tengan en cuenta las variables de análisis por horas de trabajo cuando ejecute el general.
         if (solutionFile.exists()) {
             System.out.println("La solución ya existe: " + solutionFile.getAbsolutePath());
             return;

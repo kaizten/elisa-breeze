@@ -1,9 +1,0 @@
-{
-    "employees": [
-    { "name": "John", "age": 30, "department": "Sales" },
-    { "name": "Jane", "age": 25, "department": "Marketing" },
-    { "name": "Doe", "age": 40, "department": "Development" }
-    ]
-    }
-
-    
