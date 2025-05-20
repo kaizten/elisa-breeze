@@ -140,7 +140,7 @@ public class InstanceCreatorSPC {
             optimizationProblem.computeEmployeesAvailability(List.of());
             final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             final JSONObject json = toJson.apply(optimizationProblem);
-            final String fileName = airport + "-" + percentage + "-agents" + agents + ".json";
+            final String fileName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
             KaiztenFile.writeToFile(
                     new File(fileName),
                     json);
