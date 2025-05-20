@@ -1020,7 +1020,7 @@ public class InstanceCreatorMAD {
             // guardar el problema en un archivo json
             final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
             final JSONObject json = toJson.apply(optimizationProblem);
-            final String instanceName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + "-hours" + hoursPerDay + ".json";
+            final String instanceName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
             KaiztenFile.writeToFile(
                     new File(instanceName),
                     json);
