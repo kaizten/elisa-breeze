@@ -145,7 +145,7 @@ public class PersonsReducedMobilityProblem extends OptimizationProblem {
     }
 
     public int getIndexOfDate(LocalDate date) {
-        List<LocalDate> datesOfServices = this.getDatesOfServices();
+        final List<LocalDate> datesOfServices = this.getDatesOfServices();
         for (int i = 0; i < datesOfServices.size(); i++) {
             if (datesOfServices.get(i).equals(date)) {
                 return i;

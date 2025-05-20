@@ -1,5 +1,9 @@
 package com.kaizten.prmp.io;
 
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.utils.json.KaiztenJsonSchema;
+
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
@@ -7,10 +11,6 @@ import java.util.function.Function;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.utils.json.KaiztenJsonSchema;
 
 public class PersonsReducedMobilityProblemToJson implements Function<PersonsReducedMobilityProblem, JSONObject> {
 
