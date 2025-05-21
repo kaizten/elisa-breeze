@@ -75,7 +75,7 @@ public class Main {
                         maxOverlaps,
                         percentage,
                         INSTANCE_DIRECTORY,
-                        agents, 
+                        agents,
                         timePerDay);
                 Main.saveInstance(
                         optimizationProblem,
@@ -116,7 +116,7 @@ public class Main {
                         maxOverlaps,
                         percentage,
                         INSTANCE_DIRECTORY,
-                        agents, 
+                        agents,
                         timePerDay);
                 Main.saveInstance(
                         optimizationProblem,
