@@ -25,17 +25,14 @@ import com.kaizten.utils.net.KaiztenURI;
 public class Main {
 
     // ELISA:
-    // private static final String INSTANCE_FOLDER_URI =
-    // "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instances/";
-    // private static final String SOLUTION_FOLDER =
-    // "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/";
-    // private static final String FILETOSAVE =
-    // "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
+    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instances/";
+    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/";
+    private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
 
     // CHRISTOPHER:
-    private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
-    private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions/";
-    private static final String FILETOSAVE = "/home/christopher/kaizten/internship/elisa-breeze/data/executionData.txt";
+    //private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
+    //private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions/";
+    //private static final String FILETOSAVE = "/home/christopher/kaizten/internship/elisa-breeze/data/executionData.txt";
 
     public static void solveInstance(
             File instance,
@@ -48,8 +45,6 @@ public class Main {
         final String instanceName = instance.getName();
         final String solutionName = instanceName.replace(".json", "_" + algorithm + ".json");
         File solutionFile = new File(SOLUTION_FOLDER + solutionName);
-        // TODO: añadir que no se tengan en cuenta las variables de análisis por horas
-        // de trabajo cuando ejecute el general.
         if (solutionFile.exists()) {
             System.out.println("La solución ya existe: " + solutionFile.getAbsolutePath());
             return;

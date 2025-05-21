@@ -3,10 +3,7 @@ package com.kaizten.prmp.conversor.creator;
 import com.kaizten.prmp.domain.Service;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
 
-import java.io.File;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,30 +14,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONObject;
-
 public class InstanceCreatorMAD {
 
-    public void createInstance(
+    public PersonsReducedMobilityProblem createInstance(
             List<String> selectedFlights,
             String airport,
             int numberOfDays,
             int maxOverlaps,
             double percentage,
             String INSTANCEDIRECTORY,
-            int hoursPerDay) throws Exception {
-        for (int agents = 1; agents <= 500; agents++) {
+            int timePerDay,
+            int agents) throws Exception {
+
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
             final int numberOfManagers = 3;
             final int numberOfDrivers = 6;
             final int numberOfRampManagers = 3;
-            // extra employees: lunes es dia con mas vuelos. de 0-6 se necesitan 9 empleados
-            // => día en el que más se necesitan
-            // y de 6 a 00 se necesitan 14 cada 8h => 9+14+14+14 = 51 por día => para que
-            // sobre, asignamos 80
-            final int numberOfExtraEmployees = 80; //
-            // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
-            // selectedFlights.size() / (7*5)), maxOverlaps);
+            final int numberOfExtraEmployees = 80; 
+
             final int numberOfEmployees = agents +
                     numberOfManagers +
                     numberOfDrivers +
@@ -53,14 +44,12 @@ public class InstanceCreatorMAD {
             // crear las fechas y hora de inicio y fin de los servicios
             final List<Service> listOfServices = new ArrayList<>();
             // Añado servicios base las 24h los 7 dias:
-            final Role[] roles = { Role.DRIVER, Role.DRIVER, Role.RAMP_MANAGER, Role.MANAGER }; // BASE: 2 driver, 1
-                                                                                                // manager,
-            // 1 ramp manager
-            // iterar a lo largo de los días
+            final Role[] roles = { Role.DRIVER, Role.DRIVER, Role.RAMP_MANAGER, Role.MANAGER }; // BASE: 2 driver, 1 manager, 1 ramp manager
+            // iterar a lo largo de los días, 3 turnos de 8h
             int code = 0;
             for (int i = 0; i < numberOfDays; i++) {
                 LocalDate date = LocalDate.of(2024, 2, 5).plusDays(i);
-                for (int shift = 0; shift < 3; shift++) { // turnos por día (3 porq son de 8h)
+                for (int shift = 0; shift < 3; shift++) { 
                     int start = (shift * 8) % 24;
                     int finish = (start + 8) % 24;
                     OffsetDateTime startingTime = date.atTime(start, 0).atOffset(ZoneOffset.UTC);
@@ -953,10 +942,7 @@ public class InstanceCreatorMAD {
 
             for (int i = 0; i < selectedFlights.size(); i++) {
                 code++;
-                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] =>
-                                                                         // hora
-                // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
-                // " + flightInfo[2]);
+                String[] flightInfo = selectedFlights.get(i).split("/"); 
                 String time = flightInfo[2].trim();
                 LocalDate localDate = LocalDate.parse(flightInfo[0].trim()); // fecha
                 LocalTime localTime = LocalTime.parse(time); // hora
@@ -964,8 +950,6 @@ public class InstanceCreatorMAD {
                 LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
                 // Crear el OffsetDateTime usando UTC
                 OffsetDateTime flightTime = localDateTime.atOffset(ZoneOffset.UTC);
-                // Ahora, offsetDateTime contiene la fecha y hora con el Offset UTC
-                // System.out.println("OffsetDateTime: " + flightTime);
                 OffsetDateTime serviceStartingTime;
                 OffsetDateTime serviceFinishingTime;
                 if ("Salidas".equals(flightInfo[1].trim())) { // mira si es salida
@@ -992,11 +976,10 @@ public class InstanceCreatorMAD {
                 optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
             }
             // creo x empleados nuevos, rol AGENTE
-            // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
             for (int i = 0; i < numberOfEmployees - 92; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
-                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(hoursPerDay));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(timePerDay));
             }
             // Empleados añadidos
             // TOTAl: 80+6+3+3 = 92
@@ -1017,13 +1000,6 @@ public class InstanceCreatorMAD {
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
-            // guardar el problema en un archivo json
-            final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-            final JSONObject json = toJson.apply(optimizationProblem);
-            final String instanceName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
-            KaiztenFile.writeToFile(
-                    new File(instanceName),
-                    json);
-        }
+            return optimizationProblem; 
     }
 }

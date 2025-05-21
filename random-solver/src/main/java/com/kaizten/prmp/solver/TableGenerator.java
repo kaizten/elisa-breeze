@@ -8,6 +8,8 @@ import java.io.IOException;
 import org.json.JSONObject;
 
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.io.JsonConstants;
+
 
 public class TableGenerator {
 
@@ -20,53 +22,55 @@ public class TableGenerator {
             String algorithm,
             Object[] dates) throws IOException {
         // Obtener los datos de la solución
-        double averageProductivityUsedTime = solution.getJSONObject("indicators")
-                .getJSONObject("productivityUsedTimeValues").getDouble("global");
-        double averageWorkProductivity = solution.getJSONObject("indicators")
-                .getJSONObject("workProductivityValues").getDouble("global");
-        double averageRealProductivityUsedTime = solution.getJSONObject("indicators")
-                .getJSONObject("productivityUsedTimeValues").getDouble("realServices");
-        double averageRealWorkProductivity = solution.getJSONObject("indicators")
-                .getJSONObject("workProductivityValues").getDouble("realServices");
+        double averageProductivityUsedTime = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES).getDouble(JsonConstants.GLOBAL);
+        double averageWorkProductivity = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.WORK_PRODUCTIVITY_VALUES).getDouble(JsonConstants.GLOBAL);
+        double averageRealProductivityUsedTime = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES).getDouble(JsonConstants.REAL_SERVICES);
+        double averageRealWorkProductivity = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.WORK_PRODUCTIVITY_VALUES).getDouble(JsonConstants.REAL_SERVICES);
 
-        JSONObject productivitiesUT = solution.getJSONObject("indicators")
-                .getJSONObject("productivityUsedTimeValues");
-        double putAgent = productivitiesUT.getJSONObject("byRole").optDouble("[AGENT]", 0);
-        double putDriver = productivitiesUT.getJSONObject("byRole").optDouble("[DRIVER]", 0);
-        double putRampManager = productivitiesUT.getJSONObject("byRole").optDouble("[RAMP_MANAGER]", 0);
-        double putManager = productivitiesUT.getJSONObject("byRole").optDouble("[MANAGER]", 0);
+        JSONObject productivitiesUT = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES);
+        double putAgent = productivitiesUT.getJSONObject(JsonConstants.BY_ROLE).optDouble("[AGENT]", 0);
+        double putDriver = productivitiesUT.getJSONObject(JsonConstants.BY_ROLE).optDouble("[DRIVER]", 0);
+        double putRampManager = productivitiesUT.getJSONObject(JsonConstants.BY_ROLE).optDouble("[RAMP_MANAGER]", 0);
+        double putManager = productivitiesUT.getJSONObject(JsonConstants.BY_ROLE).optDouble("[MANAGER]", 0);
 
-        JSONObject productivitiesW = solution.getJSONObject("indicators")
-                .getJSONObject("workProductivityValues");
-        double wpAgent = productivitiesW.getJSONObject("byRole").optDouble("[AGENT]", 0);
-        double wpDriver = productivitiesW.getJSONObject("byRole").optDouble("[DRIVER]", 0);
-        double wpRampManager = productivitiesW.getJSONObject("byRole").optDouble("[RAMP_MANAGER]", 0);
-        double wpManager = productivitiesW.getJSONObject("byRole").optDouble("[MANAGER]", 0);
+        JSONObject productivitiesW = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.WORK_PRODUCTIVITY_VALUES);
+        double wpAgent = productivitiesW.getJSONObject(JsonConstants.BY_ROLE).optDouble("[AGENT]", 0);
+        double wpDriver = productivitiesW.getJSONObject(JsonConstants.BY_ROLE).optDouble("[DRIVER]", 0);
+        double wpRampManager = productivitiesW.getJSONObject(JsonConstants.BY_ROLE).optDouble("[RAMP_MANAGER]", 0);
+        double wpManager = productivitiesW.getJSONObject(JsonConstants.BY_ROLE).optDouble("[MANAGER]", 0);
 
-        double coveredServicesPercentage = solution.getJSONObject("indicators").getJSONObject("coveredServices")
-                .getDouble("percentage");
-        int coveredServices = solution.getJSONObject("indicators").getJSONObject("coveredServices")
-                .getInt("absolute");
-        int numberServices = solution.getJSONObject("indicators").getInt("services");
-        int numberEmployees = solution.getJSONObject("indicators").getInt("employees");
-        int fakeServices = solution.getJSONObject("indicators").getInt("fakeServices");
-        int realServices = solution.getJSONObject("indicators").getInt("realServices");
-        int workingAgents = solution.getJSONObject("indicators").getInt("agentsWithWork");
-        double workingAgentsPercentage = solution.getJSONObject("indicators")
-                .getDouble("agentsWithWorkPercentage");
+        double coveredServicesPercentage = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.COVERED_SERVICES).getDouble(JsonConstants.PERCENTAGE);
+        int coveredServices = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.COVERED_SERVICES).getInt(JsonConstants.ABSOLUTE);
+        int numberServices = solution.getJSONObject(JsonConstants.INDICATORS).getInt(JsonConstants.SERVICES);
+        int numberEmployees = solution.getJSONObject(JsonConstants.INDICATORS).getInt(JsonConstants.EMPLOYEES);
+        int fakeServices = solution.getJSONObject(JsonConstants.INDICATORS).getInt(JsonConstants.FAKESERVICES);
+        int realServices = solution.getJSONObject(JsonConstants.INDICATORS).getInt(JsonConstants.REALSERVICES);
+        int workingAgents = solution.getJSONObject(JsonConstants.INDICATORS).getInt(JsonConstants.AGENTS_WITH_WORK);
+        double workingAgentsPercentage = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getDouble(JsonConstants.AGENTS_WITH_WORK_PERCENTAGE);
 
-        JSONObject employeesByRole = solution.getJSONObject("indicators").getJSONObject("employeesByRole");
+        JSONObject employeesByRole = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.EMPLOYEES_BY_ROLE);
         int totalAgents = employeesByRole.optInt("[AGENT]", 0);
         int totalDrivers = employeesByRole.optInt("[DRIVER]", 0);
         int totalManagers = employeesByRole.optInt("[MANAGER]", 0);
         int totalRampManagers = employeesByRole.optInt("[RAMP_MANAGER]", 0);
+
 
         // añadir cabecera si el archivo no existe
         File file = new File(FILETOSAVE);
         if (!file.exists()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
                 writer.write(
-                        "Instance\tNumber-of-Services\tReal-Services\tFake-Services\tNumber-of-Employees\tTotal-Agents\tTotal-Drivers\tTotal-Managers\tTotal-RampManagers\tAlgorithm\tProductivity-UT\tReal-Productivity-UT\tP.UT-Agent\tP.UT-Driver\tP.UT-RampManager\tP.UT-Manager\tWork-Productivity\tReal-Work-Productivity\tWP-Agent\tWP-Driver\tWP-RampManager\tWP-Manager\tExecution-Time(ms)\tCovered-Services(%)\tCovered-Services");
+                        "Instance\tNumber-of-Services\tReal-Services\tFake-Services\tNumber-of-Employees\tTotal-Agents\tWorking-Agents\t%Working-Agents\tTotal-Drivers\tTotal-Managers\tTotal-RampManagers\tAlgorithm\tProductivity-UT\tReal-Productivity-UT\tP.UT-Agent\tP.UT-Driver\tP.UT-RampManager\tP.UT-Manager\tWork-Productivity\tReal-Work-Productivity\tWP-Agent\tWP-Driver\tWP-RampManager\tWP-Manager\tExecution-Time(ms)\tCovered-Services(%)\tCovered-Services");
                 writer.newLine();
             } catch (IOException e) {
                 e.printStackTrace();

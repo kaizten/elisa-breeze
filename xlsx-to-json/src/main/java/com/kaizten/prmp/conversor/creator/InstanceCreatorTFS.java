@@ -1,6 +1,6 @@
 package com.kaizten.prmp.conversor.creator;
 
-import java.io.File;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,13 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import com.kaizten.prmp.domain.Service;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
 
 public class InstanceCreatorTFS {
 
@@ -27,28 +23,22 @@ public class InstanceCreatorTFS {
             int maxOverlaps,
             double percentage,
             String INSTANCEDIRECTORY,
-            int agents) throws Exception {
-        //for (int agents = 1; agents <= 70; agents++) {
+            int agents, 
+            int timePerDay) throws Exception {
             final int numberOfServices = selectedFlights.size() + 61 + 6 * numberOfDays;
-            // (3 de cada)+1 de respuesto de cada tipo fijo
             int numberOfManagers = 3;
             int numberOfDrivers = 3;
-            // calculo de numero de empleados extra: el dia con más demanda es lunes, con 32
-            // conductores y 12 coordinadores necesitados. Adjudicamos eso para que cubra
-            // eso y ya de paso cubre los demas (regla general de momento)
+            // calculo de numero de empleados extra: el dia con más demanda es lunes con 32
+            // adjudicamos eso para que cubra eso y ya de paso cubre los demas (regla general de momento)
             int numberOfExtraEmployees = 32;
-            // int numberOfEmployeesFlights = Math.max((int) Math.ceil((double)
-            // selectedFlights.size() / (7*5)), maxOverlaps);
             int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfExtraEmployees;
             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                     numberOfServices,
                     numberOfEmployees);
             optimizationProblem.setAirport(airport);
             final List<Service> listOfServices = new ArrayList<>();
-            // Añado servicios base (1 conductor, 1 coordinador) las 24h los 7 dias:
-            final Role[] roles = { Role.DRIVER, Role.MANAGER }; // Porq en el codigo actual de problem, solo se puede
-                                                                // añadir 1
-            // ROL por servicio
+            // Añado servicios base (1 conductor, 1 coordinador) las 24h los 7 dias, con turnos de 8h:
+            final Role[] roles = { Role.DRIVER, Role.MANAGER }; 
             int code = 0;
             // iterar a lo largo de los días
             for (int i = 0; i < numberOfDays; i++) {
@@ -582,19 +572,14 @@ public class InstanceCreatorTFS {
             // crear las fechas y hora de inicio y fin de los servicios
             for (int i = 0; i < selectedFlights.size(); i++) {
                 code++;
-                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] =>
-                                                                         // hora
-                // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
-                // " + flightInfo[2]);
-                String time = flightInfo[2].trim();
-                LocalDate localDate = LocalDate.parse(flightInfo[0].trim()); // fecha
-                LocalTime localTime = LocalTime.parse(time); // hora
+                String[] flightInfo = selectedFlights.get(i).split("/"); 
+                String time = flightInfo[2].trim(); 
+                LocalDate localDate = LocalDate.parse(flightInfo[0].trim()); //fecha
+                LocalTime localTime = LocalTime.parse(time); //hora
                 // Combinar la fecha y la hora en un LocalDateTime
                 LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
                 // Crear el OffsetDateTime usando UTC
                 OffsetDateTime flightTime = localDateTime.atOffset(ZoneOffset.UTC);
-                // Ahora, offsetDateTime contiene la fecha y hora con el Offset UTC
-                // System.out.println("OffsetDateTime: " + flightTime);
                 OffsetDateTime serviceStartingTime;
                 OffsetDateTime serviceFinishingTime;
 
@@ -622,16 +607,12 @@ public class InstanceCreatorTFS {
                 optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
             }
             // creo x empleados nuevos, rol AGENTE
-            // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
             for (int i = 0; i < numberOfEmployees - 38; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(timePerDay));
             }
             // creo los empleados necesitados para los servicios añadidos (driver y manager)
-            // 197 conductores => recuento simple (conte todos los de los servicios, sin
-            // tener en cuenta posibles solapamientos, pa tener mas que suficiente)
-            // 83 coordinadores
-            // total 38 empleados
             // 70% conductores(27) y 30% coordinadores(11)
             for (int i = numberOfEmployees - 38; i < numberOfEmployees - 11; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
@@ -643,13 +624,5 @@ public class InstanceCreatorTFS {
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
             return optimizationProblem;
-            // guardar el problema en un archivo json
-            //final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-            //final JSONObject json = toJson.apply(optimizationProblem);
-            //final String fileName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
-            //KaiztenFile.writeToFile(
-            //        new File(fileName),
-            //        json);
-        //}
     }
 }

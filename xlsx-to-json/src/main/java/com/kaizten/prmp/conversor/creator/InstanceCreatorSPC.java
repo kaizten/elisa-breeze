@@ -1,12 +1,6 @@
 package com.kaizten.prmp.conversor.creator;
 
-import com.kaizten.prmp.domain.Service;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.domain.problem.Role;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-
-import java.io.File;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,31 +10,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONObject;
+import com.kaizten.prmp.domain.Service;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.domain.problem.Role;
 
 public class InstanceCreatorSPC {
 
-    public void createInstance( // TODO bucle y en cada uno sumarle un empleado hasta 30, y devolver lista de
-                                // problemas con numero de empleados variados. guardar con numero de agentes en
-                                // el nombre
+    public PersonsReducedMobilityProblem createInstance(
             List<String> selectedFlights,
             String airport,
             int numberOfDays,
             int maxOverlaps,
             double percentage,
-            String INSTANCEDIRECTORY) throws Exception {
-        for (int agents = 1; agents <= 30; agents++) { // 30 intancias => agentes de 1 a 30
-            final int numberOfServices = selectedFlights.size() + 4 * numberOfDays; // añado 4*dias de servicio por los
-                                                                                    // servicios adicionales
-            // regla general => un empleado tiene 8h y puede hacer unos 5 servicios al dia
-            // => (vuelos/7)/5 => y cojo el maximo (ceil) pa no tener menos
-            // int serviciosPorEmpleadoPorSemana = 7 * 5; // 5 servicios por día, 7 días a
-            // la semana
-            // int neededAgents = Math.max(maxOverlaps, (int) Math.ceil((double)
-            // selectedFlights.size() / serviciosPorEmpleadoPorSemana)); // número maximo de
-            // solapamientos
-            // Managers y drivers para servicios adicionales (4 por día) + 1 de respuesto de
-            // cada
+            String INSTANCEDIRECTORY,
+            int agents,
+            int timePerDay) throws Exception {
+                
+            final int numberOfServices = selectedFlights.size() + 4 * numberOfDays; 
             final int numberOfManagers = 2;
             final int numberOfDrivers = 2;
             final int numberOfEmployees = agents + numberOfManagers + numberOfDrivers;
@@ -48,7 +34,6 @@ public class InstanceCreatorSPC {
                     numberOfServices,
                     numberOfEmployees);
             optimizationProblem.setAirport(airport);
-            // crear las fechas y hora de inicio y fin de los servicios
             final List<Service> listOfServices = new ArrayList<>();
             /*
              * Añado los 4 servicios adicionales
@@ -80,11 +65,8 @@ public class InstanceCreatorSPC {
                 }
             }
             // Añado los vuelos seleccionados
-            for (int i = 0; i < selectedFlights.size(); i++) { // coge el tamaño del selectedFlights
-                String[] flightInfo = selectedFlights.get(i).split("/"); // [0] => fecha, [1] => tipo de vuelo, [2] =>
-                                                                         // hora
-                // System.out.println("Flight info: " + flightInfo[0] + " " + flightInfo[1] + "
-                // " + flightInfo[2]);
+            for (int i = 0; i < selectedFlights.size(); i++) { 
+                String[] flightInfo = selectedFlights.get(i).split("/");
                 String time = flightInfo[2].trim();
                 if (time.length() == 4) {
                     time = "0" + time; // Agregar un cero al principio si la hora tiene solo un dígito
@@ -95,8 +77,6 @@ public class InstanceCreatorSPC {
                 LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
                 // Crear el OffsetDateTime usando UTC
                 OffsetDateTime flightTime = localDateTime.atOffset(ZoneOffset.UTC);
-                // Ahora, offsetDateTime contiene la fecha y hora con el Offset UTC
-                // System.out.println("OffsetDateTime: " + flightTime);
                 OffsetDateTime serviceStartingTime;
                 OffsetDateTime serviceFinishingTime;
                 if ("Salidas".equals(flightInfo[1].trim())) { // mira si es salida
@@ -132,18 +112,13 @@ public class InstanceCreatorSPC {
                 }
             }
             // creo x empleados nuevos, rol AGENTE
-            // solo le asigno rol y codigo, lo demas vacío o defualt como ya está puesto
             for (int i = 4; i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(timePerDay));
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
-            final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-            final JSONObject json = toJson.apply(optimizationProblem);
-            final String fileName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
-            KaiztenFile.writeToFile(
-                    new File(fileName),
-                    json);
+            return optimizationProblem;
         }
-    }
+    
 }

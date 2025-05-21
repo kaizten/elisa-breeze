@@ -1,18 +1,5 @@
 package com.kaizten.prmp.conversor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kaizten.prmp.conversor.creator.InstanceCreatorMAD;
-import com.kaizten.prmp.conversor.creator.InstanceCreatorSPC;
-import com.kaizten.prmp.conversor.creator.InstanceCreatorTFS;
-import com.kaizten.prmp.conversor.utils.FlightCounter;
-import com.kaizten.prmp.conversor.utils.ServicesSelector;
-import com.kaizten.prmp.conversor.xlsx.XlsxReader;
-import com.kaizten.prmp.conversor.xlsx.XlsxReaderMadrid;
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
-import com.kaizten.utils.io.KaiztenFile;
-import com.kaizten.prmp.conversor.utils.StringUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,6 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kaizten.prmp.conversor.creator.InstanceCreatorMAD;
+import com.kaizten.prmp.conversor.creator.InstanceCreatorSPC;
+import com.kaizten.prmp.conversor.creator.InstanceCreatorTFS;
+import com.kaizten.prmp.conversor.utils.FlightCounter;
+import com.kaizten.prmp.conversor.utils.ServicesSelector;
+import com.kaizten.prmp.conversor.utils.StringUtils;
+import com.kaizten.prmp.conversor.xlsx.XlsxReader;
+import com.kaizten.prmp.conversor.xlsx.XlsxReaderMadrid;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
+import com.kaizten.utils.io.KaiztenFile;
 
 public class Main {
 
@@ -67,13 +67,25 @@ public class Main {
         int maxOverlaps = 0;
         if (airport.equals("SPC")) {
             InstanceCreatorSPC creator = new InstanceCreatorSPC();
-            creator.createInstance(
-                    selectedFlights,
-                    airport,
-                    numberOfDays,
-                    maxOverlaps,
-                    percentage,
-                    INSTANCE_DIRECTORY);
+            for (int agents = 1; agents <= 30; agents++) {
+                final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
+                        selectedFlights,
+                        airport,
+                        numberOfDays,
+                        maxOverlaps,
+                        percentage,
+                        INSTANCE_DIRECTORY,
+                        agents, 
+                        timePerDay);
+                Main.saveInstance(
+                        optimizationProblem,
+                        INSTANCE_DIRECTORY,
+                        airport,
+                        percentage,
+                        agents,
+                        timePerDay,
+                        instanceNumber);
+            }
         } else if (airport.equals("TFS")) {
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
             for (int agents = 1; agents <= 70; agents++) {
@@ -84,7 +96,7 @@ public class Main {
                         maxOverlaps,
                         percentage,
                         INSTANCE_DIRECTORY,
-                        agents);
+                        agents, timePerDay);
                 Main.saveInstance(
                         optimizationProblem,
                         INSTANCE_DIRECTORY,
@@ -96,14 +108,25 @@ public class Main {
             }
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
-            creator.createInstance(
-                    selectedFlights,
-                    airport,
-                    numberOfDays,
-                    maxOverlaps,
-                    percentage,
-                    INSTANCE_DIRECTORY,
-                    timePerDay);
+            for (int agents = 1; agents <= 250; agents++) {
+                final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
+                        selectedFlights,
+                        airport,
+                        numberOfDays,
+                        maxOverlaps,
+                        percentage,
+                        INSTANCE_DIRECTORY,
+                        agents, 
+                        timePerDay);
+                Main.saveInstance(
+                        optimizationProblem,
+                        INSTANCE_DIRECTORY,
+                        airport,
+                        percentage,
+                        agents,
+                        timePerDay,
+                        instanceNumber);
+            }
         }
     }
 }
