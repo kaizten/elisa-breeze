@@ -23,8 +23,8 @@ public class InstanceCreatorMAD {
             int maxOverlaps,
             double percentage,
             String INSTANCEDIRECTORY,
-            int timePerDay,
-            int agents) throws Exception {
+            int agents,
+            int timePerDay) throws Exception {
 
             final int numberOfServices = selectedFlights.size() + 107 + 12 * numberOfDays;
             final int numberOfManagers = 3;
