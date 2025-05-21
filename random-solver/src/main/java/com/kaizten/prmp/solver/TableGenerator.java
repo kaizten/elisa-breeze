@@ -11,21 +11,14 @@ import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 
 public class TableGenerator {
 
-    // Ruta de archivo de ejecución
-    private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionData.txt";
-    //Analysis: 
-    //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/executionDataAnalysis.txt";
-
-    //private static final String tableOutputFile = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/tableExecutionData.txt";
-
     public static void saveExecutionDataToTable(
+            String FILETOSAVE,
             File instance,
             PersonsReducedMobilityProblem optimizationProblem,
             JSONObject solution,
             double executionTime,
             String algorithm,
             Object[] dates) throws IOException {
-                
         // Obtener los datos de la solución
         double averageProductivityUsedTime = solution.getJSONObject("indicators")
                 .getJSONObject("productivityUsedTimeValues").getDouble("global");
@@ -43,7 +36,8 @@ public class TableGenerator {
         double putRampManager = productivitiesUT.getJSONObject("byRole").optDouble("[RAMP_MANAGER]", 0);
         double putManager = productivitiesUT.getJSONObject("byRole").optDouble("[MANAGER]", 0);
 
-        JSONObject productivitiesW = solution.getJSONObject("indicators").getJSONObject("workProductivityValues");
+        JSONObject productivitiesW = solution.getJSONObject("indicators")
+                .getJSONObject("workProductivityValues");
         double wpAgent = productivitiesW.getJSONObject("byRole").optDouble("[AGENT]", 0);
         double wpDriver = productivitiesW.getJSONObject("byRole").optDouble("[DRIVER]", 0);
         double wpRampManager = productivitiesW.getJSONObject("byRole").optDouble("[RAMP_MANAGER]", 0);
@@ -67,7 +61,7 @@ public class TableGenerator {
         int totalManagers = employeesByRole.optInt("[MANAGER]", 0);
         int totalRampManagers = employeesByRole.optInt("[RAMP_MANAGER]", 0);
 
-        //añadir cabecera si el archivo no existe
+        // añadir cabecera si el archivo no existe
         File file = new File(FILETOSAVE);
         if (!file.exists()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
@@ -84,20 +78,19 @@ public class TableGenerator {
             writer.write(String.format(
                     "%s\t%d\t%d\t%d\t%d\t%d\t%d\t%.3f\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
                     instance.getName(), numberServices, realServices, fakeServices,
-                    numberEmployees, totalAgents, workingAgents, workingAgentsPercentage, totalDrivers, totalManagers, totalRampManagers,
+                    numberEmployees, totalAgents, workingAgents, workingAgentsPercentage,
+                    totalDrivers, totalManagers, totalRampManagers,
                     algorithm, averageProductivityUsedTime, averageRealProductivityUsedTime,
                     putAgent, putDriver, putRampManager, putManager,
                     averageWorkProductivity, averageRealWorkProductivity,
                     wpAgent, wpDriver, wpRampManager, wpManager,
-                    executionTime, coveredServicesPercentage, coveredServices)); 
-
-            
+                    executionTime, coveredServicesPercentage, coveredServices));
 
             writer.newLine();
 
         } catch (IOException e) {
             e.printStackTrace();
-       
+
+        }
     }
 }
-            }

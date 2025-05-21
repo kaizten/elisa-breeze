@@ -20,14 +20,15 @@ import com.kaizten.utils.io.KaiztenFile;
 
 public class InstanceCreatorTFS {
 
-    public void createInstance(
+    public PersonsReducedMobilityProblem createInstance(
             List<String> selectedFlights,
             String airport,
             int numberOfDays,
             int maxOverlaps,
             double percentage,
-            String INSTANCEDIRECTORY) throws Exception {
-        for (int agents = 1; agents <= 70; agents++) {
+            String INSTANCEDIRECTORY,
+            int agents) throws Exception {
+        //for (int agents = 1; agents <= 70; agents++) {
             final int numberOfServices = selectedFlights.size() + 61 + 6 * numberOfDays;
             // (3 de cada)+1 de respuesto de cada tipo fijo
             int numberOfManagers = 3;
@@ -641,13 +642,14 @@ public class InstanceCreatorTFS {
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
+            return optimizationProblem;
             // guardar el problema en un archivo json
-            final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
-            final JSONObject json = toJson.apply(optimizationProblem);
-            final String fileName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
-            KaiztenFile.writeToFile(
-                    new File(fileName),
-                    json);
-        }
+            //final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
+            //final JSONObject json = toJson.apply(optimizationProblem);
+            //final String fileName = INSTANCEDIRECTORY + airport + "-" + percentage + "-agents" + agents + ".json";
+            //KaiztenFile.writeToFile(
+            //        new File(fileName),
+            //        json);
+        //}
     }
 }
