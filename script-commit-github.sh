@@ -7,7 +7,7 @@
 #    -h   Display help message
 #  NOTES:
 #    - This script requires git to be installed.
-#  AUTHOR: Kaizten Analytics S.L. (info@kaizten.com)
+#  AUTHOR: Kaizten Analytics S.L. (development@kaizten.com)
 #####################################################################################################################################################
 
 main () {
