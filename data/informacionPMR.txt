@@ -1,0 +1,45 @@
+Aeropuerto de La Palma
+
+El aeropuerto de La Palma dispone de 1 ambulift (principal) y no dispone de vehículos para traslados en el interior de la terminal. Además no se tiene el rol de coordinador de rampa.
+
+Mientras existan vuelos se debe tener 1 coordinador y 1 conductor.
+
+Dado la distribución de operaciones del aeropuerto para la semana de referencia, la propuesta son 2 turnos de coordinador y conductor (que no serian de 8 horas)
+
+7:30 a 14:30 --> 1 Coordinador y 1 Conductor
+14:30 a 21:30 --> 1 Coordinador y 1 Conductor
+Aeropuerto Tenerife Sur
+
+El aeropuerto Tenerife Sur dispone de 8 ambulift (principales) y no dispone de vehículos para traslados en el interior de la terminal. Además no se tiene el rol de coordinador de rampa.
+
+En base a la distribución de operaciones se proponen los siguientes rangos de conductores y coordinadores
+
+Menos de 5 operaciones a la hora --> 1 conductor
+Entre 5 y 10 operaciones a la hora --> 2 conductores
+Entre 10 y 20 operaciones a la hora --> 4 conductores
+Más de 20 operaciones a la hora --> 8 conductores
+
+Menos de 10 operaciones a la hora --> 1 Coordinador
+Entre 10 y 20 operaciones a la hora --> 2 Coordinadores
+Mas de 20 operaciones a la hora --> 3 Coordinadores
+
+Aeropuerto Madrid
+
+El aeropuerto Madrid dispone de 14 ambulift (principales) y 2 buggies. Además si tiene el rol de coordinador de rampa.
+
+En base a la distribución de operaciones se proponen los siguientes rangos de conductores y coordinadores y coordinadores de rampa
+
+Menos de 5 operaciones a la hora --> 2 conductor por terminal (1 boggie)
+Entre 5 y 10 operaciones a la hora --> 3 conductores por terminal (1 boggie)
+Entre 10 y 20 operaciones a la hora --> 5 conductores por terminal (1 boggie)
+Más de 20 operaciones a la hora --> 8 conductores por terminal (1 boggie)
+
+Menos de 10 operaciones a la hora --> 1 Coordinador por terminal
+Entre 10 y 20 operaciones a la hora --> 2 Coordinadores por terminal
+Mas de 20 operaciones a la hora --> 3 Coordinadores por terminal
+
+Menos de 10 operaciones a la hora --> 1 Coordinador de rampa por terminal
+Entre 10 y 20 operaciones a la hora --> 2 Coordinadores de rampa por terminal
+Mas de 20 operaciones a la hora --> 3 Coordinadores de rampa por terminal
+
+En la excel adjunto esta la distribución por horas de las operaciones. Para el caso de Madrid se tendría que dividir por terminales, repartiendo 7 ambulifts 1 buggie por terminal.
