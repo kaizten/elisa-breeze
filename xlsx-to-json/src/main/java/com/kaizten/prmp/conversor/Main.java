@@ -67,7 +67,7 @@ public class Main {
         int maxOverlaps = 0;
         if (airport.equals("SPC")) {
             InstanceCreatorSPC creator = new InstanceCreatorSPC();
-            for (int agents = 1; agents <= 30; agents++) {
+            for (int agents = 1; agents <= 30; agents++) { 
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
                         airport,

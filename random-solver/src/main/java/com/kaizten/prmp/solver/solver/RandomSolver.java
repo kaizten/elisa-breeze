@@ -52,7 +52,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(employee);
                     if (this.optimizationProblem.hasEmployeeRole(employee, serviceRole)
                             && solution.doesServiceFitEmployeeWorkingTime(employee, service)
-                            && !solution.isServiceOverlapping(employee, service)) {
+                            && !solution.isServiceOverlapping(employee, service)
+                            && solution.doesServiceSatisfiesTimeBetweenDays(employee, service)) {
                         // valido startTime y FinishTime juntos, y si ambos son True, se añade a la
                         // lista de empleados disponibles.
                         // Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime,
