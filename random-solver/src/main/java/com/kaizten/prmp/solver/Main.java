@@ -25,14 +25,14 @@ import com.kaizten.utils.net.KaiztenURI;
 public class Main {
 
     // ELISA:
-    //private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instances/";
-    //private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/";
-    //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/results.txt";
+    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instances/";
+    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/";
+    private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/results.txt";
 
     // CHRISTOPHER:
-    private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
-    private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions/";
-    private static final String FILETOSAVE = "/home/christopher/kaizten/internship/elisa-breeze/data/results.txt";
+    //private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
+    //private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions/";
+    //private static final String FILETOSAVE = "/home/christopher/kaizten/internship/elisa-breeze/data/results.txt";
 
     public static void solveInstance(
             File instance,
