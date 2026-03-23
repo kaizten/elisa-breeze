@@ -30,6 +30,6 @@ public class TestMain {
 
         // Exportar solución del problema
         final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
-        solutionCreator.exportSolution(cleanedServices, new File(problem, outputFolder, "solutions/realSolutionMAD.json"));
+        solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/sinSOLAPAMIENTOrealSolutionMAD.json"));
     }
 }

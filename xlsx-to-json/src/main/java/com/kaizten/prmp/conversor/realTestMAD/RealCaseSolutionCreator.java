@@ -6,6 +6,8 @@ import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
 import com.kaizten.utils.io.KaiztenFile;
 import org.json.JSONObject;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.List;
 
 public class RealCaseSolutionCreator {
@@ -23,12 +25,15 @@ public class RealCaseSolutionCreator {
                 if (employeeIndex != -1) { //asignamos servicio al empleado
                     solution.assignServiceToEmployee(employeeIndex, i);
                 }
+
             }
         }
 
+        problem.getEvaluator().evaluate(solution);
+
+
         // Generación Solución
         PersonsReducedMobilitySolutionToJson toJson = new PersonsReducedMobilitySolutionToJson();
-        JSONObject solutionJson = toJson.apply(solution);
-        KaiztenFile.writeToFile(outputFile, solutionJson);
+        KaiztenFile.writeToFile(outputFile, toJson.apply(solution));
         }
 }

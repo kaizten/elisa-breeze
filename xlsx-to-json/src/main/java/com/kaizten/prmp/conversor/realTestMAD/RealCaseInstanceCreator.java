@@ -2,6 +2,8 @@ package com.kaizten.prmp.conversor.realTestMAD;
 
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
+import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
+import com.kaizten.opt.evaluator.builder.EvaluatorBuilder;
 
 import java.time.Duration;
 import java.util.*;
@@ -17,7 +19,7 @@ public class RealCaseInstanceCreator {
             optimizationProblem.setServiceCode(i, String.format("SERVICE_%03d", i + 1));
             optimizationProblem.setServiceTimes(i, service.getStartTime(), service.getEndTime());
             optimizationProblem.setServiceRole(i, Role.AGENT);
-            optimizationProblem.setServiceRequiredEmployees(i, service.getNeededAgents());
+            optimizationProblem.setServiceRequiredEmployees(i, service.getNeededEmployees());
 
         }
 
@@ -28,6 +30,12 @@ public class RealCaseInstanceCreator {
         }
 
         optimizationProblem.computeEmployeesAvailability(List.of());
+        
+        // Sustituye las líneas del evaluador por estas:
+        EvaluatorBuilder builder = EvaluatorBuilder.instance();
+        builder.addEvaluatorObjectiveFunction(new PersonsReducedMobilityProblemEvaluator());
+        optimizationProblem.setEvaluator(builder.build());
+        
         return optimizationProblem;
     }
 }

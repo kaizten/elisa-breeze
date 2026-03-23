@@ -1,10 +1,13 @@
 
 package com.kaizten.prmp.conversor.realTestMAD;
 import org.apache.poi.ss.usermodel.*;
+
 import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import com.mongodb.internal.time.StartTime;
 
 public class RealTestXlsxReader {
 
@@ -32,7 +35,7 @@ public class RealTestXlsxReader {
 
                 // Extraer información clave del servicio
                 String date = getVal(row, cols, "Fecha", df);
-                String flight = getVal(row, cols, "Número de vuelo", df);
+                String flight = getVal(row, cols, "Numero de vuelo", df);
                 String passenger = getVal(row, cols, "Pasajero", df);
                 String location = getVal(row, cols, "O/D", df);
                 String agents = getVal(row, cols, "Agente", df);
@@ -41,9 +44,17 @@ public class RealTestXlsxReader {
                 ServiceInformation service = new ServiceInformation();
                 service.setRowIndex(i);
                 service.setKey(date + "|" + flight + "|" + passenger + "|" + location);
-                service.setStartTime(parseDateTime(date, getVal(row, cols, "Inicio del servicio", df)));
-                service.setEndTime(parseDateTime(date, getVal(row, cols, "Fin del servicio", df)));
+
+                OffsetDateTime startTime = parseDateTime(date, getVal(row, cols, "Inicio del servicio", df));
+                OffsetDateTime endTime = parseDateTime(date, getVal(row, cols, "Fin del servicio", df));
                 
+                // Manejar cambio de día
+                if(startTime != null && endTime != null && endTime.isBefore(startTime)) {
+                    endTime = endTime.plusDays(1); 
+                }
+                service.setStartTime(startTime);
+                service.setEndTime(endTime);
+
                 // Anonimizar agentes y asignar IDs
                 if (!agents.isBlank()) {
                     for (String name : agents.split("\\r?\\n+")) {
