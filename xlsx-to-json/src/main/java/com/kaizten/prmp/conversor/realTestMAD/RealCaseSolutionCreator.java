@@ -45,7 +45,7 @@ public class RealCaseSolutionCreator {
                     double tiempoTrabajado = solution.getWorkingTime(fechaServicio, employeeIndex);
                     
                     if (tiempoTrabajado > 480) {
-                        logProblemas.println("EXCESO JORNADA: Agente " + agentCode + " en fecha " + fechaServicio + " con " + tiempoTrabajado/60.0 + " horas trabajdas");
+                        logProblemas.println("EXCESO JORNADA: Agente " + agentCode + " en fecha " + fechaServicio + " con " + tiempoTrabajado/60.0 + " horas trabajadas");
                     }
 
 
