@@ -8,6 +8,8 @@ public class ServiceInformation {
     private String key;
     private OffsetDateTime startTime;
     private OffsetDateTime endTime;
+    private String passengerName;
+    private String agentName;
     private List<String> agents = new ArrayList<>();
     private int rowIndex;
 
@@ -41,6 +43,22 @@ public class ServiceInformation {
 
     public void setRowIndex(int rowIndex) {
         this.rowIndex = rowIndex;}
+
+    public String getPassengerName() {
+        return passengerName;
+    }
+    
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
+
+    public String getAgentName() {
+        return agentName;
+    }
+
+    public void setAgentName(String agentName) {
+        this.agentName = agentName;
+    }
 
     public int getNeededEmployees() {
         return (agents != null) ? agents.size() : 0;

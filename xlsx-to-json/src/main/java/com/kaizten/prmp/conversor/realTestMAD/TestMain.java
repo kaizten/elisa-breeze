@@ -17,8 +17,13 @@ public class TestMain {
         // Leer xlsx
         final RealTestXlsxReader reader = new RealTestXlsxReader();
         List<ServiceInformation> cleanedServices = reader.readXlsxFile(xlsx);
+
+        //Diagnostico datos
+        DataDiagnostics.generateDiagnostics(cleanedServices);
+
         List<String> agents = reader.getAgentIDs();
 
+        /* 
         // Instancia Problema
         final RealCaseInstanceCreator instanceCreator = new RealCaseInstanceCreator();
         final PersonsReducedMobilityProblem problem = instanceCreator.createInstance(cleanedServices, "MAD", agents, timePerDayHours);
@@ -31,5 +36,6 @@ public class TestMain {
         // Exportar solución del problema
         final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
         solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/sinSOLAPAMIENTOrealSolutionMAD.json"));
+        */
     }
 }

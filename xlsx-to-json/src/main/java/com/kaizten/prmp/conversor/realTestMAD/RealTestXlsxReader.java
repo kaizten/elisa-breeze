@@ -44,6 +44,7 @@ public class RealTestXlsxReader {
                 ServiceInformation service = new ServiceInformation();
                 service.setRowIndex(i);
                 service.setKey(date + "|" + flight + "|" + passenger + "|" + location);
+                service.setPassengerName(passenger);
 
                 OffsetDateTime startTime = parseDateTime(date, getVal(row, cols, "Inicio del servicio", df));
                 OffsetDateTime endTime = parseDateTime(date, getVal(row, cols, "Fin del servicio", df));
@@ -55,13 +56,17 @@ public class RealTestXlsxReader {
                 service.setStartTime(startTime);
                 service.setEndTime(endTime);
 
-                // Anonimizar agentes y asignar IDs
+                service.getAgents().clear();
+                // Nombres de Agentes
                 if (!agents.isBlank()) {
                     for (String name : agents.split("\\r?\\n+")) {
                         String cleanName = name.trim().replaceAll("\\s+", " ").toUpperCase();
                         if (!cleanName.isEmpty()) {
-                            service.getAgents().add(agentIDMap.computeIfAbsent(cleanName, 
-                                k -> String.format("AGENT_%03d", nextAgentID++)));
+                            if (!service.getAgents().contains(cleanName)) {
+                                service.getAgents().add(cleanName);
+                            }
+                            //por si hace falta el nombre anonimizado
+                            agentIDMap.putIfAbsent(cleanName, String.format("AGENT_%03d", nextAgentID++));
                         }
                     }
                 }
