@@ -24,6 +24,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
 
     @Override
     public PersonsReducedMobilitySolution run() {
+        System.out.println("Ejecutando ReferenceSolver...");
         PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
         Random rand = new Random();
         // Iterar sobre los servicios, y asignar los empleados que hacen falta para cada

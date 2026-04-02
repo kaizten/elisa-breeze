@@ -1,0 +1,4 @@
+Instance	Number-of-Services	Real-Services	Fake-Services	Number-of-Employees	Total-Agents	Working-Agents	%Working-Agents	Total-Drivers	Total-Managers	Total-RampManagers	Algorithm	Productivity-UT	Real-Productivity-UT	P.UT-Agent	P.UT-Driver	P.UT-RampManager	P.UT-Manager	Work-Productivity	Real-Work-Productivity	WP-Agent	WP-Driver	WP-RampManager	WP-Manager	Execution-Time(ms)	Covered-Services(%)	Covered-Services
+realCaseProblemMAD.json	24856	24856	0	6889	6889	6889	100,000	0	0	0	casoReal	86,533	86,533	100,000	0,000	0,000	0,000	36,048	36,048	76,875	0,000	0,000	0,000	0,000	100,000	24856
+realCaseProblemMAD.json	24856	24856	0	6889	6889	6885	99,942	0	0	0	randomSolver	94,780	94,780	94,780	0,000	0,000	0,000	25,305	25,305	25,305	0,000	0,000	0,000	21640749,868	100,000	24856
+realCaseProblemMAD.json	24856	24856	0	6889	6889	6889	100,000	0	0	0	referenceSolver	100,000	100,000	100,000	0,000	0,000	0,000	21,329	21,329	21,329	0,000	0,000	0,000	4569601,075	17,658	4389

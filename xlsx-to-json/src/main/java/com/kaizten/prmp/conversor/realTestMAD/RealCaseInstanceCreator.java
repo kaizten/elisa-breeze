@@ -3,11 +3,12 @@ package com.kaizten.prmp.conversor.realTestMAD;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.domain.problem.Role;
 import com.kaizten.prmp.evaluator.PersonsReducedMobilityProblemEvaluator;
+import com.kaizten.utils.collection.Tuple2;
 import com.kaizten.opt.evaluator.builder.EvaluatorBuilder;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
-import java.util.List;
 
 public class RealCaseInstanceCreator {
     public PersonsReducedMobilityProblem createInstance(List<ServiceInformation> services, String airport, List<String> agents, int timePerDayHours) throws Exception {

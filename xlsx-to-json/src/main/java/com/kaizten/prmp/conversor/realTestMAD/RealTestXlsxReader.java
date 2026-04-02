@@ -1,19 +1,31 @@
 
 package com.kaizten.prmp.conversor.realTestMAD;
-import org.apache.poi.ss.usermodel.*;
-
-import java.io.*;
-import java.time.*;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Comparator;
 
-import com.mongodb.internal.time.StartTime;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class RealTestXlsxReader {
 
     private final Map<String, String> agentIDMap = new LinkedHashMap<>();
-    private int nextAgentID = 1;
-
+    private final Map<String, List<OffsetDateTime[]>> agentSchedules = new HashMap<>();
+   
     public List<ServiceInformation> readXlsxFile(File xlsx) throws IOException {
         Map<String, ServiceInformation> bestServices = new LinkedHashMap<>();
         DataFormatter df = new DataFormatter();
@@ -29,7 +41,7 @@ public class RealTestXlsxReader {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
 
-                //Solo procesar filas con estado "FINALIZADA"
+                //Solo procesar servicios finalizados
                 String estado = getVal(row, cols, "Estado", df);
                 if (!"FINALIZADA".equals(estado)) continue;
 
@@ -57,16 +69,22 @@ public class RealTestXlsxReader {
                 service.setEndTime(endTime);
 
                 service.getAgents().clear();
-                // Nombres de Agentes
-                if (!agents.isBlank()) {
+
+                // Agentes
+                if (!agents.isBlank() && startTime != null && endTime != null) {
                     for (String name : agents.split("\\r?\\n+")) {
-                        String cleanName = name.trim().replaceAll("\\s+", " ").toUpperCase();
+                        String cleanName = name.trim().toUpperCase();
                         if (!cleanName.isEmpty()) {
+
+                            // Formateo de nombre
+                            String base = formatName(cleanName);
+                            String freeName = getFreeAgentOrClone(base, startTime, endTime);
+
                             if (!service.getAgents().contains(cleanName)) {
-                                service.getAgents().add(cleanName);
+                                service.getAgents().add(freeName);
                             }
                             //por si hace falta el nombre anonimizado
-                            agentIDMap.putIfAbsent(cleanName, String.format("AGENT_%03d", nextAgentID++));
+                            agentIDMap.putIfAbsent(freeName, freeName);
                         }
                     }
                 }
@@ -81,7 +99,9 @@ public class RealTestXlsxReader {
                 }
             }
         }
-        return new ArrayList<>(bestServices.values());
+        List<ServiceInformation> sortedServices = new ArrayList<>(bestServices.values());
+        sortedServices.sort(Comparator.comparing(ServiceInformation::getStartTime));
+        return sortedServices;
     }
 
     // obtiene info de la celda
@@ -104,5 +124,42 @@ public class RealTestXlsxReader {
 
     public List<String> getAgentIDs() {
         return new ArrayList<>(agentIDMap.values());
+    }
+
+    private String formatName(String name) {
+        String[] parts = name.split(",");
+        if (parts.length < 2) return name.trim().replaceAll("\\s+", "_");
+        
+        String firstName = parts[0].trim();
+        StringBuilder initials = new StringBuilder();
+        for (String n : firstName.split("\\s+")) {
+            if (!n.isEmpty()) {
+                initials.append(n.charAt(0));
+            }
+        }
+        String firstSurname = parts[1].trim().split("\\s+")[0];
+        return initials.toString() + "_" + firstSurname;
+    }
+
+    private String getFreeAgentOrClone(String base, OffsetDateTime start, OffsetDateTime end) {
+        String name = base; 
+        int clone = 1;
+
+        //buffer como colchón para evitar servicios solapados en solo 1 minuto
+        OffsetDateTime bufferStart = start.minusMinutes(1);
+        OffsetDateTime bufferEnd = end.plusMinutes(1);
+        
+        while (true) {
+            List<OffsetDateTime[]> schedule = agentSchedules.computeIfAbsent(name, k -> new ArrayList<>());
+            
+            boolean overlap = schedule.stream().anyMatch(interval -> bufferStart.isBefore(interval[1]) && bufferEnd.isAfter(interval[0]));
+
+            if (!overlap) {
+                schedule.add(new OffsetDateTime[]{start, bufferEnd});
+                return name;
+            }
+            name = base + "_" + clone;
+            clone++;
+        }
     }
 }

@@ -1,9 +1,5 @@
 package com.kaizten.prmp.domain.solution;
 
-import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
-import com.kaizten.opt.solution.Solution;
-import com.kaizten.utils.string.KaiztenFormatterTable;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import com.kaizten.opt.solution.Solution;
+import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
+import com.kaizten.utils.string.KaiztenFormatterTable;
 
 public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobilityProblem> implements Cloneable {
 
@@ -360,10 +360,9 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getWorkProductivity(date, employee);
-                } else {
-                    productivity += 0.0;
+                    numberOfProductivities++;
+
                 }
-                numberOfProductivities++;
             }
         }
         return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
@@ -377,10 +376,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getProductivityUsedTime(date, employee);
-                } else {
-                    productivity += 0.0;
+                    numberOfProductivities++;
                 }
-                numberOfProductivities++;
             }
         }
         return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
@@ -396,11 +393,13 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     Set<Integer> assignedServices = this
                             .getAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee);
+                    boolean hasBeenCounted = false;
                     for (int service : assignedServices) {
-                        if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
-                            productivity += this.getProductivityUsedTime(date, employee);
-                        }
+                    if (!hasBeenCounted && !this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
+                        productivity += this.getProductivityUsedTime(date, employee);
                         numberOfProductivities++;
+                        hasBeenCounted = true;
+                    }
                     }
                 }
             }
@@ -417,11 +416,13 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date),
                         employee);
+                boolean hasBeenCounted = false;
                 for (int service : assignedServices) {
-                    if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
+                    if (!hasBeenCounted && !this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
                         productivity += this.getWorkProductivity(date, employee);
+                        numberOfProductivities++;
+                        hasBeenCounted = true;
                     }
-                    numberOfProductivities++;
                 }
             }
         }
@@ -438,10 +439,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getProductivityUsedTime(date, employee);
-                } else {
-                    productivity += 0.0;
-                }
-                numberOfProductivities++;
+                    numberOfProductivities++;
+                } 
             }
             productivityPerRole.put(role, numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities);
         }
@@ -458,10 +457,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getWorkProductivity(date, employee);
-                } else {
-                    productivity += 0.0; // Si no tiene servicio, productividad = 0
-                }
-                numberOfProductivities++;
+                    numberOfProductivities++;
+                } 
             }
             productivityPerRole.put(role, numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities);
         }

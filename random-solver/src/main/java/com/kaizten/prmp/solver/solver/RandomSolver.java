@@ -26,13 +26,17 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
     @Override
     public PersonsReducedMobilitySolution run() {
+        System.out.println("Ejecutando RandomSolver...");
         PersonsReducedMobilitySolution bestSolution = null;
         double best_productivity = 0.0;
         int stopCounter = 0;
         // Asignación de Servicio aleatorio a cada empleado sin orden ninguno
-        for (int i = 0; i < 200; i++) {
-            if (stopCounter >= 50) {
-                System.out.println("Criterio de Parada aplicado. No mejoró la solución en 50 iteraciones.");
+        // Cambio de iteraciones a 15 por instancia masiva (1h por iteración)
+        for (int i = 0; i < 15; i++) {
+            System.out.println("Iteración: " + i + " - Criterio de parada: " + stopCounter);
+            // Cambio de criterio de parada a 5 por instancia masiva
+            if (stopCounter >= 5) {
+                System.out.println("Criterio de Parada aplicado. No mejoró la solución en 5 iteraciones.");
                 break;
             }
             // Nueva solución por iteración
