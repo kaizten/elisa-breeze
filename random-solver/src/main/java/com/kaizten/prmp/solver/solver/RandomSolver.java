@@ -29,14 +29,15 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
         System.out.println("Ejecutando RandomSolver...");
         PersonsReducedMobilitySolution bestSolution = null;
         double best_productivity = 0.0;
+        int bestCoverage = -1;
         int stopCounter = 0;
         // Asignación de Servicio aleatorio a cada empleado sin orden ninguno
-        // Cambio de iteraciones a 15 por instancia masiva (1h por iteración)
-        for (int i = 0; i < 15; i++) {
+        // Cambio de iteraciones segun tamaño de instncia
+        for (int i = 0; i < 200; i++) {
             System.out.println("Iteración: " + i + " - Criterio de parada: " + stopCounter);
-            // Cambio de criterio de parada a 5 por instancia masiva
-            if (stopCounter >= 5) {
-                System.out.println("Criterio de Parada aplicado. No mejoró la solución en 5 iteraciones.");
+            // Cambio de criterio de parada a 20 por instancia masiva
+            if (stopCounter >= 50) {
+                System.out.println("Criterio de Parada aplicado. No mejoró la solución en 50 iteraciones.");
                 break;
             }
             // Nueva solución por iteración
@@ -116,6 +117,15 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
                 }
             }
+
+            //Calcular cobertura
+            int currentCoverage = 0;
+            for (int s = 0; s < this.optimizationProblem.getNumberOfServices(); s++) {
+                if (solution.getAssignedEmployees(s).size() == this.optimizationProblem.getServiceRequiredEmployees(s)) {
+                    currentCoverage++;
+                }
+            }
+
             // Calcular productividad de Working Time
             double accumulativeProductivity = 0.0;
             int count = 0;
@@ -130,9 +140,12 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 }
             }
             double productivity = count > 0 ? accumulativeProductivity / count : 0.0;
-            if (productivity > best_productivity) {
+            //if (productivity > best_productivity) {
+            //Cambio para que considere tanto cobertura como productividad
+            if (bestSolution == null || currentCoverage > bestCoverage || (currentCoverage == bestCoverage && productivity > best_productivity)) {
                 bestSolution = solution;
                 best_productivity = productivity;
+                bestCoverage = currentCoverage;
                 stopCounter = 0; // Reinicia contador
             } else {
                 stopCounter++; // Aumenta contador

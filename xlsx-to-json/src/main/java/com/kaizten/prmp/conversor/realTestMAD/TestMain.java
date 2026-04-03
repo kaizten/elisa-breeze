@@ -14,7 +14,8 @@ public class TestMain {
         final File outputFolder = new File("data/realCaseTest");
 
         // Leer xlsx
-        final RealTestXlsxReader reader = new RealTestXlsxReader();
+        //final RealTestXlsxReader reader = new RealTestXlsxReader();
+        final XlsxExtra reader = new XlsxExtra();
         List<ServiceInformation> cleanedServices = reader.readXlsxFile(xlsx);
 
         //Diagnostico datos
@@ -28,11 +29,11 @@ public class TestMain {
         // Exportar Instancia a JSON
         final PersonsReducedMobilityProblemToJson problemToJson = new PersonsReducedMobilityProblemToJson();
         final JSONObject json = problemToJson.apply(problem);
-        KaiztenFile.writeToFile(new File(outputFolder, "instances/realCaseProblemMAD.json"), json);
+        KaiztenFile.writeToFile(new File(outputFolder, "instances/realCaseProblemMAD_sin_clones2.json"), json);
 
         // Exportar solución del problema
-        final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
-        solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/realSolutionMAD.json"));
+        //final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
+        //solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/realSolutionMAD.json"));
         
     }
 }
