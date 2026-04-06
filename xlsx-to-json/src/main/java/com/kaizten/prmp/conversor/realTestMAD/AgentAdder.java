@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class StressTesterCreator {
+public class AgentAdder {
 
     public static void main(String[] args) throws Exception {
         String path = "data/realCaseTest/instances/realCaseProblemMAD_sin_clones.json";
