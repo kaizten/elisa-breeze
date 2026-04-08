@@ -355,105 +355,117 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     // media de work productivity TOTAL
     public double getAverageWorkProductivity() {
         double productivity = 0.0;
-        int numberOfProductivities = 0;
+        int counter = 0;
+        
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+                counter++;
+                
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getWorkProductivity(date, employee);
-                    numberOfProductivities++;
 
                 }
             }
         }
-        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
+        return counter == 0 ? 0.0 : productivity / counter;
     }
 
     // media de productivity used time TOTAL
     public double getAverageProductivityUsedTime() {
         double productivity = 0.0;
-        int numberOfProductivities = 0;
+        int counter = 0;
+        
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+                counter++;
+                
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getProductivityUsedTime(date, employee);
-                    numberOfProductivities++;
                 }
             }
         }
-        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
+        return counter == 0 ? 0.0 : productivity / counter;
     }
 
     // funcion que calcule la productividad used time media de los empleados solo de
     // servicios reales (que no empiecen por f-)
     public double getAverageProductivityUsedTimeRealServices() {
         double productivity = 0.0;
-        int numberOfProductivities = 0;
+        int counter = 0;
+        
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
-                if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
-                    Set<Integer> assignedServices = this
-                            .getAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee);
-                    boolean hasBeenCounted = false;
-                    for (int service : assignedServices) {
-                    if (!hasBeenCounted && !this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
-                        productivity += this.getProductivityUsedTime(date, employee);
-                        numberOfProductivities++;
-                        hasBeenCounted = true;
+                counter++;
+                Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date),
+                        employee);
+                
+                boolean hasRealService = false;
+                for (int service : assignedServices) {
+                    if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
+                        hasRealService = true;
+                        break;
                     }
-                    }
-                }
+            }
+
+            if(hasRealService) {
+                productivity += this.getProductivityUsedTime(date, employee);
             }
         }
-        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
+    }
+    return counter == 0 ? 0.0 : productivity / counter;
     }
 
     // funcion que calcule la work productividad media de los empleados solo de
     // servicios reales (que no empiecen por f-)
     public double getAverageWorkProductivityRealServices() {
         double productivity = 0.0;
-        int numberOfProductivities = 0;
+        int counter = 0;
+
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+                counter++;
+                
                 Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date),
                         employee);
-                boolean hasBeenCounted = false;
+            
+                boolean hasRealService = false;
                 for (int service : assignedServices) {
-                    if (!hasBeenCounted && !this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
-                        productivity += this.getWorkProductivity(date, employee);
-                        numberOfProductivities++;
-                        hasBeenCounted = true;
+                    if (!this.getOptimizationProblem().getServiceCode(service).startsWith("f-")) {
+                        hasRealService = true;
+                        break;
                     }
+                }
+                if (hasRealService) {
+                    productivity += this.getWorkProductivity(date, employee);
                 }
             }
         }
-        return numberOfProductivities == 0 ? 0.0 : productivity / numberOfProductivities;
+        return counter == 0 ? 0.0 : productivity / counter;
     }
 
     // media de productivity used time por rol total
     public Map<String, Double> getAverageProductivityUsedTimePerRole() {
         Map<String, Double> productivityPerRole = new HashMap<>();
         Map<String, Integer> countEmployeesPerRole = new HashMap<>();
+        
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             String role = this.optimizationProblem.getEmployeeRoles(employee).toString();
+            
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+                countEmployeesPerRole.put(role, countEmployeesPerRole.getOrDefault(role, 0) + 1);
+
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivityPerRole.put(role, productivityPerRole.getOrDefault(role, 0.0) + this.getProductivityUsedTime(date, employee));
-                    countEmployeesPerRole.put(role, countEmployeesPerRole.getOrDefault(role, 0) + 1);
                 } 
             }
         }
         Map<String, Double> finalProductivityPerRole = new HashMap<>();
         for (String r: productivityPerRole.keySet()) {
-            double total = productivityPerRole.get(r);
+            double total = productivityPerRole.getOrDefault(r, 0.0);
             int count = countEmployeesPerRole.get(r);
-
-            if (count > 0) {
-                finalProductivityPerRole.put(r, total / count);
-            } else {
-                finalProductivityPerRole.put(r, 0.0);
-            }
+            finalProductivityPerRole.put(r, total / count);
+            
         }     
-
         return finalProductivityPerRole;
     }
 
@@ -461,26 +473,23 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     public Map<String, Double> getAverageWorkProductivityPerRole() {
         Map<String, Double> productivityPerRole = new HashMap<>();
         Map<String, Integer> countEmployeesPerRole = new HashMap<>();
+
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             String role = this.optimizationProblem.getEmployeeRoles(employee).toString();
             
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+                countEmployeesPerRole.put(role, countEmployeesPerRole.getOrDefault(role, 0) + 1);
+    
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivityPerRole.put(role, productivityPerRole.getOrDefault(role, 0.0) + this.getWorkProductivity(date, employee));
-                    countEmployeesPerRole.put(role, countEmployeesPerRole.getOrDefault(role, 0) + 1);
                 } 
             }
         }
         Map<String, Double> finalProductivityPerRole = new HashMap<>();
         for (String r: productivityPerRole.keySet()) {
-            double total = productivityPerRole.get(r);
+            double total = productivityPerRole.getOrDefault(r, 0.0);
             int count = countEmployeesPerRole.get(r);
-
-            if (count > 0) {
-                finalProductivityPerRole.put(r, total / count);
-            } else {
-                finalProductivityPerRole.put(r, 0.0);
-            }
+            finalProductivityPerRole.put(r, total / count);
         }
         return finalProductivityPerRole;
     }

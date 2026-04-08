@@ -30,7 +30,7 @@ public class Main {
     //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/results.txt";
     
     //PRUEBA REAL
-    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/stresstest/";
+    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/instances/";
     private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/solutions/";
     private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/results.txt";
 
@@ -47,13 +47,22 @@ public class Main {
             return;
         }
         final String instanceName = instance.getName();
-        final String solutionName = instanceName.replace(".json", "_" + algorithm + ".json");
+        final String solutionName = instanceName.replace(".json", "_" + algorithm + "3.json");
         File solutionFile = new File(SOLUTION_FOLDER + solutionName);
         if (solutionFile.exists()) {
             System.out.println("La solución ya existe: " + solutionFile.getAbsolutePath());
             return;
         }
         PersonsReducedMobilityProblem optimizationProblem = Main.getProblemFromURI(instance.toURI().toString());
+          
+        //Verificación de orden cronológico de los servicios
+        try {
+            CheckInstance.checkChronologicalOrder(optimizationProblem);
+        } catch (IllegalStateException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+
         AbstractSolver<PersonsReducedMobilitySolution> solver = null;
         if (algorithm.equals("referenceSolver")) {
             solver = new ReferenceSolver(optimizationProblem);

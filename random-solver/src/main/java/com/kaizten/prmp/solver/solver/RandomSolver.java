@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 
 import com.kaizten.opt.solver.AbstractSolver;
@@ -28,23 +27,27 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
     public PersonsReducedMobilitySolution run() {
         System.out.println("Ejecutando RandomSolver...");
         PersonsReducedMobilitySolution bestSolution = null;
-        double best_productivity = 0.0;
+        double bestProductivity = -1.0;
         int bestCoverage = -1;
+
         int stopCounter = 0;
-        // Asignación de Servicio aleatorio a cada empleado sin orden ninguno
-        // Cambio de iteraciones segun tamaño de instncia
-        for (int i = 0; i < 200; i++) {
-            System.out.println("Iteración: " + i + " - Criterio de parada: " + stopCounter);
-            // Cambio de criterio de parada a 20 por instancia masiva
-            if (stopCounter >= 50) {
-                System.out.println("Criterio de Parada aplicado. No mejoró la solución en 50 iteraciones.");
+        int actualIteration = 0;
+        int bestIteration = 0;
+        int stop_threshold = 5; 
+        
+        while (true) {
+            int iterationGap = actualIteration - bestIteration;
+
+            if (iterationGap >= stop_threshold) {
+                System.out.println("Parada en iteración: " + actualIteration + " - Mejor iteración: " + bestIteration);
                 break;
             }
+
+            System.out.println("Iteración: " + actualIteration + " - Mejor iteración: " + bestIteration);
+
             // Nueva solución por iteración
             PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
-            Random rand = new Random();
-            // int nocubierto = 0;
-            // Recorrer todos los servicios y saca el número de empleados requeridos
+
             for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
                 int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
                 Role serviceRole = this.optimizationProblem.getServiceRole(service);
@@ -59,12 +62,12 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                             && solution.doesServiceFitEmployeeWorkingTime(employee, service)
                             && !solution.isServiceOverlapping(employee, service)
                             && solution.doesServiceSatisfiesTimeBetweenDays(employee, service)) {
-                        // valido startTime y FinishTime juntos, y si ambos son True, se añade a la
-                        // lista de empleados disponibles.
-                        // Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime,
-                        // se les asigna automáticamente //Si tienen startTime, se comprueba que el
-                        // servicio empiece después de su startTime, y si no, se pasa a false y ya no se
-                        // añadirá
+                        /* valido startTime y FinishTime juntos, y si ambos son True, se añade a la
+                        lista de empleados disponibles.
+                        Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime,
+                        se les asigna automáticamente.
+                        Si tienen startTime, se comprueba que el servicio empiece después de su startTime, 
+                        y si no, se pasa a false y ya no se añadirá. */
                         boolean startTime = true;
                         if (employeeStartTime.isPresent()) {
                             if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())) {
@@ -140,17 +143,13 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 }
             }
             double productivity = count > 0 ? accumulativeProductivity / count : 0.0;
-            //if (productivity > best_productivity) {
-            //Cambio para que considere tanto cobertura como productividad
-            if (bestSolution == null || currentCoverage > bestCoverage || (currentCoverage == bestCoverage && productivity > best_productivity)) {
+            if (bestSolution == null || currentCoverage > bestCoverage || (currentCoverage == bestCoverage && productivity > bestProductivity)) {
                 bestSolution = solution;
-                best_productivity = productivity;
+                bestProductivity = productivity;
                 bestCoverage = currentCoverage;
-                stopCounter = 0; // Reinicia contador
-            } else {
-                stopCounter++; // Aumenta contador
+                bestIteration = actualIteration;
             }
-            // System.out.println("no cubierto: " + nocubierto);
+            actualIteration++;
         }
         return bestSolution;
     }
