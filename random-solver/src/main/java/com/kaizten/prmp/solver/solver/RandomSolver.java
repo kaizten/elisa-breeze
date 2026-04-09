@@ -30,7 +30,6 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
         double bestProductivity = -1.0;
         int bestCoverage = -1;
 
-        int stopCounter = 0;
         int actualIteration = 0;
         int bestIteration = 0;
         int stop_threshold = 5; 

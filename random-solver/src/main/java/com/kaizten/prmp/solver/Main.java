@@ -19,6 +19,7 @@ import com.kaizten.prmp.io.PersonsReducedMobilityProblemJsonFileSupplier;
 import com.kaizten.prmp.io.PersonsReducedMobilitySolutionToJson;
 import com.kaizten.prmp.solver.solver.RandomSolver;
 import com.kaizten.prmp.solver.solver.ReferenceSolver;
+import com.kaizten.prmp.solver.solver.CompactingSolver;
 import com.kaizten.utils.io.KaiztenFile;
 import com.kaizten.utils.net.KaiztenURI;
 
@@ -66,6 +67,8 @@ public class Main {
         AbstractSolver<PersonsReducedMobilitySolution> solver = null;
         if (algorithm.equals("referenceSolver")) {
             solver = new ReferenceSolver(optimizationProblem);
+        } else if (algorithm.equals("compactingSolver")) {
+            solver = new CompactingSolver(optimizationProblem);
         } else {
             solver = new RandomSolver(optimizationProblem);
         }
@@ -114,7 +117,7 @@ public class Main {
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         // final File instances = new File(INSTANCE_FOLDER_URI);
         //final String[] algorithms = { "randomSolver", "referenceSolver"};
-        final String[] algorithms = { "randomSolver" };
+        final String[] algorithms = { "compactingSolver" };
         int i = 0;
         final File instanceFolder = KaiztenURI.toFile(new URI(INSTANCE_FOLDER_URI)).get();
         if (!instanceFolder.exists()) {
