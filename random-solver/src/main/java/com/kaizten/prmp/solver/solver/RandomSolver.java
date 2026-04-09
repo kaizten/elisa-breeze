@@ -32,8 +32,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
         int actualIteration = 0;
         int bestIteration = 0;
-        int stop_threshold = 5; 
-        
+        int stop_threshold = 5;
+
         while (true) {
             int iterationGap = actualIteration - bestIteration;
 
@@ -48,25 +48,28 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
             PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
 
             for (int service = 0; service < this.optimizationProblem.getNumberOfServices(); service++) {
-                int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
-                Role serviceRole = this.optimizationProblem.getServiceRole(service);
+                final int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
+                final Role serviceRole = this.optimizationProblem.getServiceRole(service);
                 OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
                 OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);
                 // Set de empleados disponibles
                 Set<Integer> availableEmployees = new HashSet<>();
                 for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
-                    Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(employee);
-                    Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(employee);
                     if (this.optimizationProblem.hasEmployeeRole(employee, serviceRole)
                             && solution.doesServiceFitEmployeeWorkingTime(employee, service)
                             && !solution.isServiceOverlapping(employee, service)
                             && solution.doesServiceSatisfiesTimeBetweenDays(employee, service)) {
-                        /* valido startTime y FinishTime juntos, y si ambos son True, se añade a la
-                        lista de empleados disponibles.
-                        Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime,
-                        se les asigna automáticamente.
-                        Si tienen startTime, se comprueba que el servicio empiece después de su startTime, 
-                        y si no, se pasa a false y ya no se añadirá. */
+                        Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(employee);
+                        Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(employee);
+                        /*
+                         * valido startTime y FinishTime juntos, y si ambos son True, se añade a la
+                         * lista de empleados disponibles.
+                         * Empiezo por poner ambos en True, porque si no tienen startTime ni finishTime,
+                         * se les asigna automáticamente.
+                         * Si tienen startTime, se comprueba que el servicio empiece después de su
+                         * startTime,
+                         * y si no, se pasa a false y ya no se añadirá.
+                         */
                         boolean startTime = true;
                         if (employeeStartTime.isPresent()) {
                             if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())) {
@@ -87,7 +90,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     }
                 }
                 // asignacion de empleados a servicios con fitness y aleatoriedad
-                while (solution.getAssignedEmployees(service).size() < requiredEmployees
+                while (solution.getNumberOfAssignedEmployees(service) < requiredEmployees
                         && !availableEmployees.isEmpty()) {
                     // Mapear fitness por empleado
                     double totalFitness = 0.0;
@@ -116,18 +119,10 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     } else {
                         break;
                     }
-
                 }
             }
-
-            //Calcular cobertura
-            int currentCoverage = 0;
-            for (int s = 0; s < this.optimizationProblem.getNumberOfServices(); s++) {
-                if (solution.getAssignedEmployees(s).size() == this.optimizationProblem.getServiceRequiredEmployees(s)) {
-                    currentCoverage++;
-                }
-            }
-
+            // Calcular cobertura
+            final int currentCoverage = solution.serviceCoverage();
             // Calcular productividad de Working Time
             double accumulativeProductivity = 0.0;
             int count = 0;
@@ -142,7 +137,9 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 }
             }
             double productivity = count > 0 ? accumulativeProductivity / count : 0.0;
-            if (bestSolution == null || currentCoverage > bestCoverage || (currentCoverage == bestCoverage && productivity > bestProductivity)) {
+            if ((bestSolution == null)
+                    || (currentCoverage > bestCoverage)
+                    || (currentCoverage == bestCoverage && productivity > bestProductivity)) {
                 bestSolution = solution;
                 bestProductivity = productivity;
                 bestCoverage = currentCoverage;
