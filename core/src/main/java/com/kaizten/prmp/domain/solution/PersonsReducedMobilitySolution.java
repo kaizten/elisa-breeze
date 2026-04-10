@@ -117,8 +117,9 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return employees.contains(employee);
     }
 
-    public Set<Integer> getAssignedEmployees(int employee) {
-        return this.assignedEmployees[employee];
+    //error corregido (cambié employee por service)
+    public Set<Integer> getAssignedEmployees(int service) { 
+        return this.assignedEmployees[service];
     }
 
     public void assignServiceToEmployee(int employee, int service) {

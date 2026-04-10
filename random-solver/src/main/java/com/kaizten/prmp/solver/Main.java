@@ -31,7 +31,7 @@ public class Main {
     //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/results.txt";
     
     //PRUEBA REAL
-    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/instances/";
+    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/test/";
     private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/solutions/";
     private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/results.txt";
 
@@ -48,7 +48,7 @@ public class Main {
             return;
         }
         final String instanceName = instance.getName();
-        final String solutionName = instanceName.replace(".json", "_" + algorithm + "3.json");
+        final String solutionName = instanceName.replace(".json", "_" + algorithm + "2.json");
         File solutionFile = new File(SOLUTION_FOLDER + solutionName);
         if (solutionFile.exists()) {
             System.out.println("La solución ya existe: " + solutionFile.getAbsolutePath());
@@ -116,7 +116,8 @@ public class Main {
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         // final File instances = new File(INSTANCE_FOLDER_URI);
-        //final String[] algorithms = { "randomSolver", "referenceSolver"};
+        //final String[] algorithms = { "randomSolver", "referenceSolver" };
+        //final String[] algorithms = { "randomSolver", "referenceSolver", "compactingSolver" };
         final String[] algorithms = { "compactingSolver" };
         int i = 0;
         final File instanceFolder = KaiztenURI.toFile(new URI(INSTANCE_FOLDER_URI)).get();
