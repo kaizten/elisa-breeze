@@ -159,6 +159,7 @@ public class PersonsReducedMobilitySolutionToJson implements Function<PersonsRed
         jsonProductivityUsedTime.put(JsonConstants.REAL_SERVICES, solution.getAverageProductivityUsedTimeRealServices());
         JSONObject jsonWorkProductivity = new JSONObject();
         jsonWorkProductivity.put(JsonConstants.GLOBAL, solution.getAverageWorkProductivity());
+        jsonWorkProductivity.put(JsonConstants.ACTIVE_EMPLOYEES, solution.getAverageActiveWorkProductivity());
         jsonWorkProductivity.put(JsonConstants.REAL_SERVICES, solution.getAverageWorkProductivityRealServices());
         JSONObject jsonProductivityUsedTimeByRole = new JSONObject();
         for (Map.Entry<String, Double> entry : solution.getAverageProductivityUsedTimePerRole().entrySet()) {

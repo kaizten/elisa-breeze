@@ -117,9 +117,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return employees.contains(employee);
     }
 
-    //error corregido (cambié employee por service)
-    public Set<Integer> getAssignedEmployees(int service) { 
-        return this.assignedEmployees[service];
+    public Set<Integer> getAssignedEmployees(int employee) { 
+        return this.assignedEmployees[employee];
     }
 
     public void assignServiceToEmployee(int employee, int service) {
@@ -381,6 +380,24 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         return counter == 0 ? 0.0 : productivity / counter;
     }
 
+    public double getAverageActiveWorkProductivity() {
+        double productivity = 0.0;
+        int counter = 0;
+
+        for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
+            for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+
+                if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
+                    productivity += this.getWorkProductivity(date, employee);
+                    counter++;
+
+
+                }
+            }
+        }
+        return counter == 0 ? 0.0 : productivity / counter;
+    }
+
     // media de productivity used time TOTAL
     public double getAverageProductivityUsedTime() {
         double productivity = 0.0;
@@ -388,10 +405,11 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
-                counter++;
 
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
                     productivity += this.getProductivityUsedTime(date, employee);
+                    counter++;
+
                 }
             }
         }
@@ -406,7 +424,6 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
-                counter++;
                 Set<Integer> assignedServices = this.getAssignedServices(this.optimizationProblem.getIndexOfDate(date),
                         employee);
 
@@ -420,6 +437,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
 
                 if (hasRealService) {
                     productivity += this.getProductivityUsedTime(date, employee);
+                    counter++;
+
                 }
             }
         }

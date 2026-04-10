@@ -68,4 +68,5 @@ public class JsonConstants {
     public static final String WORK_PRODUCTIVITY_VALUES = "workProductivityValues";
     public static final String AGENTS_WITH_WORK = "agentsWithWork";
     public static final String AGENTS_WITH_WORK_PERCENTAGE = "agentsWithWorkPercentage";
+    public static final String ACTIVE_EMPLOYEES = "activeEmployees";
 }

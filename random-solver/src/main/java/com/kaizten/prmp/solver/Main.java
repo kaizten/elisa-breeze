@@ -48,7 +48,7 @@ public class Main {
             return;
         }
         final String instanceName = instance.getName();
-        final String solutionName = instanceName.replace(".json", "_" + algorithm + "2.json");
+        final String solutionName = instanceName.replace(".json", "_" + algorithm + ".json");
         File solutionFile = new File(SOLUTION_FOLDER + solutionName);
         if (solutionFile.exists()) {
             System.out.println("La solución ya existe: " + solutionFile.getAbsolutePath());

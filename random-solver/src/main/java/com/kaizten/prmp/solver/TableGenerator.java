@@ -26,6 +26,8 @@ public class TableGenerator {
                 .getJSONObject(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES).getDouble(JsonConstants.GLOBAL);
         double averageWorkProductivity = solution.getJSONObject(JsonConstants.INDICATORS)
                 .getJSONObject(JsonConstants.WORK_PRODUCTIVITY_VALUES).getDouble(JsonConstants.GLOBAL);
+        double averageActiveWorkProductivity = solution.getJSONObject(JsonConstants.INDICATORS)
+                .getJSONObject(JsonConstants.WORK_PRODUCTIVITY_VALUES).getDouble(JsonConstants.ACTIVE_EMPLOYEES);
         double averageRealProductivityUsedTime = solution.getJSONObject(JsonConstants.INDICATORS)
                 .getJSONObject(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES).getDouble(JsonConstants.REAL_SERVICES);
         double averageRealWorkProductivity = solution.getJSONObject(JsonConstants.INDICATORS)
@@ -70,7 +72,7 @@ public class TableGenerator {
         if (!file.exists()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
                 writer.write(
-                        "Instance\tNumber-of-Services\tReal-Services\tFake-Services\tNumber-of-Employees\tTotal-Agents\tWorking-Agents\t%Working-Agents\tTotal-Drivers\tTotal-Managers\tTotal-RampManagers\tAlgorithm\tProductivity-UT\tReal-Productivity-UT\tP.UT-Agent\tP.UT-Driver\tP.UT-RampManager\tP.UT-Manager\tWork-Productivity\tReal-Work-Productivity\tWP-Agent\tWP-Driver\tWP-RampManager\tWP-Manager\tExecution-Time(ms)\tCovered-Services(%)\tCovered-Services");
+                        "Instance\tNumber-of-Services\tReal-Services\tFake-Services\tNumber-of-Employees\tTotal-Agents\tWorking-Agents\t%Working-Agents\tTotal-Drivers\tTotal-Managers\tTotal-RampManagers\tAlgorithm\tProductivity-UT\tReal-Productivity-UT\tP.UT-Agent\tP.UT-Driver\tP.UT-RampManager\tP.UT-Manager\tWork-Productivity\tReal-Work-Productivity\tWP-Agent\tWP-Driver\tWP-RampManager\tWP-Manager\tExecution-Time(ms)\tCovered-Services(%)\tCovered-Services\tActive-Work-Productivity");
                 writer.newLine();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -80,7 +82,7 @@ public class TableGenerator {
         // Guardar en archivo de texto
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILETOSAVE, true))) {
             writer.write(String.format(
-                    "%s\t%d\t%d\t%d\t%d\t%d\t%d\t%.3f\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d",
+                    "%s\t%d\t%d\t%d\t%d\t%d\t%d\t%.3f\t%d\t%d\t%d\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%d\t%.3f",
                     instance.getName(), numberServices, realServices, fakeServices,
                     numberEmployees, totalAgents, workingAgents, workingAgentsPercentage,
                     totalDrivers, totalManagers, totalRampManagers,
@@ -88,7 +90,7 @@ public class TableGenerator {
                     putAgent, putDriver, putRampManager, putManager,
                     averageWorkProductivity, averageRealWorkProductivity,
                     wpAgent, wpDriver, wpRampManager, wpManager,
-                    executionTime, coveredServicesPercentage, coveredServices));
+                    executionTime, coveredServicesPercentage, coveredServices, averageActiveWorkProductivity));
 
             writer.newLine();
 

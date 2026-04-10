@@ -1,4 +1,4 @@
-Instance	Number-of-Services	Real-Services	Fake-Services	Number-of-Employees	Total-Agents	Working-Agents	%Working-Agents	Total-Drivers	Total-Managers	Total-RampManagers	Algorithm	Productivity-UT	Real-Productivity-UT	P.UT-Agent	P.UT-Driver	P.UT-RampManager	P.UT-Manager	Work-Productivity	Real-Work-Productivity	WP-Agent	WP-Driver	WP-RampManager	WP-Manager	Execution-Time(ms)	Covered-Services(%)	Covered-Services
+Instance	Number-of-Services	Real-Services	Fake-Services	Number-of-Employees	Total-Agents	Working-Agents	%Working-Agents	Total-Drivers	Total-Managers	Total-RampManagers	Algorithm	Productivity-UT	Real-Productivity-UT	P.UT-Agent	P.UT-Driver	P.UT-RampManager	P.UT-Manager	Work-Productivity	Real-Work-Productivity	WP-Agent	WP-Driver	WP-RampManager	WP-Manager	Execution-Time(ms)	Covered-Services(%)	Covered-Services	Active-Work-Productivity
 realCaseProblemMAD.json	24856	24856	0	6889	6889	6889	100,000	0	0	0	casoReal	86,533	86,533	100,000	0,000	0,000	0,000	36,048	36,048	76,875	0,000	0,000	0,000	0,000	100,000	24856
 realCaseProblemMAD.json	24856	24856	0	6889	6889	6885	99,942	0	0	0	randomSolver	94,780	94,780	94,780	0,000	0,000	0,000	25,305	25,305	25,305	0,000	0,000	0,000	21640749,868	100,000	24856
 realCaseProblemMAD.json	24856	24856	0	6889	6889	6889	100,000	0	0	0	referenceSolver	100,000	100,000	100,000	0,000	0,000	0,000	21,329	21,329	21,329	0,000	0,000	0,000	4569601,075	17,658	4389
@@ -9,5 +9,6 @@ realCaseProblemMAD.json	24856	24856	0	6889	6889	6882	99,898	0	0	0	randomSolver	3
 realCaseProblemMAD.json	24856	24856	0	6889	6889	6889	100,000	0	0	0	referenceSolver	6,667	6,667	6,667	0,000	0,000	0,000	1,422	1,422	1,422	0,000	0,000	0,000	5483336,587	17,658	4389
 prueba.json	4005	4005	0	700	700	700	100,000	0	0	0	randomSolver	77,251	77,251	77,251	0,000	0,000	0,000	68,896	68,896	68,896	0,000	0,000	0,000	15403,908	75,830	3037
 prueba2.json	1861	1861	0	2000	2000	1795	89,750	0	0	0	randomSolver	36,680	36,680	36,680	0,000	0,000	0,000	14,344	14,344	14,344	0,000	0,000	0,000	96454,474	100,000	1861
-prueba.json	4005	4005	0	700	700	700	100,000	0	0	0	compactingSolver	93,514	93,514	93,514	0,000	0,000	0,000	76,924	76,924	76,924	0,000	0,000	0,000	6150,713	84,569	3387
-prueba2.json	1861	1861	0	2000	2000	838	41,900	0	0	0	compactingSolver	19,738	19,738	19,738	0,000	0,000	0,000	14,344	14,344	14,344	0,000	0,000	0,000	6272,052	100,000	1861
+realCaseProblemMAD.json	24856	24856	0	6889	6889	1235	17,927	0	0	0	compactingSolver	13,114	13,114	13,114	0,000	0,000	0,000	8,778	8,778	8,778	0,000	0,000	0,000	2227043,651	100,000	24856
+prueba.json	4005	4005	0	700	700	700	100,000	0	0	0	compactingSolver	93,724	93,724	93,724	0,000	0,000	0,000	77,031	77,031	77,031	0,000	0,000	0,000	7579,046	84,744	3394	77,031
+prueba2.json	1861	1861	0	2000	2000	842	42,100	0	0	0	compactingSolver	93,990	93,990	19,808	0,000	0,000	0,000	14,344	14,344	14,344	0,000	0,000	0,000	6403,154	100,000	1861	68,062
