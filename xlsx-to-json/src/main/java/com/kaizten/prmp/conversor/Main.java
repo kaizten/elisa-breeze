@@ -108,7 +108,7 @@ public class Main {
             }
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
-            for (int agents = 1; agents <= 250; agents++) {
+            for (int agents = 250; agents <= 250; agents++) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
                         airport,

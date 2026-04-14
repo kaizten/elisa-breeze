@@ -15,26 +15,35 @@ public class AgentAdder {
         JSONObject json = new JSONObject(content);
         JSONArray employees = json.getJSONObject("employees").getJSONArray("individuals");
 
-        int increase = 160; // Porcentaje adicional de agentes a añadir
+        int[] targetEmployeeCount = {600, 800, 1000, 1200, 1400};
         int originalAgent = employees.length();
-        int additionalAgentsCount = (int) (originalAgent * increase / 100.0);
 
-        System.out.println("Nº de Agentes originales: " + originalAgent);
-        System.out.println("Añadiendo " + increase + "% agentes: " + additionalAgentsCount);
+        for (int target : targetEmployeeCount) {
+            System.out.println("Generando instancia con " + target + " agentes");
 
-        for (int i = 1; i <= additionalAgentsCount; i++) {
-            JSONObject extraAgent = new JSONObject();
-            extraAgent.put("code", "EXTRA_" + String.format("%03d", i));
-            extraAgent.put("roles", new JSONArray().put("AGENT")); 
-            extraAgent.put("timePerDay", "PT8H");
-            extraAgent.put("timePerWeek", "PT40H");
-            extraAgent.put("timeBetweenWorkingDays", "PT12H");
-                
-            employees.put(extraAgent);
-        }
+            JSONObject jsonCopy = new JSONObject(json.toString());
+            JSONArray employeesCopy = jsonCopy.getJSONObject("employees").getJSONArray("individuals");
+            if(target > originalAgent) {
+                int additionalAgentsCount = target - originalAgent;
 
-        // 4. Guardar con nombre descriptivo
-        String outputPath = "data/realCaseTest/stresstest/realCaseProblemMAD_" + "Extra" + increase + "perc" + ".json";
-        Files.write(Paths.get(outputPath), json.toString(4).getBytes());
+                for (int i = 1; i <= additionalAgentsCount; i++) {
+                    JSONObject extraAgent = new JSONObject();
+                    extraAgent.put("code", "EXTRA_" + String.format("%03d", i));
+                    extraAgent.put("roles", new JSONArray().put("AGENT")); 
+                    extraAgent.put("timePerDay", "PT8H");
+                    extraAgent.put("timePerWeek", "PT40H");
+                    extraAgent.put("timeBetweenWorkingDays", "PT12H");
+                        
+                    employeesCopy.put(extraAgent);
+                }
+            } else if (target < originalAgent){
+                while (employeesCopy.length() > target) {
+                    employeesCopy.remove(employeesCopy.length() - 1);
+                }
+            }
+            
+            String outputPath = "data/realCaseTest/instances/realCaseProblemMAD_" + target + "_agents" + ".json";
+            Files.write(Paths.get(outputPath), jsonCopy.toString(4).getBytes());
+    }
     }
 }
