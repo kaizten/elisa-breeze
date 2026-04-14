@@ -67,7 +67,8 @@ public class Main {
         int maxOverlaps = 0;
         if (airport.equals("SPC")) {
             InstanceCreatorSPC creator = new InstanceCreatorSPC();
-            for (int agents = 1; agents <= 30; agents++) { 
+            final int[] agentsCount = {3,6,9,12,15,18,21,24,27,30};
+            for (int agents : agentsCount) { 
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
                         airport,
@@ -88,7 +89,8 @@ public class Main {
             }
         } else if (airport.equals("TFS")) {
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
-            for (int agents = 1; agents <= 70; agents++) {
+            final int[] agentsCount = {7,14,21,28,35,42,49,56,63,70};
+            for (int agents : agentsCount) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
                         airport,
@@ -108,7 +110,8 @@ public class Main {
             }
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
-            for (int agents = 250; agents <= 250; agents++) {
+            final int[] agentsCount = {25,50,75,100,125,150,175,200,225,250};
+            for (int agents : agentsCount) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
                         airport,
