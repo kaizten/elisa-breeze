@@ -26,7 +26,9 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     private int firstService[][];
     private int lastService[][];
     private Set<Integer>[] assignedEmployees;
-
+    private LocalDate[] lastWorkedDate;
+    private OffsetDateTime[] lastWorkedServiceEnd;
+    
     public PersonsReducedMobilitySolution(PersonsReducedMobilityProblem optimizationProblem) {
         super(optimizationProblem);
         this.serviceAssignment = new HashSet[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem
@@ -50,6 +52,8 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         for (int service = 0; service < optimizationProblem.getNumberOfServices(); service++) {
             this.assignedEmployees[service] = new HashSet<>();
         }
+        this.lastWorkedDate = new LocalDate[optimizationProblem.getNumberOfEmployees()];
+        this.lastWorkedServiceEnd = new OffsetDateTime[optimizationProblem.getNumberOfEmployees()];
     }
 
     @Override
@@ -80,6 +84,14 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         for (int service = 0; service < optimizationProblem.getNumberOfServices(); service++) {
             copy.assignedEmployees[service] = new HashSet<>(this.assignedEmployees[service]);
         }
+
+        copy.lastWorkedDate = new LocalDate[optimizationProblem.getNumberOfEmployees()];
+        copy.lastWorkedServiceEnd = new OffsetDateTime[optimizationProblem.getNumberOfEmployees()];
+        for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
+            copy.lastWorkedDate[employee] = this.lastWorkedDate[employee];
+            copy.lastWorkedServiceEnd[employee] = this.lastWorkedServiceEnd[employee];
+        }
+
         return copy;
     }
 
@@ -133,6 +145,18 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         this.serviceAssignment[indexOfDate][employee].add(service);
         this.assignedEmployees[service].add(employee);
+
+        // nuevo
+        OffsetDateTime serviceEnd = this.optimizationProblem.getServiceFinishingTime(service);
+
+        if(this.lastWorkedDate[employee] == null || date.isAfter(this.lastWorkedDate[employee])) {
+            this.lastWorkedDate[employee] = date;
+            this.lastWorkedServiceEnd[employee] = serviceEnd;
+        } else if (date.equals(this.lastWorkedDate[employee]) 
+                && (this.lastWorkedServiceEnd[employee] == null 
+                || serviceEnd.isAfter(this.lastWorkedServiceEnd[employee]))) {
+            this.lastWorkedServiceEnd[employee] = serviceEnd;
+        }
     }
 
     public boolean isServiceCovered(int service) {
@@ -384,17 +408,30 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         double productivity = 0.0;
         int counter = 0;
 
+        List<LocalDate> dates = this.optimizationProblem.getDatesOfServices();
+
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
-            for (LocalDate date : this.optimizationProblem.getDatesOfServices()) {
+            boolean employeeHasWorked = false;
 
+            for (LocalDate date : dates) {
                 if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
-                    productivity += this.getWorkProductivity(date, employee);
-                    counter++;
-
-
+                    employeeHasWorked = true;
+                    break;
                 }
             }
+
+            if (!employeeHasWorked) {
+                continue;
+            }
+
+            for (LocalDate date : dates) {
+                if (this.hasAssignedServices(this.optimizationProblem.getIndexOfDate(date), employee)) {
+                    productivity += this.getWorkProductivity(date, employee);
+                }
+                counter++;
+            }
         }
+
         return counter == 0 ? 0.0 : productivity / counter;
     }
 
@@ -732,11 +769,33 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         return elapsedTime;
     }
-
+    /*
     public boolean doesServiceSatisfiesTimeBetweenDays(int employee, int service) {
         long elapseOfTimeBetweenDays = this.getElapsedTimeFromPreviousDays(employee, service);
         return (elapseOfTimeBetweenDays >= this.optimizationProblem.getEmployeeTimeBetweenWorkingDays(employee));
-    }
+    } */
+    public boolean doesServiceSatisfiesTimeBetweenDays(int employee, int service) {
+        if (this.lastWorkedDate[employee] == null || this.lastWorkedServiceEnd[employee] == null) {
+        return true;
+        }
+
+        LocalDate serviceDate = this.optimizationProblem.getServiceStartingTime(service).toLocalDate();
+
+        if (serviceDate.equals(this.lastWorkedDate[employee])) {
+            return true;
+        }
+
+        if (serviceDate.isAfter(this.lastWorkedDate[employee])) {
+            long minutesBetween = Duration.between(
+                    this.lastWorkedServiceEnd[employee],
+                    this.optimizationProblem.getServiceStartingTime(service))
+                    .toMinutes();
+
+            return minutesBetween >= this.optimizationProblem.getEmployeeTimeBetweenWorkingDays(employee);
+        }
+
+        return true;
+    }   
 
     public boolean doesServiceFitsWorkingJourney(int employee, int service) {
         if (!this.optimizationProblem.hasEmployeeStartTime(employee)

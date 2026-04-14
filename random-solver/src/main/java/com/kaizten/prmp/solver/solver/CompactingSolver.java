@@ -97,7 +97,6 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
     // construye la solución
     private PersonsReducedMobilitySolution buildIterationSolution() {
         PersonsReducedMobilitySolution solution = new PersonsReducedMobilitySolution(this.optimizationProblem);
-        Map<Integer, EmployeeLastWorkInfo> employeeLastWorkInfoMap = new HashMap<>();
 
         List<Integer> services = new ArrayList<>();
         for (int s = 0; s < this.optimizationProblem.getNumberOfServices(); s++) {
@@ -107,20 +106,19 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
             int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
 
             while (solution.getNumberOfAssignedEmployees(service) < requiredEmployees){
-                int selectedEmployee = selectEmployee(solution, service, employeeLastWorkInfoMap);
+                int selectedEmployee = selectEmployee(solution, service);
 
                 if(selectedEmployee == -1){
                     break; 
                 }
                 solution.assignServiceToEmployee(selectedEmployee, service);
-                updateEmployeeLastWorkInfo(selectedEmployee, service, employeeLastWorkInfoMap);
             }
         }  
         return solution;
     }
 
     //seleccionar empleado
-    private int selectEmployee(PersonsReducedMobilitySolution solution, int service, Map<Integer, EmployeeLastWorkInfo> employeeLastWorkInfoMap){
+    private int selectEmployee(PersonsReducedMobilitySolution solution, int service){
 
         Role requiredRole = this.optimizationProblem.getServiceRole(service);
         List<EmployeeFitness> topCandidates = new ArrayList<>();
@@ -130,7 +128,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
 
             if(solution.isEmployeeAssignedToService(service, employee)){continue;}
             
-            if(!isEmployeeTimeCompatible(solution, employee, service, employeeLastWorkInfoMap)){continue;}
+            if(!isEmployeeTimeCompatible(solution, employee, service)){continue;}
 
             double fitness = getEmployeeFitness(solution, employee, service);
             topCandidates.add(new EmployeeFitness(employee, fitness));
@@ -152,7 +150,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
     }
 
     // verificar compatibilidad temporal
-    private boolean isEmployeeTimeCompatible(PersonsReducedMobilitySolution solution, int employee, int service, Map<Integer, EmployeeLastWorkInfo> employeeLastWorkInfoMap) {
+    private boolean isEmployeeTimeCompatible(PersonsReducedMobilitySolution solution, int employee, int service) {
         OffsetDateTime serviceStart = this.optimizationProblem.getServiceStartingTime(service);
         OffsetDateTime serviceEnd = this.optimizationProblem.getServiceFinishingTime(service);
 
@@ -163,12 +161,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         
         if(solution.isServiceOverlapping(employee, service)){return false;}
 
-        // este método hace comprobaciones muy costosas, por lo que lo sustityo por una más simple
-        //if(!solution.doesServiceSatisfiesTimeBetweenDays(employee, service)){return false;}
-
-        if(!checkTimeBetweenDays(employee, service, employeeLastWorkInfoMap)){
-            return false;
-        }
+        if(!solution.doesServiceSatisfiesTimeBetweenDays(employee, service)){return false;}
 
         boolean startOk = employeeStartOpt.isEmpty() 
             || !serviceStart.toLocalTime().isBefore(employeeStartOpt.get());
@@ -200,50 +193,6 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         return BONUS_ACTIVE_EMPLOYEE - PENALTY_SERVICES_GAP * gap; 
     }
 
-    private boolean checkTimeBetweenDays( int employee, int service, Map<Integer, EmployeeLastWorkInfo> employeeLastWorkInfoMap) {
-        EmployeeLastWorkInfo lastWorkInfo = employeeLastWorkInfoMap.get(employee);
-        if(lastWorkInfo == null || lastWorkInfo.lastWorkDate == null
-            || lastWorkInfo.lastServiceEnd == null){
-                return true;
-        }
-
-        LocalDate serviceDate = this.optimizationProblem.getServiceStartingTime(service).toLocalDate();
-        if(serviceDate.equals(lastWorkInfo.lastWorkDate)){
-            return true;
-        }
-
-        if (serviceDate.isAfter(lastWorkInfo.lastWorkDate)){
-            long minutesBetween = Duration.between(lastWorkInfo.lastServiceEnd, this.optimizationProblem.getServiceStartingTime(service)).toMinutes();
-            return minutesBetween >= this.optimizationProblem.getEmployeeTimeBetweenWorkingDays(employee);
-            
-        }
-
-        return true;
-        
-    }
-
-    private void updateEmployeeLastWorkInfo(int employee, int service, Map<Integer, EmployeeLastWorkInfo> employeeLastWorkInfoMap){
-        
-        OffsetDateTime serviceEnd = this.optimizationProblem.getServiceFinishingTime(service);
-        LocalDate serviceDate = this.optimizationProblem.getServiceStartingTime(service).toLocalDate();
-
-        EmployeeLastWorkInfo lastWorkInfo = employeeLastWorkInfoMap.computeIfAbsent(employee, k -> new EmployeeLastWorkInfo());
-
-        if(lastWorkInfo.lastWorkDate == null 
-                || serviceDate.isAfter(lastWorkInfo.lastWorkDate)){
-            
-            lastWorkInfo.lastWorkDate = serviceDate;
-            lastWorkInfo.lastServiceEnd = serviceEnd;
-            return;
-        }
-        if (serviceDate.equals(lastWorkInfo.lastWorkDate) 
-                && (lastWorkInfo.lastServiceEnd == null 
-                || serviceEnd.isAfter(lastWorkInfo.lastServiceEnd))){
-            lastWorkInfo.lastServiceEnd = serviceEnd;
-        }
-    }
-
-
     // Clases auxiliares
     private static class EmployeeFitness {
         int employee;
@@ -254,11 +203,6 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
             this.fitness = fitness;
         }
 
-    }
-
-    public static class EmployeeLastWorkInfo {
-        LocalDate lastWorkDate;
-        OffsetDateTime lastServiceEnd;
     }
 
 }
