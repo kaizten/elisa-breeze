@@ -1,8 +1,6 @@
 package com.kaizten.prmp.conversor.realTestMAD;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;

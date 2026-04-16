@@ -1,11 +1,13 @@
 package com.kaizten.prmp.conversor.realTestMAD;
 
+import java.io.File;
+import java.util.List;
+
+import org.json.JSONObject;
+
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
 import com.kaizten.prmp.io.PersonsReducedMobilityProblemToJson;
 import com.kaizten.utils.io.KaiztenFile;
-import org.json.JSONObject;
-import java.io.File;
-import java.util.List;
 
 public class TestMain {
     public static void main(String[] args) throws Exception {
@@ -15,7 +17,7 @@ public class TestMain {
 
         // Leer xlsx
         //final RealTestXlsxReader reader = new RealTestXlsxReader();
-        final XlsxExtra reader = new XlsxExtra();
+        final RealTestXlsxReader reader = new RealTestXlsxReader();
         List<ServiceInformation> cleanedServices = reader.readXlsxFile(xlsx);
 
         //Diagnostico datos
@@ -29,11 +31,11 @@ public class TestMain {
         // Exportar Instancia a JSON
         final PersonsReducedMobilityProblemToJson problemToJson = new PersonsReducedMobilityProblemToJson();
         final JSONObject json = problemToJson.apply(problem);
-        KaiztenFile.writeToFile(new File(outputFolder, "instances/realCaseProblemMAD_sin_clones2.json"), json);
+        KaiztenFile.writeToFile(new File(outputFolder, "instances/realCaseProblemMAD_INTENTO.json"), json);
 
         // Exportar solución del problema
-        //final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
-        //solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/realSolutionMAD.json"));
+        final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
+        solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/realSolutionMAD.json"));
         
     }
 }

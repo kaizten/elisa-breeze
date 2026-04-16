@@ -26,14 +26,14 @@ import com.kaizten.utils.net.KaiztenURI;
 public class Main {
 
     // ELISA:
-    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instances/";
-    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/";
-    private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/results.txt";
+    //private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/instances/";
+    //private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions/";
+    //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/results.txt";
     
     //PRUEBA REAL
-    //private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/instances/";
-    //private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/solutions/";
-    //private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/results.txt";
+    private static final String INSTANCE_FOLDER_URI = "file:/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/instances/";
+    private static final String SOLUTION_FOLDER = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/solutions/";
+    private static final String FILETOSAVE = "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/results.txt";
 
     //private static final String INSTANCE_FOLDER_URI = "file:/home/christopher/kaizten/internship/elisa-breeze/data/instances/";
     //private static final String SOLUTION_FOLDER = "/home/christopher/kaizten/internship/elisa-breeze/data/solutions/";
@@ -69,7 +69,7 @@ public class Main {
             solver = new ReferenceSolver(optimizationProblem);
         } else if (algorithm.equals("compactingSolver")) {
             solver = new CompactingSolver(optimizationProblem);
-        } else {
+        } else if (algorithm.equals("randomSolver")) {
             solver = new RandomSolver(optimizationProblem);
         }
         final long startTime = System.nanoTime(); // Iniciar medición tiempo
@@ -117,7 +117,6 @@ public class Main {
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
         // final File instances = new File(INSTANCE_FOLDER_URI);
         final String[] algorithms = { "randomSolver", "referenceSolver", "compactingSolver" };
-        //final String[] algorithms = { "compactingSolver" };
         int i = 0;
         final File instanceFolder = KaiztenURI.toFile(new URI(INSTANCE_FOLDER_URI)).get();
         if (!instanceFolder.exists()) {

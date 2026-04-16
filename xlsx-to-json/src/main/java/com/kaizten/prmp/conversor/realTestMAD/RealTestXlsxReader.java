@@ -9,11 +9,11 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Comparator;
 
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,6 +26,12 @@ public class RealTestXlsxReader {
     private final Map<String, String> agentIDMap = new LinkedHashMap<>();
     private final Map<String, List<OffsetDateTime[]>> agentSchedules = new HashMap<>();
    
+    private boolean useClones = true;
+
+    public void setUseClones(boolean useClones) {
+        this.useClones = useClones;
+    }
+
     public List<ServiceInformation> readXlsxFile(File xlsx) throws IOException {
         Map<String, ServiceInformation> bestServices = new LinkedHashMap<>();
         DataFormatter df = new DataFormatter();
@@ -142,6 +148,8 @@ public class RealTestXlsxReader {
     }
 
     private String getFreeAgentOrClone(String base, OffsetDateTime start, OffsetDateTime end) {
+        if(!useClones) return base; // para no utilizar clones
+        
         String name = base; 
         int clone = 1;
 
