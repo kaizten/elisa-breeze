@@ -2,6 +2,7 @@ package com.kaizten.prmp.conversor.realTestMAD;
 
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.json.JSONArray;
@@ -15,11 +16,19 @@ public class AgentAdder {
         JSONObject json = new JSONObject(content);
         JSONArray employees = json.getJSONObject("employees").getJSONArray("individuals");
 
-        int[] targetEmployeeCount = {600, 800, 1000, 1200, 1400};
         int originalAgent = employees.length();
 
-        for (int target : targetEmployeeCount) {
+        for (int target = 600; target <= 1600; target += 20) {
             System.out.println("Generando instancia con " + target + " agentes");
+
+            String outputPath = "data/realCaseTest/instances/realCaseProblemMAD_" + target + "_agents.json";
+            Path outputFile = Paths.get(outputPath);
+
+            // Verificar si ya existe para no crearlos de nuevo
+            if (Files.exists(outputFile)) {
+                System.out.println("El archivo ya existe: " + outputPath);
+                continue;
+            }
 
             JSONObject jsonCopy = new JSONObject(json.toString());
             JSONArray employeesCopy = jsonCopy.getJSONObject("employees").getJSONArray("individuals");
@@ -42,7 +51,6 @@ public class AgentAdder {
                 }
             }
             
-            String outputPath = "data/realCaseTest/instances/realCaseProblemMAD_" + target + "_agents" + ".json";
             Files.write(Paths.get(outputPath), jsonCopy.toString(4).getBytes());
     }
     }
