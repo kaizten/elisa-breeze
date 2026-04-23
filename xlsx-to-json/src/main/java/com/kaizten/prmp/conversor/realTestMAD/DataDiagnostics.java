@@ -57,9 +57,11 @@ public class DataDiagnostics {
 
         for (String pas : passengerMap.keySet()) {
             List<ServiceInformation> passengerService = passengerMap.get(pas);
+            
             if (passengerService.size() > 1) {
                 passengerMultiplied++;
                 writer.println("\nPasajero: " + pas + " tiene " + passengerService.size() + " servicios:");
+                
                 for (ServiceInformation s : passengerService) {
                     writer.println("  - " + s.getKey() + " (Inicio: " + s.getStartTime().toLocalTime() + ")");
                 }

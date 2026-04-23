@@ -45,6 +45,7 @@ public class RealTestXlsxReader {
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
+                
                 if (row == null) continue;
 
                 //Solo procesar servicios finalizados
@@ -71,6 +72,7 @@ public class RealTestXlsxReader {
                 if(startTime != null && endTime != null && endTime.isBefore(startTime)) {
                     endTime = endTime.plusDays(1); 
                 }
+
                 service.setStartTime(startTime);
                 service.setEndTime(endTime);
 
@@ -80,8 +82,8 @@ public class RealTestXlsxReader {
                 if (!agents.isBlank() && startTime != null && endTime != null) {
                     for (String name : agents.split("\\r?\\n+")) {
                         String cleanName = name.trim().toUpperCase();
+                        
                         if (!cleanName.isEmpty()) {
-
                             // Formateo de nombre
                             String base = formatName(cleanName);
                             String freeName = getFreeAgentOrClone(base, startTime, endTime);
@@ -98,6 +100,7 @@ public class RealTestXlsxReader {
                 // Elegir la mejor fila si hay duplicados (la que contiene más información)
                 if (service.getStartTime() != null && service.getEndTime() != null && !service.getAgents().isEmpty()) {
                     ServiceInformation existing = bestServices.get(service.getKey());
+                    
                     if (existing == null || service.rowScore() > existing.rowScore() || 
                        (service.rowScore() == existing.rowScore() && i > existing.getRowIndex())) {
                         bestServices.put(service.getKey(), service);
@@ -121,6 +124,7 @@ public class RealTestXlsxReader {
         try {
             LocalDate date = LocalDate.parse(d.trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             LocalTime time = null;
+
             for (String p : new String[]{"HH:mm:ss", "HH:mm", "H:mm:ss", "H:mm"}) {
                 try { time = LocalTime.parse(t.trim(), DateTimeFormatter.ofPattern(p)); break; } catch (Exception e) {}
             }
@@ -134,10 +138,12 @@ public class RealTestXlsxReader {
 
     private String formatName(String name) {
         String[] parts = name.split(",");
+
         if (parts.length < 2) return name.trim().replaceAll("\\s+", "_");
         
         String firstName = parts[0].trim();
         StringBuilder initials = new StringBuilder();
+        
         for (String n : firstName.split("\\s+")) {
             if (!n.isEmpty()) {
                 initials.append(n.charAt(0));

@@ -20,6 +20,7 @@ public class FlightAnalyzer {
             Map<String, Map<String, List<String>>> flights;
             if (airport.equals("MAD")) {
                 flights = XlsxReaderMadrid.readXlsx(xlsFile, airport);
+
             } else {
                 flights = XlsxReader.readXlsx(xlsFile, airport);
             }
@@ -44,6 +45,7 @@ public class FlightAnalyzer {
             System.out.println("\nDía: " + day);
             System.out.println("Hora | Vuelos");
             System.out.println("-------------------------------");
+
             for (Map.Entry<Integer, Integer> entry : hourlyCounts.entrySet()) {
                 System.out.printf("%02d:00 | %d\n", entry.getKey(), entry.getValue());
             }
@@ -52,10 +54,12 @@ public class FlightAnalyzer {
 
     private static void processType(List<String> flightList, Map<Integer, Integer> hourlyCounts) {
         if (flightList == null) return;
+        
         for (String flight : flightList) {
             try {
                 int hour = Integer.parseInt(flight.substring(0, 2));
                 int amount = 1; // si no pone nada, es 1 vuelo
+                
                 if (flight.contains("(") && flight.contains(")")) {
                     String val = flight.substring(flight.indexOf("(") + 1, flight.indexOf(")"));
                     amount = Integer.parseInt(val.trim());

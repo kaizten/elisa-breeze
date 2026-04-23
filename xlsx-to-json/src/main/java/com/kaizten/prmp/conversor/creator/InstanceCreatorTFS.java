@@ -25,6 +25,7 @@ public class InstanceCreatorTFS {
             String INSTANCEDIRECTORY,
             int agents, 
             int timePerDay) throws Exception {
+
             final int numberOfServices = selectedFlights.size() + 61 + 6 * numberOfDays;
             int numberOfManagers = 3;
             int numberOfDrivers = 3;
@@ -40,14 +41,17 @@ public class InstanceCreatorTFS {
             // Añado servicios base (1 conductor, 1 coordinador) las 24h los 7 dias, con turnos de 8h:
             final Role[] roles = { Role.DRIVER, Role.MANAGER }; 
             int code = 0;
+            
             // iterar a lo largo de los días
             for (int i = 0; i < numberOfDays; i++) {
                 LocalDate date = LocalDate.of(2024, 2, 5).plusDays(i);
+                
                 for (int shift = 0; shift < 3; shift++) { // turnos por día (3 porq son de 8h)
                     int start = (shift * 8) % 24;
                     int finish = (start + 8) % 24;
                     OffsetDateTime startingTime = date.atTime(start, 0).atOffset(ZoneOffset.UTC);
                     OffsetDateTime finishingTime = date.atTime(finish, 0).atOffset(ZoneOffset.UTC);
+                    
                     if (finishingTime.getHour() < startingTime.getHour()) {
                         finishingTime = finishingTime.plusDays(1);
                     }
@@ -73,6 +77,7 @@ public class InstanceCreatorTFS {
             newService1.setRequiredEmployees(2);
             newService1.setRole(Role.DRIVER);
             listOfServices.add(newService1);
+
             final Service newService2 = new Service();
             newService2.setCode("f-" + String.format("%04d", ++code));
             newService2.setStartingTime(monday.atTime(10, 0).atOffset(ZoneOffset.UTC));
@@ -80,6 +85,7 @@ public class InstanceCreatorTFS {
             newService2.setRequiredEmployees(4);
             newService2.setRole(Role.DRIVER);
             listOfServices.add(newService2);
+
             final Service newService3 = new Service();
             newService3.setCode("f-" + String.format("%04d", ++code));
             newService3.setStartingTime(monday.atTime(10, 0).atOffset(ZoneOffset.UTC));
@@ -87,6 +93,7 @@ public class InstanceCreatorTFS {
             newService3.setRequiredEmployees(2);
             newService3.setRole(Role.MANAGER);
             listOfServices.add(newService3);
+
             final Service newService4 = new Service();
             newService4.setCode("f-" + String.format("%04d", ++code));
             newService4.setStartingTime(monday.atTime(13, 0).atOffset(ZoneOffset.UTC));
@@ -94,6 +101,7 @@ public class InstanceCreatorTFS {
             newService4.setRequiredEmployees(8);
             newService4.setRole(Role.DRIVER);
             listOfServices.add(newService4);
+
             final Service newService5 = new Service();
             newService5.setCode("f-" + String.format("%04d", ++code));
             newService5.setStartingTime(monday.atTime(13, 0).atOffset(ZoneOffset.UTC));
@@ -101,6 +109,7 @@ public class InstanceCreatorTFS {
             newService5.setRequiredEmployees(3);
             newService5.setRole(Role.MANAGER);
             listOfServices.add(newService5);
+
             final Service newService6 = new Service();
             newService6.setCode("f-" + String.format("%04d", ++code));
             newService6.setStartingTime(monday.atTime(16, 0).atOffset(ZoneOffset.UTC));
@@ -108,6 +117,7 @@ public class InstanceCreatorTFS {
             newService6.setRequiredEmployees(4);
             newService6.setRole(Role.DRIVER);
             listOfServices.add(newService6);
+
             final Service newService7 = new Service();
             newService7.setCode("f-" + String.format("%04d", ++code));
             newService7.setStartingTime(monday.atTime(16, 0).atOffset(ZoneOffset.UTC));
@@ -586,10 +596,12 @@ public class InstanceCreatorTFS {
                 if ("Salidas".equals(flightInfo[1].trim())) { // mira si es salida
                     serviceStartingTime = flightTime.minusHours(1); // 1 hora antes de la salida
                     serviceFinishingTime = flightTime.plusMinutes(10); // 10 minutos después de la salida
+
                 } else { // Llegadas
                     serviceStartingTime = flightTime.minusMinutes(10); // 10 minutos antes de la llegada
                     serviceFinishingTime = flightTime.plusHours(1); // 1 hora después de la llegada
                 }
+
                 final Service newService = new Service();
                 newService.setCode(String.format("%04d", code));
                 newService.setStartingTime(serviceStartingTime);
@@ -599,6 +611,7 @@ public class InstanceCreatorTFS {
                 listOfServices.add(newService);
             }
             Collections.sort(listOfServices);
+
             for (int i = 0; i < listOfServices.size(); i++) {
                 Service service = listOfServices.get(i);
                 optimizationProblem.setServiceCode(i, service.getCode());
@@ -612,12 +625,14 @@ public class InstanceCreatorTFS {
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
                 optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(timePerDay));
             }
+
             // creo los empleados necesitados para los servicios añadidos (driver y manager)
             // 70% conductores(27) y 30% coordinadores(11)
             for (int i = numberOfEmployees - 38; i < numberOfEmployees - 11; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
             }
+
             for (int i = numberOfEmployees - 11; i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));

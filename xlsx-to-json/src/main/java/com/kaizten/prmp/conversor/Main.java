@@ -31,6 +31,7 @@ public class Main {
             int agents,
             int timePerDay,
             int instanceNumber) throws IOException {
+
         final PersonsReducedMobilityProblemToJson toJson = new PersonsReducedMobilityProblemToJson();
         final JSONObject json = toJson.apply(optimizationProblem);
         final String instanceName = INSTANCE_DIRECTORY +
@@ -46,6 +47,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException, Exception {
+
         final double percentage = Double.parseDouble(args[0]);
         final String airport = args[1];
         final int instanceNumber = Integer.parseInt(args[2]);
@@ -54,20 +56,25 @@ public class Main {
         final int timePerDay = Integer.parseInt(args[5]);
         final File xlsFile = new File(FILEPATH);
         final Map<String, Map<String, List<String>>> flights;
+
         if (airport.equals("MAD")) {
             flights = XlsxReaderMadrid.readXlsx(xlsFile, airport);
+
         } else {
             flights = XlsxReader.readXlsx(xlsFile, airport);
         }
+
         final int total = FlightCounter.countTotalFlights(flights);
         final int numberOfServices = (int) Math.round(total * percentage);
         final int numberOfDays = flights.size();
         final ServicesSelector selector = new ServicesSelector();
         final List<String> selectedFlights = selector.randomServiceSelector(flights, numberOfServices);
         int maxOverlaps = 0;
+        
         if (airport.equals("SPC")) {
             InstanceCreatorSPC creator = new InstanceCreatorSPC();
             final int[] agentsCount = {3,6,9,12,15,18,21,24,27,30};
+            
             for (int agents : agentsCount) { 
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
@@ -87,9 +94,11 @@ public class Main {
                         timePerDay,
                         instanceNumber);
             }
+
         } else if (airport.equals("TFS")) {
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
             final int[] agentsCount = {7,14,21,28,35,42,49,56,63,70};
+            
             for (int agents : agentsCount) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,
@@ -108,9 +117,11 @@ public class Main {
                         timePerDay,
                         instanceNumber);
             }
+
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
             final int[] agentsCount = {25,50,75,100,125,150,175,200,225,250};
+            
             for (int agents : agentsCount) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
                         selectedFlights,

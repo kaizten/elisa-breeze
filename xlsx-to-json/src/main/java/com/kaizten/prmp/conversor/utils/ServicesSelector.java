@@ -11,6 +11,7 @@ import java.util.Random;
 public class ServicesSelector {
 
     public List<String> randomServiceSelector(Map<String, Map<String, List<String>>> flights, double numberOfServices) {
+
         Map<String, String> dayToDateMap = Map.of(
                 "Lunes", "2024-02-05",
                 "Martes", "2024-02-06",
@@ -19,15 +20,19 @@ public class ServicesSelector {
                 "Viernes", "2024-02-09",
                 "Sábado", "2024-02-10",
                 "Domingo", "2024-02-11");
+
         Random random = new Random();
         List<String> hours = new ArrayList<>();
         List<String> selectedFlights = new ArrayList<>();
+        
         for (Map.Entry<String, Map<String, List<String>>> entry : flights.entrySet()) {
             String date = dayToDateMap.get(entry.getKey());
             Map<String, List<String>> flightsInfo = entry.getValue();
+            
             for (Map.Entry<String, List<String>> info : flightsInfo.entrySet()) {
                 String flightType = info.getKey();
                 List<String> flightHours = info.getValue();
+                
                 for (String hour : flightHours) {
                     String cleanHour = hour.replaceAll("^\\*?\\s*\\(\\d+\\)\\s*\\*?$", "").trim();
                     hours.add(date + "/" + flightType + "/" + cleanHour.substring(0, 5));

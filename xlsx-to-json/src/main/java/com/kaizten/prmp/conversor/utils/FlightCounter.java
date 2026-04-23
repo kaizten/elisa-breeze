@@ -17,6 +17,7 @@ public class FlightCounter {
             if (hours.containsKey("Salidas")) {
                 for (String flight : hours.get("Salidas")) {
                     String[] parts = flight.split(" ");
+                    
                     if (parts.length >= 2) {
                         try {
                             int amount = Integer.parseInt(parts[1].replace("(", "").replace(")", ""));
@@ -30,6 +31,7 @@ public class FlightCounter {
             if (hours.containsKey("Llegadas")) {
                 for (String flight : hours.get("Llegadas")) {
                     String[] parts = flight.split(" ");
+                    
                     if (parts.length >= 2) {
                         try {
                             int amount = Integer.parseInt(parts[1].replace("(", "").replace(")", ""));

@@ -21,7 +21,6 @@ public class RealCaseSolutionCreator {
                 int employeeIndex = agentIDs.indexOf(agentCode);
                 
                 if (employeeIndex != -1) { //asignamos servicio al empleado
-
                     solution.assignServiceToEmployee(employeeIndex, i);
             }
         }

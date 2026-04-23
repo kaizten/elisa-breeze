@@ -21,6 +21,7 @@ public class TableGenerator {
             double executionTime,
             String algorithm,
             Object[] dates) throws IOException {
+                
         // Obtener los datos de la solución
         double averageProductivityUsedTime = solution.getJSONObject(JsonConstants.INDICATORS)
                 .getJSONObject(JsonConstants.PRODUCTIVITY_USED_TIME_VALUES).getDouble(JsonConstants.GLOBAL);
