@@ -21,12 +21,12 @@ print(f"Work Productivity: estadístico={stat_wp_1:.4f}, p-valor={p_value_wp_1:.
 
 # Test Wilcoxon 2 Random vs Compacting
 
-stat_cs_2, p_value_cs_2 = wilcoxon(df_pivoted[('Covered-Services(%)', 'randomSolver')], df_pivoted[('Covered-Services(%)', 'compactingSolver')], alternative = 'greater')
-stat_wp_2, p_value_wp_2 = wilcoxon(df_pivoted[('Work-Productivity', 'randomSolver')], df_pivoted[('Work-Productivity', 'compactingSolver')], alternative = 'greater')
+stat_cs_2, p_value_cs_2 = wilcoxon(df_pivoted[('Covered-Services(%)', 'compactingSolver')], df_pivoted[('Covered-Services(%)', 'randomSolver')], alternative = 'greater')
+stat_wp_2, p_value_wp_2 = wilcoxon(df_pivoted[('Work-Productivity', 'compactingSolver')], df_pivoted[('Work-Productivity', 'randomSolver')], alternative = 'greater')
 
 # Resultados
 
-print("Resultados test de Wilcoxon RandomSolver vs CompactingSolver:\n")
+print("Resultados test de Wilcoxon CompactingSolver vs RandomSolver:\n")
 print("Total de instancias analizadas:", len(df_pivoted), "\n")
 print(f"Covered Services (%): estadístico={stat_cs_2:.4f}, p-valor={p_value_cs_2:.4f}\n")
 print(f"Work Productivity: estadístico={stat_wp_2:.4f}, p-valor={p_value_wp_2:.4f}\n")
