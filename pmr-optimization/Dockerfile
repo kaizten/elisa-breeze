@@ -8,7 +8,7 @@ LABEL category="algorithm"
 VOLUME /data
 
 # Copy JAR
-COPY target/random-solver-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
+COPY target/pmr-optimization-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
 
 # Entry point
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
