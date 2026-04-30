@@ -11,17 +11,17 @@ import org.json.JSONObject;
 public class AgentAdder {
 
     public static void main(String[] args) throws Exception {
-        String path = "data/realCaseTest/instances/realCaseProblemMAD_sin_clones.json";
+        String path = "data/realCaseTest/prueba/realCaseProblem_original.json";
         String content = new String(Files.readAllBytes(Paths.get(path)));
         JSONObject json = new JSONObject(content);
         JSONArray employees = json.getJSONObject("employees").getJSONArray("individuals");
 
         int originalAgent = employees.length();
 
-        for (int target = 1000; target <= 2000; target += 20) {
+        for (int target = 1000; target <= 1800; target += 20) {
             System.out.println("Generando instancia con " + target + " agentes");
 
-            String outputPath = "data/realCaseTest/instances/realCaseProblemMAD_" + target + "_agents.json";
+            String outputPath = "data/realCaseTest/prueba/realCaseProblemMAD_" + target + "_agents.json";
             Path outputFile = Paths.get(outputPath);
 
             // Verificar si ya existe para no crearlos de nuevo

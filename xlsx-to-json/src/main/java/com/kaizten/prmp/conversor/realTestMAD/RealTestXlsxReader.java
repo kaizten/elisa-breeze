@@ -26,7 +26,8 @@ public class RealTestXlsxReader {
     private final Map<String, String> agentIDMap = new LinkedHashMap<>();
     private final Map<String, List<OffsetDateTime[]>> agentSchedules = new HashMap<>();
    
-    private boolean useClones = true;
+    private boolean useClones = false;
+    private static final long MAX_SERVICE_DURATION_MINUTES = 8 * 60;
 
     public void setUseClones(boolean useClones) {
         this.useClones = useClones;
@@ -108,7 +109,10 @@ public class RealTestXlsxReader {
                 }
             }
         }
-        List<ServiceInformation> sortedServices = new ArrayList<>(bestServices.values());
+        List<ServiceInformation> sortedServices = new ArrayList<>();
+        for (ServiceInformation service : bestServices.values()) {
+            sortedServices.addAll(splitServiceIfTooLong(service));
+        }
         sortedServices.sort(Comparator.comparing(ServiceInformation::getStartTime));
         return sortedServices;
     }
@@ -175,5 +179,56 @@ public class RealTestXlsxReader {
             name = base + "_" + clone;
             clone++;
         }
+    }
+
+    private List<ServiceInformation> splitServiceIfTooLong(ServiceInformation service) {
+        List<ServiceInformation> result = new ArrayList<>();
+
+        OffsetDateTime start = service.getStartTime();
+        OffsetDateTime end = service.getEndTime();
+
+        if (start == null || end == null) {
+            result.add(service);
+            return result;
+        }
+
+        long durationMinutes = java.time.Duration.between(start, end).toMinutes();
+
+        if (durationMinutes <= MAX_SERVICE_DURATION_MINUTES) {
+            result.add(service);
+            return result;
+        }
+
+        OffsetDateTime middle = start.plusMinutes(durationMinutes / 2);
+
+        ServiceInformation firstPart = copyService(service);
+        firstPart.setKey(service.getKey() + "_PART_1");
+        firstPart.setStartTime(start);
+        firstPart.setEndTime(middle);
+
+        ServiceInformation secondPart = copyService(service);
+        secondPart.setKey(service.getKey() + "_PART_2");
+        secondPart.setStartTime(middle);
+        secondPart.setEndTime(end);
+
+        result.add(firstPart);
+        result.add(secondPart);
+
+        return result;
+    }
+
+    private ServiceInformation copyService(ServiceInformation original) {
+        ServiceInformation copy = new ServiceInformation();
+
+        copy.setRowIndex(original.getRowIndex());
+        copy.setKey(original.getKey());
+        copy.setPassengerName(original.getPassengerName());
+        copy.setStartTime(original.getStartTime());
+        copy.setEndTime(original.getEndTime());
+
+        copy.getAgents().clear();
+        copy.getAgents().addAll(original.getAgents());
+
+        return copy;
     }
 }

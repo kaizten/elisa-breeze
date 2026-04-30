@@ -31,11 +31,11 @@ public class TestMain {
         // Exportar Instancia a JSON
         final PersonsReducedMobilityProblemToJson problemToJson = new PersonsReducedMobilityProblemToJson();
         final JSONObject json = problemToJson.apply(problem);
-        KaiztenFile.writeToFile(new File(outputFolder, "instances/realCaseProblemMAD_INTENTO.json"), json);
+        KaiztenFile.writeToFile(new File(outputFolder, "prueba/realCaseProblem_original.json"), json);
 
         // Exportar solución del problema
-        final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
-        solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/realSolutionMAD.json"));
+        //final RealCaseSolutionCreator solutionCreator = new RealCaseSolutionCreator();
+        //solutionCreator.exportSolution(problem, cleanedServices, agents, new File(outputFolder, "solutions/realSolutionMAD.json"));
         
     }
 }

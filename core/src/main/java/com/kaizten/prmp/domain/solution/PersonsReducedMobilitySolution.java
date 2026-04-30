@@ -32,7 +32,9 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
     private Set<Integer>[] assignedEmployees;
     private LocalDate[] lastWorkedDate;
     private OffsetDateTime[] lastWorkedServiceEnd;
-    private Set<LocalDate>[] workedDatesPerEmployee;
+    //private Set<LocalDate>[] workedDatesPerEmployee;
+    private long[][] usedMinutesPerDayEmployee;
+    private long[][] usedMinutesPerWeekEmployee;
 
     
     public PersonsReducedMobilitySolution(PersonsReducedMobilityProblem optimizationProblem) {
@@ -61,10 +63,13 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         this.lastWorkedDate = new LocalDate[optimizationProblem.getNumberOfEmployees()];
         this.lastWorkedServiceEnd = new OffsetDateTime[optimizationProblem.getNumberOfEmployees()];
         
-        this.workedDatesPerEmployee = new HashSet[optimizationProblem.getNumberOfEmployees()];
+        /*this.workedDatesPerEmployee = new HashSet[optimizationProblem.getNumberOfEmployees()];
         for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
             this.workedDatesPerEmployee[employee] = new HashSet<>();
-        }
+        }*/
+        this.usedMinutesPerDayEmployee = new long[optimizationProblem.getNumberOfDatesWithServices()][optimizationProblem.getNumberOfEmployees()];
+        int numWeeks = (optimizationProblem.getNumberOfDatesWithServices() + WORK_WINDOW_DAYS - 1) / WORK_WINDOW_DAYS;
+        this.usedMinutesPerWeekEmployee = new long[numWeeks][optimizationProblem.getNumberOfEmployees()];
     }
 
     @Override
@@ -103,9 +108,19 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             copy.lastWorkedServiceEnd[employee] = this.lastWorkedServiceEnd[employee];
         }
 
-        copy.workedDatesPerEmployee = new HashSet[optimizationProblem.getNumberOfEmployees()];
+        /*copy.workedDatesPerEmployee = new HashSet[optimizationProblem.getNumberOfEmployees()];
         for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
             copy.workedDatesPerEmployee[employee] = new HashSet<>(this.workedDatesPerEmployee[employee]);
+        }*/
+        
+        copy.usedMinutesPerWeekEmployee = new long[this.usedMinutesPerWeekEmployee.length][];
+        copy.usedMinutesPerDayEmployee = new long[this.usedMinutesPerDayEmployee.length][];
+
+        for (int i = 0; i < this.usedMinutesPerWeekEmployee.length; i++) {
+            copy.usedMinutesPerWeekEmployee[i] = this.usedMinutesPerWeekEmployee[i].clone();
+        }
+        for (int i = 0; i < this.usedMinutesPerDayEmployee.length; i++) {
+            copy.usedMinutesPerDayEmployee[i] = this.usedMinutesPerDayEmployee[i].clone();
         }
 
         return copy;
@@ -159,11 +174,20 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
             this.firstService[indexOfDate][employee] = service;
             this.lastService[indexOfDate][employee] = service;
         }
+        //NUEVO
+        long previousUsedMinutes = this.usedMinutesPerDayEmployee[indexOfDate][employee]; 
+
         this.serviceAssignment[indexOfDate][employee].add(service);
         this.assignedEmployees[service].add(employee);
-        this.workedDatesPerEmployee[employee].add(date);
 
-        // nuevo
+        //NUEVO
+        int weekIndex = indexOfDate / WORK_WINDOW_DAYS; 
+        long newUsedMinutes = this.getUsedTime(indexOfDate, employee).toMinutes();
+        long extraMinutes = newUsedMinutes - previousUsedMinutes;
+
+        this.usedMinutesPerDayEmployee[indexOfDate][employee] = newUsedMinutes;
+        this.usedMinutesPerWeekEmployee[weekIndex][employee] += extraMinutes;
+  
         OffsetDateTime serviceEnd = this.optimizationProblem.getServiceFinishingTime(service);
 
         if(this.lastWorkedDate[employee] == null || date.isAfter(this.lastWorkedDate[employee])) {
@@ -239,7 +263,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
      * }
      */
 
-    public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
+    /* public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
         LocalDate date = this.optimizationProblem.getDate(service);
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
         long assignedWorkingTime = 0;
@@ -265,9 +289,9 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         // Verifica que las horas trabajadas no excedan las disponibles para el empleado
         return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
-    }
+    }*/
 
-    public boolean doesServiceSatisfyWeeklyWorkLimits(int employee, int service) {
+    /*public boolean doesServiceSatisfyWeeklyWorkLimits(int employee, int service) {
         LocalDate serviceDate = this.optimizationProblem.getDate(service);
 
         if (this.workedDatesPerEmployee[employee].contains(serviceDate)) {
@@ -292,8 +316,46 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
 
         return true;
+    }*/
+//=========================
+
+    public long getProposedDailyMinutes(int employee, int service) {
+        int dateIndex = this.optimizationProblem.getIndexOfDate(this.optimizationProblem.getDate(service));
+        OffsetDateTime start = this.optimizationProblem.getServiceStartingTime(service);
+        OffsetDateTime finish = this.optimizationProblem.getServiceFinishingTime(service);
+
+        // Si ya tenía trabajo hoy, cogemos el inicio más temprano y el fin más tardío
+        if (this.hasAssignedServices(dateIndex, employee)) {
+            OffsetDateTime currentStart = this.getStartingTime(dateIndex, employee);
+            OffsetDateTime currentFinish = this.getFinishingTime(dateIndex, employee);
+            
+            start = start.isBefore(currentStart) ? start : currentStart;
+            finish = finish.isAfter(currentFinish) ? finish : currentFinish;
+        }
+
+        return Duration.between(start, finish).toMinutes();
     }
 
+    public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
+        // ¿El tiempo propuesto para hoy es menor o igual a su límite diario?
+        return getProposedDailyMinutes(employee, service) <= this.optimizationProblem.getEmployeeAvailableTimePerDay(employee);
+    }
+
+    public boolean doesServiceSatisfyWeeklyWorkLimits(int employee, int service) {
+        int dateIndex = this.optimizationProblem.getIndexOfDate(this.optimizationProblem.getDate(service));
+        
+        // El extra de hoy es el tiempo propuesto menos el que ya tenía asignado antes
+        long extraMins = getProposedDailyMinutes(employee, service) - this.usedMinutesPerDayEmployee[dateIndex][employee];
+        
+
+        // ¿Lo que lleva esta semana + el extra de hoy es menor o igual a 40h (2400 mins)?
+        long maxWeeklyMinutes = this.optimizationProblem.getEmployeeAvailableTimePerDay(employee)
+            * MAX_WORKING_DAYS_IN_WEEK;
+        return (this.usedMinutesPerWeekEmployee[dateIndex / WORK_WINDOW_DAYS][employee] + extraMins) <= maxWeeklyMinutes; 
+    }
+
+
+//=========================
     public int getFirstUncoveredService() {
         for (int i = 0; i < this.optimizationProblem.getNumberOfServices(); i++) {
             if (!this.isServiceCovered(i)) {
