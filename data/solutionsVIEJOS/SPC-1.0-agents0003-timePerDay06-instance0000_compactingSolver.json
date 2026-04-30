@@ -1,0 +1,2158 @@
+{
+     "dates": [
+          {
+               "date": "2024-02-05",
+               "uncoveredServices": [
+                    "0033",
+                    "0034",
+                    "0035",
+                    "0029",
+                    "0036",
+                    "0037",
+                    "0038",
+                    "0039",
+                    "0048",
+                    "0040",
+                    "0041",
+                    "0042",
+                    "0043",
+                    "0044",
+                    "0045",
+                    "0051",
+                    "0052",
+                    "0058",
+                    "0059",
+                    "0049",
+                    "0053",
+                    "0055",
+                    "0056",
+                    "0057",
+                    "0060",
+                    "0063",
+                    "0064",
+                    "0065",
+                    "0073",
+                    "0066",
+                    "0067",
+                    "0068",
+                    "0069",
+                    "0070",
+                    "0074",
+                    "0075",
+                    "0076",
+                    "0082",
+                    "0083",
+                    "0077",
+                    "0084",
+                    "0078",
+                    "0079",
+                    "0080",
+                    "0081",
+                    "0085",
+                    "0086",
+                    "0087",
+                    "0095",
+                    "0096",
+                    "0088",
+                    "0089",
+                    "0090",
+                    "0097",
+                    "0091",
+                    "0092",
+                    "0093",
+                    "0094",
+                    "0099",
+                    "0100",
+                    "0098",
+                    "0107",
+                    "0108",
+                    "0101",
+                    "0102",
+                    "0103",
+                    "0104",
+                    "0105",
+                    "0106",
+                    "0112",
+                    "0113",
+                    "0109",
+                    "0110",
+                    "0111"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-05T14:30:00Z",
+                              "code": "f-0000",
+                              "startTime": "2024-02-05T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-05T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "startingTime": "2024-02-05T07:30:00Z",
+                              "finishingTime": "2024-02-05T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-05T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-05T14:30:00Z",
+                              "code": "f-0001",
+                              "startTime": "2024-02-05T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-05T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "startingTime": "2024-02-05T07:30:00Z",
+                              "finishingTime": "2024-02-05T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-05T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-05T21:30:00Z",
+                              "code": "f-0002",
+                              "startTime": "2024-02-05T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-05T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "startingTime": "2024-02-05T14:30:00Z",
+                              "finishingTime": "2024-02-05T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-05T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-05T21:30:00Z",
+                              "code": "f-0003",
+                              "startTime": "2024-02-05T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-05T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "startingTime": "2024-02-05T14:30:00Z",
+                              "finishingTime": "2024-02-05T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-05T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-05T08:10:00Z",
+                                   "code": "0028",
+                                   "startTime": "2024-02-05T07:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T11:50:00Z",
+                                   "code": "0054",
+                                   "startTime": "2024-02-05T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T10:40:00Z",
+                                   "code": "0050",
+                                   "startTime": "2024-02-05T09:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T09:30:00Z",
+                                   "code": "0030",
+                                   "startTime": "2024-02-05T08:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 96.55172413793103,
+                              "finishTime": "2024-02-05T11:50:00Z",
+                              "usedTime": "PT4H50M",
+                              "availableTime": "PT1H10M",
+                              "breakTime": "PT1H20M",
+                              "startingTime": "2024-02-05T07:00:00Z",
+                              "finishingTime": "2024-02-05T11:50:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-05T07:00:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-05T08:50:00Z",
+                                   "code": "0032",
+                                   "startTime": "2024-02-05T07:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T13:20:00Z",
+                                   "code": "0071",
+                                   "startTime": "2024-02-05T12:10:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T11:30:00Z",
+                                   "code": "0061",
+                                   "startTime": "2024-02-05T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T10:10:00Z",
+                                   "code": "0046",
+                                   "startTime": "2024-02-05T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 82.35294117647058,
+                              "finishTime": "2024-02-05T13:20:00Z",
+                              "usedTime": "PT5H40M",
+                              "availableTime": "PT20M",
+                              "breakTime": "PT1H20M",
+                              "startingTime": "2024-02-05T07:40:00Z",
+                              "finishingTime": "2024-02-05T13:20:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-05T07:40:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-05T08:50:00Z",
+                                   "code": "0031",
+                                   "startTime": "2024-02-05T07:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T13:20:00Z",
+                                   "code": "0072",
+                                   "startTime": "2024-02-05T12:10:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T11:40:00Z",
+                                   "code": "0062",
+                                   "startTime": "2024-02-05T10:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-05T10:10:00Z",
+                                   "code": "0047",
+                                   "startTime": "2024-02-05T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 82.35294117647058,
+                              "finishTime": "2024-02-05T13:20:00Z",
+                              "usedTime": "PT5H40M",
+                              "availableTime": "PT20M",
+                              "breakTime": "PT1H20M",
+                              "startingTime": "2024-02-05T07:40:00Z",
+                              "finishingTime": "2024-02-05T13:20:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-05T07:40:00Z",
+                              "services": 4
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 74,
+                         "percentage": 82.22222222222221
+                    },
+                    "services": 90,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 16,
+                         "percentage": 17.77777777777778
+                    }
+               }
+          },
+          {
+               "date": "2024-02-06",
+               "uncoveredServices": [
+                    "0122",
+                    "0114",
+                    "0123",
+                    "0115",
+                    "0116",
+                    "0117",
+                    "0126",
+                    "0127",
+                    "0129",
+                    "0130",
+                    "0131",
+                    "0132",
+                    "0120",
+                    "0136",
+                    "0137",
+                    "0133",
+                    "0134",
+                    "0140",
+                    "0135",
+                    "0141",
+                    "0145",
+                    "0142",
+                    "0143",
+                    "0152",
+                    "0154",
+                    "0155",
+                    "0156",
+                    "0147",
+                    "0148",
+                    "0149",
+                    "0150",
+                    "0160",
+                    "0161",
+                    "0157",
+                    "0162",
+                    "0163",
+                    "0158",
+                    "0166",
+                    "0168",
+                    "0169",
+                    "0170",
+                    "0174",
+                    "0175",
+                    "0164",
+                    "0176",
+                    "0165",
+                    "0167",
+                    "0184",
+                    "0171",
+                    "0172",
+                    "0173",
+                    "0185",
+                    "0186",
+                    "0187",
+                    "0177",
+                    "0188",
+                    "0189",
+                    "0178",
+                    "0179",
+                    "0180",
+                    "0181",
+                    "0182",
+                    "0183",
+                    "0191",
+                    "0192",
+                    "0195",
+                    "0190",
+                    "0198",
+                    "0193",
+                    "0194",
+                    "0207",
+                    "0196",
+                    "0197",
+                    "0208",
+                    "0209",
+                    "0199",
+                    "0200",
+                    "0201",
+                    "0202",
+                    "0203",
+                    "0211",
+                    "0204",
+                    "0205",
+                    "0206",
+                    "0212",
+                    "0213",
+                    "0214",
+                    "0215",
+                    "0210",
+                    "0217",
+                    "0218",
+                    "0219",
+                    "0220",
+                    "0221",
+                    "0216",
+                    "0227",
+                    "0222",
+                    "0223",
+                    "0229",
+                    "0230",
+                    "0224",
+                    "0225",
+                    "0226",
+                    "0231",
+                    "0232",
+                    "0233",
+                    "0228",
+                    "0238",
+                    "0239",
+                    "0240",
+                    "0234",
+                    "0235",
+                    "0236",
+                    "0237",
+                    "0245",
+                    "0246",
+                    "0241",
+                    "0247",
+                    "0248",
+                    "0249",
+                    "0242",
+                    "0243",
+                    "0244",
+                    "0250"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-06T14:30:00Z",
+                              "code": "f-0004",
+                              "startTime": "2024-02-06T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-06T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-06T07:30:00Z",
+                              "finishingTime": "2024-02-06T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-06T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-06T14:30:00Z",
+                              "code": "f-0005",
+                              "startTime": "2024-02-06T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-06T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-06T07:30:00Z",
+                              "finishingTime": "2024-02-06T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-06T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-06T21:30:00Z",
+                              "code": "f-0006",
+                              "startTime": "2024-02-06T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-06T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-06T14:30:00Z",
+                              "finishingTime": "2024-02-06T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-06T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-06T21:30:00Z",
+                              "code": "f-0007",
+                              "startTime": "2024-02-06T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-06T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-06T14:30:00Z",
+                              "finishingTime": "2024-02-06T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-06T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-06T13:00:00Z",
+                                   "code": "0153",
+                                   "startTime": "2024-02-06T11:50:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T11:30:00Z",
+                                   "code": "0139",
+                                   "startTime": "2024-02-06T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T08:40:00Z",
+                                   "code": "0118",
+                                   "startTime": "2024-02-06T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T10:10:00Z",
+                                   "code": "0128",
+                                   "startTime": "2024-02-06T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 84.84848484848484,
+                              "finishTime": "2024-02-06T13:00:00Z",
+                              "usedTime": "PT5H30M",
+                              "availableTime": "PT30M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT19H40M",
+                              "startingTime": "2024-02-06T07:30:00Z",
+                              "finishingTime": "2024-02-06T13:00:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-06T07:30:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-06T13:00:00Z",
+                                   "code": "0151",
+                                   "startTime": "2024-02-06T11:50:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T11:30:00Z",
+                                   "code": "0144",
+                                   "startTime": "2024-02-06T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T08:40:00Z",
+                                   "code": "0119",
+                                   "startTime": "2024-02-06T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T10:10:00Z",
+                                   "code": "0125",
+                                   "startTime": "2024-02-06T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 84.84848484848484,
+                              "finishTime": "2024-02-06T13:00:00Z",
+                              "usedTime": "PT5H30M",
+                              "availableTime": "PT30M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H10M",
+                              "startingTime": "2024-02-06T07:30:00Z",
+                              "finishingTime": "2024-02-06T13:00:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-06T07:30:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-06T12:30:00Z",
+                                   "code": "0146",
+                                   "startTime": "2024-02-06T11:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T11:20:00Z",
+                                   "code": "0138",
+                                   "startTime": "2024-02-06T10:10:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T10:05:00Z",
+                                   "code": "0124",
+                                   "startTime": "2024-02-06T08:55:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T13:40:00Z",
+                                   "code": "0159",
+                                   "startTime": "2024-02-06T12:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-06T08:50:00Z",
+                                   "code": "0121",
+                                   "startTime": "2024-02-06T07:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 97.22222222222221,
+                              "finishTime": "2024-02-06T13:40:00Z",
+                              "usedTime": "PT6H",
+                              "availableTime": "PT0S",
+                              "breakTime": "PT10M",
+                              "timeFromPreviousDays": "PT18H20M",
+                              "startingTime": "2024-02-06T07:40:00Z",
+                              "finishingTime": "2024-02-06T13:40:00Z",
+                              "workProductivity": 97.22222222222221,
+                              "startTime": "2024-02-06T07:40:00Z",
+                              "services": 5
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 124,
+                         "percentage": 87.94326241134752
+                    },
+                    "services": 141,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 17,
+                         "percentage": 12.056737588652481
+                    }
+               }
+          },
+          {
+               "date": "2024-02-07",
+               "uncoveredServices": [
+                    "0251",
+                    "0254",
+                    "0260",
+                    "0255",
+                    "0256",
+                    "0257",
+                    "0258",
+                    "0268",
+                    "0269",
+                    "0270",
+                    "0263",
+                    "0264",
+                    "0265",
+                    "0272",
+                    "0273",
+                    "0279",
+                    "0274",
+                    "0275",
+                    "0281",
+                    "0284",
+                    "0285",
+                    "0278",
+                    "0288",
+                    "0282",
+                    "0283",
+                    "0286",
+                    "0287",
+                    "0293",
+                    "0294",
+                    "0295",
+                    "0289",
+                    "0290",
+                    "0291",
+                    "0296",
+                    "0292",
+                    "0297",
+                    "0298",
+                    "0299",
+                    "0301",
+                    "0302",
+                    "0303",
+                    "0300",
+                    "0308",
+                    "0309",
+                    "0310",
+                    "0304",
+                    "0305",
+                    "0306",
+                    "0307",
+                    "0314",
+                    "0311",
+                    "0315",
+                    "0316",
+                    "0312",
+                    "0317",
+                    "0313",
+                    "0318",
+                    "0319",
+                    "0321",
+                    "0323",
+                    "0324",
+                    "0325",
+                    "0326",
+                    "0327",
+                    "0328",
+                    "0320",
+                    "0322",
+                    "0335",
+                    "0336",
+                    "0337",
+                    "0338",
+                    "0329",
+                    "0330",
+                    "0331",
+                    "0332",
+                    "0333",
+                    "0334"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-07T14:30:00Z",
+                              "code": "f-0008",
+                              "startTime": "2024-02-07T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-07T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-07T07:30:00Z",
+                              "finishingTime": "2024-02-07T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-07T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-07T14:30:00Z",
+                              "code": "f-0009",
+                              "startTime": "2024-02-07T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-07T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-07T07:30:00Z",
+                              "finishingTime": "2024-02-07T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-07T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-07T21:30:00Z",
+                              "code": "f-0010",
+                              "startTime": "2024-02-07T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-07T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-07T14:30:00Z",
+                              "finishingTime": "2024-02-07T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-07T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-07T21:30:00Z",
+                              "code": "f-0011",
+                              "startTime": "2024-02-07T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-07T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-07T14:30:00Z",
+                              "finishingTime": "2024-02-07T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-07T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-07T10:30:00Z",
+                                   "code": "0261",
+                                   "startTime": "2024-02-07T09:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T13:00:00Z",
+                                   "code": "0276",
+                                   "startTime": "2024-02-07T11:50:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T08:55:00Z",
+                                   "code": "0259",
+                                   "startTime": "2024-02-07T07:45:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T11:50:00Z",
+                                   "code": "0271",
+                                   "startTime": "2024-02-07T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 88.88888888888889,
+                              "finishTime": "2024-02-07T13:00:00Z",
+                              "usedTime": "PT5H15M",
+                              "availableTime": "PT45M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H45M",
+                              "startingTime": "2024-02-07T07:45:00Z",
+                              "finishingTime": "2024-02-07T13:00:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-07T07:45:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-07T10:10:00Z",
+                                   "code": "0262",
+                                   "startTime": "2024-02-07T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T12:40:00Z",
+                                   "code": "0280",
+                                   "startTime": "2024-02-07T11:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T08:10:00Z",
+                                   "code": "0252",
+                                   "startTime": "2024-02-07T07:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T11:30:00Z",
+                                   "code": "0267",
+                                   "startTime": "2024-02-07T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 82.35294117647058,
+                              "finishTime": "2024-02-07T12:40:00Z",
+                              "usedTime": "PT5H40M",
+                              "availableTime": "PT20M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H",
+                              "startingTime": "2024-02-07T07:00:00Z",
+                              "finishingTime": "2024-02-07T12:40:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-07T07:00:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-07T12:10:00Z",
+                                   "code": "0277",
+                                   "startTime": "2024-02-07T11:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T10:40:00Z",
+                                   "code": "0266",
+                                   "startTime": "2024-02-07T09:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-07T08:10:00Z",
+                                   "code": "0253",
+                                   "startTime": "2024-02-07T07:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 67.74193548387096,
+                              "finishTime": "2024-02-07T12:10:00Z",
+                              "usedTime": "PT5H10M",
+                              "availableTime": "PT50M",
+                              "breakTime": "PT2H30M",
+                              "timeFromPreviousDays": "PT17H20M",
+                              "startingTime": "2024-02-07T07:00:00Z",
+                              "finishingTime": "2024-02-07T12:10:00Z",
+                              "workProductivity": 58.333333333333336,
+                              "startTime": "2024-02-07T07:00:00Z",
+                              "services": 3
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 77,
+                         "percentage": 83.69565217391305
+                    },
+                    "services": 92,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 15,
+                         "percentage": 16.304347826086957
+                    }
+               }
+          },
+          {
+               "date": "2024-02-08",
+               "uncoveredServices": [
+                    "0344",
+                    "0345",
+                    "0339",
+                    "0346",
+                    "0340",
+                    "0355",
+                    "0350",
+                    "0351",
+                    "0352",
+                    "0353",
+                    "0357",
+                    "0362",
+                    "0363",
+                    "0358",
+                    "0359",
+                    "0360",
+                    "0367",
+                    "0366",
+                    "0370",
+                    "0371",
+                    "0368",
+                    "0372",
+                    "0373",
+                    "0374",
+                    "0369",
+                    "0379",
+                    "0380",
+                    "0381",
+                    "0382",
+                    "0383",
+                    "0375",
+                    "0384",
+                    "0385",
+                    "0386",
+                    "0376",
+                    "0377",
+                    "0378",
+                    "0387",
+                    "0389",
+                    "0388",
+                    "0392",
+                    "0390",
+                    "0391"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-08T14:30:00Z",
+                              "code": "f-0012",
+                              "startTime": "2024-02-08T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-08T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-08T07:30:00Z",
+                              "finishingTime": "2024-02-08T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-08T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-08T14:30:00Z",
+                              "code": "f-0013",
+                              "startTime": "2024-02-08T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-08T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-08T07:30:00Z",
+                              "finishingTime": "2024-02-08T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-08T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-08T21:30:00Z",
+                              "code": "f-0014",
+                              "startTime": "2024-02-08T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-08T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-08T14:30:00Z",
+                              "finishingTime": "2024-02-08T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-08T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-08T21:30:00Z",
+                              "code": "f-0015",
+                              "startTime": "2024-02-08T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-08T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-08T14:30:00Z",
+                              "finishingTime": "2024-02-08T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-08T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-08T11:30:00Z",
+                                   "code": "0356",
+                                   "startTime": "2024-02-08T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T08:50:00Z",
+                                   "code": "0343",
+                                   "startTime": "2024-02-08T07:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T10:10:00Z",
+                                   "code": "0348",
+                                   "startTime": "2024-02-08T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T13:40:00Z",
+                                   "code": "0364",
+                                   "startTime": "2024-02-08T12:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 77.77777777777779,
+                              "finishTime": "2024-02-08T13:40:00Z",
+                              "usedTime": "PT6H",
+                              "availableTime": "PT0S",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H40M",
+                              "startingTime": "2024-02-08T07:40:00Z",
+                              "finishingTime": "2024-02-08T13:40:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-08T07:40:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-08T08:40:00Z",
+                                   "code": "0342",
+                                   "startTime": "2024-02-08T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T11:50:00Z",
+                                   "code": "0361",
+                                   "startTime": "2024-02-08T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T13:20:00Z",
+                                   "code": "0365",
+                                   "startTime": "2024-02-08T12:10:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T10:30:00Z",
+                                   "code": "0347",
+                                   "startTime": "2024-02-08T09:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 80,
+                              "finishTime": "2024-02-08T13:20:00Z",
+                              "usedTime": "PT5H50M",
+                              "availableTime": "PT10M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H50M",
+                              "startingTime": "2024-02-08T07:30:00Z",
+                              "finishingTime": "2024-02-08T13:20:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-08T07:30:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-08T08:40:00Z",
+                                   "code": "0341",
+                                   "startTime": "2024-02-08T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T11:30:00Z",
+                                   "code": "0354",
+                                   "startTime": "2024-02-08T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-08T10:10:00Z",
+                                   "code": "0349",
+                                   "startTime": "2024-02-08T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 87.5,
+                              "finishTime": "2024-02-08T11:30:00Z",
+                              "usedTime": "PT4H",
+                              "availableTime": "PT2H",
+                              "breakTime": "PT2H30M",
+                              "timeFromPreviousDays": "PT19H20M",
+                              "startingTime": "2024-02-08T07:30:00Z",
+                              "finishingTime": "2024-02-08T11:30:00Z",
+                              "workProductivity": 58.333333333333336,
+                              "startTime": "2024-02-08T07:30:00Z",
+                              "services": 3
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 43,
+                         "percentage": 74.13793103448276
+                    },
+                    "services": 58,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 15,
+                         "percentage": 25.862068965517242
+                    }
+               }
+          },
+          {
+               "date": "2024-02-09",
+               "uncoveredServices": [
+                    "0393",
+                    "0401",
+                    "0396",
+                    "0397",
+                    "0402",
+                    "0404",
+                    "0408",
+                    "0409",
+                    "0410",
+                    "0411",
+                    "0412",
+                    "0413",
+                    "0406",
+                    "0415",
+                    "0416",
+                    "0417",
+                    "0421",
+                    "0422",
+                    "0423",
+                    "0424",
+                    "0425",
+                    "0429",
+                    "0426",
+                    "0430",
+                    "0427",
+                    "0428",
+                    "0431",
+                    "0434",
+                    "0436",
+                    "0432",
+                    "0433",
+                    "0435",
+                    "0437",
+                    "0445",
+                    "0446",
+                    "0438",
+                    "0439",
+                    "0440",
+                    "0441",
+                    "0442",
+                    "0443",
+                    "0447",
+                    "0448",
+                    "0444",
+                    "0451",
+                    "0452",
+                    "0453",
+                    "0454",
+                    "0449",
+                    "0450",
+                    "0456",
+                    "0457",
+                    "0458",
+                    "0459",
+                    "0460",
+                    "0455"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-09T14:30:00Z",
+                              "code": "f-0016",
+                              "startTime": "2024-02-09T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-09T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-09T07:30:00Z",
+                              "finishingTime": "2024-02-09T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-09T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-09T14:30:00Z",
+                              "code": "f-0017",
+                              "startTime": "2024-02-09T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-09T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-09T07:30:00Z",
+                              "finishingTime": "2024-02-09T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-09T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-09T21:30:00Z",
+                              "code": "f-0018",
+                              "startTime": "2024-02-09T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-09T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-09T14:30:00Z",
+                              "finishingTime": "2024-02-09T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-09T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-09T21:30:00Z",
+                              "code": "f-0019",
+                              "startTime": "2024-02-09T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-09T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-09T14:30:00Z",
+                              "finishingTime": "2024-02-09T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-09T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-09T08:40:00Z",
+                                   "code": "0400",
+                                   "startTime": "2024-02-09T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T12:20:00Z",
+                                   "code": "0414",
+                                   "startTime": "2024-02-09T11:10:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T10:10:00Z",
+                                   "code": "0405",
+                                   "startTime": "2024-02-09T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T13:30:00Z",
+                                   "code": "0420",
+                                   "startTime": "2024-02-09T12:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 77.77777777777779,
+                              "finishTime": "2024-02-09T13:30:00Z",
+                              "usedTime": "PT6H",
+                              "availableTime": "PT0S",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT17H50M",
+                              "startingTime": "2024-02-09T07:30:00Z",
+                              "finishingTime": "2024-02-09T13:30:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-09T07:30:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-09T12:10:00Z",
+                                   "code": "0418",
+                                   "startTime": "2024-02-09T11:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T09:30:00Z",
+                                   "code": "0398",
+                                   "startTime": "2024-02-09T08:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T10:40:00Z",
+                                   "code": "0407",
+                                   "startTime": "2024-02-09T09:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T08:10:00Z",
+                                   "code": "0395",
+                                   "startTime": "2024-02-09T07:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 90.32258064516128,
+                              "finishTime": "2024-02-09T12:10:00Z",
+                              "usedTime": "PT5H10M",
+                              "availableTime": "PT50M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT17H40M",
+                              "startingTime": "2024-02-09T07:00:00Z",
+                              "finishingTime": "2024-02-09T12:10:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-09T07:00:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-09T12:10:00Z",
+                                   "code": "0419",
+                                   "startTime": "2024-02-09T11:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T09:30:00Z",
+                                   "code": "0399",
+                                   "startTime": "2024-02-09T08:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T10:45:00Z",
+                                   "code": "0403",
+                                   "startTime": "2024-02-09T09:35:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-09T08:10:00Z",
+                                   "code": "0394",
+                                   "startTime": "2024-02-09T07:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 90.32258064516128,
+                              "finishTime": "2024-02-09T12:10:00Z",
+                              "usedTime": "PT5H10M",
+                              "availableTime": "PT50M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT19H30M",
+                              "startingTime": "2024-02-09T07:00:00Z",
+                              "finishingTime": "2024-02-09T12:10:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-09T07:00:00Z",
+                              "services": 4
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 56,
+                         "percentage": 77.77777777777779
+                    },
+                    "services": 72,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 16,
+                         "percentage": 22.22222222222222
+                    }
+               }
+          },
+          {
+               "date": "2024-02-10",
+               "uncoveredServices": [
+                    "0462",
+                    "0463",
+                    "0464",
+                    "0465",
+                    "0466",
+                    "0467",
+                    "0475",
+                    "0472",
+                    "0479",
+                    "0480",
+                    "0473",
+                    "0478",
+                    "0483",
+                    "0482",
+                    "0485",
+                    "0490",
+                    "0491",
+                    "0492",
+                    "0484",
+                    "0486",
+                    "0493",
+                    "0494",
+                    "0495",
+                    "0496",
+                    "0497",
+                    "0498",
+                    "0499",
+                    "0500",
+                    "0501",
+                    "0502",
+                    "0510",
+                    "0511",
+                    "0503",
+                    "0504",
+                    "0505",
+                    "0514",
+                    "0515",
+                    "0516",
+                    "0506",
+                    "0507",
+                    "0508",
+                    "0509",
+                    "0512",
+                    "0517",
+                    "0513",
+                    "0523",
+                    "0524",
+                    "0518",
+                    "0519",
+                    "0527",
+                    "0520",
+                    "0521",
+                    "0522",
+                    "0532",
+                    "0533",
+                    "0534",
+                    "0535",
+                    "0525",
+                    "0526",
+                    "0528",
+                    "0529",
+                    "0530",
+                    "0531",
+                    "0536",
+                    "0538",
+                    "0541",
+                    "0542",
+                    "0537",
+                    "0544",
+                    "0539",
+                    "0540",
+                    "0543"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-10T14:30:00Z",
+                              "code": "f-0020",
+                              "startTime": "2024-02-10T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-10T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-10T07:30:00Z",
+                              "finishingTime": "2024-02-10T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-10T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-10T14:30:00Z",
+                              "code": "f-0021",
+                              "startTime": "2024-02-10T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-10T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-10T07:30:00Z",
+                              "finishingTime": "2024-02-10T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-10T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-10T21:30:00Z",
+                              "code": "f-0022",
+                              "startTime": "2024-02-10T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-10T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-10T14:30:00Z",
+                              "finishingTime": "2024-02-10T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-10T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-10T21:30:00Z",
+                              "code": "f-0023",
+                              "startTime": "2024-02-10T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-10T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-10T14:30:00Z",
+                              "finishingTime": "2024-02-10T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-10T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-10T13:10:00Z",
+                                   "code": "0488",
+                                   "startTime": "2024-02-10T12:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T10:40:00Z",
+                                   "code": "0474",
+                                   "startTime": "2024-02-10T09:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T08:55:00Z",
+                                   "code": "0469",
+                                   "startTime": "2024-02-10T07:45:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T11:50:00Z",
+                                   "code": "0477",
+                                   "startTime": "2024-02-10T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 86.15384615384616,
+                              "finishTime": "2024-02-10T13:10:00Z",
+                              "usedTime": "PT5H25M",
+                              "availableTime": "PT35M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H15M",
+                              "startingTime": "2024-02-10T07:45:00Z",
+                              "finishingTime": "2024-02-10T13:10:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-10T07:45:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-10T10:30:00Z",
+                                   "code": "0470",
+                                   "startTime": "2024-02-10T09:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T11:40:00Z",
+                                   "code": "0481",
+                                   "startTime": "2024-02-10T10:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T09:00:00Z",
+                                   "code": "0461",
+                                   "startTime": "2024-02-10T07:50:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T13:10:00Z",
+                                   "code": "0487",
+                                   "startTime": "2024-02-10T12:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 87.5,
+                              "finishTime": "2024-02-10T13:10:00Z",
+                              "usedTime": "PT5H20M",
+                              "availableTime": "PT40M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT19H40M",
+                              "startingTime": "2024-02-10T07:50:00Z",
+                              "finishingTime": "2024-02-10T13:10:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-10T07:50:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-10T10:10:00Z",
+                                   "code": "0471",
+                                   "startTime": "2024-02-10T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T13:10:00Z",
+                                   "code": "0489",
+                                   "startTime": "2024-02-10T12:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T08:50:00Z",
+                                   "code": "0468",
+                                   "startTime": "2024-02-10T07:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-10T11:50:00Z",
+                                   "code": "0476",
+                                   "startTime": "2024-02-10T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 84.84848484848484,
+                              "finishTime": "2024-02-10T13:10:00Z",
+                              "usedTime": "PT5H30M",
+                              "availableTime": "PT30M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT19H30M",
+                              "startingTime": "2024-02-10T07:40:00Z",
+                              "finishingTime": "2024-02-10T13:10:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-10T07:40:00Z",
+                              "services": 4
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 72,
+                         "percentage": 81.81818181818183
+                    },
+                    "services": 88,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 16,
+                         "percentage": 18.181818181818183
+                    }
+               }
+          },
+          {
+               "date": "2024-02-11",
+               "uncoveredServices": [
+                    "0551",
+                    "0552",
+                    "0545",
+                    "0546",
+                    "0547",
+                    "0557",
+                    "0560",
+                    "0561",
+                    "0554",
+                    "0563",
+                    "0564",
+                    "0565",
+                    "0567",
+                    "0571",
+                    "0570",
+                    "0575",
+                    "0576",
+                    "0577",
+                    "0578",
+                    "0572",
+                    "0573",
+                    "0574",
+                    "0581",
+                    "0582",
+                    "0583",
+                    "0579",
+                    "0580",
+                    "0585",
+                    "0586",
+                    "0587",
+                    "0584",
+                    "0591",
+                    "0593",
+                    "0588",
+                    "0589",
+                    "0590",
+                    "0596",
+                    "0597",
+                    "0592",
+                    "0594",
+                    "0595",
+                    "0598",
+                    "0599",
+                    "0601",
+                    "0602",
+                    "0603",
+                    "0600",
+                    "0604",
+                    "0605",
+                    "0606"
+               ],
+               "employees": [
+                    {
+                         "code": "0000",
+                         "services": [{
+                              "finishTime": "2024-02-11T14:30:00Z",
+                              "code": "f-0024",
+                              "startTime": "2024-02-11T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-11T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-11T07:30:00Z",
+                              "finishingTime": "2024-02-11T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-11T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0001",
+                         "services": [{
+                              "finishTime": "2024-02-11T14:30:00Z",
+                              "code": "f-0025",
+                              "startTime": "2024-02-11T07:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-11T14:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-11T07:30:00Z",
+                              "finishingTime": "2024-02-11T14:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-11T07:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0002",
+                         "services": [{
+                              "finishTime": "2024-02-11T21:30:00Z",
+                              "code": "f-0026",
+                              "startTime": "2024-02-11T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-11T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-11T14:30:00Z",
+                              "finishingTime": "2024-02-11T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-11T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0003",
+                         "services": [{
+                              "finishTime": "2024-02-11T21:30:00Z",
+                              "code": "f-0027",
+                              "startTime": "2024-02-11T14:30:00Z",
+                              "serviceTime": "PT7H"
+                         }],
+                         "indicators": {
+                              "productivityUsedTime": 100,
+                              "finishTime": "2024-02-11T21:30:00Z",
+                              "usedTime": "PT7H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H",
+                              "timeFromPreviousDays": "PT17H",
+                              "startingTime": "2024-02-11T14:30:00Z",
+                              "finishingTime": "2024-02-11T21:30:00Z",
+                              "workProductivity": 87.5,
+                              "startTime": "2024-02-11T14:30:00Z",
+                              "services": 1
+                         }
+                    },
+                    {
+                         "code": "0004",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-11T08:40:00Z",
+                                   "code": "0549",
+                                   "startTime": "2024-02-11T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T11:50:00Z",
+                                   "code": "0559",
+                                   "startTime": "2024-02-11T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T13:25:00Z",
+                                   "code": "0569",
+                                   "startTime": "2024-02-11T12:15:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T10:40:00Z",
+                                   "code": "0556",
+                                   "startTime": "2024-02-11T09:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 78.87323943661971,
+                              "finishTime": "2024-02-11T13:25:00Z",
+                              "usedTime": "PT5H55M",
+                              "availableTime": "PT5M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H20M",
+                              "startingTime": "2024-02-11T07:30:00Z",
+                              "finishingTime": "2024-02-11T13:25:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-11T07:30:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0005",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-11T11:50:00Z",
+                                   "code": "0558",
+                                   "startTime": "2024-02-11T10:40:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T13:10:00Z",
+                                   "code": "0568",
+                                   "startTime": "2024-02-11T12:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T10:40:00Z",
+                                   "code": "0555",
+                                   "startTime": "2024-02-11T09:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T08:40:00Z",
+                                   "code": "0548",
+                                   "startTime": "2024-02-11T07:30:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 82.35294117647058,
+                              "finishTime": "2024-02-11T13:10:00Z",
+                              "usedTime": "PT5H40M",
+                              "availableTime": "PT20M",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H20M",
+                              "startingTime": "2024-02-11T07:30:00Z",
+                              "finishingTime": "2024-02-11T13:10:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-11T07:30:00Z",
+                              "services": 4
+                         }
+                    },
+                    {
+                         "code": "0006",
+                         "services": [
+                              {
+                                   "finishTime": "2024-02-11T08:55:00Z",
+                                   "code": "0550",
+                                   "startTime": "2024-02-11T07:45:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T12:45:00Z",
+                                   "code": "0566",
+                                   "startTime": "2024-02-11T11:35:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T10:10:00Z",
+                                   "code": "0553",
+                                   "startTime": "2024-02-11T09:00:00Z",
+                                   "serviceTime": "PT1H10M"
+                              },
+                              {
+                                   "finishTime": "2024-02-11T11:30:00Z",
+                                   "code": "0562",
+                                   "startTime": "2024-02-11T10:20:00Z",
+                                   "serviceTime": "PT1H10M"
+                              }
+                         ],
+                         "indicators": {
+                              "productivityUsedTime": 93.33333333333333,
+                              "finishTime": "2024-02-11T12:45:00Z",
+                              "usedTime": "PT5H",
+                              "availableTime": "PT1H",
+                              "breakTime": "PT1H20M",
+                              "timeFromPreviousDays": "PT18H35M",
+                              "startingTime": "2024-02-11T07:45:00Z",
+                              "finishingTime": "2024-02-11T12:45:00Z",
+                              "workProductivity": 77.77777777777779,
+                              "startTime": "2024-02-11T07:45:00Z",
+                              "services": 4
+                         }
+                    }
+               ],
+               "indicators": {
+                    "uncoveredServices": {
+                         "absolute": 50,
+                         "percentage": 75.75757575757575
+                    },
+                    "services": 66,
+                    "employees": 7,
+                    "coveredServices": {
+                         "absolute": 16,
+                         "percentage": 24.242424242424242
+                    }
+               }
+          }
+     ],
+     "indicators": {
+          "uncoveredServices": {
+               "absolute": 496,
+               "percentage": 81.71334431630972
+          },
+          "productivityUsedTimeValues": {
+               "realServices": 84.94872027399653,
+               "byRole": {
+                    "[DRIVER]": 100,
+                    "[AGENT]": 84.94872027399653,
+                    "[MANAGER]": 100
+               },
+               "global": 93.54945154599854
+          },
+          "fakeServices": 28,
+          "realServices": 579,
+          "employeesByRole": {
+               "[DRIVER]": 2,
+               "[AGENT]": 3,
+               "[MANAGER]": 2
+          },
+          "services": 607,
+          "agentsWithWorkPercentage": 100,
+          "employees": 7,
+          "coveredServices": {
+               "absolute": 111,
+               "percentage": 18.28665568369028
+          },
+          "workProductivityValues": {
+               "realServices": 32.936507936507944,
+               "byRole": {
+                    "[DRIVER]": 87.5,
+                    "[AGENT]": 76.85185185185186,
+                    "[MANAGER]": 87.5
+               },
+               "global": 82.93650793650797,
+               "activeEmployees": 82.93650793650797
+          },
+          "agentsWithWork": 3
+     }
+}

@@ -29,6 +29,7 @@ public class InstanceCreatorSPC {
             final int numberOfServices = selectedFlights.size() + 4 * numberOfDays; 
             final int numberOfManagers = 2;
             final int numberOfDrivers = 2;
+            final int dayHoursFixedServices = 8; 
             final int numberOfEmployees = agents + numberOfManagers + numberOfDrivers;
             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                     numberOfServices,
@@ -118,6 +119,7 @@ public class InstanceCreatorSPC {
                 for (Role role : roles) {
                     optimizationProblem.addEmployeeRoles(employeecode, role);
                     optimizationProblem.setEmployeeCode(employeecode, String.format("%04d", employeecode));
+                    optimizationProblem.setEmployeeTimePerDay(employeecode, Duration.ofHours(dayHoursFixedServices));
                     employeecode++;
                 }
             }

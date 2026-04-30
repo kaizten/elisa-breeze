@@ -3,9 +3,8 @@ import json
 import re
 from collections import defaultdict
 from pathlib import Path
-from statistics import mean, median
-
-import matplotlib.pyplot as plt
+from statistics import mean
+from datetime import datetime
 
 SINTETICO_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions")
 REAL_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/solutions")
@@ -13,31 +12,39 @@ OUTPUT_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/anali
 
 
 def get_algorithm_from_filename(path: Path) -> str:
-    last_part = path.stem.split("-")[-1].lower()
+    name = path.stem.lower()
 
-    if "compacting" in last_part:
+    if "compacting" in name:
         return "CompactingSolver"
-    if "random" in last_part:
+    if "random" in name:
         return "RandomSolver"
-    if "reference" in last_part:
+    if "reference" in name:
         return "ReferenceSolver"
 
 
 def get_agents_from_filename(path: Path):
     name = path.stem.lower()
 
-    # Sintéticos: 
     match = re.search(r"agents(\d+)", name)
     if match:
         return int(match.group(1))
 
-    # Reales:
-    match = re.search(r"_(\d+)_(?:reference|random|compacting)", name)
+    match = re.search(r"_(\d+)_agents_", name)
     if match:
         return int(match.group(1))
 
     return ""
 
+def parse_datetime(value: str):
+    if not value:
+        return None
+
+    value = value.replace("Z", "+00:00")
+
+    try:
+        return datetime.fromisoformat(value)
+    except ValueError:
+        return None
 
 def get_time_per_day_from_filename(path: Path):
     name = path.stem.lower()
@@ -87,7 +94,6 @@ def parse_filename(path: Path, experiment_type: str) -> dict:
 
 
 def get_employee_identifier(employee: dict) -> str:
-
     preferred_keys = [
         "code",
         "name",
@@ -128,6 +134,7 @@ def get_employee_identifier(employee: dict) -> str:
 
     return ""
 
+
 def parse_service_time_to_minutes(service_time: str) -> float:
     if not service_time:
         return 0
@@ -145,16 +152,18 @@ def parse_service_time_to_minutes(service_time: str) -> float:
 
 
 def calculate_worked_days(solution: dict):
-
     dates = solution.get("dates")
 
+    if not isinstance(dates, list):
+        raise ValueError("No es un JSON de solución porque no tiene la clave dates.")
+
     employee_days = defaultdict(set)
-    employee_services = defaultdict(int)
     employee_minutes = defaultdict(float)
+    employee_used_minutes = defaultdict(float)
     horizon_dates = set()
 
     for day_block in dates:
-        date = day_block.get("date")
+        date = str(day_block.get("date", ""))[:10]
 
         if not date:
             continue
@@ -165,34 +174,52 @@ def calculate_worked_days(solution: dict):
             employee_id = get_employee_identifier(employee)
             services = employee.get("services", [])
 
-            if employee_id and services:
-                employee_days[employee_id].add(date)
-                employee_services[employee_id] += len(services)
+            real_services = [
+                service for service in services
+                if not str(service.get("code", "")).startswith("f-")
+            ]
 
-                for service in services:
+            if employee_id and real_services:
+                employee_days[employee_id].add(date)
+
+                # Tiempo efectivo de servicios reales, sin huecos.
+                for service in real_services:
                     employee_minutes[employee_id] += parse_service_time_to_minutes(
                         service.get("serviceTime", "")
                     )
 
+                # Tiempo usado: desde el primer servicio real hasta el último servicio real del día.
+                real_starts = [
+                    parse_datetime(service.get("startTime", ""))
+                    for service in real_services
+                ]
+
+                real_finishes = [
+                    parse_datetime(service.get("finishTime", ""))
+                    for service in real_services
+                ]
+
+                real_starts = [value for value in real_starts if value is not None]
+                real_finishes = [value for value in real_finishes if value is not None]
+
+                if real_starts and real_finishes:
+                    used_minutes = (max(real_finishes) - min(real_starts)).total_seconds() / 60
+                    employee_used_minutes[employee_id] += used_minutes
+
     horizon_days = len(horizon_dates)
     days_values = [len(days) for days in employee_days.values()]
 
-    detail_rows = []
+    employee_rows = []
 
     for employee_id, worked_dates in sorted(employee_days.items()):
         days_worked = len(worked_dates)
-        total_minutes = employee_minutes[employee_id]
-        total_hours = total_minutes / 60
+        total_used_hours = employee_used_minutes[employee_id] / 60
 
-        detail_rows.append({
+        employee_rows.append({
             "employee_id": employee_id,
             "days_worked": days_worked,
-            "active_days_ratio": round(days_worked / horizon_days, 4) if horizon_days else 0,
-            "assigned_services": employee_services[employee_id],
-            "total_work_minutes": round(total_minutes, 2),
-            "total_work_hours": round(total_hours, 4),
-            "avg_hours_per_worked_day": round(total_hours / days_worked, 4) if days_worked else 0,
-            "worked_dates": ";".join(sorted(worked_dates)),
+            "total_used_hours": round(total_used_hours, 4),
+            "avg_hours_per_worked_day": round(total_used_hours / days_worked, 4) if days_worked else 0,
         })
 
     if not days_values:
@@ -201,52 +228,28 @@ def calculate_worked_days(solution: dict):
             "active_employees": 0,
             "employee_days": 0,
             "avg_days_per_active": 0,
-            "median_days_per_active": 0,
-            "min_days_per_active": 0,
-            "max_days_per_active": 0,
-            "avg_active_days_ratio": 0,
-            "employee_days_per_calendar_day": 0,
-            "one_day_employees": 0,
-            "full_period_employees": 0,
-            "total_assigned_services": 0,
-            "avg_services_per_active": 0,
-            "total_work_minutes": 0,
-            "total_work_hours": 0,
             "avg_hours_per_active_employee": 0,
             "avg_hours_per_worked_day": 0,
         }
 
-        return summary, detail_rows
+        return summary, employee_rows
 
-    total_employee_days = sum(days_values)
-    total_assigned_services = sum(employee_services.values())
-    total_work_minutes = sum(employee_minutes.values())
-    total_work_hours = total_work_minutes / 60
-    avg_days = mean(days_values)
+    active_employees = len(days_values)
+    employee_days_total = sum(days_values)
+
+    total_work_hours = sum(employee_minutes.values()) / 60
+    total_used_hours = sum(employee_used_minutes.values()) / 60
 
     summary = {
         "horizon_days": horizon_days,
-        "active_employees": len(days_values),
-        "employee_days": total_employee_days,
-        "avg_days_per_active": round(avg_days, 4),
-        "median_days_per_active": round(median(days_values), 4),
-        "min_days_per_active": min(days_values),
-        "max_days_per_active": max(days_values),
-        "avg_active_days_ratio": round(avg_days / horizon_days, 4) if horizon_days else 0,
-        "employee_days_per_calendar_day": round(total_employee_days / horizon_days, 4) if horizon_days else 0,
-        "one_day_employees": sum(1 for value in days_values if value == 1),
-        "full_period_employees": sum(1 for value in days_values if value == horizon_days),
-        "total_assigned_services": total_assigned_services,
-        "avg_services_per_active": round(total_assigned_services / len(days_values), 4),
-
-        # Nuevas métricas de tiempo trabajado
-        "total_work_minutes": round(total_work_minutes, 2),
-        "total_work_hours": round(total_work_hours, 4),
-        "avg_hours_per_active_employee": round(total_work_hours / len(days_values), 4),
-        "avg_hours_per_worked_day": round(total_work_hours / total_employee_days, 4) if total_employee_days else 0,
+        "active_employees": active_employees,
+        "employee_days": employee_days_total,
+        "avg_days_per_active": round(mean(days_values), 4),
+        "avg_hours_per_active_employee": round(total_work_hours / active_employees, 4),
+        "avg_hours_per_worked_day": round(total_used_hours / employee_days_total, 4) if employee_days_total else 0,
     }
 
-    return summary, detail_rows
+    return summary, employee_rows
 
 def process_folder(folder: Path, experiment_type: str):
     summary_rows = []
@@ -257,15 +260,8 @@ def process_folder(folder: Path, experiment_type: str):
             with path.open("r", encoding="utf-8") as f:
                 solution = json.load(f)
 
-            summary, details = calculate_worked_days(solution)
+            summary, employees = calculate_worked_days(solution)
             metadata = parse_filename(path, experiment_type)
-
-            time_per_day = metadata.get("time_per_day")
-
-            if time_per_day not in ("", 0, None):
-                summary["avg_daily_load_ratio"] = round(summary["avg_hours_per_worked_day"] / time_per_day, 4)
-            else:
-                summary["avg_daily_load_ratio"] = ""
 
             summary_rows.append({
                 "experiment_type": experiment_type,
@@ -273,20 +269,27 @@ def process_folder(folder: Path, experiment_type: str):
                 **summary,
             })
 
-            for detail in details:
+            for employee in employees:
                 employee_rows.append({
                     "experiment_type": experiment_type,
                     **metadata,
-                    **detail,
+                    **employee,
                 })
+
+        except ValueError:
+            continue
 
         except Exception as e:
             print(f"Error procesando {path.name}: {e}")
 
+    print(f"{experiment_type}: {len(summary_rows)} soluciones procesadas")
     return summary_rows, employee_rows
 
 
 def write_tsv(path: Path, rows: list[dict]):
+    if not rows:
+        print(f"No se generó {path}, porque no hay datos.")
+        return
 
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -298,6 +301,7 @@ def write_tsv(path: Path, rows: list[dict]):
         writer.writerows(rows)
 
     print(f"Tabla generada: {path}")
+
 
 def main():
     sintetico_summary, sintetico_employees = process_folder(

@@ -22,12 +22,18 @@ import com.kaizten.utils.string.KaiztenFormatterTable;
 public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobilityProblem> implements Cloneable {
 
     private final int NO_SERVICE_ASSIGNED = -1;
+
+    private static final int MAX_WORKING_DAYS_IN_WEEK = 5;
+    private static final int WORK_WINDOW_DAYS = 7;
+
     private Set<Integer>[][] serviceAssignment;
     private int firstService[][];
     private int lastService[][];
     private Set<Integer>[] assignedEmployees;
     private LocalDate[] lastWorkedDate;
     private OffsetDateTime[] lastWorkedServiceEnd;
+    private Set<LocalDate>[] workedDatesPerEmployee;
+
     
     public PersonsReducedMobilitySolution(PersonsReducedMobilityProblem optimizationProblem) {
         super(optimizationProblem);
@@ -54,6 +60,11 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         this.lastWorkedDate = new LocalDate[optimizationProblem.getNumberOfEmployees()];
         this.lastWorkedServiceEnd = new OffsetDateTime[optimizationProblem.getNumberOfEmployees()];
+        
+        this.workedDatesPerEmployee = new HashSet[optimizationProblem.getNumberOfEmployees()];
+        for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
+            this.workedDatesPerEmployee[employee] = new HashSet<>();
+        }
     }
 
     @Override
@@ -90,6 +101,11 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
             copy.lastWorkedDate[employee] = this.lastWorkedDate[employee];
             copy.lastWorkedServiceEnd[employee] = this.lastWorkedServiceEnd[employee];
+        }
+
+        copy.workedDatesPerEmployee = new HashSet[optimizationProblem.getNumberOfEmployees()];
+        for (int employee = 0; employee < optimizationProblem.getNumberOfEmployees(); employee++) {
+            copy.workedDatesPerEmployee[employee] = new HashSet<>(this.workedDatesPerEmployee[employee]);
         }
 
         return copy;
@@ -145,6 +161,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         this.serviceAssignment[indexOfDate][employee].add(service);
         this.assignedEmployees[service].add(employee);
+        this.workedDatesPerEmployee[employee].add(date);
 
         // nuevo
         OffsetDateTime serviceEnd = this.optimizationProblem.getServiceFinishingTime(service);
@@ -221,7 +238,7 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
      * super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
      * }
      */
-    // verificar que no se acumule a otro dia sino que se considere como nuevo dia
+
     public boolean doesServiceFitEmployeeWorkingTime(int employee, int service) {
         LocalDate date = this.optimizationProblem.getDate(service);
         int indexOfDate = this.optimizationProblem.getIndexOfDate(date);
@@ -248,6 +265,33 @@ public class PersonsReducedMobilitySolution extends Solution<PersonsReducedMobil
         }
         // Verifica que las horas trabajadas no excedan las disponibles para el empleado
         return (assignedWorkingTime <= super.getOptimizationProblem().getEmployeeAvailableTimePerDay(employee));
+    }
+
+    public boolean doesServiceSatisfyWeeklyWorkLimits(int employee, int service) {
+        LocalDate serviceDate = this.optimizationProblem.getDate(service);
+
+        if (this.workedDatesPerEmployee[employee].contains(serviceDate)) {
+            return true;
+        }
+
+        for (int offset = 0; offset < WORK_WINDOW_DAYS; offset++) {
+            LocalDate windowStart = serviceDate.minusDays(offset);
+            LocalDate windowEnd = windowStart.plusDays(WORK_WINDOW_DAYS - 1);
+
+            int workedDaysInWindow = 1;
+
+            for (LocalDate workedDate : this.workedDatesPerEmployee[employee]) {
+                if (!workedDate.isBefore(windowStart) && !workedDate.isAfter(windowEnd)) {
+                    workedDaysInWindow++;
+
+                    if (workedDaysInWindow > MAX_WORKING_DAYS_IN_WEEK) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public int getFirstUncoveredService() {

@@ -61,6 +61,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     if (this.optimizationProblem.hasEmployeeRole(employee, serviceRole)
                             && solution.doesServiceFitEmployeeWorkingTime(employee, service)
                             && !solution.isServiceOverlapping(employee, service)
+                            && solution.doesServiceSatisfyWeeklyWorkLimits(employee, service)
                             && solution.doesServiceSatisfiesTimeBetweenDays(employee, service)) {
 
                         Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(employee);

@@ -30,7 +30,8 @@ public class InstanceCreatorMAD {
             final int numberOfManagers = 3;
             final int numberOfDrivers = 6;
             final int numberOfRampManagers = 3;
-            final int numberOfExtraEmployees = 80; 
+            final int numberOfExtraEmployees = 80;
+            final int dayHoursFixedServices = 8; 
 
             final int numberOfEmployees = agents +
                     numberOfManagers +
@@ -1006,14 +1007,17 @@ public class InstanceCreatorMAD {
             for (int i = numberOfEmployees - (92); i < numberOfEmployees - (38); i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(dayHoursFixedServices));
             }
             for (int i = numberOfEmployees - (38); i < numberOfEmployees - (19); i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(dayHoursFixedServices));
             }
             for (int i = numberOfEmployees - (19); i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.RAMP_MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(dayHoursFixedServices));
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
             return optimizationProblem; 

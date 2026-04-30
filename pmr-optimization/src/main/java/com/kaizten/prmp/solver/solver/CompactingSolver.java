@@ -24,9 +24,11 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
 
     private static final int STOP_THRESHOLD = 5; 
     private static final double BONUS_ACTIVE_EMPLOYEE = 1.0; // Bonus por cada empleado activo en un servicio
-     private static final double PENALTY_NEW_EMPLOYEE = 0.8; // Penalización por cada nuevo empleado asignado a un servicio
+    private static final double PENALTY_NEW_EMPLOYEE = 0.8; // Penalización por cada nuevo empleado asignado a un servicio
     private static final double PENALTY_SERVICES_GAP = 0.5; // Penalización por cada hora de gap entre servicios para un mismo empleado
     private static final int TOP_CANDIDATES_CHOICE = 3; // Número de mejores empleados a considerar para la asignación
+    private static final double BONUS_ACTIVE_IN_WEEK = 0.6; // Bonus por cada día trabajado en la semana, para incentivar la concentración de servicios en menos días
+    private static final double PENALTY_NEW_WORKING_DAY = 0.4; // Penalización por cada nuevo día trabajado en la semana, para incentivar la concentración de servicios en menos días
 
     public CompactingSolver(PersonsReducedMobilityProblem optimizationProblem) {
         this.optimizationProblem = optimizationProblem;
@@ -161,6 +163,8 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         
         if(solution.isServiceOverlapping(employee, service)){return false;}
 
+        if(!solution.doesServiceSatisfyWeeklyWorkLimits(employee, service)){return false;}
+
         if(!solution.doesServiceSatisfiesTimeBetweenDays(employee, service)){return false;}
 
         boolean startOk = employeeStartOpt.isEmpty() 
@@ -173,24 +177,24 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
     }
 
      // calcular el fitness del empleado para el servicio
-    private double getEmployeeFitness(PersonsReducedMobilitySolution solution, int employee, int service){ 
+    private double getEmployeeFitness(PersonsReducedMobilitySolution solution, int employee, int service) { 
         OffsetDateTime serviceStart = this.optimizationProblem.getServiceStartingTime(service);
         LocalDate serviceDate = serviceStart.toLocalDate();
 
-        if(!solution.hasAssignedServices(serviceDate, employee)){
-            return - PENALTY_NEW_EMPLOYEE; // Penalización por asignar un nuevo empleado
-        }
-        
-        OffsetDateTime lastServiceEnd = solution.getFinishingTime(serviceDate, employee);
-    
-        double gap;
-        if(!serviceStart.isBefore(lastServiceEnd)){
-            gap = Duration.between(lastServiceEnd, serviceStart).toMinutes() / 60.0;
-        } else {
-            gap = 0.0;
+        if (solution.hasAssignedServices(serviceDate, employee)) {
+            OffsetDateTime lastServiceEnd = solution.getFinishingTime(serviceDate, employee);
+
+            double gap;
+            if (!serviceStart.isBefore(lastServiceEnd)) {
+                gap = Duration.between(lastServiceEnd, serviceStart).toMinutes() / 60.0;
+            } else {
+                gap = 0.0;
+            }
+
+            return BONUS_ACTIVE_EMPLOYEE - PENALTY_SERVICES_GAP * gap;
         }
 
-        return BONUS_ACTIVE_EMPLOYEE - PENALTY_SERVICES_GAP * gap; 
+        return -PENALTY_NEW_EMPLOYEE;
     }
 
     // Clases auxiliares

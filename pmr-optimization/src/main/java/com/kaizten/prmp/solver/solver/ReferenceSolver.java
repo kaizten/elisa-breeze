@@ -43,6 +43,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                 if (this.optimizationProblem.hasEmployeeRole(employee, serviceRole)
                         && solution.doesServiceFitEmployeeWorkingTime(employee, service)
                         && !solution.isServiceOverlapping(employee, service)
+                        && solution.doesServiceSatisfyWeeklyWorkLimits(employee, service)
                         && solution.doesServiceSatisfiesTimeBetweenDays(employee, service)) {
 
                     // valido startTime y FinishTime juntos, y si ambos son True, se añade a la

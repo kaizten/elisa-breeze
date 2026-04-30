@@ -33,7 +33,8 @@ public class InstanceCreatorTFS {
             // adjudicamos eso para que cubra eso y ya de paso cubre los demas (regla general de momento)
             int numberOfExtraEmployees = 32;
             int numberOfEmployees = agents + numberOfManagers + numberOfDrivers + numberOfExtraEmployees;
-            final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
+            final int dayHoursFixedServices = 8; 
+             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
                     numberOfServices,
                     numberOfEmployees);
             optimizationProblem.setAirport(airport);
@@ -631,11 +632,13 @@ public class InstanceCreatorTFS {
             for (int i = numberOfEmployees - 38; i < numberOfEmployees - 11; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.DRIVER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(dayHoursFixedServices));
             }
 
             for (int i = numberOfEmployees - 11; i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.MANAGER);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
+                optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(dayHoursFixedServices));
             }
             optimizationProblem.computeEmployeesAvailability(List.of());
             return optimizationProblem;
