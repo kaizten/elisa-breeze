@@ -128,6 +128,21 @@ def get_employee_identifier(employee: dict) -> str:
 
     return ""
 
+def parse_service_time_to_minutes(service_time: str) -> float:
+    if not service_time:
+        return 0
+
+    match = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", service_time)
+
+    if not match:
+        return 0
+
+    hours = int(match.group(1)) if match.group(1) else 0
+    minutes = int(match.group(2)) if match.group(2) else 0
+    seconds = int(match.group(3)) if match.group(3) else 0
+
+    return hours * 60 + minutes + seconds / 60
+
 
 def calculate_worked_days(solution: dict):
 
@@ -135,6 +150,7 @@ def calculate_worked_days(solution: dict):
 
     employee_days = defaultdict(set)
     employee_services = defaultdict(int)
+    employee_minutes = defaultdict(float)
     horizon_dates = set()
 
     for day_block in dates:
@@ -153,6 +169,11 @@ def calculate_worked_days(solution: dict):
                 employee_days[employee_id].add(date)
                 employee_services[employee_id] += len(services)
 
+                for service in services:
+                    employee_minutes[employee_id] += parse_service_time_to_minutes(
+                        service.get("serviceTime", "")
+                    )
+
     horizon_days = len(horizon_dates)
     days_values = [len(days) for days in employee_days.values()]
 
@@ -160,12 +181,17 @@ def calculate_worked_days(solution: dict):
 
     for employee_id, worked_dates in sorted(employee_days.items()):
         days_worked = len(worked_dates)
+        total_minutes = employee_minutes[employee_id]
+        total_hours = total_minutes / 60
 
         detail_rows.append({
             "employee_id": employee_id,
             "days_worked": days_worked,
             "active_days_ratio": round(days_worked / horizon_days, 4) if horizon_days else 0,
             "assigned_services": employee_services[employee_id],
+            "total_work_minutes": round(total_minutes, 2),
+            "total_work_hours": round(total_hours, 4),
+            "avg_hours_per_worked_day": round(total_hours / days_worked, 4) if days_worked else 0,
             "worked_dates": ";".join(sorted(worked_dates)),
         })
 
@@ -184,12 +210,18 @@ def calculate_worked_days(solution: dict):
             "full_period_employees": 0,
             "total_assigned_services": 0,
             "avg_services_per_active": 0,
+            "total_work_minutes": 0,
+            "total_work_hours": 0,
+            "avg_hours_per_active_employee": 0,
+            "avg_hours_per_worked_day": 0,
         }
 
         return summary, detail_rows
 
     total_employee_days = sum(days_values)
     total_assigned_services = sum(employee_services.values())
+    total_work_minutes = sum(employee_minutes.values())
+    total_work_hours = total_work_minutes / 60
     avg_days = mean(days_values)
 
     summary = {
@@ -206,6 +238,12 @@ def calculate_worked_days(solution: dict):
         "full_period_employees": sum(1 for value in days_values if value == horizon_days),
         "total_assigned_services": total_assigned_services,
         "avg_services_per_active": round(total_assigned_services / len(days_values), 4),
+
+        # Nuevas métricas de tiempo trabajado
+        "total_work_minutes": round(total_work_minutes, 2),
+        "total_work_hours": round(total_work_hours, 4),
+        "avg_hours_per_active_employee": round(total_work_hours / len(days_values), 4),
+        "avg_hours_per_worked_day": round(total_work_hours / total_employee_days, 4) if total_employee_days else 0,
     }
 
     return summary, detail_rows
@@ -221,6 +259,13 @@ def process_folder(folder: Path, experiment_type: str):
 
             summary, details = calculate_worked_days(solution)
             metadata = parse_filename(path, experiment_type)
+
+            time_per_day = metadata.get("time_per_day")
+
+            if time_per_day not in ("", 0, None):
+                summary["avg_daily_load_ratio"] = round(summary["avg_hours_per_worked_day"] / time_per_day, 4)
+            else:
+                summary["avg_daily_load_ratio"] = ""
 
             summary_rows.append({
                 "experiment_type": experiment_type,
