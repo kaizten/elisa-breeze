@@ -7,7 +7,7 @@ from statistics import mean
 from datetime import datetime
 
 SINTETICO_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/solutions")
-REAL_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/pruebaSolution")
+REAL_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/realCaseTest/solutions")
 OUTPUT_DIR = Path("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/analisis_resultados_py/worked_days_output")
 
 
