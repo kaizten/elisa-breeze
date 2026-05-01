@@ -73,7 +73,7 @@ public class Main {
         
         if (airport.equals("SPC")) {
             InstanceCreatorSPC creator = new InstanceCreatorSPC();
-            final int[] agentsCount = {10,15,20,25,30,35,40,45,50,55}; // de 5 en 5
+            final int[] agentsCount = {10,20,30,40,50,60,70,80,90,100}; // de 10 en 10
             
             for (int agents : agentsCount) { 
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
@@ -97,7 +97,7 @@ public class Main {
 
         } else if (airport.equals("TFS")) {
             InstanceCreatorTFS creator = new InstanceCreatorTFS();
-            final int[] agentsCount = {30,40,50,60,70,80,90,100,110,120}; // de 10 en 10
+            final int[] agentsCount = {50,70,90,110,130,150,170,190,210,230}; // de 20 en 20
             
             for (int agents : agentsCount) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(
@@ -120,7 +120,7 @@ public class Main {
 
         } else if (airport.equals("MAD")) {
             InstanceCreatorMAD creator = new InstanceCreatorMAD();
-            final int[] agentsCount = {150,180,210,240,270,300,330,360,390,420}; // de 30 en 30
+            final int[] agentsCount = {150,190,230,270,310,350,390,430,470,510}; // de 40 en 40
             
             for (int agents : agentsCount) {
                 final PersonsReducedMobilityProblem optimizationProblem = creator.createInstance(

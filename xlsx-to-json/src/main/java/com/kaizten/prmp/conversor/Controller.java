@@ -3,7 +3,7 @@ package com.kaizten.prmp.conversor;
 public class Controller {
 
     private static final String FILE_PATH = "data/flights.xlsx";
-    private static final String INSTANCE_DIRECTORY = "data/instances/";
+    private static final String INSTANCE_DIRECTORY = "data/instances2/";
 
     public static void main(String[] args) throws Exception {
         final String[] airports = { "MAD", "SPC", "TFS" };
