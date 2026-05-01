@@ -41,9 +41,14 @@ public class Main {
                 "-timePerDay" + StringUtils.toWitdh(timePerDay, 2) +
                 "-instance" + StringUtils.toWitdh(instanceNumber, 4) +
                 ".json";
-        KaiztenFile.writeToFile(
-                new File(instanceName),
-                json);
+
+        final File outputFile = new File(instanceName);
+        if (outputFile.exists()) {
+            System.out.println("La instancia ya existe: " + outputFile);
+            return;
+        }
+
+        KaiztenFile.writeToFile(outputFile, json);
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException, Exception {
