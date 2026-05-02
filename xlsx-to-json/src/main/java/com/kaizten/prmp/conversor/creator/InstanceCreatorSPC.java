@@ -27,8 +27,8 @@ public class InstanceCreatorSPC {
             int timePerDay) throws Exception {
                 
             final int numberOfServices = selectedFlights.size() + 4 * numberOfDays; 
-            final int numberOfManagers = 2;
-            final int numberOfDrivers = 2;
+            final int numberOfManagers = 4;
+            final int numberOfDrivers = 4;
             final int dayHoursFixedServices = 8; 
             final int numberOfEmployees = agents + numberOfManagers + numberOfDrivers;
             final PersonsReducedMobilityProblem optimizationProblem = new PersonsReducedMobilityProblem(
@@ -113,9 +113,9 @@ public class InstanceCreatorSPC {
                 optimizationProblem.setServiceRole(i, service.getRole());
                 optimizationProblem.setServiceRequiredEmployees(i, service.getRequiredEmployees());
             }
-            // Creo los 4 empleados adicionales
+            // Creo los 8 empleados adicionales (van rotando para cumplir restricciones horarias semanales y diarias)
             int employeecode = 0;
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 for (Role role : roles) {
                     optimizationProblem.addEmployeeRoles(employeecode, role);
                     optimizationProblem.setEmployeeCode(employeecode, String.format("%04d", employeecode));
@@ -124,7 +124,7 @@ public class InstanceCreatorSPC {
                 }
             }
             // creo x empleados nuevos, rol AGENTE
-            for (int i = 4; i < numberOfEmployees; i++) {
+            for (int i = 8; i < numberOfEmployees; i++) {
                 optimizationProblem.addEmployeeRoles(i, Role.AGENT);
                 optimizationProblem.setEmployeeCode(i, String.format("%04d", i));
                 optimizationProblem.setEmployeeTimePerDay(i, Duration.ofHours(timePerDay));
