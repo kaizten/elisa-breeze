@@ -18,7 +18,7 @@ public class AgentAdder {
 
         int originalAgent = employees.length();
 
-        for (int target = 600; target <= 1000; target += 100) {
+        for (int target = 600; target <= 1800; target += 20) {
             System.out.println("Generando instancia con " + target + " agentes");
 
             String outputPath = "data/realCaseTest/instances/realCaseProblemMAD_" + target + "_agents.json";
