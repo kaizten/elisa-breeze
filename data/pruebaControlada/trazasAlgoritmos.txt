@@ -1,0 +1,454 @@
+ReferenceSolver: 
+La instancia está ordenada cronológicamente.
+Ejecutando ReferenceSolver...
+--------------------------------------------------
+Servicio S01 [08:00 - 09:10] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones básicas.
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones básicas.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 cumple las restricciones básicas.
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02, E03]
+Empleado seleccionado aleatoriamente: E03
+Empleado asignado: E03
+
+Revisando y ajustando horas de jornada del empleado E03...
+Empleado no tenía hora de inicio ni de finalización. Se le asigna jornada alrededor del servicio: 04:35 - 12:35
+Empleado E03 eliminado de la lista de candidatos disponibles.
+
+Servicio S01 cubierto correctamente.
+--------------------------------------------------
+Servicio S02 [08:30 - 09:40] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones básicas.
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones básicas.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 no cumple las restricciones.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02]
+Empleado seleccionado aleatoriamente: E01
+Empleado asignado: E01
+
+Revisando y ajustando horas de jornada del empleado E01...
+Empleado no tenía hora de inicio ni de finalización. Se le asigna jornada alrededor del servicio: 05:05 - 13:05
+Empleado E01 eliminado de la lista de candidatos disponibles.
+
+Servicio S02 cubierto correctamente.
+--------------------------------------------------
+Servicio S03 [09:50 - 11:00] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones básicas.
+Empleado tiene hora de inicio: 05:05. Servicio empieza a las: 09:50. StartTime válido: true
+Empleado tiene hora de finalización: 13:05. Servicio termina a las: 11:00. FinishTime válido: true
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones básicas.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 cumple las restricciones básicas.
+Empleado tiene hora de inicio: 04:35. Servicio empieza a las: 09:50. StartTime válido: true
+Empleado tiene hora de finalización: 12:35. Servicio termina a las: 11:00. FinishTime válido: true
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02, E03]
+Empleado seleccionado aleatoriamente: E01
+Empleado asignado: E01
+
+Revisando y ajustando horas de jornada del empleado E01...
+Empleado tiene hora de inicio y de finalización.
+Empleado E01 eliminado de la lista de candidatos disponibles.
+
+Servicio S03 cubierto correctamente.
+--------------------------------------------------
+Servicio S04 [10:00 - 11:10] | Rol: DRIVER | Empleados requeridos: 1
+
+Empleado E01 no cumple las restricciones.
+
+Empleado E02 no cumple las restricciones.
+
+Empleado E03 cumple las restricciones básicas.
+Empleado tiene hora de inicio: 04:35. Servicio empieza a las: 10:00. StartTime válido: true
+Empleado tiene hora de finalización: 12:35. Servicio termina a las: 11:10. FinishTime válido: true
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 cumple las restricciones básicas.
+Empleado E04 añadido a la lista de candidatos válidos.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E03, E04]
+Empleado seleccionado aleatoriamente: E04
+Empleado asignado: E04
+
+Revisando y ajustando horas de jornada del empleado E04...
+Empleado no tenía hora de inicio ni de finalización. Se le asigna jornada alrededor del servicio: 06:35 - 14:35
+Empleado E04 eliminado de la lista de candidatos disponibles.
+
+Servicio S04 cubierto correctamente.
+--------------------------------------------------
+Servicio S05 [11:20 - 12:30] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones básicas.
+Empleado tiene hora de inicio: 05:05. Servicio empieza a las: 11:20. StartTime válido: true
+Empleado tiene hora de finalización: 13:05. Servicio termina a las: 12:30. FinishTime válido: true
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones básicas.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 cumple las restricciones básicas.
+Empleado tiene hora de inicio: 04:35. Servicio empieza a las: 11:20. StartTime válido: true
+Empleado tiene hora de finalización: 12:35. Servicio termina a las: 12:30. FinishTime válido: true
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02, E03]
+Empleado seleccionado aleatoriamente: E02
+Empleado asignado: E02
+
+Revisando y ajustando horas de jornada del empleado E02...
+Empleado no tenía hora de inicio ni de finalización. Se le asigna jornada alrededor del servicio: 07:55 - 15:55
+Empleado E02 eliminado de la lista de candidatos disponibles.
+
+Servicio S05 cubierto correctamente.
+--------------------------------------------------
+Todos los servicios fueron cubiertos correctamente.
+
+
+
+
+
+
+
+
+
+
+
+
+RandomSolver: 
+Ejecutando RandomSolver...
+--------------------------------------------------
+Servicio S01 [08:00 - 09:10] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 cumple las restricciones.
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02, E03]
+Empleado E01 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+Empleado E02 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+Empleado E03 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+
+Random Value: 0.004377066452002647 entre 0 y Total Fitness: 0.006237006237006237
+
+Tramos de la ruleta:
+Empleado E01 | tramo: [0.0, 0.002079002079002079]
+Empleado E02 | tramo: [0.002079002079002079, 0.004158004158004158]
+Empleado E03 | tramo: [0.004158004158004158, 0.006237006237006237]
+
+Empleado seleccionado por ruleta: E03
+Empleado asignado: E03 y eliminado de candidatos disponibles.
+
+Servicio S01 cubierto correctamente.
+--------------------------------------------------
+Servicio S02 [08:30 - 09:40] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 no cumple las restricciones.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02]
+Empleado E01 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+Empleado E02 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+
+Random Value: 1.1233729058561876E-4 entre 0 y Total Fitness: 0.004158004158004158
+
+Tramos de la ruleta:
+Empleado E01 | tramo: [0.0, 0.002079002079002079]
+
+Empleado seleccionado por ruleta: E01
+Empleado asignado: E01 y eliminado de candidatos disponibles.
+
+Servicio S02 cubierto correctamente.
+--------------------------------------------------
+Servicio S03 [09:50 - 11:00] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 cumple las restricciones.
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02, E03]
+Empleado E01 - Tiempo disponible: 410 - Fitness: 0.0024330900243309003
+Empleado E02 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+Empleado E03 - Tiempo disponible: 410 - Fitness: 0.0024330900243309003
+
+Random Value: 0.0015234879367561319 entre 0 y Total Fitness: 0.006945182127663881
+
+Tramos de la ruleta:
+Empleado E01 | tramo: [0.0, 0.0024330900243309003]
+
+Empleado seleccionado por ruleta: E01
+Empleado asignado: E01 y eliminado de candidatos disponibles.
+
+Servicio S03 cubierto correctamente.
+--------------------------------------------------
+Servicio S04 [10:00 - 11:10] | Rol: DRIVER | Empleados requeridos: 1
+
+Empleado E01 no cumple las restricciones.
+
+Empleado E02 no cumple las restricciones.
+
+Empleado E03 cumple las restricciones.
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 cumple las restricciones.
+Empleado E04 añadido a la lista de candidatos válidos.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E03, E04]
+Empleado E03 - Tiempo disponible: 410 - Fitness: 0.0024330900243309003
+Empleado E04 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+
+Random Value: 0.004208438817064499 entre 0 y Total Fitness: 0.00451209210333298
+
+Tramos de la ruleta:
+Empleado E03 | tramo: [0.0, 0.0024330900243309003]
+Empleado E04 | tramo: [0.0024330900243309003, 0.00451209210333298]
+
+Empleado seleccionado por ruleta: E04
+Empleado asignado: E04 y eliminado de candidatos disponibles.
+
+Servicio S04 cubierto correctamente.
+--------------------------------------------------
+Servicio S05 [11:20 - 12:30] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Empleado E01 añadido a la lista de candidatos válidos.
+
+Empleado E02 cumple las restricciones.
+Empleado E02 añadido a la lista de candidatos válidos.
+
+Empleado E03 cumple las restricciones.
+Empleado E03 añadido a la lista de candidatos válidos.
+
+Empleado E04 no cumple las restricciones.
+
+Empleado E05 no cumple las restricciones.
+
+Candidatos disponibles: [E01, E02, E03]
+Empleado E01 - Tiempo disponible: 330 - Fitness: 0.0030211480362537764
+Empleado E02 - Tiempo disponible: 480 - Fitness: 0.002079002079002079
+Empleado E03 - Tiempo disponible: 410 - Fitness: 0.0024330900243309003
+
+Random Value: 0.003774838693865002 entre 0 y Total Fitness: 0.007533240139586755
+
+Tramos de la ruleta:
+Empleado E01 | tramo: [0.0, 0.0030211480362537764]
+Empleado E02 | tramo: [0.0030211480362537764, 0.0051001501152558555]
+
+Empleado seleccionado por ruleta: E02
+Empleado asignado: E02 y eliminado de candidatos disponibles.
+
+Servicio S05 cubierto correctamente.
+--------------------------------------------------
+Todos los servicios fueron cubiertos correctamente.
+
+
+
+COMPACTINGSOLVER:
+
+Ejecutando CompactingSolver...
+--------------------------------------------------
+Servicio S01 [08:00 - 09:10] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Calculando fitness para Empleado E01 y Servicio S01
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E02 cumple las restricciones.
+Calculando fitness para Empleado E02 y Servicio S01
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E03 cumple las restricciones.
+Calculando fitness para Empleado E03 y Servicio S01
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E04 no tiene el rol requerido: AGENT
+
+Empleado E05 no tiene el rol requerido: AGENT
+
+Mejores candidatos seleccionados para el servicio: 
+Empleado E01 | Fitness: -0.8
+Empleado E02 | Fitness: -0.8
+Empleado E03 | Fitness: -0.8
+
+Empleado seleccionado aleatoriamente entre los mejores candidatos: E03
+Empleado E03 asignado al servicio S01
+
+Servicio S01 cubierto correctamente.
+--------------------------------------------------
+Servicio S02 [08:30 - 09:40] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Calculando fitness para Empleado E01 y Servicio S02
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E02 cumple las restricciones.
+Calculando fitness para Empleado E02 y Servicio S02
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E03 tiene un solapamiento con el servicio S02
+
+Empleado E04 no tiene el rol requerido: AGENT
+
+Empleado E05 no tiene el rol requerido: AGENT
+
+Mejores candidatos seleccionados para el servicio: 
+Empleado E01 | Fitness: -0.8
+Empleado E02 | Fitness: -0.8
+
+Empleado seleccionado aleatoriamente entre los mejores candidatos: E01
+Empleado E01 asignado al servicio S02
+
+Servicio S02 cubierto correctamente.
+--------------------------------------------------
+Servicio S03 [09:50 - 11:00] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Calculando fitness para Empleado E01 y Servicio S03
+Gap entre servicios: 0.16666666666666666 horas. 
+Fitness: 0.9166666666666666
+
+Empleado E02 cumple las restricciones.
+Calculando fitness para Empleado E02 y Servicio S03
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E03 cumple las restricciones.
+Calculando fitness para Empleado E03 y Servicio S03
+Gap entre servicios: 0.6666666666666666 horas. 
+Fitness: 0.6666666666666667
+
+Empleado E04 no tiene el rol requerido: AGENT
+
+Empleado E05 no tiene el rol requerido: AGENT
+
+Mejores candidatos seleccionados para el servicio: 
+Empleado E01 | Fitness: 0.9166666666666666
+Empleado E02 | Fitness: -0.8
+Empleado E03 | Fitness: 0.6666666666666667
+
+Empleado seleccionado aleatoriamente entre los mejores candidatos: E03
+Empleado E03 asignado al servicio S03
+
+Servicio S03 cubierto correctamente.
+--------------------------------------------------
+Servicio S04 [10:00 - 11:10] | Rol: DRIVER | Empleados requeridos: 1
+
+Empleado E01 no tiene el rol requerido: DRIVER
+
+Empleado E02 no tiene el rol requerido: DRIVER
+
+Empleado E03 tiene un solapamiento con el servicio S04
+
+Empleado E04 cumple las restricciones.
+Calculando fitness para Empleado E04 y Servicio S04
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E05 no tiene el rol requerido: DRIVER
+
+Mejores candidatos seleccionados para el servicio: 
+Empleado E04 | Fitness: -0.8
+
+Empleado seleccionado aleatoriamente entre los mejores candidatos: E04
+Empleado E04 asignado al servicio S04
+Servicio S04 cubierto correctamente.
+--------------------------------------------------
+Servicio S05 [11:20 - 12:30] | Rol: AGENT | Empleados requeridos: 1
+
+Empleado E01 cumple las restricciones.
+Calculando fitness para Empleado E01 y Servicio S05
+Gap entre servicios: 1.6666666666666667 horas. 
+Fitness: 0.16666666666666663
+
+Empleado E02 cumple las restricciones.
+Calculando fitness para Empleado E02 y Servicio S05
+Penalización por abrir nueva jornada.
+Fitness: -0.8
+
+Empleado E03 cumple las restricciones.
+Calculando fitness para Empleado E03 y Servicio S05
+Gap entre servicios: 0.3333333333333333 horas. 
+Fitness: 0.8333333333333334
+
+Empleado E04 no tiene el rol requerido: AGENT
+
+Empleado E05 no tiene el rol requerido: AGENT
+
+Mejores candidatos seleccionados para el servicio: 
+Empleado E01 | Fitness: 0.16666666666666663
+Empleado E02 | Fitness: -0.8
+Empleado E03 | Fitness: 0.8333333333333334
+
+Empleado seleccionado aleatoriamente entre los 3 mejores candidatos: E01
+Empleado E01 asignado al servicio S05
+
+Servicio S05 cubierto correctamente.
+--------------------------------------------------
+Todos los servicios fueron cubiertos correctamente.

@@ -20,7 +20,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
     private PersonsReducedMobilityProblem optimizationProblem;
 
     //TRACE
-    private boolean TRACE = true;
+    private boolean TRACE = false;
     private String serviceLabel(int service) {
         return String.format("S%02d", service + 1);
     }
@@ -182,15 +182,26 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     double cumulative = 0.0;
                     int selectedEmployee = -1;
 
+                    if (TRACE) {
+                        System.out.println("Random Value: " + randomValue +" entre 0 y Total Fitness: " + totalFitness);
+                        System.out.println("Tramos de la ruleta:");
+                    }
+
                     for (Map.Entry<Integer, Double> entry : employeeFitnessMap.entrySet()) {
+                        double previous = cumulative;
                         cumulative += entry.getValue();
+
+                            if (TRACE) {
+                                System.out.println("Empleado " + employeeLabel(entry.getKey())
+                                        + " | tramo: [" + previous + ", " + cumulative + "]");
+                            }
 
                         if (randomValue <= cumulative) {
                             selectedEmployee = entry.getKey();
 
                             //TRACE
                             if (TRACE) {
-                                System.out.println("Empleado seleccionado por ruleta: " + employeeLabel(selectedEmployee) + " (Random Value: " + randomValue + ")");
+                                System.out.println("Empleado seleccionado por ruleta: " + employeeLabel(selectedEmployee));
                             }
 
                             break;

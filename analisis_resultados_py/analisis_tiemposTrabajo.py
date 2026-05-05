@@ -269,12 +269,12 @@ def process_folder(folder: Path, experiment_type: str):
                 **summary,
             })
 
-            for employee in employees:
-                employee_rows.append({
-                    "experiment_type": experiment_type,
-                    **metadata,
-                    **employee,
-                })
+            #for employee in employees:
+             #   employee_rows.append({
+            #        "experiment_type": experiment_type,
+             #       **metadata,
+             #       **employee,
+             #   })
 
         except ValueError:
             continue
@@ -315,10 +315,8 @@ def main():
     )
 
     write_tsv(OUTPUT_DIR / "synthetic_worked_days_summary.tsv", sintetico_summary)
-    write_tsv(OUTPUT_DIR / "synthetic_worked_days_by_employee.tsv", sintetico_employees)
 
     write_tsv(OUTPUT_DIR / "real_worked_days_summary.tsv", real_summary)
-    write_tsv(OUTPUT_DIR / "real_worked_days_by_employee.tsv", real_employees)
 
 
 if __name__ == "__main__":

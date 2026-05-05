@@ -19,7 +19,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
     private PersonsReducedMobilityProblem optimizationProblem;
 
     //TRACE
-    private static boolean TRACE = true; 
+    private static boolean TRACE = false; 
     private String serviceLabel(int service) {
         return String.format("S%02d", service + 1);
     }
@@ -79,16 +79,14 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
 
                     //TRACE
                     if (TRACE) {
-                        System.out.println("Empleado " + employeeLabel(employee) + " cumple las restricciones.");
+                        System.out.println("Empleado " + employeeLabel(employee) + " cumple las restricciones básicas.");
                     }
 
                     boolean startTime = true;
                     if (employeeStartTime.isPresent()) {
                         // si el servicio empieza antes de la hora de inicio del empleado, o si empieza
-                        if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())
-                                || serviceStartingTime.toLocalTime().isAfter(employeeStartTime.get().plusHours(this.optimizationProblem.getEmployeeTimePerDay(employee)))) {
-                            startTime = false;
-                        }
+                        startTime = !serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get());
+
                         //TRACE
                         if (TRACE) {
                             System.out.println("Empleado tiene hora de inicio: " + employeeStartTime.get() + ". Servicio empieza a las: " + serviceStartingTime.toLocalTime() + ". StartTime válido: " + startTime);
@@ -98,14 +96,14 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     // hacemos lo mismo con FinishTime
                     boolean finishTime = true;
                     if (employeeFinishTime.isPresent()) {
-                        if (serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get()) ||
-                                serviceFinishingTime.toLocalTime().isBefore(employeeFinishTime.get().minusHours(this.optimizationProblem.getEmployeeTimePerDay(employee)))) {
-                            finishTime = false;
-                        }
+                        finishTime = !serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get());
+
                         //TRACE
                         if (TRACE) {
                             System.out.println("Empleado tiene hora de finalización: " + employeeFinishTime.get() + ". Servicio termina a las: " + serviceFinishingTime.toLocalTime() + ". FinishTime válido: " + finishTime);
+                    
                     }
+                }
 
                     // comprobamos si ambos estan en true, y si es asi, se añade
                     if (startTime && finishTime) {
@@ -221,7 +219,6 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                             + " queda sin cubrir. No hay suficientes candidatos disponibles.");
                 }
             }
-        }
         }
         return solution;
     }

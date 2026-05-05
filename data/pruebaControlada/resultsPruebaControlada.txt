@@ -1,0 +1,5 @@
+Instance	Number-of-Services	Real-Services	Fake-Services	Number-of-Employees	Total-Agents	Working-Agents	%Working-Agents	Total-Drivers	Total-Managers	Total-RampManagers	Algorithm	Productivity-UT	Real-Productivity-UT	P.UT-Agent	P.UT-Driver	P.UT-RampManager	P.UT-Manager	Work-Productivity	Real-Work-Productivity	WP-Agent	WP-Driver	WP-RampManager	WP-Manager	Execution-Time(ms)	Covered-Services(%)	Covered-Services	Active-Work-Productivity
+pruebaControlada.json	5	5	0	5	2	2	100,000	1	1	0	referenceSolver	95,833	95,833	93,750	100,000	0,000	0,000	14,583	14,583	29,167	14,583	0,000	0,000	1,809	100,000	5	24,306
+pruebaControlada.json	5	5	0	5	2	2	100,000	1	1	0	randomSolver	98,333	98,333	96,667	100,000	0,000	0,000	14,583	14,583	21,875	14,583	0,000	0,000	122,224	100,000	5	18,229
+pruebaControlada.json	5	5	0	5	2	1	50,000	1	1	0	compactingSolver	78,704	78,704	29,167	100,000	0,000	0,000	14,583	14,583	14,583	14,583	0,000	0,000	223,221	100,000	5	24,306
+TFS-0.5-agents0050-timePerDay08-instance0009.json	1095	992	103	88	50	50	100,000	27	11	0	compactingSolver	88,561	81,741	64,926	68,992	0,000	80,705	45,258	23,485	41,333	46,693	0,000	59,578	2285,811	100,000	1095	47,414
