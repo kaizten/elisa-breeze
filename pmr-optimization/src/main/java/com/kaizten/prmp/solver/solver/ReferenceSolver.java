@@ -18,19 +18,6 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
 
     private PersonsReducedMobilityProblem optimizationProblem;
 
-    //TRACE
-    private static boolean TRACE = false; 
-    private String serviceLabel(int service) {
-        return String.format("S%02d", service + 1);
-    }
-    private String employeeLabel(int employee) {
-        return String.format("E%02d", employee + 1);
-    }
-    private void printSeparator() {
-        if (TRACE) {
-            System.out.println("--------------------------------------------------");
-        }
-    }
 
     public ReferenceSolver(PersonsReducedMobilityProblem optimizationProblem) {
         this.optimizationProblem = optimizationProblem;
@@ -47,16 +34,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
             Role serviceRole = this.optimizationProblem.getServiceRole(service);
             OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
             OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);
-            
-            //TRACE
-            if (TRACE) {
-            printSeparator();
-            System.out.println("Servicio " + serviceLabel(service)
-                    + " [" + serviceStartingTime.toLocalTime() + " - " + serviceFinishingTime.toLocalTime() + "]"
-                    + " | Rol: " + serviceRole
-                    + " | Empleados requeridos: " + requiredEmployees);
-            }
-            
+
             // Set de empleados disponibles
             Set<Integer> availableEmployees = new HashSet<>();
 
@@ -77,56 +55,24 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     // Si tienen startTime, se comprueba que el servicio empiece después de su
                     // startTime, y si no, se pasa a false y ya no se añadirá
 
-                    //TRACE
-                    if (TRACE) {
-                        System.out.println("Empleado " + employeeLabel(employee) + " cumple las restricciones básicas.");
-                    }
-
                     boolean startTime = true;
                     if (employeeStartTime.isPresent()) {
                         // si el servicio empieza antes de la hora de inicio del empleado, o si empieza
                         startTime = !serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get());
-
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado tiene hora de inicio: " + employeeStartTime.get() + ". Servicio empieza a las: " + serviceStartingTime.toLocalTime() + ". StartTime válido: " + startTime);
-                        }
                     }
 
                     // hacemos lo mismo con FinishTime
                     boolean finishTime = true;
                     if (employeeFinishTime.isPresent()) {
                         finishTime = !serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get());
-
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado tiene hora de finalización: " + employeeFinishTime.get() + ". Servicio termina a las: " + serviceFinishingTime.toLocalTime() + ". FinishTime válido: " + finishTime);
-                    
-                    }
                 }
 
                     // comprobamos si ambos estan en true, y si es asi, se añade
                     if (startTime && finishTime) {
                         availableEmployees.add(employee);
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado " + employeeLabel(employee) + " añadido a la lista de candidatos válidos.");
-                        }
                     }
-                } else{
-                    //TRACE
-                    if (TRACE) {
-                        System.out.println("Empleado " + employeeLabel(employee) + " no cumple las restricciones.");
-                    }
-                }
-            }
 
-            //TRACE
-            if (TRACE) {
-                System.out.println("Candidatos disponibles: " + availableEmployees.stream()
-                        .sorted()
-                        .map(this::employeeLabel)
-                        .toList());
+                }
             }
 
             // Asignar empleados al azar según el número de empleados requeridos por el servicio
@@ -135,19 +81,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                 int randomIndex = rand.nextInt(availableEmployees.size());
                 Integer selectedEmployee = (Integer) availableEmployees.toArray()[randomIndex];
 
-                //TRACE
-                if (TRACE) {
-                    System.out.println("Empleado seleccionado aleatoriamente: " + employeeLabel(selectedEmployee));
-                }
-
                 solution.assignServiceToEmployee(selectedEmployee, service);
-
-                //TRACE
-                if (TRACE) {
-                    System.out.println("Asignacion añadida: Sol.add("
-                            + serviceLabel(service) + ", " + employeeLabel(selectedEmployee) + ")");
-                    System.out.println("Revisando y ajustando horas de jornada del empleado " + employeeLabel(selectedEmployee) + "...");
-                }
 
                 Optional<LocalTime> employeeStartTime = this.optimizationProblem.getEmployeeStart(selectedEmployee);
                 Optional<LocalTime> employeeFinishTime = this.optimizationProblem.getEmployeeFinish(selectedEmployee);
@@ -161,10 +95,6 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     LocalDateTime jornadaStartTime = jornadaFinishTime.minusHours(this.optimizationProblem.getEmployeeTimePerDay(selectedEmployee));
                     this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
                     
-                    //TRACE
-                    if (TRACE) {
-                        System.out.println("Empleado no tenía hora de inicio. Se le asigna: " + jornadaStartTime.toLocalTime());
-                    }
                 }
 
                 if (employeeStartTime.isPresent() && !employeeFinishTime.isPresent()) { // hay start pero no finish =>
@@ -173,11 +103,7 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                     LocalDateTime jornadaStartTime = serviceStartingDate.atTime(employeeStartTime.get());
                     LocalDateTime jornadaFinishTime = jornadaStartTime.plusHours(this.optimizationProblem.getEmployeeTimePerDay(selectedEmployee));
                     this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
-                
-                    //TRACE
-                    if (TRACE) {
-                        System.out.println("Empleado no tenía hora de finalización. Se le asigna: " + jornadaFinishTime.toLocalTime());
-                    }
+
                 }
 
                 if (!employeeStartTime.isPresent() && !employeeFinishTime.isPresent()) { // No hay start y no hay finish
@@ -195,29 +121,9 @@ public class ReferenceSolver extends AbstractSolver<PersonsReducedMobilitySoluti
                             .atTime(serviceFinishingTime.toLocalTime().plusSeconds(timeLeftAroundService));
                     this.optimizationProblem.setEmployeeStartTime(selectedEmployee, jornadaStartTime.toLocalTime());
                     this.optimizationProblem.setEmployeeFinishTime(selectedEmployee, jornadaFinishTime.toLocalTime());
-                
-                    //TRACE
-                    if (TRACE) {
-                        System.out.println("Empleado no tenía hora de inicio ni de finalización. Se le asigna jornada alrededor del servicio: " + jornadaStartTime.toLocalTime() + " - " + jornadaFinishTime.toLocalTime());
-                    }
                 }
 
                 availableEmployees.remove(selectedEmployee);
-
-                //TRACE
-                if (TRACE) {
-                    System.out.println("Empleado " + employeeLabel(selectedEmployee) + " eliminado de la lista de candidatos disponibles.");
-                }
-            }
-
-            //TRACE
-            if (TRACE) {
-                if (solution.getAssignedEmployees(service).size() == requiredEmployees) {
-                    System.out.println("Servicio " + serviceLabel(service) + " cubierto correctamente.");
-                } else {
-                    System.out.println("Servicio " + serviceLabel(service)
-                            + " queda sin cubrir. No hay suficientes candidatos disponibles.");
-                }
             }
         }
         return solution;

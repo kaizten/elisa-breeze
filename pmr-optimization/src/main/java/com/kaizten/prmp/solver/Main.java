@@ -133,8 +133,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws JsonProcessingException, IOException, URISyntaxException {
-        //final String[] algorithms = { "randomSolver", "referenceSolver", "compactingSolver" };
-        final String[] algorithms = { "referenceSolver" };
+        final String[] algorithms = { "randomSolver", "referenceSolver", "compactingSolver" };
         int i = 0;
         final File instanceFolder = KaiztenURI.toFile(new URI(INSTANCE_FOLDER_URI)).get();
 

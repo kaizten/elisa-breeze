@@ -1,21 +1,17 @@
 package com.kaizten.prmp.solver.solver;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
-import java.io.BufferedWriter;
-import java.time.Duration;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.Locale;
 
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
@@ -27,25 +23,15 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
     
     private PersonsReducedMobilityProblem optimizationProblem;
 
-    //TRACE
-    private boolean TRACE = false;
-    private String serviceLabel(int service) {
-        return String.format("S%02d", service + 1);
-    }
-    private String employeeLabel(int employee) {
-        return String.format("E%02d", employee + 1);
-    }
-    private void printSeparator() {
-        if (TRACE) {
-            System.out.println("--------------------------------------------------");
-        }
-    }
-    private static final boolean EXPORT_METRICS = false;
-    private static final Path ITERATIONS_OUTPUT = Path.of("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/pruebaControlada/compacting_iterations.txt");
-    private BufferedWriter metricsWriter;
+    private int stopThreshold = 5;
+    private boolean exportMetrics = false;
+    private int runId = 1;
+    private Path metricsOutput = Path.of("/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/pruebaControlada/iteration_metrics.csv");
+    private static final String ALGORITHM_NAME = "CompactingSolver";    
+
 
     private final Random random;
-    private static final int STOP_THRESHOLD = 5; 
+    //private static final int STOP_THRESHOLD = 5; 
     private static final double BONUS_ACTIVE_EMPLOYEE = 1.0; // Bonus por cada empleado activo en un servicio
     private static final double PENALTY_NEW_EMPLOYEE = 0.8; // Penalización por cada nuevo empleado asignado a un servicio
     private static final double PENALTY_SERVICES_GAP = 0.5; // Penalización por cada hora de gap entre servicios para un mismo empleado
@@ -56,16 +42,25 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         this.random = new Random();
     }
 
+    // METRICS
+    public void configureMetrics(int stopThreshold, int runId, Path metricsOutput, boolean exportMetrics) {
+    this.stopThreshold = stopThreshold;
+    this.runId = runId;
+    this.metricsOutput = metricsOutput;
+    this.exportMetrics = exportMetrics;
+}
+
     @Override
     public PersonsReducedMobilitySolution run(){
         System.out.println("Ejecutando CompactingSolver...");
 
-        //METRICS
-        try {
-            Files.writeString(ITERATIONS_OUTPUT, "iteracion;cobertura;wp\n");
-        } catch (Exception e) {
+        // METRICS
+        long startTime = System.nanoTime();
+
+        if (exportMetrics) {
+            initializeMetricsFile();
         }
-        
+                
         PersonsReducedMobilitySolution bestSolution = null;
         double bestProductivity = -1.0;
         int bestCoverage = -1;
@@ -76,7 +71,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         while (true) {
             int iterationGap = actualIteration - bestIteration;
 
-            if (iterationGap >= STOP_THRESHOLD) {
+            if (iterationGap >= stopThreshold) {
                 System.out.println("Parada en iteración: " + actualIteration + " - Mejor iteración: " + bestIteration);
                 break;
             }
@@ -91,9 +86,14 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
 
 
             // Calcular productividad de Working Time solo si la cobertura es mejor o igual a la mejor encontrada
-            double productivity = -1.0;
+            //double productivity = -1.0;
+            
+            //METRICS
+            double productivity = computeWorkProductivity(solution);
 
-            if (bestSolution == null || currentCoverage >= bestCoverage) {
+            // para minimizar tiempo ejecución: 
+            // si borro metrics, descomentar esta parte y borrar la de arriba
+            /*if (bestSolution == null || currentCoverage >= bestCoverage) {
                 double accumulativeProductivity = 0.0;
                 int count = 0;
                 List<LocalDate> dates = this.optimizationProblem.getDatesOfServices();
@@ -108,10 +108,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
                     }
                 }
                 productivity = count > 0 ? accumulativeProductivity / count : 0.0;
-            }
-
-            //TRACE
-            TRACE = false;
+            }*/
 
             if ((bestSolution == null)
                         || (currentCoverage > bestCoverage)
@@ -122,30 +119,16 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
                     bestIteration = actualIteration;
                 }
 
-                //METRICS
-                try {
-                    double accumulativeProductivity = 0.0;
-                    int count = 0;
-                    List<LocalDate> dates = this.optimizationProblem.getDatesOfServices();
-                    
-                    for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
-                        for (LocalDate date : dates) {
-                            Double productivityWorkingTime = solution.getWorkProductivity(date, employee);
-                            if (productivityWorkingTime != null) {
-                                accumulativeProductivity += productivityWorkingTime;
-                                count++;
-                            }
-                        }
-                    }
-                    productivity = count > 0 ? accumulativeProductivity / count : 0.0;
-                    double coveragePct = 100.0 * currentCoverage / this.optimizationProblem.getNumberOfServices();
-                    Files.writeString(
-                        ITERATIONS_OUTPUT,
-                        String.format(Locale.US, "%d;%.5f;%.5f%n", actualIteration, coveragePct, productivity),
-                        StandardOpenOption.APPEND
+                // METRICS
+                if (exportMetrics) {
+                    exportIterationMetrics(
+                        actualIteration,
+                        currentCoverage,
+                        productivity,
+                        bestCoverage,
+                        bestProductivity,
+                        startTime
                     );
-                } catch (Exception e) {
-                    System.err.println("Error al escribir métricas: " + e.getMessage());    
                 }
 
                 actualIteration++;
@@ -164,42 +147,15 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         for (int service : services){
             int requiredEmployees = this.optimizationProblem.getServiceRequiredEmployees(service);
 
-            //TRACE
-            if (TRACE) {
-                printSeparator();
-                System.out.println("Servicio " + serviceLabel(service)
-                            + " [" + this.optimizationProblem.getServiceStartingTime(service).toLocalTime()
-                            + " - " + this.optimizationProblem.getServiceFinishingTime(service).toLocalTime() + "]"
-                            + " | Rol: " + this.optimizationProblem.getServiceRole(service)
-                            + " | Empleados requeridos: " + requiredEmployees);
-            }
-
-
             while (solution.getNumberOfAssignedEmployees(service) < requiredEmployees){
                 int selectedEmployee = selectEmployee(solution, service);
 
                 if(selectedEmployee == -1){
-                    //TRACE
-                    if (TRACE) {
-                        System.out.println("Servicio " + serviceLabel(service)
-                                + " queda sin cubrir. No hay suficientes candidatos disponibles.");
-                    }
-
                     break; 
                 }
 
                 solution.assignServiceToEmployee(selectedEmployee, service);
-                if (TRACE) {
-                    System.out.println("Empleado " + employeeLabel(selectedEmployee) + " asignado al servicio " + serviceLabel(service));
-                }
             }
-            //TRACE
-            if (TRACE) {
-                if (solution.getNumberOfAssignedEmployees(service) == requiredEmployees) {
-                    System.out.println("Servicio " + serviceLabel(service) + " cubierto correctamente.");
-                }
-            }
-
         }  
         return solution;
     }
@@ -212,19 +168,9 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         
         for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
             if(!this.optimizationProblem.hasEmployeeRole(employee, requiredRole)){
-                //TRACE 
-                if (TRACE) {
-                    System.out.println("Empleado " + employeeLabel(employee) + " no tiene el rol requerido: " + requiredRole);
-                }
-
                 continue;}
 
             if(solution.isEmployeeAssignedToService(service, employee)){
-                //TRACE
-                if (TRACE) {
-                    System.out.println("Empleado " + employeeLabel(employee) + " ya está asignado al servicio " + serviceLabel(service));
-                }
-
                 continue;}
             
             if(!isEmployeeTimeCompatible(solution, employee, service)){continue;}
@@ -242,19 +188,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
             if(topCandidates.isEmpty()){
                 return -1;
             }
-            //TRACE
-            if (TRACE) {
-                System.out.println("Mejores candidatos seleccionados para el servicio: ");
-                for (EmployeeFitness candidate : topCandidates) {
-                    System.out.println("Empleado " + employeeLabel(candidate.employee) + " | Fitness: " + candidate.fitness);
-                }
-            }
             int selectedIndex = random.nextInt(topCandidates.size());
-
-            //TRACE
-            if (TRACE) {
-                System.out.println("Empleado seleccionado aleatoriamente entre los 3 mejores candidatos: " + employeeLabel(topCandidates.get(selectedIndex).employee));
-            }
 
         return topCandidates.get(selectedIndex).employee;
     }
@@ -268,31 +202,15 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         Optional<LocalTime> employeeEndOpt = this.optimizationProblem.getEmployeeFinish(employee);
 
         if(!solution.doesServiceFitEmployeeWorkingTime(employee, service)){
-            //TRACE
-            if (TRACE) {
-                System.out.println("Empleado " + employeeLabel(employee) + " no cumple con su horario de trabajo para el servicio " + serviceLabel(service));
-            }
             return false;}
         
         if(solution.isServiceOverlapping(employee, service)){
-            //TRACE
-            if (TRACE) {
-                System.out.println("Empleado " + employeeLabel(employee) + " tiene un solapamiento con el servicio " + serviceLabel(service));
-            }
             return false;}
 
         if(!solution.doesServiceSatisfyWeeklyWorkLimits(employee, service)){
-            //TRACE
-            if (TRACE) {
-                System.out.println("Empleado " + employeeLabel(employee) + " excede los límites de trabajo semanal con el servicio " + serviceLabel(service));
-            }
             return false;}
 
         if(!solution.doesServiceSatisfiesTimeBetweenDays(employee, service)){
-            //TRACE
-            if (TRACE) {
-                System.out.println("Empleado " + employeeLabel(employee) + " no cumple con el tiempo entre días para el servicio " + serviceLabel(service));
-            }
             return false;}
 
         boolean startOk = employeeStartOpt.isEmpty() 
@@ -309,17 +227,7 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
         OffsetDateTime serviceStart = this.optimizationProblem.getServiceStartingTime(service);
         LocalDate serviceDate = serviceStart.toLocalDate(); 
 
-        //TRACE
-        if (TRACE) {
-            System.out.println("Calculando fitness para Empleado " + employeeLabel(employee) + " y Servicio " + serviceLabel(service));
-        }
-
         if(!solution.hasAssignedServices(serviceDate, employee)){ 
-            //TRACE
-            if (TRACE) {
-                System.out.println("Penalización por abrir nueva jornada.");
-            }
-
             return - PENALTY_NEW_EMPLOYEE; // Penalización por asignar un nuevo empleado 
         }
         
@@ -330,10 +238,6 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
             else { 
                 gap = 0.0; 
         } 
-        //TRACE
-        if (TRACE) {
-            System.out.println("Gap entre servicios: " + gap + " horas. \n Fitness: " + (BONUS_ACTIVE_EMPLOYEE - PENALTY_SERVICES_GAP * gap));
-        }
 
         return BONUS_ACTIVE_EMPLOYEE - PENALTY_SERVICES_GAP * gap; }
 
@@ -347,6 +251,78 @@ public class CompactingSolver extends AbstractSolver<PersonsReducedMobilitySolut
             this.fitness = fitness;
         }
 
+    }
+
+    //METRICS
+    private double computeWorkProductivity(PersonsReducedMobilitySolution solution) {
+        double accumulativeProductivity = 0.0;
+        int count = 0;
+        List<LocalDate> dates = this.optimizationProblem.getDatesOfServices();
+
+        for (int employee = 0; employee < this.optimizationProblem.getNumberOfEmployees(); employee++) {
+            for (LocalDate date : dates) {
+                Double productivityWorkingTime = solution.getWorkProductivity(date, employee);
+                accumulativeProductivity += productivityWorkingTime;
+                count++;
+            }
+        }
+
+        return count > 0 ? accumulativeProductivity / count : 0.0;
+    }
+    //METRICS
+    private void initializeMetricsFile() {
+    try {
+        if (metricsOutput.getParent() != null) {
+            Files.createDirectories(metricsOutput.getParent());
+        }
+
+        if (Files.notExists(metricsOutput) || Files.size(metricsOutput) == 0) {
+            Files.writeString(
+                metricsOutput,
+                "algorithm;stop_threshold;run;iteration;current_coverage;current_active_wp;best_coverage;best_active_wp;elapsed_ms\n",
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+            );
+        }
+    } catch (Exception e) {
+        System.err.println("Error inicializando archivo de métricas: " + e.getMessage());
+    }
+}
+
+    //METRICS
+    private void exportIterationMetrics(
+            int iteration,
+            int currentCoverage,
+            double currentProductivity,
+            int bestCoverage,
+            double bestProductivity,
+            long startTime) {
+        try {
+            double currentCoveragePct = 100.0 * currentCoverage / this.optimizationProblem.getNumberOfServices();
+            double bestCoveragePct = 100.0 * bestCoverage / this.optimizationProblem.getNumberOfServices();
+            long elapsedMs = (System.nanoTime() - startTime) / 1_000_000;
+
+            Files.writeString(
+                metricsOutput,
+                String.format(
+                    Locale.US,
+                    "%s;%d;%d;%d;%.5f;%.5f;%.5f;%.5f;%d%n",
+                    ALGORITHM_NAME,
+                    stopThreshold,
+                    runId,
+                    iteration,
+                    currentCoveragePct,
+                    currentProductivity,
+                    bestCoveragePct,
+                    bestProductivity,
+                    elapsedMs
+                ),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+            );
+        } catch (Exception e) {
+            System.err.println("Error escribiendo métricas: " + e.getMessage());
+        }
     }
 
 }

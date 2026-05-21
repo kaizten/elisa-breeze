@@ -1,14 +1,19 @@
 package com.kaizten.prmp.solver.solver;
 
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.nio.file.Files;
+
 
 import com.kaizten.opt.solver.AbstractSolver;
 import com.kaizten.prmp.domain.problem.PersonsReducedMobilityProblem;
@@ -18,20 +23,6 @@ import com.kaizten.prmp.domain.solution.PersonsReducedMobilitySolution;
 public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution> {
 
     private PersonsReducedMobilityProblem optimizationProblem;
-
-    //TRACE
-    private boolean TRACE = false;
-    private String serviceLabel(int service) {
-        return String.format("S%02d", service + 1);
-    }
-    private String employeeLabel(int employee) {
-        return String.format("E%02d", employee + 1);
-    }
-    private void printSeparator() {
-        if (TRACE) {
-            System.out.println("--------------------------------------------------");
-        }
-    }
 
     public RandomSolver(PersonsReducedMobilityProblem optimizationProblem) {
         this.optimizationProblem = optimizationProblem;
@@ -48,12 +39,12 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
         int bestCoverage = -1;
         int actualIteration = 0;
         int bestIteration = 0;
-        int stop_threshold = 5;
+        int stopThreshold = 5;
 
         while (true) {
             int iterationGap = actualIteration - bestIteration;
 
-            if (iterationGap >= stop_threshold) {
+            if (iterationGap >= stopThreshold) {
                 System.out.println("Parada en iteración: " + actualIteration + " - Mejor iteración: " + bestIteration);
                 break;
             }
@@ -68,15 +59,6 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 final Role serviceRole = this.optimizationProblem.getServiceRole(service);
                 OffsetDateTime serviceStartingTime = this.optimizationProblem.getServiceStartingTime(service);
                 OffsetDateTime serviceFinishingTime = this.optimizationProblem.getServiceFinishingTime(service);
-                
-                //TRACE
-                if (TRACE) {
-                    printSeparator();
-                    System.out.println("Servicio " + serviceLabel(service)
-                            + " [" + serviceStartingTime.toLocalTime() + " - " + serviceFinishingTime.toLocalTime() + "]"
-                            + " | Rol: " + serviceRole
-                            + " | Empleados requeridos: " + requiredEmployees);
-                }
                 
                 // Set de empleados disponibles
                 Set<Integer> availableEmployees = new HashSet<>();
@@ -101,20 +83,10 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                          * y si no, se pasa a false y ya no se añadirá.
                          */
 
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado " + employeeLabel(employee) + " cumple las restricciones.");
-                        }
-
                         boolean startTime = true;
                         if (employeeStartTime.isPresent()) {
                             if (serviceStartingTime.toLocalTime().isBefore(employeeStartTime.get())) {
                                 startTime = false;
-                            }
-
-                            //TRACE
-                            if (TRACE) {
-                                System.out.println("Empleado tiene hora de inicio: " + employeeStartTime.get() + ". Servicio empieza a las: " + serviceStartingTime.toLocalTime() + ". StartTime válido: " + startTime);
                             }
                         }
 
@@ -124,36 +96,14 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                             if (serviceFinishingTime.toLocalTime().isAfter(employeeFinishTime.get())) {
                                 finishTime = false;
                             }
-
-                            //TRACE
-                            if (TRACE) {
-                                System.out.println("Empleado tiene hora de finalización: " + employeeFinishTime.get() + ". Servicio termina a las: " + serviceFinishingTime.toLocalTime() + ". FinishTime válido: " + finishTime);
-                            }
                         }
 
                         // comprobamos si ambos estan en true, y si es asi, se añade
                         if (startTime && finishTime) {
                             availableEmployees.add(employee);
+                        }
 
-                            //TRACE
-                            if (TRACE) {
-                                System.out.println("Empleado " + employeeLabel(employee) + " añadido a la lista de candidatos válidos.");
-                            }
-                        }
-                    } else{
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado " + employeeLabel(employee) + " no cumple las restricciones.");
-                        }
                     }
-                }
-
-                //TRACE
-                if (TRACE) {
-                    System.out.println("Candidatos disponibles: " + availableEmployees.stream()
-                            .sorted()
-                            .map(this::employeeLabel)
-                            .toList());
                 }
 
                 // asignacion de empleados a servicios con fitness y aleatoriedad
@@ -170,11 +120,6 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         double fitness = 1.0 / (availableTime + 1); // +1 para evitar división por cero
                         employeeFitnessMap.put(employee, fitness);
                         totalFitness += fitness;
-
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado " + employeeLabel(employee) + " - Tiempo disponible: " + availableTime + " - Fitness: " + fitness);
-                        }
                     }
 
                     // Selección tipo ruleta (fitness proporcional)
@@ -182,28 +127,11 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                     double cumulative = 0.0;
                     int selectedEmployee = -1;
 
-                    if (TRACE) {
-                        System.out.println("Random Value: " + randomValue +" entre 0 y Total Fitness: " + totalFitness);
-                        System.out.println("Tramos de la ruleta:");
-                    }
-
                     for (Map.Entry<Integer, Double> entry : employeeFitnessMap.entrySet()) {
-                        double previous = cumulative;
                         cumulative += entry.getValue();
-
-                            if (TRACE) {
-                                System.out.println("Empleado " + employeeLabel(entry.getKey())
-                                        + " | tramo: [" + previous + ", " + cumulative + "]");
-                            }
 
                         if (randomValue <= cumulative) {
                             selectedEmployee = entry.getKey();
-
-                            //TRACE
-                            if (TRACE) {
-                                System.out.println("Empleado seleccionado por ruleta: " + employeeLabel(selectedEmployee));
-                            }
-
                             break;
                         }
                     }
@@ -212,31 +140,12 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                         solution.assignServiceToEmployee(selectedEmployee, service);
                         availableEmployees.remove(selectedEmployee);
 
-                        //TRACE
-                        if (TRACE) {
-                            System.out.println("Empleado asignado: " + employeeLabel(selectedEmployee) + " y eliminado de candidatos disponibles.");
-                        }
-
                     } else {
                         break;
                     }
                 }
-
-                //TRACE
-                //TRACE
-                if (TRACE) {
-                    if (solution.getAssignedEmployees(service).size() == requiredEmployees) {
-                        System.out.println("Servicio " + serviceLabel(service) + " cubierto correctamente.");
-                    } else {
-                        System.out.println("Servicio " + serviceLabel(service)
-                                + " queda sin cubrir. No hay suficientes candidatos disponibles.");
-                    }
-                }
                 
             }
-
-            //TRACE
-            TRACE = false; // Desactivar trazas después de la primera iteración
 
             // Calcular cobertura
             final int currentCoverage = solution.serviceCoverage();
@@ -249,11 +158,8 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
 
                 for (LocalDate date : dates) {
                     Double productivityWorkingTime = solution.getWorkProductivity(date, employee);
-
-                    if (productivityWorkingTime != null) {
-                        accumulativeProductivity += productivityWorkingTime;
-                        count++;
-                    }
+                    accumulativeProductivity += productivityWorkingTime;
+                    count++;
                 }
             }
             double productivity = count > 0 ? accumulativeProductivity / count : 0.0;
@@ -267,6 +173,7 @@ public class RandomSolver extends AbstractSolver<PersonsReducedMobilitySolution>
                 bestCoverage = currentCoverage;
                 bestIteration = actualIteration;
             }
+
             actualIteration++;
         }
         return bestSolution;
