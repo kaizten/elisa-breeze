@@ -12,14 +12,14 @@ import com.kaizten.prmp.solver.solver.CompactingSolver;
 public class ControlledExperiment {
 
     private static final Path INSTANCE_FILE = Path.of(
-        "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/pruebaControlada/instances/MAD-0.9-agents0270-timePerDay08-instance0000.json"
+        "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/pruebaControlada/instances/realCaseProblemMAD_1100_agents.json"
     );
 
     private static final Path METRICS_OUTPUT = Path.of(
-        "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/pruebaControlada/iteration_metrics.csv"
+        "/Users/elisa/Desktop/Uni/Tercero/Practicas/elisa-breeze/data/pruebaControlada/iteration_metrics3.csv"
     );
 
-    private static final int[] STOP_THRESHOLDS = {1, 2, 3, 5, 10, 25, 50, 100};
+    private static final int[] STOP_THRESHOLDS = {1, 2, 3, 5, 10, 15, 20};
     private static final int RUNS_PER_CONFIGURATION = 5;
 
     public static void main(String[] args) throws IOException, URISyntaxException {
