@@ -18,13 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 6,
+  "id": 7,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "fieldConfig": {
         "defaults": {
@@ -47,11 +47,24 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Empleados"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Empleados Disponibles"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
-        "w": 12,
+        "w": 10,
         "x": 0,
         "y": 0
       },
@@ -70,6 +83,10 @@
           "values": false
         },
         "showPercentChange": false,
+        "text": {
+          "titleSize": 30,
+          "valueSize": 140
+        },
         "textMode": "value_and_name",
         "wideLayout": false
       },
@@ -79,12 +96,13 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
               "jsonPath": "{\n  \"Empleados\": $count(employees.individuals)\n}",
-              "language": "jsonata"
+              "language": "jsonata",
+              "name": ""
             }
           ],
           "method": "GET",
@@ -93,7 +111,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Números de Empleados",
+      "title": "",
       "transformations": [
         {
           "id": "extractFields",
@@ -104,13 +122,133 @@
           }
         }
       ],
-      "transparent": true,
       "type": "stat"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "bfl5xk7mqpczkd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "[DRIVER]"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CONDUCTOR"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "[AGENT]"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "AGENTE"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "[MANAGER]"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "COORDINADOR"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 10,
+        "y": 0
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "bfl5xk7mqpczkd"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.indicators.employeesByRole",
+              "language": "jsonpath",
+              "name": "Agentes Activos"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "keepTime": false,
+            "replace": false,
+            "source": "Agentes Activos"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "cfl6a6mu1xb7ka"
       },
       "description": "",
       "fieldConfig": {
@@ -134,13 +272,26 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Servicios"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Servicios Solicitados"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
         "w": 12,
-        "x": 12,
-        "y": 0
+        "x": 0,
+        "y": 9
       },
       "id": 10,
       "options": {
@@ -166,7 +317,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -180,7 +331,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Número de Servicios",
+      "title": "",
       "transformations": [
         {
           "id": "extractFields",
@@ -191,15 +342,14 @@
           }
         }
       ],
-      "transparent": true,
       "type": "stat"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
-      "description": "Muestra el número de empleados necesitados por rol",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -218,16 +368,15 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 24,
-        "x": 0,
+        "h": 9,
+        "w": 12,
+        "x": 12,
         "y": 9
       },
       "id": 2,
       "options": {
         "displayLabels": [
           "name",
-          "value",
           "percent"
         ],
         "legend": {
@@ -255,7 +404,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -273,7 +422,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Empleados por Rol Necesitados",
+      "title": "",
       "transformations": [
         {
           "id": "groupBy",
@@ -293,13 +442,12 @@
           }
         }
       ],
-      "transparent": true,
       "type": "piechart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "description": "Evolución del número de empleados necesitados a lo largo del tiempo",
       "fieldConfig": {
@@ -382,7 +530,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 18
       },
       "id": 19,
       "options": {
@@ -404,11 +552,11 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
-              "jsonPath": "$reduce(services[], function($acc, $e) {\n    $append($acc, $map($e, function($s) {\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role, \"code\": $s.code},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role, \"code\": $s.code}\n        ], function($v) { $v.role in $Roles })\n    }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n)}, [])",
+              "jsonPath": "$reduce(services[], function($acc, $e) {\n    $append($acc, $map($e, function($s) {\n        $filter([\n            {\"time\": $s.startTime, \"count\": $s.employees, \"role\": $s.role},\n            {\"time\": $s.finishTime, \"count\": -$s.employees, \"role\": $s.role}\n        ], function($v) { $v.role in $Roles })\n    }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n)}, [])\n",
               "language": "jsonata",
               "name": "",
               "type": "number"
@@ -420,7 +568,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Empleados necesitados por Rol ",
+      "title": "Empleados necesitados por Rol",
       "transformations": [
         {
           "id": "extractFields",
@@ -469,34 +617,14 @@
             },
             "replaceFields": false
           }
-        },
-        {
-          "disabled": true,
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
         }
       ],
-      "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "fieldConfig": {
         "defaults": {
@@ -546,7 +674,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 29
       },
       "id": 20,
       "options": {
@@ -571,8 +699,8 @@
           "sort": "none"
         },
         "xField": "code",
-        "xTickLabelRotation": -45,
-        "xTickLabelSpacing": 0
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -580,7 +708,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -595,7 +723,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Empleados por Servicio (Real) con Roles por Colores",
+      "title": "Empleados por Servicio con Roles por Colores",
       "transformations": [
         {
           "id": "extractFields",
@@ -636,33 +764,14 @@
             ],
             "fields": {}
           }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "description": "Para ver cuándo trabaja qué rol\n",
       "fieldConfig": {
@@ -691,7 +800,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 40
       },
       "id": 7,
       "options": {
@@ -716,7 +825,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -749,148 +858,13 @@
           "urlPath": ""
         }
       ],
-      "title": "Diagrama de Gantt de servicios reales necesitados de cada rol",
-      "transformations": [
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        }
-      ],
-      "transparent": true,
+      "title": "Diagrama de Gantt de servicios necesitados de cada rol",
       "type": "marcusolsson-gantt-panel"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
-      },
-      "description": "Para ver cuándo trabaja qué rol\n",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 54
-      },
-      "id": 21,
-      "options": {
-        "colorByField": "role",
-        "colors": [
-          {
-            "color": "green",
-            "text": ""
-          }
-        ],
-        "endField": "finishTime",
-        "labelFields": [],
-        "showYAxis": true,
-        "sortBy": "startTime",
-        "sortOrder": "asc",
-        "startField": "startTime",
-        "textField": "role"
-      },
-      "pluginVersion": "0.8.1",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.services[*].role"
-            },
-            {
-              "jsonPath": "$.services[*].code",
-              "language": "jsonpath",
-              "name": ""
-            },
-            {
-              "jsonPath": "$.services[*].startTime",
-              "language": "jsonpath",
-              "name": ""
-            },
-            {
-              "jsonPath": "$.services[*].finishTime",
-              "language": "jsonpath",
-              "name": ""
-            },
-            {
-              "jsonPath": "$.services[*].employees",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "method": "GET",
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": ""
-        }
-      ],
-      "title": "Diagrama de Gantt de servicios añadidos necesitados de cada rol",
-      "transformations": [
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "r-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "marcusolsson-gantt-panel"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "eec4uy21ivb40c"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "description": "Duración en minutos de cada servicio",
       "fieldConfig": {
@@ -963,15 +937,15 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 18,
         "w": 24,
         "x": 0,
-        "y": 66
+        "y": 52
       },
       "id": 3,
       "options": {
         "barRadius": 0.05,
-        "barWidth": 0.96,
+        "barWidth": 0.78,
         "colorByField": "Duración",
         "fullHighlight": false,
         "groupWidth": 0.7,
@@ -984,184 +958,7 @@
         "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
-        "text": {
-          "valueSize": 40
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        },
-        "xField": "Servicio",
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
-          },
-          "fields": [
-            {
-              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60*60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])*60])\n    }\n})",
-              "language": "jsonata",
-              "name": ""
-            }
-          ],
-          "hide": false,
-          "method": "GET",
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": ""
-        }
-      ],
-      "title": "Duración Servicios (Reales)",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "replace": true,
-            "source": "result"
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Duración"
-              }
-            ]
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "Servicio"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
-      },
-      "description": "Duración en minutos de cada servicio",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "dark-orange",
-            "mode": "continuous-BlPu"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "left",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "log": 2,
-              "type": "log"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "code"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "palette-classic-by-name"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Duración"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "dthms"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 76
-      },
-      "id": 22,
-      "options": {
-        "barRadius": 0.05,
-        "barWidth": 0.96,
-        "colorByField": "Duración",
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
-        "text": {
-          "valueSize": 10
-        },
+        "text": {},
         "tooltip": {
           "hideZeros": false,
           "mode": "single",
@@ -1169,7 +966,7 @@
         },
         "xField": "Servicio",
         "xTickLabelRotation": -45,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1177,7 +974,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -1193,7 +990,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Duración Servicios (Añadidos)",
+      "title": "Duración Servicios ",
       "transformations": [
         {
           "id": "extractFields",
@@ -1214,33 +1011,14 @@
               }
             ]
           }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "r-.*"
-                  }
-                },
-                "fieldName": "Servicio"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "fieldConfig": {
         "defaults": {
@@ -1284,7 +1062,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 86
+        "y": 70
       },
       "id": 6,
       "options": {
@@ -1309,7 +1087,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -1323,7 +1101,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Roles de cada Empleado ",
+      "title": "Roles de cada Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -1333,34 +1111,14 @@
             "replace": true,
             "source": "result"
           }
-        },
-        {
-          "disabled": true,
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
         }
       ],
-      "transparent": true,
       "type": "esnet-matrix-panel"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbavfsgujuof"
+        "uid": "cfl6a6mu1xb7ka"
       },
       "fieldConfig": {
         "defaults": {
@@ -1420,10 +1178,10 @@
         ]
       },
       "gridPos": {
-        "h": 71,
+        "h": 11,
         "w": 24,
         "x": 0,
-        "y": 98
+        "y": 82
       },
       "id": 5,
       "options": {
@@ -1438,20 +1196,18 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "horizontal",
+        "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
-        "text": {
-          "valueSize": 25
-        },
+        "text": {},
         "tooltip": {
           "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         },
         "xField": "Empleados",
-        "xTickLabelRotation": -45,
-        "xTickLabelSpacing": 0
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1459,7 +1215,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbavfsgujuof"
+            "uid": "cfl6a6mu1xb7ka"
           },
           "fields": [
             {
@@ -1494,29 +1250,165 @@
               }
             ]
           }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "cfl6a6mu1xb7ka"
+      },
+      "description": "Scatterplot de la relación entre el numero de empleados y la duración del servicio",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 43,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "pointShape": "circle",
+            "pointSize": {
+              "fixed": 7
+            },
+            "pointStrokeWidth": 4,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "show": "points"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duración"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dthms"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 93
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "mapping": "auto",
+        "series": [
+          {
+            "frame": {
+              "matcher": {
+                "id": "byIndex",
+                "options": 0
+              }
+            },
+            "x": {
+              "matcher": {
+                "id": "byName",
+                "options": "Número de Empleados"
+              }
+            },
+            "y": {
+              "matcher": {
+                "id": "byName",
+                "options": "Duración"
+              }
+            }
+          }
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "cfl6a6mu1xb7ka"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.services[*].employees",
+              "name": "Número de Empleados"
+            },
+            {
+              "jsonPath": "$map($.services, function($service) {\n    {\n        \"Servicio\": $service.code,\n        \"Duración\": $sum([$number($match($service.serviceTime, /(\\d+)H/)[0].groups[0]) * 60 *60, $number($match($service.serviceTime, /(\\d+)M/)[0].groups[0])*60])\n    }\n})",
+              "language": "jsonata",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Relación entre cantidad de empleados y duración del servicio",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "keepTime": false,
+            "replace": false,
+            "source": "result1"
+          }
         },
         {
-          "disabled": true,
-          "id": "filterByValue",
+          "id": "organize",
           "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "Empleados"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
+            "excludeByName": {
+              "result1": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
           }
         }
       ],
-      "transparent": true,
-      "type": "barchart"
+      "type": "xychart"
     }
   ],
   "preload": false,
@@ -1573,13 +1465,13 @@
     ]
   },
   "time": {
-    "from": "2024-01-15T00:00:00.000Z",
-    "to": "2024-01-19T23:59:59.000Z"
+    "from": "2024-02-05T13:40:00.000Z",
+    "to": "2024-02-11T18:30:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Dashboard-ConvertedInstance",
-  "uid": "eefbatpwmwpoga",
-  "version": 3,
+  "title": "Dashboard-SPCinstance",
+  "uid": "cegi1fe6scmbke",
+  "version": 17,
   "weekStart": ""
 }

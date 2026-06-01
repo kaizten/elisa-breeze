@@ -18,13 +18,177 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 9,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5xk7mqpczkd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-purple",
+            "mode": "fixed"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "bfl5xk7mqpczkd"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.indicators.workProductivityValues.global",
+              "name": "Prod. Trabajo"
+            },
+            {
+              "jsonPath": "$.indicators.workProductivityValues.activeEmployees",
+              "language": "jsonpath",
+              "name": "Prod. Trabajo Activo"
+            },
+            {
+              "jsonPath": "$.indicators.productivityUsedTimeValues.global",
+              "language": "jsonpath",
+              "name": "Prod. Tiempo Usado"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "Productividades Medias (%)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "bfl5xk7mqpczkd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 11,
+        "x": 0,
+        "y": 9
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "bfl5xk7mqpczkd"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.indicators.agents",
+              "name": "Agentes Disponibles"
+            },
+            {
+              "jsonPath": "$.indicators.agentsWithWork",
+              "language": "jsonpath",
+              "name": "Agentes Activos"
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": ""
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "bfl5xk7mqpczkd"
       },
       "fieldConfig": {
         "defaults": {
@@ -41,13 +205,39 @@
           },
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "absolute",
+                  "Servicios No Cubiertos"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 11,
-        "w": 24,
-        "x": 0,
-        "y": 0
+        "h": 10,
+        "w": 13,
+        "x": 11,
+        "y": 9
       },
       "id": 1,
       "options": {
@@ -83,7 +273,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5xk7mqpczkd"
           },
           "fields": [
             {
@@ -97,7 +287,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Servicios",
+      "title": "",
       "transformations": [
         {
           "id": "extractFields",
@@ -108,13 +298,12 @@
           }
         }
       ],
-      "transparent": true,
       "type": "piechart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "description": "Resumen de cuando hay y cuando no hay servicios",
       "fieldConfig": {
@@ -152,10 +341,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 7,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 19
       },
       "id": 8,
       "options": {
@@ -180,7 +369,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -194,7 +383,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Servicios (Reales) a lo largo del tiempo",
+      "title": "Servicios a lo largo del tiempo",
       "transformations": [
         {
           "id": "extractFields",
@@ -219,164 +408,14 @@
             ],
             "fields": {}
           }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "Servicios"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
         }
       ],
-      "transparent": true,
       "type": "state-timeline"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
-      },
-      "description": "Resumen de cuando hay y cuando no hay servicios",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "blue",
-            "mode": "shades"
-          },
-          "custom": {
-            "fillOpacity": 70,
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineWidth": 0,
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 23
-      },
-      "id": 13,
-      "options": {
-        "alignValue": "left",
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "mergeValues": true,
-        "rowHeight": 0.9,
-        "showValue": "never",
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.5.0",
-      "targets": [
-        {
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
-          },
-          "fields": [
-            {
-              "jsonPath": "$reduce(dates.employees, function($acc, $e) {\n  $append($acc, $map($e.services, function($s) {\n    {\n      \"Servicios\": $s.code,\n      \"start_time\": $s.startTime,\n      \"finish_time\": $s.finishTime\n    }\n  }))\n}, [])\n\n",
-              "language": "jsonata"
-            }
-          ],
-          "method": "GET",
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": ""
-        }
-      ],
-      "title": "Servicios (añadidos) a lo largo del tiempo",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "replace": true,
-            "source": "result"
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "start_time"
-              },
-              {
-                "destinationType": "time",
-                "targetField": "finish_time"
-              }
-            ],
-            "fields": {}
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "r-.*"
-                  }
-                },
-                "fieldName": "Servicios"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "state-timeline"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "fieldConfig": {
         "defaults": {
@@ -431,30 +470,13 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (mean)"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 26
       },
       "id": 11,
       "options": {
@@ -476,7 +498,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -490,7 +512,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Cantidad de Servicios (Reales) a lo largo del tiempo",
+      "title": "Cantidad de Servicios a lo largo del tiempo",
       "transformations": [
         {
           "id": "extractFields",
@@ -556,35 +578,16 @@
             "reduce": {
               "reducer": "sum"
             },
-            "replaceFields": false
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
+            "replaceFields": true
           }
         }
       ],
-      "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "fieldConfig": {
         "defaults": {
@@ -643,30 +646,13 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 39
       },
       "id": 12,
       "options": {
@@ -688,11 +674,11 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
-              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.indicators, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1, \"code\": $e.code},\n                {\"time\": $s.finishTime, \"count\": -1, \"code\": $e.code}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
+              "jsonPath": "$reduce(dates[].employees[], function($acc, $e) {\n        $append($acc, $map($e.indicators, function($s) {\n            [\n                {\"time\": $s.startTime, \"count\": 1, \"code\": $s.code},\n                {\"time\": $s.finishTime, \"count\": -1, \"code\": $s.code}\n            ]\n        }) ~> $reduce(function($acc, $v) { $append($acc, $v) }, [])\n    )}, [])",
               "language": "jsonata"
             }
           ],
@@ -703,13 +689,12 @@
           "urlPath": ""
         }
       ],
-      "title": "Empleados trabajando a lo largo del tiempo (incluye servicios añadidos)",
+      "title": "Empleados trabajando a lo largo del tiempo",
       "transformations": [
         {
           "id": "extractFields",
           "options": {
             "delimiter": ",",
-            "keepTime": false,
             "replace": true,
             "source": "result"
           }
@@ -749,36 +734,16 @@
             "reduce": {
               "reducer": "sum"
             },
-            "replaceFields": false
-          }
-        },
-        {
-          "disabled": true,
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-.*"
-                  }
-                },
-                "fieldName": "code"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
+            "replaceFields": true
           }
         }
       ],
-      "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "fieldConfig": {
         "defaults": {
@@ -799,17 +764,17 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 28,
+        "h": 15,
         "w": 24,
         "x": 0,
-        "y": 58
+        "y": 50
       },
       "id": 9,
       "options": {
         "colorByField": "employee_code",
         "endField": "finish_time",
         "showYAxis": true,
-        "sortBy": "startTime",
+        "sortBy": "text",
         "sortOrder": "asc",
         "startField": "start_time",
         "textField": "employee_code"
@@ -821,7 +786,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -835,7 +800,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Jornada por Empleados",
+      "title": "Jornada por Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -868,39 +833,71 @@
             "filters": [
               {
                 "config": {
-                  "id": "regex",
+                  "id": "equal",
                   "options": {
-                    "value": "f-*"
+                    "value": "0006"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0007"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0004"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0008"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0005"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0009"
                   }
                 },
                 "fieldName": "employee_code"
               }
             ],
             "match": "any",
-            "type": "exclude"
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "field": "employee_code"
-              }
-            ]
+            "type": "include"
           }
         }
       ],
-      "transparent": true,
       "type": "marcusolsson-gantt-panel"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
-      "description": "Sólo muestra servicios con empleados",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -924,10 +921,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 16,
+        "h": 20,
         "w": 24,
         "x": 0,
-        "y": 86
+        "y": 65
       },
       "id": 6,
       "options": {
@@ -938,7 +935,7 @@
           "service_code"
         ],
         "showYAxis": true,
-        "sortBy": "startTime",
+        "sortBy": "text",
         "sortOrder": "asc",
         "startField": "start_time",
         "textField": "employee_code"
@@ -949,7 +946,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -963,7 +960,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Servicios (Reales) realizados por Empleado ",
+      "title": "Servicios realizados por Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -976,31 +973,76 @@
           }
         },
         {
+          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
               {
                 "config": {
-                  "id": "regex",
+                  "id": "equal",
                   "options": {
-                    "value": "f-*"
+                    "value": "0004"
                   }
                 },
-                "fieldName": "service_code"
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0005"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0006"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0007"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0008"
+                  }
+                },
+                "fieldName": "employee_code"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0009"
+                  }
+                },
+                "fieldName": "employee_code"
               }
             ],
             "match": "any",
-            "type": "exclude"
+            "type": "include"
           }
         }
       ],
-      "transparent": true,
       "type": "marcusolsson-gantt-panel"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "fieldConfig": {
         "defaults": {
@@ -1014,7 +1056,7 @@
             "axisLabel": "Productividad (%)",
             "axisPlacement": "auto",
             "fillOpacity": 80,
-            "gradientMode": "hue",
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -1035,6 +1077,14 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 50
+              },
+              {
+                "color": "#EAB839",
+                "value": 100
               }
             ]
           }
@@ -1042,10 +1092,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 29,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 102
+        "y": 85
       },
       "id": 2,
       "options": {
@@ -1060,9 +1110,12 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "horizontal",
+        "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
+        "text": {
+          "valueSize": 40
+        },
         "tooltip": {
           "hideZeros": false,
           "mode": "multi",
@@ -1070,7 +1123,7 @@
         },
         "xField": "Empleados",
         "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1078,7 +1131,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -1099,8 +1152,25 @@
           "urlPath": ""
         }
       ],
-      "title": "Productividad (WT/Jornada) de cada empleado ",
+      "title": "Productividad (WT/Jornada) de cada empleado",
       "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Empleados": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Productividad": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
         {
           "id": "sortBy",
           "options": {
@@ -1108,50 +1178,99 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Empleados"
+                "field": "Productividad (mean)"
               }
             ]
           }
         },
         {
-          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
               {
                 "config": {
-                  "id": "regex",
+                  "id": "equal",
                   "options": {
-                    "value": "r-*"
+                    "value": "0000"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0001"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0002"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0003"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0004"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0005"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0006"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0007"
                   }
                 },
                 "fieldName": "Empleados"
               }
             ],
             "match": "any",
-            "type": "include"
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Productividad"
-              }
-            ]
+            "type": "exclude"
           }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "fieldConfig": {
         "defaults": {
@@ -1165,7 +1284,7 @@
             "axisLabel": "Productividad (%)",
             "axisPlacement": "auto",
             "fillOpacity": 80,
-            "gradientMode": "hue",
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -1186,6 +1305,22 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "#EAB839",
+                "value": 80
+              },
+              {
+                "color": "super-light-green",
+                "value": 90
+              },
+              {
+                "color": "green",
+                "value": 100
               }
             ]
           }
@@ -1193,12 +1328,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 29,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 131
+        "y": 95
       },
-      "id": 14,
+      "id": 13,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -1211,9 +1346,12 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "horizontal",
+        "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
+        "text": {
+          "valueSize": 40
+        },
         "tooltip": {
           "hideZeros": false,
           "mode": "multi",
@@ -1221,7 +1359,7 @@
         },
         "xField": "Empleados",
         "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1229,7 +1367,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -1250,8 +1388,25 @@
           "urlPath": ""
         }
       ],
-      "title": "Productividad (WT/UT) de cada empleado ",
+      "title": "Productividad (WT/UT) de cada empleado",
       "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Empleados": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Productividad": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
         {
           "id": "sortBy",
           "options": {
@@ -1259,50 +1414,99 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Empleados"
+                "field": "Productividad (mean)"
               }
             ]
           }
         },
         {
-          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
               {
                 "config": {
-                  "id": "regex",
+                  "id": "equal",
                   "options": {
-                    "value": "r-*"
+                    "value": "0000"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0001"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0002"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0003"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0004"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0005"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0006"
+                  }
+                },
+                "fieldName": "Empleados"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0007"
                   }
                 },
                 "fieldName": "Empleados"
               }
             ],
             "match": "any",
-            "type": "include"
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Productividad"
-              }
-            ]
+            "type": "exclude"
           }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
       "fieldConfig": {
         "defaults": {
@@ -1345,16 +1549,16 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 27,
+        "h": 11,
         "w": 24,
         "x": 0,
-        "y": 160
+        "y": 105
       },
       "id": 4,
       "options": {
         "barRadius": 0.1,
         "barWidth": 0.93,
-        "colorByField": "result1",
+        "colorByField": "Servicios (sum)",
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
@@ -1363,9 +1567,12 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "horizontal",
+        "orientation": "vertical",
         "showValue": "auto",
         "stacking": "none",
+        "text": {
+          "valueSize": 40
+        },
         "tooltip": {
           "hideZeros": false,
           "mode": "multi",
@@ -1373,7 +1580,7 @@
         },
         "xField": "Empleado",
         "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1381,7 +1588,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -1415,27 +1622,106 @@
           }
         },
         {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Empleado": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Servicios": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
           "id": "sortBy",
           "options": {
             "fields": {},
             "sort": [
               {
                 "desc": true,
-                "field": "Empleado"
+                "field": "Servicios (sum)"
               }
             ]
           }
         },
         {
-          "disabled": true,
           "id": "filterByValue",
           "options": {
             "filters": [
               {
                 "config": {
-                  "id": "regex",
+                  "id": "equal",
                   "options": {
-                    "value": "f-*"
+                    "value": "0000"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0001"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0002"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0003"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0004"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0005"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0006"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0007"
                   }
                 },
                 "fieldName": "Empleado"
@@ -1446,15 +1732,13 @@
           }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5vwc4y0c8wa"
       },
-      "description": "El tiempo de descanso es dentro de la jornada. Los empleados asignados a las jornadas ficticias, tienen tiempo 0 porque la jornada es de 8h y el servicio tambien.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1467,8 +1751,8 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 51,
-            "gradientMode": "hue",
+            "fillOpacity": 81,
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -1487,7 +1771,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -1496,7 +1781,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tiempo Descando"
+              "options": "Tiempo Descando (mean)"
             },
             "properties": [
               {
@@ -1508,10 +1793,10 @@
         ]
       },
       "gridPos": {
-        "h": 28,
+        "h": 11,
         "w": 24,
         "x": 0,
-        "y": 187
+        "y": 116
       },
       "id": 7,
       "options": {
@@ -1526,7 +1811,7 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "horizontal",
+        "orientation": "auto",
         "showValue": "auto",
         "stacking": "none",
         "tooltip": {
@@ -1536,7 +1821,7 @@
         },
         "xField": "Empleado",
         "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1544,7 +1829,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5vwc4y0c8wa"
           },
           "fields": [
             {
@@ -1559,7 +1844,7 @@
           "urlPath": ""
         }
       ],
-      "title": "Tiempo de Descanso por Empleados",
+      "title": "Tiempo de Descanso por Empleado",
       "transformations": [
         {
           "id": "extractFields",
@@ -1570,44 +1855,41 @@
           }
         },
         {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Empleado": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Tiempo Descando": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
           "id": "sortBy",
           "options": {
             "fields": {},
             "sort": [
               {
                 "desc": true,
-                "field": "Tiempo Descando"
+                "field": "Tiempo Descando (mean)"
               }
             ]
           }
-        },
-        {
-          "disabled": true,
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "f-*"
-                  }
-                },
-                "fieldName": "Empleado"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     },
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "defbax11h2io0b"
+        "uid": "bfl5xk7mqpczkd"
       },
       "description": "Ordenado por el Tiempo disponible de cada empleado",
       "fieldConfig": {
@@ -1641,7 +1923,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -1650,7 +1933,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tiempo Usado"
+              "options": "Tiempo Usado (mean)"
             },
             "properties": [
               {
@@ -1662,7 +1945,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tiempo Disponible"
+              "options": "Tiempo Disponible (mean)"
             },
             "properties": [
               {
@@ -1674,10 +1957,10 @@
         ]
       },
       "gridPos": {
-        "h": 28,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 215
+        "y": 127
       },
       "id": 3,
       "options": {
@@ -1691,9 +1974,12 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "orientation": "horizontal",
+        "orientation": "auto",
         "showValue": "auto",
         "stacking": "normal",
+        "text": {
+          "valueSize": 40
+        },
         "tooltip": {
           "hideZeros": false,
           "mode": "single",
@@ -1701,7 +1987,7 @@
         },
         "xField": "Empleado",
         "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "11.5.0",
       "targets": [
@@ -1709,7 +1995,7 @@
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "marcusolsson-json-datasource",
-            "uid": "defbax11h2io0b"
+            "uid": "bfl5xk7mqpczkd"
           },
           "fields": [
             {
@@ -1734,23 +2020,122 @@
           }
         },
         {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Empleado": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Tiempo Disponible": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              },
+              "Tiempo Usado": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
           "id": "sortBy",
           "options": {
             "fields": {},
             "sort": [
               {
                 "desc": true,
-                "field": "Tiempo Disponible"
+                "field": "Tiempo Usado (mean)"
               }
             ]
           }
         },
         {
           "id": "filterByValue",
-          "options": {}
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0000"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0001"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0002"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0003"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0004"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0005"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0006"
+                  }
+                },
+                "fieldName": "Empleado"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0007"
+                  }
+                },
+                "fieldName": "Empleado"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
         }
       ],
-      "transparent": true,
       "type": "barchart"
     }
   ],
@@ -1762,13 +2147,13 @@
     "list": []
   },
   "time": {
-    "from": "2024-01-15T00:00:00.000Z",
-    "to": "2024-01-20T12:00:00.000Z"
+    "from": "2024-02-05T05:30:00.000Z",
+    "to": "2024-02-11T23:59:00.000Z"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Dashboard-ConvertedSolution",
-  "uid": "aefbass18z4zkf",
-  "version": 8,
+  "title": "Dashboard-SPCsolution",
+  "uid": "begi4jxzj18g0e",
+  "version": 20,
   "weekStart": ""
 }
