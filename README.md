@@ -19,7 +19,7 @@ Se implementa una arquitectura que permite:
 * **pmr-optimization/**: Motor de optimización principal. Incluye los tres algoritmos de resolución, además del registro automático de métricas.
 * **analisis_resultados_py/**: Script para el análisis estadísticos de los resultados mediante el test de Wilcoxon.
 * **data/:** Contiene los archivos Excel originales, las instancias JSON generadas, las soluciones de las experimentaciones, resultados de análisis de datos y métricas recogidas.
-* **dashboards/**: Consultas y configuraciones para la visualización en Grafana, junto a ejemplos de Dashboards creados.
+* **dashboards/**: Ejemplo de los dashboards creados, incluyendo código y captura.
 
 ## Requisitos Técnicos
 
